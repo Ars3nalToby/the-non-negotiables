@@ -30,9 +30,9 @@
    ============================================================ */
 :root,
 [data-theme="light"]{
-  --paper:#EEF1F4;
-  --card:#FFFFFF;
-  --card-2:#F8FAFC;
+  --paper:#F4EEDD;
+  --card:#FFFEF8;
+  --card-2:#F6EFDD;
   --ink:#0A1622;
   --ink-2:#334C63;
   --mute:#66788A;
@@ -41,14 +41,16 @@
   --red-wash:#FDE7E7;
   --navy:#063672;
   --navy-wash:#E4EDF8;
-  --gold:#8A7038;
-  --rule:#D3DBE3;
-  --rule-soft:#E4EAEF;
+  --gold:#AD8A3C;
+  --gold-deep:#8A6C24;
+  --gold-wash:#F2E4BE;
+  --rule:#DCD0AC;
+  --rule-soft:#EAE1C4;
   --ok:#0E7A4A;
   --ok-wash:#E3F5EC;
   --warn:#8A5A00;
   --warn-wash:#FDF1DC;
-  --hairline:rgba(10,22,34,.028);
+  --hairline:rgba(120,90,20,.05);
   --board-bg:#0A1622;
   --board-fg:#FFFFFF;
   --shadow:rgba(10,22,34,.20);
@@ -65,7 +67,9 @@
   --red-wash:#2C1113;
   --navy:#7FB2F0;
   --navy-wash:#132436;
-  --gold:#CBA968;
+  --gold:#D9B673;
+  --gold-deep:#F0CE8C;
+  --gold-wash:#2C2410;
   --rule:#243545;
   --rule-soft:#1B2937;
   --ok:#3ECF8E;
@@ -125,7 +129,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* ============================================================
    MASTHEAD + NAV
    ============================================================ */
-.masthead{border-bottom:3px solid var(--ink);background:var(--card)}
+.masthead{border-bottom:3px solid var(--ink);background:var(--card);position:relative}
+.masthead::after{content:'';position:absolute;left:0;right:0;bottom:-5px;height:2px;background:var(--gold)}
 .masthead__in{
   display:flex;align-items:flex-end;justify-content:space-between;
   gap:20px;flex-wrap:wrap;padding-top:22px;padding-bottom:14px;
@@ -144,8 +149,14 @@ button{font:inherit;color:inherit;cursor:pointer}
 .mh-meta{
   font-family:var(--mono);font-size:11px;letter-spacing:.1em;
   text-transform:uppercase;color:var(--mute);text-align:right;
+  border:1px solid var(--gold);border-radius:2px;background:var(--gold-wash);
+  padding:8px 12px;
 }
-.mh-meta strong{display:block;color:var(--ink);font-weight:600;font-size:13px;letter-spacing:.06em}
+.mh-meta strong{
+  display:flex;align-items:center;justify-content:flex-end;gap:6px;
+  color:var(--gold-deep);font-weight:700;font-size:12.5px;letter-spacing:.07em;
+}
+.plaque-icon{width:12px;height:12px;fill:var(--gold-deep);flex:0 0 auto}
 .theme{
   width:42px;height:42px;border:1px solid var(--rule);background:var(--card-2);
   border-radius:2px;display:grid;place-items:center;flex:0 0 auto;
@@ -225,7 +236,9 @@ button{font:inherit;color:inherit;cursor:pointer}
 .section__head{
   display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;
   border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:22px;
+  position:relative;
 }
+.section__head::before{content:'';position:absolute;left:0;bottom:-4px;width:34px;height:2px;background:var(--gold)}
 .section__title{margin:0;font-variation-settings:'wdth' 112;font-weight:800;font-size:clamp(22px,3.4vw,34px);letter-spacing:-.015em;text-transform:uppercase}
 .section__note{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
 .lede{font-family:var(--serif);font-size:18px;line-height:1.6;color:var(--ink-2);max-width:66ch;margin:0 0 22px}
@@ -283,6 +296,41 @@ button{font:inherit;color:inherit;cursor:pointer}
   .row__bne{grid-area:bne;text-align:right;align-self:center}
 }
 @media (min-width:821px){.tt__head{display:grid;grid-template-columns:34px 92px 1fr 78px 132px 30px;gap:12px}}
+
+/* ============================================================
+   ACCORDION GROUPS — gold plaque headers, used to fold long lists
+   (timetable by month, ticket desk by month, squad by position)
+   into something that doesn't need a 38-row scroll to get through.
+   ============================================================ */
+.acc{border:1px solid var(--rule);border-top:0;background:var(--card)}
+.acc:first-child{border-top:1px solid var(--ink)}
+.acc + .acc{margin-top:0}
+.acc__summary{
+  display:flex;align-items:center;gap:10px;cursor:pointer;
+  list-style:none;padding:12px 14px;
+  background:linear-gradient(180deg,var(--gold-wash),var(--card) 130%);
+  border-bottom:1px solid var(--rule);
+  -webkit-tap-highlight-color:transparent;
+}
+.acc__summary::-webkit-details-marker{display:none}
+.acc__summary::marker{content:''}
+.acc__chev{
+  width:8px;height:8px;flex:0 0 auto;
+  border-right:2px solid var(--gold-deep);border-bottom:2px solid var(--gold-deep);
+  transform:rotate(-45deg);transition:transform .18s ease;
+}
+.acc[open] > .acc__summary .acc__chev{transform:rotate(45deg)}
+.acc__label{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.acc__meta{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--mute);white-space:nowrap}
+.acc__flag{font-style:normal;color:var(--gold-deep);font-weight:700}
+.acc__body{padding:0}
+.acc__body .squad{padding:12px;gap:10px}
+.acc:not([open]) .acc__body{display:none}
+@media (max-width:640px){
+  .acc__summary{padding:13px 12px;min-height:44px}
+  .acc__label{font-size:11px}
+  .acc__meta{font-size:9.5px}
+}
 
 /* ============================================================
    CARDS / GRIDS
@@ -724,7 +772,7 @@ button{font:inherit;color:inherit;cursor:pointer}
     </h1>
     <div class="mh-right">
       <div class="mh-meta">
-        <strong>Champions of England</strong>
+        <strong><svg class="plaque-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 5.1 5.6.6-4.2 3.8 1.2 5.5L12 14.9 6.9 17l1.2-5.5-4.2-3.8 5.6-.6L12 2z"/></svg>Champions of England</strong>
         Watching from Brisbane since 2009
       </div>
       <button class="theme" id="theme-toggle" aria-label="Switch between light and dark">
@@ -778,7 +826,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 <section class="section wrap" id="timetable">
   <div class="section__head">
     <h2 class="section__title">The season timetable</h2>
-    <p class="section__note">38 league games · tap a row for the dossier</p>
+    <p class="section__note">38 league games, grouped by month · tap a row for the dossier</p>
   </div>
   <div class="filters" role="group" aria-label="Filter fixtures">
     <button class="chip" data-filter="all" aria-pressed="true">All 38</button>
@@ -919,7 +967,7 @@ button{font:inherit;color:inherit;cursor:pointer}
     <h2 class="section__title">The squad, and where to follow them</h2>
     <p class="section__note">Instagram · official accounts only</p>
   </div>
-  <div class="squad" id="squad-grid"></div>
+  <div id="squad-grid"></div>
 </section>
 
 <!-- ============ JUNIOR GUNNERS ============ -->
@@ -1313,6 +1361,9 @@ const isoDate = (d,tz) => new Intl.DateTimeFormat('en-CA',{timeZone:tz,year:'num
 const addDays = (d,n) => new Date(d.getTime() + n*86400000);
 const bneHour = d => parseInt(fmt(d,BNE,{hour:'2-digit',hourCycle:'h23'}),10);
 const isBrutal = d => { const h = bneHour(d); return h >= 1 && h < 6; };
+/* Grouping key for the month accordions — sort-stable, UK calendar month. */
+const monthKey = d => fmt(d,LDN,{year:'numeric',month:'2-digit'});
+const monthLabel = d => fmt(d,LDN,{month:'long',year:'numeric'});
 /* Anything rendered via innerHTML that did not come from this file must
    go through this. Matters the moment the crew board gets a real backend. */
 const esc = s => String(s).replace(/[&<>"']/g, c => (
@@ -1370,15 +1421,9 @@ function passes(f,i){
   return true;
 }
 
-function renderRows(){
-  const frag = document.createDocumentFragment();
-  FIXTURES.forEach((f,i) => {
-    if(!passes(f,i)) return;
-    const c = CLUBS[f.opp], d = new Date(f.ko);
-    const btn = document.createElement('button');
-    btn.className = 'row' + (i === NEXT_I ? ' is-next' : '') + (i < NEXT_I ? ' is-done' : '');
-    btn.type = 'button'; btn.dataset.i = i;
-    btn.innerHTML = `
+function rowHTML(f,i,d){
+  const c = CLUBS[f.opp];
+  return `<button type="button" class="row${i === NEXT_I ? ' is-next' : ''}${i < NEXT_I ? ' is-done' : ''}" data-i="${i}">
       <span class="row__no">${String(f.n).padStart(2,'0')}</span>
       <span class="row__date">${dayShort(d,LDN)}</span>
       <span class="row__opp"><b>${c.name}</b><span class="row__meta">${f.v === 'H' ? 'Emirates Stadium' : c.stadium} \u00b7 ${t24(d,LDN)} UK<span class="row__tv">${f.tv ? ' \u00b7 ' + f.tv : ''}</span>${f.moved ? ' <i class="moved">MOVED</i>' : ''}</span></span>
@@ -1386,10 +1431,35 @@ function renderRows(){
       <span class="row__bne">${f.result
         ? `<b class="row__score">${f.result}</b><span>Full time</span>`
         : `<b>${t24(d,BNE)}${isBrutal(d) ? ' <i class="flag" title="1am\u20136am Brisbane">\u25cf</i>' : ''}</b>${dayShort(d,BNE)} BNE`}</span>
-      <span class="row__go">\u2192</span>`;
-    frag.appendChild(btn);
+      <span class="row__go">\u2192</span></button>`;
+}
+
+/* Grouped by UK calendar month, folded into accordions so the season
+   isn't one 38-row scroll. Only the group holding the next fixture
+   opens by default under the "all" filter; a narrower filter opens
+   every group since the result set is already short. */
+function renderRows(){
+  const groups = [];
+  let cur = null;
+  FIXTURES.forEach((f,i) => {
+    if(!passes(f,i)) return;
+    const d = new Date(f.ko), key = monthKey(d);
+    if(!cur || cur.key !== key){ cur = {key, label:monthLabel(d), rows:[], hasNext:false}; groups.push(cur); }
+    if(i === NEXT_I) cur.hasNext = true;
+    cur.rows.push(rowHTML(f,i,d));
   });
-  rowsEl.replaceChildren(frag);
+
+  rowsEl.innerHTML = groups.length ? groups.map(g => {
+    const open = g.hasNext || activeFilter !== 'all';
+    return `<details class="acc"${open ? ' open' : ''}>
+      <summary class="acc__summary">
+        <span class="acc__chev" aria-hidden="true"></span>
+        <span class="acc__label">${g.label}</span>
+        <span class="acc__meta">${g.rows.length} fixture${g.rows.length === 1 ? '' : 's'}${g.hasNext ? ' <i class="acc__flag">\u25cf next up</i>' : ''}</span>
+      </summary>
+      <div class="acc__body">${g.rows.join('')}</div>
+    </details>`;
+  }).join('') : '<p style="padding:16px;color:var(--mute);font-family:var(--mono);font-size:13px">No fixtures match this filter.</p>';
 }
 
 document.querySelectorAll('.chip').forEach(chip => {
@@ -1549,7 +1619,7 @@ document.addEventListener('keydown', e => {
 /* ============================================================
    TICKET DESK
    ============================================================ */
-$('#tk-rows').innerHTML = FIXTURES.filter((f,i) => i >= NEXT_I).map(f => {
+function tkRowHTML(f){
   const c = CLUBS[f.opp], d = new Date(f.ko);
   const dem = DEMAND_TEXT[DEMAND[f.opp] || 2];
   return `<div class="tk__row">
@@ -1559,7 +1629,28 @@ $('#tk-rows').innerHTML = FIXTURES.filter((f,i) => i >= NEXT_I).map(f => {
     <div class="tk__tier">${f.v === 'H' ? 'Members\u2019 sale' : 'Away credits'}</div>
     <a class="tk__link" href="${f.v === 'H' ? 'https://www.arsenal.com/ticket-exchange' : 'https://www.arsenal.com/tickets'}" target="_blank" rel="noopener noreferrer">${f.v === 'H' ? 'Exchange' : 'Away tickets'}</a>
   </div>`;
-}).join('');
+}
+
+/* Same fold-by-month treatment as the timetable \u2014 only the nearest
+   sale window is open by default. */
+(function renderTicketDesk(){
+  const groups = [];
+  let cur = null;
+  FIXTURES.forEach((f,i) => {
+    if(i < NEXT_I) return;
+    const d = new Date(f.ko), key = monthKey(d);
+    if(!cur || cur.key !== key){ cur = {key, label:monthLabel(d), rows:[]}; groups.push(cur); }
+    cur.rows.push(tkRowHTML(f));
+  });
+  $('#tk-rows').innerHTML = groups.map((g,gi) => `<details class="acc"${gi === 0 ? ' open' : ''}>
+    <summary class="acc__summary">
+      <span class="acc__chev" aria-hidden="true"></span>
+      <span class="acc__label">${g.label}</span>
+      <span class="acc__meta">${g.rows.length} fixture${g.rows.length === 1 ? '' : 's'}</span>
+    </summary>
+    <div class="acc__body">${g.rows.join('')}</div>
+  </details>`).join('');
+})();
 
 /* ============================================================
    EUROPE — cards, now with confirmed dates and Brisbane times.
@@ -1698,7 +1789,12 @@ $('#crew-add').addEventListener('click', () => {
    ============================================================ */
 $('#dates').innerHTML = KEY_DATES.map(k => `<div class="date"><b>${k.d}</b><span>${k.t}</span></div>`).join('');
 
-$('#squad-grid').innerHTML = SQUAD.map(p => {
+/* Grouped by position, like a matchday programme roster \u2014 open by
+   default since the squad grid isn't the section causing scroll pain,
+   but the same fold-away structure as the timetable/ticket desk. */
+const POS_ORDER = ['GK','DF','MF','FW','MGR'];
+const POS_LABEL = {GK:'Goalkeepers', DF:'Defenders', MF:'Midfielders', FW:'Forwards', MGR:'Manager'};
+function squadCardHTML(p){
   const url = p.ig ? `https://www.instagram.com/${p.ig}/`
                    : `https://www.instagram.com/explore/search/keyword/?q=${enc(p.name + ' Arsenal')}`;
   return `<article class="p">
@@ -1707,6 +1803,17 @@ $('#squad-grid').innerHTML = SQUAD.map(p => {
     <p class="p__meta">${p.from}</p>
     <a class="p__ig" href="${url}" target="_blank" rel="noopener noreferrer">${p.ig ? '@' + p.ig : 'Find on Instagram'}</a>
   </article>`;
+}
+$('#squad-grid').innerHTML = POS_ORDER.filter(pos => SQUAD.some(p => p.pos === pos)).map(pos => {
+  const players = SQUAD.filter(p => p.pos === pos);
+  return `<details class="acc" open>
+    <summary class="acc__summary">
+      <span class="acc__chev" aria-hidden="true"></span>
+      <span class="acc__label">${POS_LABEL[pos]}</span>
+      <span class="acc__meta">${players.length} player${players.length === 1 ? '' : 's'}</span>
+    </summary>
+    <div class="acc__body"><div class="squad">${players.map(squadCardHTML).join('')}</div></div>
+  </details>`;
 }).join('');
 
 $('#quiz').innerHTML = QUIZ.map((q,i) => `
