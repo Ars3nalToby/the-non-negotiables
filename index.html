@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Non-Negotiables — Arsenal 2026/27</title>
+<meta name="description" content="Every Arsenal fixture, the stadium, the opponent, the away-day logistics, the ticket windows, and what time you have to wake up in Brisbane.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#EF0107" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A1420" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Non-Negotiables — Arsenal 2026/27">
+<meta property="og:description" content="Every Arsenal fixture, the stadium, the opponent, the away-day logistics, the ticket windows — and what time you actually have to wake up.">
+<meta property="og:site_name" content="The Non-Negotiables">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Non-Negotiables — Arsenal 2026/27">
+<meta name="twitter:description" content="Fixtures, away days and wake-up calls. Built by a Gunner 16,000km from N5.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Non-Negotiables">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23EF0107'/%3E%3Crect x='14' y='27' width='36' height='6' fill='%23fff'/%3E%3Crect x='14' y='39' width='22' height='6' fill='%23fff'/%3E%3Crect x='14' y='15' width='28' height='6' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS — light is the default (paper timetable),
+   dark is the departure board taken full-page.
+   ============================================================ */
+:root,
+[data-theme="light"]{
+  --paper:#EEF1F4;
+  --card:#FFFFFF;
+  --card-2:#F8FAFC;
+  --ink:#0A1622;
+  --ink-2:#334C63;
+  --mute:#66788A;
+  --red:#EF0107;
+  --red-deep:#B00105;
+  --red-wash:#FDE7E7;
+  --navy:#063672;
+  --navy-wash:#E4EDF8;
+  --gold:#8A7038;
+  --rule:#D3DBE3;
+  --rule-soft:#E4EAEF;
+  --ok:#0E7A4A;
+  --ok-wash:#E3F5EC;
+  --warn:#8A5A00;
+  --warn-wash:#FDF1DC;
+  --hairline:rgba(10,22,34,.028);
+  --board-bg:#0A1622;
+  --board-fg:#FFFFFF;
+  --shadow:rgba(10,22,34,.20);
+}
+[data-theme="dark"]{
+  --paper:#0A1420;
+  --card:#12202D;
+  --card-2:#182838;
+  --ink:#EDF2F7;
+  --ink-2:#B4C4D2;
+  --mute:#7C90A2;
+  --red:#FF3B41;
+  --red-deep:#FF6166;
+  --red-wash:#2C1113;
+  --navy:#7FB2F0;
+  --navy-wash:#132436;
+  --gold:#CBA968;
+  --rule:#243545;
+  --rule-soft:#1B2937;
+  --ok:#3ECF8E;
+  --ok-wash:#0F2A20;
+  --warn:#E9B45C;
+  --warn-wash:#2A2010;
+  --hairline:rgba(255,255,255,.026);
+  --board-bg:#050C14;
+  --board-fg:#FFFFFF;
+  --shadow:rgba(0,0,0,.55);
+}
+
+:root{
+  --sans:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --serif:'Newsreader',Georgia,serif;
+  --pad:clamp(16px,4vw,40px);
+  --maxw:1180px;
+}
+
+*{box-sizing:border-box}
+html{
+  -webkit-text-size-adjust:100%;
+  scroll-behavior:smooth;
+  /* iPhone: kill the grey flash on every tap, we style :active ourselves */
+  -webkit-tap-highlight-color:transparent;
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+section[id]{scroll-margin-top:60px}
+/* Nothing should ever scroll sideways. If something does, this contains
+   the damage while the real culprit gets found. */
+body{overflow-x:hidden}
+/* Respect the notch and the home indicator */
+.wrap{padding-left:max(var(--pad), env(safe-area-inset-left));
+      padding-right:max(var(--pad), env(safe-area-inset-right))}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.55;
+  background-image:repeating-linear-gradient(to bottom,transparent 0 31px,var(--hairline) 31px 32px);
+  transition:background-color .25s ease,color .25s ease;
+}
+img{max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
+.eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--mute);margin:0 0 10px;
+}
+
+/* ============================================================
+   MASTHEAD + NAV
+   ============================================================ */
+.masthead{border-bottom:3px solid var(--ink);background:var(--card)}
+.masthead__in{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:20px;flex-wrap:wrap;padding-top:22px;padding-bottom:14px;
+}
+.wordmark{margin:0;line-height:.86}
+.wordmark b{
+  display:block;font-variation-settings:'wdth' 118;font-weight:900;
+  font-size:clamp(28px,5.2vw,52px);letter-spacing:-.02em;text-transform:uppercase;
+}
+.wordmark b em{font-style:normal;color:var(--red)}
+.wordmark span{
+  display:block;margin-top:9px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--mute);
+}
+.mh-right{display:flex;align-items:center;gap:14px;padding-bottom:6px}
+.mh-meta{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--mute);text-align:right;
+}
+.mh-meta strong{display:block;color:var(--ink);font-weight:600;font-size:13px;letter-spacing:.06em}
+.theme{
+  width:42px;height:42px;border:1px solid var(--rule);background:var(--card-2);
+  border-radius:2px;display:grid;place-items:center;flex:0 0 auto;
+  transition:border-color .16s ease,background .16s ease;
+}
+.theme:hover{border-color:var(--red)}
+.theme svg{width:19px;height:19px;stroke:var(--ink);fill:none;stroke-width:1.7;stroke-linecap:round}
+[data-theme="light"] .theme .moon{display:block}
+[data-theme="light"] .theme .sun{display:none}
+[data-theme="dark"] .theme .moon{display:none}
+[data-theme="dark"] .theme .sun{display:block}
+
+.nav{
+  background:var(--card);border-bottom:1px solid var(--rule);
+  position:sticky;top:0;z-index:30;
+}
+.nav__in{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.nav__in::-webkit-scrollbar{display:none}
+.nav a{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;
+  text-transform:uppercase;text-decoration:none;color:var(--mute);
+  padding:14px 14px;white-space:nowrap;border-bottom:2px solid transparent;
+}
+.nav a:hover{color:var(--ink);border-bottom-color:var(--red)}
+
+/* ============================================================
+   HERO BOARD
+   ============================================================ */
+.board{background:var(--board-bg);color:var(--board-fg);border-bottom:3px solid var(--ink);position:relative;overflow:hidden}
+.board::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(to bottom,rgba(255,255,255,.035) 0 1px,transparent 1px 3px);
+}
+.board__in{padding-top:30px;padding-bottom:34px;position:relative;z-index:1}
+.board .eyebrow{color:rgba(255,255,255,.5)}
+.board__grid{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:clamp(12px,3vw,34px)}
+.side{min-width:0}
+.side--away{text-align:right}
+.side__club{
+  font-variation-settings:'wdth' 112;font-weight:900;
+  font-size:clamp(22px,4.4vw,46px);line-height:1;letter-spacing:-.015em;
+  text-transform:uppercase;margin:0;overflow-wrap:anywhere;
+}
+.side__club.is-arsenal::first-letter{color:var(--red)}
+.side__tag{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.48);margin-top:8px}
+.vs{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--red);border:1px solid rgba(255,255,255,.2);padding:8px 10px;border-radius:2px;white-space:nowrap}
+
+.clocks{margin-top:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(184px,1fr));border-top:1px solid rgba(255,255,255,.16)}
+.clock{padding:16px 18px 4px 0;border-right:1px solid rgba(255,255,255,.1)}
+.clock:last-child{border-right:0}
+.clock__label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.clock__time{font-family:var(--mono);font-weight:600;font-size:clamp(26px,4.6vw,40px);line-height:1.1;margin-top:6px;font-variant-numeric:tabular-nums}
+.clock__time.is-hot{color:var(--red)}
+.clock__day{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:rgba(255,255,255,.6);margin-top:2px}
+.verdict{margin-top:22px;border-top:1px solid rgba(255,255,255,.16);padding-top:16px;font-family:var(--serif);font-size:clamp(16px,2.1vw,20px);line-height:1.45;color:rgba(255,255,255,.9);max-width:60ch}
+.verdict b{color:var(--red);font-weight:600}
+.board__cta{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+
+.btn{
+  display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.13em;
+  text-transform:uppercase;padding:11px 15px;border-radius:2px;
+  border:1px solid currentColor;background:transparent;text-decoration:none;
+  transition:background .16s ease,color .16s ease,border-color .16s ease;
+}
+.btn--solid{background:var(--red);border-color:var(--red);color:#fff}
+.btn--solid:hover{background:var(--red-deep);border-color:var(--red-deep);color:#fff}
+.btn--ghost{color:rgba(255,255,255,.78)}
+.btn--ghost:hover{background:#fff;color:#0A1622;border-color:#fff}
+.btn--line{color:var(--ink-2);border-color:var(--rule)}
+.btn--line:hover{border-color:var(--red);color:var(--red)}
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+.section{padding:clamp(38px,6vw,70px) 0}
+.section--tight{padding-top:clamp(26px,4vw,44px)}
+.section__head{
+  display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:22px;
+}
+.section__title{margin:0;font-variation-settings:'wdth' 112;font-weight:800;font-size:clamp(22px,3.4vw,34px);letter-spacing:-.015em;text-transform:uppercase}
+.section__note{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.lede{font-family:var(--serif);font-size:18px;line-height:1.6;color:var(--ink-2);max-width:66ch;margin:0 0 22px}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chip{
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  padding:8px 12px;border:1px solid var(--rule);background:var(--card);border-radius:2px;color:var(--mute);
+}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+/* ============================================================
+   TIMETABLE
+   ============================================================ */
+.tt{border-top:1px solid var(--ink)}
+.tt__head{display:none;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);padding:9px 12px;border-bottom:1px solid var(--rule)}
+.row{
+  display:grid;grid-template-columns:34px 92px 1fr 78px 132px 30px;gap:12px;align-items:center;
+  width:100%;text-align:left;padding:13px 12px;background:var(--card);
+  border:0;border-bottom:1px solid var(--rule-soft);transition:background .14s ease;
+}
+.row:hover,.row:focus-visible{background:var(--card-2)}
+.row:focus-visible{outline:2px solid var(--red);outline-offset:-2px}
+.row.is-next{background:var(--red-wash);box-shadow:inset 4px 0 0 var(--red)}
+.row.is-done{opacity:.55}
+.row__no{font-family:var(--mono);font-size:11px;color:var(--mute);font-variant-numeric:tabular-nums}
+.row__date{font-family:var(--mono);font-size:12px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.row__opp{min-width:0}
+.row__opp b{display:block;font-weight:700;font-size:16px;letter-spacing:-.005em;font-variation-settings:'wdth' 104;overflow-wrap:anywhere}
+.row__opp span,.row__meta{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--mute);margin-top:2px}
+.row__tv{display:inline}
+.ha{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;padding:4px 7px;border-radius:2px}
+.ha--h{background:var(--red-wash);color:var(--red-deep)}
+.ha--a{background:var(--navy-wash);color:var(--navy)}
+.row__bne{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.row__bne b{display:block;font-size:14px;font-weight:600;color:var(--ink)}
+.row__bne .flag{color:var(--red);font-style:normal}
+.row__go{font-family:var(--mono);font-size:14px;color:var(--rule);text-align:right}
+.moved{
+  font-style:normal;background:var(--warn-wash);color:var(--warn);
+  padding:2px 5px;border-radius:2px;letter-spacing:.1em;font-size:9px;
+}
+.row:hover .row__go{color:var(--red)}
+.row__score{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--ok)}
+@media (max-width:820px){
+  .row{
+    grid-template-columns:auto 1fr auto;
+    grid-template-areas:"ha opp bne" "ha date bne";
+    column-gap:11px;row-gap:3px;padding:14px 10px;
+  }
+  .row__no,.row__go{display:none}
+  .row__ha{grid-area:ha;align-self:center}
+  .row__opp{grid-area:opp}
+  .row__date{grid-area:date}
+  .row__bne{grid-area:bne;text-align:right;align-self:center}
+}
+@media (min-width:821px){.tt__head{display:grid;grid-template-columns:34px 92px 1fr 78px 132px 30px;gap:12px}}
+
+/* ============================================================
+   CARDS / GRIDS
+   ============================================================ */
+.grid{display:grid;gap:12px}
+.grid--3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.grid--2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.box{background:var(--card);border:1px solid var(--rule);border-radius:2px;padding:18px}
+.box h3{margin:0 0 10px;font-size:12px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mute);border-bottom:1px solid var(--rule-soft);padding-bottom:9px}
+.box h4{margin:0 0 6px;font-size:18px;font-weight:800;font-variation-settings:'wdth' 106;letter-spacing:-.01em}
+.box p{margin:0 0 10px;font-size:15px;line-height:1.6;color:var(--ink-2)}
+.box p:last-child{margin-bottom:0}
+
+.badge{
+  display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;padding:4px 7px;border-radius:2px;
+}
+.badge--hard{background:var(--red-wash);color:var(--red-deep)}
+.badge--mid{background:var(--warn-wash);color:var(--warn)}
+.badge--easy{background:var(--ok-wash);color:var(--ok)}
+
+/* ============================================================
+   TICKET DESK
+   ============================================================ */
+.legal{
+  background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--red);
+  padding:18px 20px;border-radius:2px;margin-bottom:20px;
+}
+.legal h3{margin:0 0 8px;font-size:16px;font-weight:800;font-variation-settings:'wdth' 106}
+.legal p{margin:0 0 9px;font-size:14.5px;line-height:1.62;color:var(--ink-2);max-width:74ch}
+.legal p:last-child{margin-bottom:0}
+.legal code{font-family:var(--mono);font-size:12.5px;background:var(--card-2);padding:2px 5px;border-radius:2px;color:var(--ink)}
+
+.tk{border-top:1px solid var(--ink)}
+.tk__row{
+  display:grid;grid-template-columns:1fr 96px 130px 118px;gap:12px;align-items:center;
+  padding:12px;background:var(--card);border-bottom:1px solid var(--rule-soft);
+}
+.tk__row b{display:block;font-weight:700;font-size:15px;font-variation-settings:'wdth' 104}
+.tk__row span.sub{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--mute);margin-top:2px}
+.tk__link{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;text-decoration:none;color:var(--ink-2);border:1px solid var(--rule);padding:7px 9px;border-radius:2px;text-align:center;display:block}
+.tk__link:hover{border-color:var(--red);color:var(--red)}
+.tk__tier{font-family:var(--mono);font-size:11px;color:var(--ink-2)}
+@media (max-width:760px){
+  .tk__row{grid-template-columns:1fr auto;row-gap:8px}
+  .tk__tier{grid-column:1 / -1}
+}
+
+/* crew board */
+.crew{display:grid;gap:8px;margin-top:12px}
+.crew__item{
+  display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;
+  background:var(--card-2);border:1px solid var(--rule-soft);padding:11px 13px;border-radius:2px;
+}
+.crew__item b{font-size:14.5px}
+.crew__item span{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;color:var(--mute)}
+.crewform{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:12px}
+.crewform input,.crewform select{
+  font-family:var(--sans);
+  /* 16px minimum — anything smaller makes iOS Safari zoom the page on focus */
+  font-size:16px;
+  padding:11px 12px;
+  border:1px solid var(--rule);background:var(--card);color:var(--ink);border-radius:2px;
+  min-height:44px;
+}
+.crewform button{grid-column:1/-1}
+
+/* ============================================================
+   EUROPE
+   ============================================================ */
+.euro{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:12px}
+.eu{background:var(--card);border:1px solid var(--rule);border-radius:2px;padding:0;overflow:hidden;display:flex;flex-direction:column}
+.eu__top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid var(--rule-soft);background:var(--card-2)}
+.eu__md{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.eu__body{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.eu__name{margin:0;font-size:19px;font-weight:800;font-variation-settings:'wdth' 106;letter-spacing:-.01em;line-height:1.15}
+.eu__grd{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--mute)}
+.eu__bne{
+  font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--ink);letter-spacing:.02em;margin:0;
+}
+.eu__bne .flag{color:var(--red);font-style:normal}
+.eu__note{font-family:var(--serif);font-size:15px;line-height:1.58;color:var(--ink-2);margin:2px 0 0}
+.eu__links{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:10px}
+.eu__links a{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;border:1px solid var(--rule);padding:6px 8px;border-radius:2px;color:var(--ink-2);
+}
+.eu__links a:hover{border-color:var(--red);color:var(--red)}
+.eu--home{box-shadow:inset 3px 0 0 var(--red)}
+.eu--away{box-shadow:inset 3px 0 0 var(--navy)}
+
+/* ============================================================
+   TRANSFERS
+   ============================================================ */
+.deadline{
+  background:var(--board-bg);color:#fff;border-radius:2px;
+  padding:18px 20px;margin-bottom:18px;
+  display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+}
+.deadline__l{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.deadline__t{font-family:var(--mono);font-weight:600;font-size:clamp(22px,3.6vw,32px);font-variant-numeric:tabular-nums;margin:4px 0 0}
+.deadline__n{font-size:14.5px;color:rgba(255,255,255,.75);margin:4px 0 0;max-width:44ch;line-height:1.5}
+
+.mv{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:2px;overflow:hidden}
+.mv__r{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;background:var(--card);padding:11px 13px}
+.mv__r b{font-size:15px;font-weight:700;font-variation-settings:'wdth' 104}
+.mv__r span.club{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--mute);display:block;margin-top:2px}
+.mv__fee{font-family:var(--mono);font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
+.mv__in .mv__fee{color:var(--red-deep)}
+.mv__out .mv__fee{color:var(--ok)}
+
+.wire{display:grid;gap:8px}
+.wire__i{
+  display:block;text-decoration:none;background:var(--card);border:1px solid var(--rule);
+  border-left:3px solid var(--red);padding:12px 14px;border-radius:2px;transition:border-color .14s ease;
+}
+.wire__i:hover{border-color:var(--red)}
+.wire__i b{display:block;font-size:15px;font-weight:600;line-height:1.4}
+.wire__i span{
+  display:block;font-family:var(--mono);font-size:10px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--mute);margin-top:5px;
+}
+.wire__note{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;color:var(--mute);margin:10px 0 0}
+
+/* ============================================================
+   DRAWER
+   ============================================================ */
+.scrim{position:fixed;inset:0;background:rgba(5,12,20,.6);opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:40}
+.scrim.is-open{opacity:1;pointer-events:auto}
+.drawer{
+  position:fixed;top:0;right:0;height:100dvh;width:min(560px,100%);background:var(--paper);z-index:50;
+  transform:translateX(101%);
+  visibility:hidden;
+  transition:transform .28s cubic-bezier(.22,.7,.3,1), visibility 0s linear .28s;
+  display:flex;flex-direction:column;box-shadow:-18px 0 50px var(--shadow);
+}
+.drawer.is-open{transform:none;visibility:visible;transition:transform .28s cubic-bezier(.22,.7,.3,1), visibility 0s}
+.drawer__bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;background:var(--board-bg);color:#fff;flex:0 0 auto}
+.drawer__bar .eyebrow{margin:0;color:rgba(255,255,255,.5)}
+.x{background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;width:34px;height:34px;border-radius:2px;font-size:15px;line-height:1}
+.x:hover{background:#fff;color:#0A1622}
+.drawer__body{overflow-y:auto;padding:20px 18px 60px;flex:1 1 auto}
+.dcard{background:var(--card);border:1px solid var(--rule);padding:16px;margin-bottom:14px;border-radius:2px}
+.dcard h3{margin:0 0 12px;font-size:12px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mute);border-bottom:1px solid var(--rule-soft);padding-bottom:9px}
+.dtitle{font-variation-settings:'wdth' 112;font-weight:900;font-size:clamp(24px,5.2vw,34px);line-height:1.02;text-transform:uppercase;letter-spacing:-.02em;margin:0 0 8px}
+.dsub{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;color:var(--mute);text-transform:uppercase}
+.stub{position:relative;background:var(--card);border:1px solid var(--rule);padding:16px;margin-bottom:14px;border-radius:2px}
+.stub::before,.stub::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:var(--paper);border:1px solid var(--rule);top:52px}
+.stub::before{left:-9px;clip-path:inset(0 0 0 50%)}
+.stub::after{right:-9px;clip-path:inset(0 50% 0 0)}
+.kv{display:grid;grid-template-columns:110px 1fr;gap:7px 12px;font-size:14px}
+.kv dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);padding-top:3px}
+.kv dd{margin:0;font-weight:500}
+.linkgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:4px}
+.lnk{display:block;text-decoration:none;border:1px solid var(--rule);background:var(--card-2);padding:11px 12px;border-radius:2px;transition:border-color .14s ease}
+.lnk:hover{border-color:var(--red)}
+.lnk b{display:block;font-size:13.5px;font-weight:600}
+.lnk span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--mute);margin-top:3px;text-transform:uppercase}
+.note{font-family:var(--serif);font-size:16.5px;line-height:1.62;color:var(--ink);margin:0}
+.sign{margin-top:12px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+
+/* ============================================================
+   SQUAD
+   ============================================================ */
+.squad{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:10px}
+.p{background:var(--card);border:1px solid var(--rule);border-radius:2px;padding:13px;display:flex;flex-direction:column;gap:8px}
+.p__no{font-family:var(--mono);font-size:11px;color:var(--mute);display:flex;justify-content:space-between;align-items:center}
+.p__pos{background:var(--card-2);padding:3px 6px;border-radius:2px;letter-spacing:.1em}
+.p__name{font-weight:700;font-size:15.5px;line-height:1.2;font-variation-settings:'wdth' 104;margin:0}
+.p__meta{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--mute)}
+.p__ig{margin-top:auto;text-decoration:none;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--rule);padding:7px 8px;border-radius:2px;text-align:center;color:var(--ink-2)}
+.p__ig:hover{border-color:var(--red);color:var(--red)}
+
+/* ============================================================
+   JUNIOR GUNNERS
+   ============================================================ */
+.jg{background:var(--card);border:1px solid var(--rule);padding:clamp(20px,4vw,36px);border-radius:2px}
+.jg__hd{display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+.jg__hd h3{margin:0;font-size:clamp(21px,3vw,28px);font-weight:900;font-variation-settings:'wdth' 110;letter-spacing:-.015em}
+.jg__age{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;background:var(--red);color:#fff;padding:5px 8px;border-radius:2px}
+.jg p{font-size:16px;line-height:1.65;color:var(--ink-2);max-width:66ch}
+.pitch{width:100%;height:auto;display:block;margin:16px 0;border:1px solid var(--rule);border-radius:2px;background:var(--card-2)}
+.pitch text{font-family:var(--mono);font-size:9px;letter-spacing:.08em}
+
+.quiz{margin-top:8px}
+.q{border-top:1px solid var(--rule-soft);padding:16px 0}
+.q:first-child{border-top:0}
+.q__p{font-weight:700;font-size:16.5px;margin:0 0 10px;font-variation-settings:'wdth' 104}
+.q__opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:7px}
+.q__opt{
+  text-align:left;background:var(--card-2);border:1px solid var(--rule);
+  padding:11px 12px;border-radius:2px;font-size:14.5px;transition:.14s ease;
+}
+.q__opt:hover{border-color:var(--red)}
+.q__opt.is-right{background:var(--ok-wash);border-color:var(--ok);color:var(--ok);font-weight:600}
+.q__opt.is-wrong{background:var(--red-wash);border-color:var(--red);color:var(--red-deep)}
+.q__fb{margin:10px 0 0;font-family:var(--serif);font-size:15.5px;color:var(--ink-2);display:none}
+.q__fb.is-shown{display:block}
+
+.bingo{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px;margin-top:12px}
+.bingo button{
+  background:var(--card-2);border:1px dashed var(--rule);padding:14px 10px;border-radius:2px;
+  font-size:13px;line-height:1.35;min-height:74px;text-align:center;color:var(--ink-2);
+}
+.bingo button.is-on{background:var(--red);border-color:var(--red);border-style:solid;color:#fff;font-weight:600}
+
+.words{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-top:12px}
+.word{background:var(--card-2);border:1px solid var(--rule-soft);padding:12px;border-radius:2px}
+.word b{display:block;color:var(--red);font-size:15px}
+.word span{font-size:14px;color:var(--ink-2);line-height:1.5}
+
+/* ============================================================
+   PROGRAMME + TRIBUTE
+   ============================================================ */
+.programme{background:var(--card);border:1px solid var(--rule);padding:clamp(20px,4vw,40px)}
+.pnote{border-top:1px solid var(--rule-soft);padding-top:22px;margin-top:22px}
+.pnote:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.pnote h3{margin:0 0 4px;font-variation-settings:'wdth' 108;font-weight:800;font-size:clamp(19px,2.6vw,25px);letter-spacing:-.01em}
+.pnote .byline{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 12px}
+.pnote p{font-family:var(--serif);font-size:17px;line-height:1.66;margin:0 0 14px;color:var(--ink);max-width:68ch}
+.pnote p:last-child{margin-bottom:0}
+.pnote .drop::first-letter{float:left;font-family:var(--sans);font-weight:900;font-size:3.1em;line-height:.82;padding:4px 10px 0 0;color:var(--red);font-variation-settings:'wdth' 112}
+
+.tribute{background:var(--board-bg);color:#fff;border-radius:2px;padding:clamp(22px,4vw,42px)}
+.tribute .eyebrow{color:rgba(255,255,255,.5)}
+.tribute h3{margin:0 0 14px;font-size:clamp(24px,4vw,38px);font-weight:900;font-variation-settings:'wdth' 112;letter-spacing:-.02em;text-transform:uppercase;line-height:1.02}
+.tribute h3 em{font-style:normal;color:var(--red)}
+.tribute p{font-family:var(--serif);font-size:17px;line-height:1.66;color:rgba(255,255,255,.82);max-width:68ch;margin:0 0 14px}
+.reads{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:22px}
+.read{
+  display:block;text-decoration:none;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.14);padding:16px;border-radius:2px;transition:.16s ease;
+}
+.read:hover{background:rgba(255,255,255,.1);border-color:var(--red)}
+.read b{display:block;font-size:17px;font-weight:800;font-variation-settings:'wdth' 106;margin-bottom:5px}
+.read span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--red);margin-bottom:8px}
+.read p{font-family:var(--sans);font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.66);margin:0;max-width:none}
+
+/* ============================================================
+   KEY DATES + FOOTER
+   ============================================================ */
+.dates{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1px;background:var(--rule)}
+.date{background:var(--card);padding:14px}
+.date b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--red);margin-bottom:5px}
+.date span{font-size:14px;font-weight:500}
+
+.foot{background:var(--board-bg);color:rgba(255,255,255,.62);padding:34px 0 46px;font-size:13.5px}
+.foot h4{color:#fff;margin:0 0 10px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.foot__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:26px}
+.foot code{font-family:var(--mono);font-size:12px;background:rgba(255,255,255,.08);padding:2px 5px;border-radius:2px;color:#fff}
+.foot p{margin:0 0 9px;line-height:1.6}
+.foot a{color:#fff}
+
+/* ============================================================
+   MOBILE — 640px and below (iPhone SE 375 → Pro Max 430)
+   Not a shrink of the desktop layout. The board becomes a
+   stacked boarding pass; the timetable becomes a left-railed
+   list; everything below 44px gets a bigger tap target.
+   ============================================================ */
+@media (max-width:640px){
+
+  :root{--pad:16px}
+  body{font-size:16px}
+  section[id]{scroll-margin-top:52px}
+
+  /* ---- masthead: wordmark left, toggle pinned right ---- */
+  .masthead__in{
+    display:grid;grid-template-columns:1fr auto;align-items:center;
+    gap:12px;padding-top:16px;padding-bottom:14px;
+  }
+  .wordmark b{font-size:26px;font-variation-settings:'wdth' 100}
+  .wordmark span{font-size:9.5px;letter-spacing:.13em;margin-top:7px}
+  .mh-right{padding-bottom:0}
+  .mh-meta{display:none}          /* redundant on a small screen */
+  .theme{width:44px;height:44px}
+
+  /* ---- nav: keep it scrollable but signal that it scrolls ---- */
+  .nav__in{
+    -webkit-overflow-scrolling:touch;
+    -webkit-mask-image:linear-gradient(to right,#000 88%,transparent 100%);
+    mask-image:linear-gradient(to right,#000 88%,transparent 100%);
+  }
+  .nav a{padding:14px 12px;font-size:10px}
+
+  /* ---- hero board: stack, so club names get full width ---- */
+  .board__in{padding-top:22px;padding-bottom:26px}
+  .board__grid{grid-template-columns:1fr;gap:10px;align-items:start}
+  .side--away{text-align:left}
+  .side__club{
+    font-size:32px;line-height:.98;
+    overflow-wrap:normal;word-break:normal;hyphens:none;
+  }
+  .side__tag{margin-top:5px;font-size:9.5px}
+  .vs{
+    justify-self:start;padding:5px 9px;font-size:10px;
+    border-color:rgba(255,255,255,.25);
+  }
+
+  /* clocks: London | Brisbane side by side, countdown full width */
+  .clocks{
+    grid-template-columns:1fr 1fr;margin-top:20px;
+    column-gap:14px;
+  }
+  .clock{
+    padding:14px 0 12px;border-right:0;
+    border-bottom:1px solid rgba(255,255,255,.1);
+  }
+  .clock:last-child{
+    grid-column:1 / -1;border-bottom:0;padding-bottom:0;
+    display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  }
+  .clock:last-child .clock__label{width:100%}
+  .clock__time{font-size:30px}
+  .clock:last-child .clock__time{font-size:22px}
+  .clock:last-child .clock__day{margin-top:0}
+  .verdict{font-size:16px;margin-top:18px;padding-top:14px}
+  .board__cta .btn{flex:1;text-align:center;padding:13px 10px}
+
+  /* ---- timetable: left rail, two-line body, big Brisbane time ---- */
+  .row{
+    grid-template-columns:auto 1fr auto;
+    grid-template-areas:"ha opp bne" "ha date bne";
+    column-gap:10px;row-gap:2px;padding:13px 8px;
+  }
+  .row__opp b{font-size:15.5px;line-height:1.25}
+  .row__meta{
+    font-size:10px;line-height:1.4;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+  .row__tv{display:none}          /* broadcaster lives in the drawer */
+  .row__date{font-size:11px}
+  .row__bne b{font-size:16px}
+  .row__bne{font-size:10px}
+  .ha{font-size:9px;padding:4px 5px;letter-spacing:.06em}
+
+  /* ---- filter chips: real tap targets ---- */
+  .filters{gap:6px}
+  .chip{padding:12px 13px;font-size:10px;min-height:44px;display:flex;align-items:center}
+  .chip:active{transform:scale(.97)}
+
+  /* ---- ticket desk rows ---- */
+  .tk__row{
+    grid-template-columns:1fr auto;gap:8px 10px;padding:13px 12px;
+    grid-template-areas:"name badge" "tier tier" "link link";
+  }
+  .tk__row > div:nth-child(1){grid-area:name}
+  .tk__row > div:nth-child(2){grid-area:badge;align-self:start}
+  .tk__tier{grid-area:tier;font-size:12px;line-height:1.45}
+  .tk__link{grid-area:link;padding:12px;min-height:44px;
+            display:flex;align-items:center;justify-content:center}
+
+  /* ---- transfers ---- */
+  .deadline{padding:16px;gap:14px}
+  .deadline > div{flex:1 1 100%}
+  .deadline__t{font-size:26px}
+  .mv__r{padding:12px}
+  .mv__r b{font-size:14.5px}
+
+  /* ---- squad + links: bigger targets ---- */
+  .squad{grid-template-columns:1fr 1fr;gap:8px}
+  .p{padding:12px}
+  .p__ig{padding:12px 8px;min-height:44px;display:flex;align-items:center;justify-content:center}
+  .linkgrid{grid-template-columns:1fr 1fr;gap:7px}
+  .lnk{padding:12px 11px;min-height:56px}
+  .eu__links a{padding:10px 10px;min-height:40px;display:flex;align-items:center}
+
+  /* ---- junior gunners ---- */
+  .q__opts{grid-template-columns:1fr}
+  .q__opt{padding:14px 13px;min-height:48px}
+  .bingo{grid-template-columns:1fr 1fr;gap:5px}
+  .bingo button{min-height:78px;font-size:12.5px;padding:12px 8px}
+  .words{grid-template-columns:1fr}
+  .jg{padding:18px 16px}
+
+  /* ---- editorial: tighter measure, no oversized drop cap ---- */
+  .pnote p{font-size:16px;line-height:1.62}
+  .pnote .drop::first-letter{font-size:2.6em;padding-right:8px}
+  .lede{font-size:16.5px}
+  .tribute{padding:20px 16px}
+  .tribute p{font-size:16px}
+
+  /* ---- drawer: full bleed, respect the home indicator ---- */
+  .drawer{width:100%;box-shadow:none}
+  .drawer__bar{padding:12px 16px;padding-top:max(12px, env(safe-area-inset-top))}
+  .drawer__body{
+    padding:16px 16px calc(60px + env(safe-area-inset-bottom));
+    -webkit-overflow-scrolling:touch;
+  }
+  .x{width:44px;height:44px}
+  .stub::before,.stub::after{display:none}   /* notches clip at full bleed */
+  .kv{grid-template-columns:88px 1fr;gap:6px 10px;font-size:13.5px}
+  .kv dt{font-size:9.5px}
+  .dtitle{font-size:26px}
+
+  /* ---- footer ---- */
+  .foot{padding-bottom:calc(40px + env(safe-area-inset-bottom))}
+  .foot__grid{gap:22px}
+}
+
+/* Very narrow — iPhone SE and anyone running Larger Text */
+@media (max-width:380px){
+  .side__club{font-size:27px}
+  .clock__time{font-size:26px}
+  .squad,.bingo{grid-template-columns:1fr}
+  .linkgrid{grid-template-columns:1fr}
+  .row{column-gap:8px;padding:12px 6px}
+}
+
+/* Tablet / iPad portrait */
+@media (min-width:641px) and (max-width:900px){
+  .board__grid{gap:16px}
+  .side__club{font-size:34px}
+  .clocks{grid-template-columns:1fr 1fr}
+  .clock:last-child{grid-column:1 / -1;border-right:0}
+}
+
+/* Landscape phone — the board eats the whole screen otherwise */
+@media (max-height:500px) and (orientation:landscape){
+  .board__in{padding-top:16px;padding-bottom:18px}
+  .side__club{font-size:26px}
+  .clock__time{font-size:22px}
+  .verdict{font-size:14.5px;margin-top:12px;padding-top:10px}
+}
+
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms !important;transition-duration:.001ms !important}}
+.reveal{opacity:0;transform:translateY(8px);animation:rise .5s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap masthead__in">
+    <h1 class="wordmark">
+      <b>The <em>Non-</em>Negotiables</b>
+      <span>Arsenal 2026/27 · fixtures, away days &amp; wake-up calls</span>
+    </h1>
+    <div class="mh-right">
+      <div class="mh-meta">
+        <strong>Champions of England</strong>
+        Watching from Brisbane since 2009
+      </div>
+      <button class="theme" id="theme-toggle" aria-label="Switch between light and dark">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path class="moon" d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/>
+          <g class="sun"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/></g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav"><div class="wrap nav__in">
+  <a href="#timetable">Timetable</a>
+  <a href="#tickets">Ticket desk</a>
+  <a href="#europe">Europe</a>
+  <a href="#transfers">Transfers</a>
+  <a href="#squad">Squad</a>
+  <a href="#junior">Junior Gunners</a>
+  <a href="#programme">Programme notes</a>
+  <a href="#reading">Required reading</a>
+</div></nav>
+
+<section class="board" id="board">
+  <div class="wrap board__in">
+    <p class="eyebrow" id="board-eyebrow">Next match</p>
+    <div class="board__grid">
+      <div class="side">
+        <p class="side__club is-arsenal" id="board-home">Arsenal</p>
+        <p class="side__tag" id="board-home-tag">Home</p>
+      </div>
+      <div class="vs">Premier League</div>
+      <div class="side side--away">
+        <p class="side__club" id="board-away">—</p>
+        <p class="side__tag" id="board-away-tag">Away</p>
+      </div>
+    </div>
+    <div class="clocks">
+      <div class="clock"><p class="clock__label">Kick-off · London</p><p class="clock__time" id="clk-uk">—</p><p class="clock__day" id="clk-uk-day">—</p></div>
+      <div class="clock"><p class="clock__label">Kick-off · Brisbane</p><p class="clock__time" id="clk-bne">—</p><p class="clock__day" id="clk-bne-day">—</p></div>
+      <div class="clock"><p class="clock__label">Countdown</p><p class="clock__time" id="clk-count">—</p><p class="clock__day" id="clk-venue">—</p></div>
+    </div>
+    <p class="verdict" id="verdict">—</p>
+    <div class="board__cta">
+      <button class="btn btn--solid" id="board-open">Open the dossier</button>
+      <a class="btn btn--ghost" href="#timetable">Full season timetable</a>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" id="timetable">
+  <div class="section__head">
+    <h2 class="section__title">The season timetable</h2>
+    <p class="section__note">38 league games · tap a row for the dossier</p>
+  </div>
+  <div class="filters" role="group" aria-label="Filter fixtures">
+    <button class="chip" data-filter="all" aria-pressed="true">All 38</button>
+    <button class="chip" data-filter="H" aria-pressed="false">Emirates</button>
+    <button class="chip" data-filter="A" aria-pressed="false">Away days</button>
+    <button class="chip" data-filter="upcoming" aria-pressed="false">Still to come</button>
+    <button class="chip" data-filter="brutal" aria-pressed="false">Brisbane 1am–6am</button>
+  </div>
+  <div class="tt">
+    <div class="tt__head" aria-hidden="true"><span>#</span><span>Date</span><span>Opponent</span><span>Venue</span><span>Brisbane KO</span><span></span></div>
+    <div id="tt-rows"></div>
+  </div>
+</section>
+
+<!-- ============ TICKET DESK ============ -->
+<section class="section wrap" id="tickets">
+  <div class="section__head">
+    <h2 class="section__title">The ticket desk</h2>
+    <p class="section__note">Official channels only</p>
+  </div>
+
+  <div class="legal">
+    <h3>Why there is no resale here, and never will be</h3>
+    <p>In England and Wales it is a criminal offence for anyone not authorised in writing by the club to sell — or otherwise dispose of — a ticket for a designated football match. That is section 166 of the Criminal Justice and Public Order Act 1994, extended to online sales by the Violent Crime Reduction Act 2006 and the Ticket Touting (Designation of Football Matches) Order 2007.</p>
+    <p>The wording is deliberately wide. It catches offering a ticket, exposing one for sale, <code>making a ticket available for sale by another</code>, and <code>advertising that a ticket is available for purchase</code>. Face value doesn't help. Not making a profit doesn't help. A noticeboard counts.</p>
+    <p>So this desk does the honest version instead: it tells you exactly when each fixture goes on sale, which membership tier you realistically need, and sends every transaction to Arsenal's own authorised Ticket Exchange and Ticket Transfer. That is the only legal secondary market for these games, and it is the one that protects your membership.</p>
+  </div>
+
+  <div class="tk">
+    <div id="tk-rows"></div>
+  </div>
+
+  <div class="grid grid--2" style="margin-top:26px">
+    <div class="box">
+      <h3>Away crew board</h3>
+      <h4>Who's travelling, not who's selling</h4>
+      <p>No tickets, no money, no listings. Just a board of who is heading to which away day, so people flying in from Brisbane, Kuala Lumpur or Dublin can find each other for a pre-match pint.</p>
+      <div class="crew" id="crew-list"></div>
+      <div class="crewform">
+        <input id="crew-name" type="text" placeholder="Name or handle" maxlength="40">
+        <input id="crew-from" type="text" placeholder="Travelling from" maxlength="40">
+        <select id="crew-fix"></select>
+        <button class="btn btn--line" id="crew-add">Add me to the board</button>
+      </div>
+      <p style="margin-top:12px;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--mute)">Local preview only — saved in this browser. Wire to Supabase or Firebase to make it shared.</p>
+    </div>
+
+    <div class="box">
+      <h3>A marketplace you can actually run</h3>
+      <h4>Programmes, shirts, badges, memorabilia</h4>
+      <p>The ticket law covers tickets. It does not cover the rest of it — and there is a genuinely underserved market in matchday programmes, retro shirts, pin badges, ticket stubs from finals and old Highbury ephemera.</p>
+      <p>That is a real marketplace, it is completely legal, it fits this site's whole programme-and-archive personality, and nobody has built a good Arsenal-specific one. If you want a marketplace, build that one.</p>
+      <p style="color:var(--ink);font-weight:600">Same escrow logic, same listings UI, none of the criminal liability.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EUROPE ============ -->
+<section class="section wrap" id="europe">
+  <div class="section__head">
+    <h2 class="section__title">Europe · the league phase</h2>
+    <p class="section__note">Drawn 27 Aug 2026 · Monaco</p>
+  </div>
+
+  <p class="lede">Eight opponents, four at the Emirates and four abroad. Real Madrid come to N5. We go to Munich, Seville, Naples and Prague — which, for anyone reading this from the southern hemisphere, is the best four-city European itinerary the draw could realistically have produced.</p>
+
+  <div class="box" style="margin-bottom:18px">
+    <h3>All eight, confirmed</h3>
+    <p style="margin:0 0 8px">UEFA published the full league-phase schedule on <strong style="color:var(--ink)">29 August</strong>. Every one of Arsenal's eight matches kicks off at <strong style="color:var(--ink)">20:00 UK</strong> — which is 05:00 Brisbane for the first three and 06:00 for the rest.</p>
+    <p style="margin:0;color:var(--ink)"><strong>There is no such thing as a convenient Champions League night in Queensland.</strong> Every single one is a working morning. Plan accordingly.</p>
+  </div>
+
+  <div class="euro" id="euro-grid"></div>
+
+  <div class="box" style="margin-top:18px">
+    <h3>Where we're starting from</h3>
+    <p>Last season Arsenal won all eight league phase matches and finished top of the table — the first side to go 8-0 since the format was introduced. Then the final, and penalties, and a summer nobody wants to relive. The top eight go straight to the last 16; ninth to twenty-fourth go into a two-legged play-off.</p>
+    <p style="margin-bottom:0">The final is at the Estadio Metropolitano in Madrid on 5 June 2027.</p>
+  </div>
+</section>
+
+<section class="section section--tight wrap">
+  <div class="section__head">
+    <h2 class="section__title">Dates that decide the season</h2>
+    <p class="section__note">Beyond the league</p>
+  </div>
+  <div class="dates" id="dates"></div>
+</section>
+
+<!-- ============ TRANSFERS ============ -->
+<section class="section wrap" id="transfers">
+  <div class="section__head">
+    <h2 class="section__title">The window</h2>
+    <p class="section__note">Summer 2026 · Berta's second</p>
+  </div>
+
+  <div class="deadline">
+    <div>
+      <p class="deadline__l">Deadline · 11pm BST, Tuesday 1 September</p>
+      <p class="deadline__t" id="dl-count">—</p>
+      <p class="deadline__n" id="dl-bne">—</p>
+    </div>
+    <div>
+      <p class="deadline__l">Net spend so far</p>
+      <p class="deadline__t" style="color:var(--red)">~£153m</p>
+      <p class="deadline__n">Five in, seven out. Refining a title-winning squad rather than rebuilding one.</p>
+    </div>
+  </div>
+
+  <div class="grid grid--2">
+    <div>
+      <h3 style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:0 0 10px">In</h3>
+      <div class="mv" id="mv-in"></div>
+    </div>
+    <div>
+      <h3 style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:0 0 10px">Out</h3>
+      <div class="mv" id="mv-out"></div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-top:18px">
+    <h3>Still live</h3>
+    <p><strong style="color:var(--ink)">Bradley Barcola (PSG)</strong> — the one deal that would define the window. Arsenal missed on Vinícius Júnior when he extended at Madrid, and the elite left-sided attacker brief never got filled. Reported to need a sale to fund it.</p>
+    <p><strong style="color:var(--ink)">Julián Álvarez (Atlético)</strong> — Spanish press pushing hard on this one. Would be the striker depth behind Gyökeres that Arteta has been circling all summer.</p>
+    <p><strong style="color:var(--ink)">Outgoing:</strong> Fabio Vieira (Hamburg keen, Arsenal holding at €20m+), Ethan Nwaneri (marketable homegrown profit), and Arteta has said publicly that another departure is coming.</p>
+    <p style="margin-bottom:0"><strong style="color:var(--ink)">The actual squad hole:</strong> cover on the right side of defence. Everyone is talking about wingers.</p>
+  </div>
+
+  <div style="margin-top:22px">
+    <h3 style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:0 0 10px">Live wire</h3>
+    <div class="wire" id="wire"></div>
+    <p class="wire__note" id="wire-note">Connecting…</p>
+  </div>
+</section>
+
+<section class="section wrap" id="squad">
+  <div class="section__head">
+    <h2 class="section__title">The squad, and where to follow them</h2>
+    <p class="section__note">Instagram · official accounts only</p>
+  </div>
+  <div class="squad" id="squad-grid"></div>
+</section>
+
+<!-- ============ JUNIOR GUNNERS ============ -->
+<section class="section wrap" id="junior">
+  <div class="section__head">
+    <h2 class="section__title">Junior Gunners</h2>
+    <p class="section__note">Read-only · no sign-ups, no messages</p>
+  </div>
+
+  <div class="jg">
+    <div class="jg__hd">
+      <h3>Your first season as a Gunner</h3>
+      <span class="jg__age">Ages 6–12</span>
+    </div>
+    <p>Welcome. You have picked a team that plays in red and white, has a cannon on its badge, and made a lot of grown-ups wait twenty-two years for a Premier League trophy. They are champions now. Here is everything you need to know to keep up at the dinner table.</p>
+
+    <h4 style="font-size:15px;font-family:var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:26px 0 0">Where everyone stands</h4>
+    <svg class="pitch" viewBox="0 0 400 300" role="img" aria-label="A football pitch showing where each Arsenal position stands">
+      <rect x="6" y="6" width="388" height="288" fill="none" stroke="currentColor" stroke-opacity=".3"/>
+      <line x1="200" y1="6" x2="200" y2="294" stroke="currentColor" stroke-opacity=".18"/>
+      <circle cx="200" cy="150" r="38" fill="none" stroke="currentColor" stroke-opacity=".18"/>
+      <rect x="6" y="88" width="46" height="124" fill="none" stroke="currentColor" stroke-opacity=".18"/>
+      <rect x="348" y="88" width="46" height="124" fill="none" stroke="currentColor" stroke-opacity=".18"/>
+      <g fill="#EF0107">
+        <circle cx="30" cy="150" r="15"/>
+        <circle cx="96" cy="46" r="15"/><circle cx="82" cy="112" r="15"/>
+        <circle cx="82" cy="188" r="15"/><circle cx="96" cy="254" r="15"/>
+        <circle cx="176" cy="150" r="15"/><circle cx="208" cy="80" r="15"/><circle cx="208" cy="220" r="15"/>
+        <circle cx="318" cy="56" r="15"/><circle cx="336" cy="150" r="15"/><circle cx="318" cy="244" r="15"/>
+      </g>
+      <g fill="#fff" font-weight="700" text-anchor="middle" font-size="13">
+        <text x="30" y="155">GK</text>
+        <text x="96" y="51">LB</text><text x="82" y="117">CB</text>
+        <text x="82" y="193">CB</text><text x="96" y="259">RB</text>
+        <text x="176" y="155">6</text><text x="208" y="85">8</text><text x="208" y="225">M</text>
+        <text x="318" y="61">LW</text><text x="336" y="155">ST</text><text x="318" y="249">RW</text>
+      </g>
+    </svg>
+    <div class="words" style="margin-top:0">
+      <div class="word"><b>GK · goalkeeper</b><span>The only one allowed to use their hands, and only inside their own box.</span></div>
+      <div class="word"><b>CB · centre-back &nbsp;|&nbsp; LB / RB · full-backs</b><span>The four defenders. Full-backs also run forward to help attack.</span></div>
+      <div class="word"><b>6 and 8 · midfield</b><span>The engine room. The number 8 is the captain, Martin Ødegaard — his job is the pass nobody else sees.</span></div>
+      <div class="word"><b>LW / RW · wingers &nbsp;|&nbsp; ST · striker</b><span>The three who score the goals. Bukayo Saka plays on the right.</span></div>
+    </div>
+
+    <h4 style="font-size:15px;font-family:var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:32px 0 0">Words the grown-ups shout</h4>
+    <div class="words">
+      <div class="word"><b>Offside</b><span>You can't stand behind the last defender waiting for the ball. It stops people cheating near the goal.</span></div>
+      <div class="word"><b>The Emirates</b><span>Arsenal's home ground in north London. It holds about 60,700 people.</span></div>
+      <div class="word"><b>Clean sheet</b><span>The other team scored zero. Defenders love this more than anything.</span></div>
+      <div class="word"><b>Derby</b><span>A match against a nearby rival. Arsenal's is against Tottenham. It is a big deal.</span></div>
+      <div class="word"><b>Away day</b><span>When Arsenal play at somebody else's ground and the fans travel there.</span></div>
+      <div class="word"><b>The Invincibles</b><span>The 2003–04 Arsenal team that played a whole league season without losing once. Nobody has done it since.</span></div>
+    </div>
+
+    <h4 style="font-size:15px;font-family:var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:32px 0 0">Quiz: are you paying attention?</h4>
+    <div class="quiz" id="quiz"></div>
+
+    <h4 style="font-size:15px;font-family:var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:32px 0 0">Matchday bingo</h4>
+    <p style="font-size:14.5px">Tap a square when it happens. Get a full row and you're allowed to be smug.</p>
+    <div class="bingo" id="bingo"></div>
+
+    <div style="border-top:1px solid var(--rule-soft);margin-top:28px;padding-top:20px">
+      <p style="font-size:14.5px;margin:0"><b style="color:var(--ink)">A note for the grown-up reading this:</b> most Premier League kick-offs land between midnight and 6am in Australia. The results are on this site the next morning, spoiler-free until you tap. Nobody needs to be awake at 2am to be a proper supporter.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" id="programme">
+  <div class="section__head">
+    <h2 class="section__title">Programme notes</h2>
+    <p class="section__note">Original writing · not the club's</p>
+  </div>
+  <div class="programme">
+    <article class="pnote">
+      <h3>Defending it is a completely different job</h3>
+      <p class="byline">Season opener · August 2026</p>
+      <p class="drop">Twenty-two years is a long time to spend explaining to people why the wait was nearly over. Now it is over, and the strange thing nobody warns you about is that winning the thing does not make the next season easier. It makes it louder. Every draw is a wobble. Every substitution is a referendum. Every set-piece conceded gets its own six-minute segment on a channel you have never heard of.</p>
+      <p>The squad is better than the one that won it. Bruno Guimarães walking into a midfield that already had Zubimendi, Rice and Ødegaard is faintly obscene. Tzolis gives us a left side that does not depend on one man's hamstring. Hincapié is permanent. Meslier is a free goalkeeper who has played a hundred Premier League games. This is what a club looks like when it has stopped being sentimental about the gaps.</p>
+      <p>What we are actually watching for this year is whether the standards hold when the motivation changes. Chasing is easy. Being chased is the test.</p>
+    </article>
+
+    <article class="pnote">
+      <h3>In defence of the captain, again, forever</h3>
+      <p class="byline">On Martin Ødegaard</p>
+      <p>Every eighteen months the discourse cycles back to whether the armband should move. It is always framed as a compliment to Declan Rice, which is a neat trick, because it means anyone defending Ødegaard sounds like they are attacking a player everyone loves.</p>
+      <p>So let's be plain about it. Captaincy at this club, under this manager, is not about who wins the most duels. It is about who holds the shape of the idea when the game is going badly — who keeps demanding the ball in the pocket at 0-0 away from home in the 71st minute when the easy thing is to hide. He does that in games where his numbers look ordinary. That is precisely the point.</p>
+      <p>Also he scored in the opener and the shot took a deflection, which is the most Ødegaard sentence ever written.</p>
+    </article>
+
+    <article class="pnote">
+      <h3>A word on watching this from 16,000km away</h3>
+      <p class="byline">The Brisbane clause</p>
+      <p>There is a specific kind of supporter who has never once walked up Drayton Park but can tell you exactly what the away kit looked like in 2011 because they were awake at 2am to see it. That is most of us out here. The fixture list is not a fixture list, it is a sleep schedule, and a 3pm Saturday in London is midnight on Sunday morning in Queensland.</p>
+      <p>So this site puts the Brisbane time next to every kick-off, and flags the ones that land between 1am and 6am — the genuinely brutal ones, where you either commit or you spend Sunday morning dodging the score. Both are respectable choices. Only one of them is correct.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============ TRIBUTE ============ -->
+<section class="section wrap" id="reading">
+  <div class="section__head">
+    <h2 class="section__title">Required reading</h2>
+    <p class="section__note">Go and support them properly</p>
+  </div>
+  <div class="tribute">
+    <p class="eyebrow">The people who did this first, and better</p>
+    <h3>Everything here owes a debt to <em>Arseblog</em></h3>
+    <p>Andrew Mangan started Arseblog in 2002, from Barcelona, before anyone had decided that a person writing about their football club every single morning was a job. He has now done it for well over two decades. The Arsecast followed in October 2006 and became the thing a lot of us listen to before we've had coffee. The Irish Independent once described it as the most-consumed football fan content in world football, which sounds like hyperbole until you realise how many of us have organised our mornings around it.</p>
+    <p>Tim Stillman writes the columns. If you have ever read a piece about Arsenal that made you rethink a player you thought you had figured out, there is a decent chance it was his. He is also Arseblog News' Arsenal Women correspondent and presents the Arsenal Women Arsecast — which matters, because he was covering that team properly long before it was fashionable to.</p>
+    <p>None of their writing is reproduced here. This site links out, and it should: the tone I'm reaching for is theirs, and the correct response to loving someone's work is to go and pay for it.</p>
+
+    <div class="reads">
+      <a class="read" href="https://arseblog.com" target="_blank" rel="noopener noreferrer">
+        <span>Since 2002</span><b>Arseblog</b>
+        <p>Andrew Mangan's daily blog. The original, still the standard.</p>
+      </a>
+      <a class="read" href="https://arseblog.com/author/timstillman/" target="_blank" rel="noopener noreferrer">
+        <span>Columnist</span><b>Tim Stillman</b>
+        <p>The column archive. Start anywhere, you'll keep going.</p>
+      </a>
+      <a class="read" href="https://arseblog.news" target="_blank" rel="noopener noreferrer">
+        <span>News desk</span><b>Arseblog News</b>
+        <p>Fast, sane Arsenal news without the transfer-rumour sewage.</p>
+      </a>
+      <a class="read" href="https://arseblog.news/category/arsenal-women/" target="_blank" rel="noopener noreferrer">
+        <span>Arsenal Women</span><b>The Women's coverage</b>
+        <p>Stillman's beat. Proper reporting on a team that deserves it.</p>
+      </a>
+      <a class="read" href="https://arseblog.com/category/arsecast/" target="_blank" rel="noopener noreferrer">
+        <span>Podcast · Oct 2006</span><b>Arsecast</b>
+        <p>Mangan, plus a rotating cast including Tim Stillman and James McNicholas.</p>
+      </a>
+      <a class="read" href="https://www.patreon.com/arseblog" target="_blank" rel="noopener noreferrer">
+        <span>The point of this box</span><b>Support Arseblog</b>
+        <p>Independent fan media only survives if people pay for it. Go on.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div>
+      <h4>Where the data comes from</h4>
+      <p>Fixtures and key dates: the published 2026/27 Premier League fixture list (Sky Sports / Arsenal.com). Squad and transfers: Arsenal.com's official ins-and-outs page. All times UK local, converted live to Australia/Brisbane by your browser.</p>
+      <p>Kick-off times move for TV. Re-check before you book anything.</p>
+    </div>
+    <div>
+      <h4>Tickets</h4>
+      <p>Every ticket link points to Arsenal's own authorised channels. No resale is brokered, listed, advertised or facilitated here — see the ticket desk for why.</p>
+      <p>Ticket tier estimates are this site's own read on demand, not club information.</p>
+    </div>
+    <div>
+      <h4>Independent</h4>
+      <p>An unofficial fan project. Not affiliated with, endorsed by, or connected to Arsenal Football Club. No club marks, crests or photography used. All written notes are original.</p>
+      <p>Built by a Gunner in Brisbane. Since 2009.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="d-title" aria-hidden="true">
+  <div class="drawer__bar">
+    <p class="eyebrow" id="d-eyebrow">Fixture dossier</p>
+    <button class="x" id="d-close" aria-label="Close dossier">✕</button>
+  </div>
+  <div class="drawer__body" id="d-body"></div>
+</aside>
+
+<script>
+/* ============================================================
+   DATA_NOTES — upgrade paths
+   1. Live fixtures/results/table: football-data.org (free tier,
+      X-Auth-Token, competition 'PL') or TheSportsDB (Arsenal = 133604).
+   2. Opponent xG / pressing: FBref + StatsBomb open data.
+   3. Hotel rates: needs a paid feed (Booking Demand API, Amadeus,
+      Expedia Rapid) behind a server. Never put a key in this file.
+   4. Crew board: swap localStorage for Supabase (free tier is plenty).
+   5. TICKETS: legal constraint documented in the ticket desk section.
+      Do not add listings. Route to arsenal.com/tickets only.
+   VERIFY BEFORE PUBLISHING: Instagram handles change. ig:null falls
+   back to an Instagram search rather than a guessed handle.
+   ============================================================ */
+
+const CLUBS = {
+  ars:{name:'Arsenal',stadium:'Emirates Stadium',city:'London',area:'Islington, N5',cap:'60,700',station:'Arsenal (Piccadilly line)',note:''},
+  cov:{name:'Coventry City',stadium:'Coventry Building Society Arena',city:'Coventry',area:'Rowley\u2019s Green',cap:'32,600',station:'Coventry Arena',last:'Promoted from the Championship',
+    note:'Their first season in the top flight in twenty-five years, and they have waited long enough that the away end will sing for ninety minutes regardless of the score. The trap here is treating it as a formality \u2014 newly promoted sides in August are all adrenaline and no fear.'},
+  avl:{name:'Aston Villa',stadium:'Villa Park',city:'Birmingham',area:'Aston, B6',cap:'42,600',station:'Witton or Aston',last:'Champions League qualification',
+    note:'Emery has never needed much of an excuse, and Villa Park under lights on a Monday is one of the genuinely hostile away days left \u2014 a proper old ground with the Holte End behind one goal and no patience for anyone playing out from the back. They beat us here 2-1 last season, Buend\u00eda in the 95th minute, and they did the double over us in 2023/24. They arrive off a 4-0 hiding at Brighton with Jo\u00e3o Gomes suspended, which historically makes them more dangerous rather than less. Watch the second ball.'},
+  che:{name:'Chelsea',stadium:'Stamford Bridge',city:'London',area:'Fulham, SW6',cap:'40,300',station:'Fulham Broadway',last:'Xabi Alonso\u2019s first full season',
+    note:'A London derby with a manager who wants his side to control the game in exactly the way we do, which usually produces either a chess match or an absolute mess. Nothing in between. The Bridge is compact and the away allocation is tucked into the corner of the Shed End.'},
+  sun:{name:'Sunderland',stadium:'Stadium of Light',city:'Sunderland',area:'Monkwearmouth',cap:'48,700',station:'Stadium of Light (Metro)',last:'Europa League qualification',
+    note:'Forty-eight thousand people who have decided, collectively and without discussion, that this is the year. The Stadium of Light on a night game is a genuinely great football experience and an extremely bad place to be one goal down.'},
+  bha:{name:'Brighton & Hove Albion',stadium:'American Express Stadium',city:'Brighton',area:'Falmer',cap:'31,800',station:'Falmer',last:'Conference League qualification',
+    note:'Brighton have spent a decade being the smartest club in the division, and the Amex is the only ground where the away end genuinely cannot get a taxi afterwards \u2014 Falmer station empties 30,000 people through two platforms. Their build-up is designed to bait a press and punish it. Patience is the whole game plan.'},
+  lee:{name:'Leeds United',stadium:'Elland Road',city:'Leeds',area:'Beeston',cap:'37,600',station:'Leeds (then a 25-minute walk)',
+    note:'Elland Road does not do quiet. Loud, old, close to the pitch, and utterly indifferent to whether you are the champions. We put five past them at the Emirates in August 2025; nobody at Leeds has forgotten that, and they will not let us forget that they have not forgotten.'},
+  nfo:{name:'Nottingham Forest',stadium:'The City Ground',city:'Nottingham',area:'West Bridgford',cap:'30,400',station:'Nottingham (walk over Trent Bridge)',
+    note:'The nicest walk to any away ground in England \u2014 over the river, past the swans, into a stand that has been shaking since 1980. Forest transition faster than almost anyone and will happily give us the ball for an hour to get one chance.'},
+  eve:{name:'Everton',stadium:'Hill Dickinson Stadium',city:'Liverpool',area:'Bramley-Moore Dock',cap:'52,900',station:'Sandhills',
+    note:'The new dock ground is a proper piece of architecture and considerably nastier to visit than late-period Goodison, because 52,000 Evertonians in a steep bowl have rediscovered their voice. Everton away is never routine, whatever the table says.'},
+  liv:{name:'Liverpool',stadium:'Anfield',city:'Liverpool',area:'Anfield, L4',cap:'61,000',station:'Liverpool Lime Street',
+    note:'You know what Anfield is. The expanded Anfield Road End made it louder rather than more corporate, which nobody predicted. First fifteen minutes is a survival exercise. Get through it at 0-0 and the ground gets nervous quicker than any big stadium in the country.'},
+  hul:{name:'Hull City',stadium:'MKM Stadium',city:'Hull',area:'West Park',cap:'25,600',station:'Hull Paragon',
+    note:'Newly promoted, a long way from London, and a ground in a park that feels more like a Sunday than a title defence. Which is exactly the danger. These are the six points that decide leagues \u2014 the games nobody writes about in May because you won them 2-0 and forgot.'},
+  new:{name:'Newcastle United',stadium:'St James\u2019 Park',city:'Newcastle upon Tyne',area:'City centre',cap:'52,300',station:'Newcastle Central',
+    note:'St James\u2019 sits right in the middle of the city, which makes it the best away weekend on the calendar and the hardest one to be sensible on. The away end is in the gods \u2014 bring shoes with grip. Selling Bruno to us has not improved their mood.'},
+  mci:{name:'Manchester City',stadium:'Etihad Stadium',city:'Manchester',area:'Eastlands',cap:'61,000',station:'Etihad Campus (tram)',last:'Runners-up, 78 points',
+    note:'The team we beat to it, in the first post-Guardiola era anyone has had to imagine. We put three past them in the Community Shield in August, which is worth precisely nothing in February and everything in the group chat.'},
+  bre:{name:'Brentford',stadium:'Gtech Community Stadium',city:'London',area:'Brentford, TW8',cap:'17,250',station:'Kew Bridge',
+    note:'Seventeen thousand people crammed into a box next to the M4, playing the most annoying football in London. Long throws, set-piece coaches, a goalkeeper starting attacks with 60-yard passes. A genuinely well-run football club and an absolutely miserable Tuesday night.'},
+  tot:{name:'Tottenham Hotspur',stadium:'Tottenham Hotspur Stadium',city:'London',area:'N17',cap:'62,850',station:'White Hart Lane or Seven Sisters',
+    note:'The North London derby, away, in December, in a stadium that cost more than some countries. Everything else about the season is a rehearsal for this. There is no tactical note worth writing here. Just win it.'},
+  bou:{name:'AFC Bournemouth',stadium:'Vitality Stadium',city:'Bournemouth',area:'Kings Park',cap:'11,300',station:'Bournemouth or Pokesdown',last:'Europa League qualification',
+    note:'The smallest ground in the division and one of the most awkward fixtures in it \u2014 Bournemouth press with real aggression and the tight pitch does half their work. Eleven thousand people close enough to hear individually.'},
+  mun:{name:'Manchester United',stadium:'Old Trafford',city:'Manchester',area:'Trafford',cap:'74,300',station:'Old Trafford (tram) or Piccadilly',last:'Champions League qualification',
+    note:'Seventy-four thousand seats, a leaking roof, and a fanbase that has spent a decade being told next season is the one. It is still Old Trafford and it is still the fixture that makes older Gunners go quiet. February away is a proper test of where the season actually is.'},
+  cry:{name:'Crystal Palace',stadium:'Selhurst Park',city:'London',area:'South Norwood, SE25',cap:'25,500',station:'Selhurst or Norwood Junction',
+    note:'Boxing Day at Selhurst is a cruel piece of scheduling and the Holmesdale End will make sure you feel it. Old ground, terrible sightlines, brilliant noise. Palace have been a bogey side often enough that pretending otherwise is tempting fate.'},
+  ful:{name:'Fulham',stadium:'Craven Cottage',city:'London',area:'Fulham, SW6',cap:'29,600',station:'Putney Bridge',
+    note:'The prettiest ground in the league \u2014 riverside, Victorian pavilion, the walk through Bishop\u2019s Park. It is also 8pm on the 30th of December, which means four degrees and everyone having had a difficult week. Fulham at home are far better than their reputation.'},
+  ips:{name:'Ipswich Town',stadium:'Portman Road',city:'Ipswich',area:'Town centre',cap:'30,300',station:'Ipswich',
+    note:'Back up again, and Portman Road remains one of the proper old grounds \u2014 right in the town, stands close to the pitch, a crowd that knows when to get behind them. McKenna\u2019s sides are coached to within an inch of their lives. Nothing is loose against them.'}
+};
+
+/* UK offsets: BST (+01:00) to 25 Oct 2026, GMT (+00:00) to 28 Mar 2027, then BST. */
+/* `ko` = ISO with an explicit UK offset. `tv` = broadcaster.
+   `moved` = shifted from the original slot for television.
+   `checked` = date this row was last verified against a live source.
+   Fixtures get moved for TV constantly — audit.mjs warns when a
+   fixture inside 21 days hasn't been re-checked. */
+const FIXTURES = [
+  {n:1, ko:'2026-08-21T20:00:00+01:00', opp:'cov', v:'H', result:'W 3-0', scorers:'Havertz, Saka, \u00d8degaard', tv:'Sky Sports', checked:'2026-08-29'},
+  {n:2, ko:'2026-08-31T20:00:00+01:00', opp:'avl', v:'A', tv:'Sky Sports', moved:true, checked:'2026-08-29'},
+  {n:3, ko:'2026-09-06T16:30:00+01:00', opp:'che', v:'H', tv:'Sky Sports', moved:true, checked:'2026-08-29'},
+  {n:4, ko:'2026-09-12T20:00:00+01:00', opp:'sun', v:'A', tv:'TNT Sports', moved:true, checked:'2026-08-29'},
+  {n:5, ko:'2026-09-19T15:00:00+01:00', opp:'bha', v:'A', tv:'Not on UK TV \u00b7 3pm blackout', checked:'2026-08-29'},
+  {n:6, ko:'2026-10-10T12:30:00+01:00', opp:'lee', v:'H', tv:'TNT Sports', moved:true, checked:'2026-08-29'},
+  {n:7, ko:'2026-10-18T16:30:00+01:00', opp:'nfo', v:'A', tv:'Sky Sports', moved:true, checked:'2026-08-29'},
+  {n:8, ko:'2026-10-24T15:00:00+01:00', opp:'eve', v:'H', tv:'Not on UK TV \u00b7 3pm blackout', checked:'2026-08-29'},
+  {n:9, ko:'2026-11-01T16:30:00+00:00', opp:'liv', v:'A', tv:'Sky Sports', moved:true, checked:'2026-08-29'},
+  {n:10,ko:'2026-11-07T15:00:00+00:00', opp:'hul', v:'H'},
+  {n:11,ko:'2026-11-21T15:00:00+00:00', opp:'new', v:'A'},
+  {n:12,ko:'2026-11-28T15:00:00+00:00', opp:'mci', v:'H'},
+  {n:13,ko:'2026-12-02T20:00:00+00:00', opp:'bre', v:'A'},
+  {n:14,ko:'2026-12-05T15:00:00+00:00', opp:'tot', v:'A'},
+  {n:15,ko:'2026-12-12T15:00:00+00:00', opp:'bou', v:'H', warn:'Arsenal have said this is set to move \u2014 Bournemouth are in Europa League action the preceding Thursday.'},
+  {n:16,ko:'2026-12-19T15:00:00+00:00', opp:'mun', v:'H'},
+  {n:17,ko:'2026-12-26T15:00:00+00:00', opp:'cry', v:'A'},
+  {n:18,ko:'2026-12-30T20:00:00+00:00', opp:'ful', v:'A'},
+  {n:19,ko:'2027-01-02T15:00:00+00:00', opp:'ips', v:'H'},
+  {n:20,ko:'2027-01-06T20:00:00+00:00', opp:'bre', v:'H'},
+  {n:21,ko:'2027-01-16T15:00:00+00:00', opp:'hul', v:'A'},
+  {n:22,ko:'2027-01-23T15:00:00+00:00', opp:'new', v:'H'},
+  {n:23,ko:'2027-01-30T15:00:00+00:00', opp:'mci', v:'A'},
+  {n:24,ko:'2027-02-06T15:00:00+00:00', opp:'liv', v:'H'},
+  {n:25,ko:'2027-02-10T20:00:00+00:00', opp:'ips', v:'A'},
+  {n:26,ko:'2027-02-20T15:00:00+00:00', opp:'ful', v:'H'},
+  {n:27,ko:'2027-02-27T15:00:00+00:00', opp:'mun', v:'A'},
+  {n:28,ko:'2027-03-03T20:00:00+00:00', opp:'cry', v:'H'},
+  {n:29,ko:'2027-03-13T15:00:00+00:00', opp:'che', v:'A'},
+  {n:30,ko:'2027-03-20T15:00:00+00:00', opp:'sun', v:'H'},
+  {n:31,ko:'2027-04-10T15:00:00+01:00', opp:'cov', v:'A'},
+  {n:32,ko:'2027-04-17T15:00:00+01:00', opp:'avl', v:'H'},
+  {n:33,ko:'2027-04-24T15:00:00+01:00', opp:'bou', v:'A'},
+  {n:34,ko:'2027-05-01T15:00:00+01:00', opp:'tot', v:'H'},
+  {n:35,ko:'2027-05-08T15:00:00+01:00', opp:'lee', v:'A'},
+  {n:36,ko:'2027-05-15T15:00:00+01:00', opp:'nfo', v:'H'},
+  {n:37,ko:'2027-05-23T15:00:00+01:00', opp:'eve', v:'A'},
+  {n:38,ko:'2027-05-30T16:00:00+01:00', opp:'bha', v:'H'}
+];
+
+/* ---- Champions League league phase, drawn 27 Aug 2026 (Monaco) ----
+   Dates and kick-off times confirmed by UEFA 29 Aug 2026.
+   All eight are 20:00 UK (21:00 CET). GMT from matchday 4 onward. */
+const CL = [
+  {md:1, ko:'2026-09-09T20:00:00+01:00', v:'A', name:'Napoli', country:'Italy', pot:3,
+   ground:'Stadio Diego Armando Maradona', city:'Naples',
+   note:'Straight into it. Naples, the Maradona, forty-odd thousand people who treat a European night as a civic event. Opening the league phase away in Campania is about as unforgiving a start as the draw could have given us \u2014 and if you only do one away trip this season, do this one. Then do not attempt to drive anywhere.'},
+  {md:2, ko:'2026-10-13T20:00:00+01:00', v:'H', name:'Lille', country:'France', pot:3,
+   ground:'Emirates Stadium', city:'London',
+   note:'First European night back at the Emirates. Lille are always better than the seeding suggests \u2014 well coached, quick in transition, completely unbothered by reputations. A home banana skin dressed up as a comfortable evening.'},
+  {md:3, ko:'2026-10-21T20:00:00+01:00', v:'A', name:'Bayern Munich', country:'Germany', pot:1,
+   ground:'Allianz Arena', city:'Munich',
+   note:'Eight days after Lille, the hardest away trip in the draw. This is the tie that ended 2023/24 for us and a rivalry that runs a lot deeper than most fans want to count. The Allianz on a European night is the best-run big away day in Europe \u2014 the trains work, the beer is cheap, and the stadium glows red from the motorway.'},
+  {md:4, ko:'2026-11-04T20:00:00+00:00', v:'A', name:'Slavia Praha', country:'Czechia', pot:4,
+   ground:'Fortuna Arena', city:'Prague',
+   note:'We won 3-0 there last season, Merino with a brace. Prague in November is cold and beautiful, the Fortuna Arena is small and loud, and the flights are absurdly cheap. The value away day of the whole draw.'},
+  {md:5, ko:'2026-11-24T20:00:00+00:00', v:'H', name:'Borussia Dortmund', country:'Germany', pot:2,
+   ground:'Emirates Stadium', city:'London',
+   note:'Mercifully, the Yellow Wall does not travel. Dortmund away is the great European pilgrimage; Dortmund at home is a very good side without the terrace that makes them frightening. Take the draw.'},
+  {md:6, ko:'2026-12-09T20:00:00+00:00', v:'H', name:'Real Madrid', country:'Spain', pot:1,
+   ground:'Emirates Stadium', city:'London',
+   note:'The night the whole draw was pointing at. Fifteen-time winners, at the Emirates, in December. We knocked them out of the 2024/25 quarter-final \u2014 3-0 here, then 2-1 at the Bernab\u00e9u \u2014 and nobody in that dressing room has forgotten it. This is the ticket everyone will want and almost nobody will get.'},
+  {md:7, ko:'2027-01-20T20:00:00+00:00', v:'A', name:'Real Betis', country:'Spain', pot:2,
+   ground:'Estadio Benito Villamar\u00edn', city:'Seville',
+   note:'Seville in January, a stadium being rebuilt around you, and a crowd singing a song older than half the clubs in this competition. The most underrated trip in the draw and the one to book first, before everyone else works it out.'},
+  {md:8, ko:'2027-01-27T20:00:00+00:00', v:'H', name:'Sabah', country:'Azerbaijan', pot:4,
+   ground:'Emirates Stadium', city:'London',
+   note:'Champions League debutants from Baku, and the one night this season where the Emirates gets to be generous for ninety minutes. Historically this is when Nwaneri scores twice and the internet decides he should start every week. A kind way to finish a brutal league phase.'}
+];
+
+/* Demand read — this site's own estimate, not club information. */
+const DEMAND = {tot:3,mci:3,liv:3,mun:3,che:3,new:2,avl:2,eve:2,bha:2,nfo:2,cry:2,bre:2,ful:2,sun:2,lee:2,bou:1,cov:1,hul:1,ips:1};
+const DEMAND_TEXT = {
+  3:{lbl:'Ballot territory',cls:'badge--hard',tier:'Season ticket holders + highest away credits. Members almost never see general sale.'},
+  2:{lbl:'Silver, be quick',cls:'badge--mid',tier:'Silver members with a decent record. Red members: refresh at 10am and hope.'},
+  1:{lbl:'Red members OK',cls:'badge--easy',tier:'Usually reaches Red membership, and often general sale.'}
+};
+
+const KEY_DATES = [
+  {d:'16 Aug 2026', t:'Community Shield v Man City, Principality Stadium \u2014 won 3-0'},
+  {d:'21 Aug 2026', t:'Premier League title defence begins'},
+  {d:'27 Aug 2026', t:'Champions League draw \u2014 Madrid, Bayern, Dortmund, Betis, Lille, Napoli, Sabah, Slavia'},
+  {d:'9 Sep 2026', t:'Champions League MD1 \u2014 Napoli away, the Maradona'},
+  {d:'21 Oct 2026', t:'Champions League MD3 \u2014 Bayern away, the Allianz'},
+  {d:'9 Dec 2026', t:'Champions League MD6 \u2014 Real Madrid at the Emirates'},
+  {d:'9 Jan 2027', t:'FA Cup third round'},
+  {d:'27 Jan 2027', t:'Champions League MD8 \u2014 Sabah at home, league phase ends'},
+  {d:'16 Feb 2027', t:'Champions League knockout phase begins'},
+  {d:'21 Mar 2027', t:'Carabao Cup final'},
+  {d:'22 May 2027', t:'FA Cup final'},
+  {d:'30 May 2027', t:'Premier League season ends'},
+  {d:'5 Jun 2027', t:'Champions League final, Metropolitano, Madrid'}
+];
+
+const SQUAD = [
+  {no:1, pos:'GK', name:'David Raya', from:'Spain', ig:null},
+  {no:2, pos:'DF', name:'William Saliba', from:'France', ig:'wsaliba4'},
+  {no:3, pos:'DF', name:'Myles Lewis-Skelly', from:'England', ig:null},
+  {no:4, pos:'DF', name:'Ben White', from:'England', ig:null},
+  {no:5, pos:'MF', name:'Bruno Guimar\u00e3es', from:'Brazil \u00b7 new', ig:null},
+  {no:6, pos:'DF', name:'Gabriel Magalh\u00e3es', from:'Brazil', ig:null},
+  {no:7, pos:'FW', name:'Bukayo Saka', from:'England', ig:'bukayosaka87'},
+  {no:8, pos:'MF', name:'Martin \u00d8degaard', from:'Norway \u00b7 captain', ig:'odegaard.98'},
+  {no:9, pos:'FW', name:'Viktor Gy\u00f6keres', from:'Sweden', ig:null},
+  {no:10,pos:'MF', name:'Eberechi Eze', from:'England', ig:null},
+  {no:11,pos:'FW', name:'Gabriel Martinelli', from:'Brazil', ig:null},
+  {no:12,pos:'DF', name:'Jurri\u00ebn Timber', from:'Netherlands', ig:null},
+  {no:13,pos:'GK', name:'Illan Meslier', from:'France \u00b7 new', ig:null},
+  {no:14,pos:'FW', name:'Christos Tzolis', from:'Greece \u00b7 new', ig:null},
+  {no:15,pos:'MF', name:'Mart\u00edn Zubimendi', from:'Spain', ig:null},
+  {no:16,pos:'DF', name:'Piero Hincapi\u00e9', from:'Ecuador', ig:null},
+  {no:17,pos:'DF', name:'Riccardo Calafiori', from:'Italy', ig:null},
+  {no:18,pos:'DF', name:'Ezri Konsa', from:'England \u00b7 new', ig:null},
+  {no:19,pos:'MF', name:'Declan Rice', from:'England', ig:'declanrice'},
+  {no:20,pos:'FW', name:'Kai Havertz', from:'Germany', ig:null},
+  {no:21,pos:'MF', name:'Mikel Merino', from:'Spain', ig:null},
+  {no:22,pos:'MF', name:'Ethan Nwaneri', from:'England', ig:null},
+  {no:23,pos:'FW', name:'Noni Madueke', from:'England', ig:null},
+  {no:0, pos:'MGR',name:'Mikel Arteta', from:'Manager since 2019', ig:null}
+];
+
+const QUIZ = [
+  {q:'What is the name of Arsenal\u2019s home ground?',a:['Emirates Stadium','Highbury','Old Trafford'],c:0,
+   f:'Correct. Arsenal moved there in 2006 from Highbury, which was just down the road.'},
+  {q:'Which animal is NOT on the Arsenal badge?',a:['A cannon','A lion','Neither \u2014 it\u2019s just a cannon'],c:2,
+   f:'The badge is a cannon. Arsenal started as a team of workers at a weapons factory in Woolwich in 1886.'},
+  {q:'Who wears number 8 and wears the captain\u2019s armband?',a:['Bukayo Saka','Martin \u00d8degaard','Declan Rice'],c:1,
+   f:'Martin \u00d8degaard, from Norway. He is the one always pointing at where he wants everyone to run.'},
+  {q:'What is a \u201cclean sheet\u201d?',a:['A new kit','The other team scored zero','Half-time'],c:1,
+   f:'Right. The goalkeeper and defenders get most of the credit \u2014 and they will remind you of it.'},
+  {q:'How many players from each team are on the pitch at kick-off?',a:['Nine','Eleven','Fifteen'],c:1,
+   f:'Eleven each, including the goalkeeper. Five can be swapped for substitutes during the game.'}
+];
+
+const BINGO = ['Arsenal win a corner','Someone shouts at the referee','Saka takes on a defender','A shot hits the post',
+  'The keeper makes a save','A player gets a yellow card','Arsenal score','Someone slides on their knees',
+  'The commentator says \u201cArteta\u201d','A substitute comes on','The ball goes in the crowd','Full time whistle'];
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+const $ = s => document.querySelector(s);
+const enc = encodeURIComponent;
+const BNE = 'Australia/Brisbane';
+const LDN = 'Europe/London';
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+const fmt = (d,tz,o) => new Intl.DateTimeFormat('en-GB', Object.assign({timeZone:tz}, o)).format(d);
+/* hourCycle:'h23' not hour12:false — some engines render midnight as "24:00"
+   with hour12:false, and Villa away is exactly 00:00 Brisbane. */
+const t24 = (d,tz) => fmt(d,tz,{hour:'2-digit',minute:'2-digit',hourCycle:'h23'});
+const dayLong = (d,tz) => fmt(d,tz,{weekday:'long',day:'numeric',month:'long'});
+const dayShort = (d,tz) => fmt(d,tz,{weekday:'short',day:'2-digit',month:'short'});
+const isoDate = (d,tz) => new Intl.DateTimeFormat('en-CA',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit'}).format(d);
+const addDays = (d,n) => new Date(d.getTime() + n*86400000);
+const bneHour = d => parseInt(fmt(d,BNE,{hour:'2-digit',hourCycle:'h23'}),10);
+const isBrutal = d => { const h = bneHour(d); return h >= 1 && h < 6; };
+/* Anything rendered via innerHTML that did not come from this file must
+   go through this. Matters the moment the crew board gets a real backend. */
+const esc = s => String(s).replace(/[&<>"']/g, c => (
+  {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* ============================================================
+   THEME
+   ============================================================ */
+(function initTheme(){
+  const saved = store.get('nn-theme');
+  const sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  document.documentElement.dataset.theme = saved || (sysDark ? 'dark' : 'light');
+})();
+$('#theme-toggle').addEventListener('click', () => {
+  const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  store.set('nn-theme', next);
+});
+
+/* ============================================================
+   AWAY-DAY LINKS (keyless, date pre-filled)
+   ============================================================ */
+function awayLinks(club, koDate){
+  const inD = isoDate(addDays(koDate,-1), BNE);
+  const outD = isoDate(addDays(koDate,1), BNE);
+  const place = club.stadium + ' ' + club.city;
+  return [
+    {b:'Hotels near the ground', s:'Booking.com \u00b7 dates set', u:`https://www.booking.com/searchresults.html?ss=${enc(place)}&checkin=${inD}&checkout=${outD}&group_adults=1&no_rooms=1`},
+    {b:'Compare nightly rates', s:'Google Hotels', u:`https://www.google.com/search?q=${enc('hotels near ' + place)}&hl=en-GB`},
+    {b:'Gigs that weekend', s:'Songkick \u00b7 ' + club.city, u:`https://www.songkick.com/search?query=${enc(club.city)}&type=locations`},
+    {b:'What\u2019s on in town', s:'Skiddle \u00b7 ' + club.city, u:`https://www.skiddle.com/whats-on/${enc(club.city)}/`},
+    {b:'Everything else on', s:'Eventbrite', u:`https://www.eventbrite.co.uk/d/united-kingdom--${enc(club.city.toLowerCase())}/events/`},
+    {b:'Getting there', s:'Maps \u00b7 ' + club.station, u:`https://www.google.com/maps/search/?api=1&query=${enc(place)}`},
+    {b:'Trains', s:'Trainline', u:'https://www.thetrainline.com/'},
+    {b:'Official tickets', s:'Arsenal.com', u:'https://www.arsenal.com/tickets'}
+  ];
+}
+
+/* ============================================================
+   TIMETABLE
+   ============================================================ */
+const rowsEl = $('#tt-rows');
+let activeFilter = 'all';
+const NEXT_I = (() => {
+  const i = FIXTURES.findIndex(f => new Date(f.ko).getTime() > Date.now());
+  return i === -1 ? FIXTURES.length - 1 : i;
+})();
+
+function passes(f,i){
+  const d = new Date(f.ko);
+  if(activeFilter === 'all') return true;
+  if(activeFilter === 'H' || activeFilter === 'A') return f.v === activeFilter;
+  if(activeFilter === 'upcoming') return i >= NEXT_I;
+  if(activeFilter === 'brutal') return isBrutal(d);
+  return true;
+}
+
+function renderRows(){
+  const frag = document.createDocumentFragment();
+  FIXTURES.forEach((f,i) => {
+    if(!passes(f,i)) return;
+    const c = CLUBS[f.opp], d = new Date(f.ko);
+    const btn = document.createElement('button');
+    btn.className = 'row' + (i === NEXT_I ? ' is-next' : '') + (i < NEXT_I ? ' is-done' : '');
+    btn.type = 'button'; btn.dataset.i = i;
+    btn.innerHTML = `
+      <span class="row__no">${String(f.n).padStart(2,'0')}</span>
+      <span class="row__date">${dayShort(d,LDN)}</span>
+      <span class="row__opp"><b>${c.name}</b><span class="row__meta">${f.v === 'H' ? 'Emirates Stadium' : c.stadium} \u00b7 ${t24(d,LDN)} UK<span class="row__tv">${f.tv ? ' \u00b7 ' + f.tv : ''}</span>${f.moved ? ' <i class="moved">MOVED</i>' : ''}</span></span>
+      <span class="row__ha"><i class="ha ${f.v === 'H' ? 'ha--h' : 'ha--a'}">${f.v === 'H' ? 'HOME' : 'AWAY'}</i></span>
+      <span class="row__bne">${f.result
+        ? `<b class="row__score">${f.result}</b><span>Full time</span>`
+        : `<b>${t24(d,BNE)}${isBrutal(d) ? ' <i class="flag" title="1am\u20136am Brisbane">\u25cf</i>' : ''}</b>${dayShort(d,BNE)} BNE`}</span>
+      <span class="row__go">\u2192</span>`;
+    frag.appendChild(btn);
+  });
+  rowsEl.replaceChildren(frag);
+}
+
+document.querySelectorAll('.chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed','false'));
+    chip.setAttribute('aria-pressed','true');
+    activeFilter = chip.dataset.filter;
+    renderRows();
+  });
+});
+
+/* ============================================================
+   HERO BOARD
+   ============================================================ */
+let boardIdx = NEXT_I;
+
+function paintBoard(i){
+  const f = FIXTURES[i], c = CLUBS[f.opp], d = new Date(f.ko);
+  const home = f.v === 'H';
+  $('#board-eyebrow').textContent = home ? 'Next match \u00b7 Emirates Stadium' : 'Next away day \u00b7 ' + c.stadium;
+  $('#board-home').textContent = home ? 'Arsenal' : c.name;
+  $('#board-home').className = 'side__club' + (home ? ' is-arsenal' : '');
+  $('#board-away').textContent = home ? c.name : 'Arsenal';
+  $('#board-away').className = 'side__club' + (home ? '' : ' is-arsenal');
+  $('#board-home-tag').textContent = home ? 'Home' : c.area;
+  $('#board-away-tag').textContent = home ? c.area : 'Away end';
+  $('#clk-uk').textContent = t24(d,LDN);
+  $('#clk-uk-day').textContent = dayLong(d,LDN);
+  const brutal = isBrutal(d);
+  const bneEl = $('#clk-bne');
+  bneEl.textContent = t24(d,BNE);
+  bneEl.className = 'clock__time' + (brutal ? ' is-hot' : '');
+  $('#clk-bne-day').textContent = dayLong(d,BNE);
+  $('#clk-venue').textContent = (home ? 'Emirates Stadium' : c.stadium) + ' \u00b7 ' + c.cap;
+
+  const h = bneHour(d);
+  $('#verdict').innerHTML = brutal
+    ? `Kick-off lands at <b>${t24(d,BNE)}</b> on ${dayLong(d,BNE)} in Brisbane. Squarely in the brutal window. Set two alarms, put the phone across the room, and do not look at the group chat before you\u2019ve watched it.`
+    : (h >= 22 || h < 1)
+      ? `<b>${t24(d,BNE)}</b> Brisbane time, ${dayLong(d,BNE)}. Late but civilised \u2014 you can stay up for this one without ruining the next day.`
+      : `<b>${t24(d,BNE)}</b> Brisbane time, ${dayLong(d,BNE)}. A rare gift: a kick-off you can watch like a normal person.`;
+}
+
+/* One interval for the whole board. Rolls to the next fixture ~2h after
+   kick-off, so a tab left open overnight doesn't sit on LIVE forever. */
+function tickBoard(){
+  const ko = new Date(FIXTURES[boardIdx].ko).getTime();
+  const ms = ko - Date.now();
+  if(ms <= 0){
+    if(Date.now() > ko + 2*3600*1000 && boardIdx < FIXTURES.length - 1){
+      boardIdx++; paintBoard(boardIdx); return;
+    }
+    $('#clk-count').textContent = 'LIVE';
+    return;
+  }
+  const dd = Math.floor(ms/86400000), hh = Math.floor(ms%86400000/3600000),
+        mm = Math.floor(ms%3600000/60000), ss = Math.floor(ms%60000/1000);
+  $('#clk-count').textContent = dd > 0
+    ? `${dd}d ${String(hh).padStart(2,'0')}h ${String(mm).padStart(2,'0')}m`
+    : `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
+}
+$('#board-open').addEventListener('click', () => openDrawer(boardIdx));
+
+/* ============================================================
+   DRAWER
+   ============================================================ */
+const drawer = $('#drawer'), scrim = $('#scrim');
+let lastFocus = null;
+
+function openDrawer(i){
+  const f = FIXTURES[i], c = CLUBS[f.opp], d = new Date(f.ko);
+  const home = f.v === 'H';
+  const ground = home ? CLUBS.ars : c;
+  const dem = DEMAND_TEXT[DEMAND[f.opp] || 2];
+
+  $('#d-eyebrow').textContent = `Matchweek ${f.n} \u00b7 ${home ? 'Home' : 'Away'}`;
+  $('#d-body').innerHTML = `
+    <p class="dsub">${dayLong(d,LDN)} \u00b7 ${t24(d,LDN)} UK</p>
+    <h2 class="dtitle" id="d-title">${home ? 'Arsenal v ' + c.name : c.name + ' v Arsenal'}</h2>
+
+    <div class="dcard">
+      <h3>Kick-off, both ends of the world</h3>
+      <dl class="kv">
+        <dt>London</dt><dd>${t24(d,LDN)} \u00b7 ${dayLong(d,LDN)}</dd>
+        <dt>Brisbane</dt><dd>${t24(d,BNE)} \u00b7 ${dayLong(d,BNE)} ${isBrutal(d) ? '<span style="color:var(--red)">\u25cf brutal window</span>' : ''}</dd>
+        ${f.tv ? `<dt>On TV</dt><dd>${f.tv}${f.moved ? ' \u2014 moved from the original slot' : ''}</dd>` : ''}
+        ${f.checked ? `<dt>Verified</dt><dd style="color:var(--mute);font-size:13px">${f.checked}</dd>` : '<dt>Verified</dt><dd style="color:var(--warn);font-size:13px">Not re-checked \u2014 confirm before booking</dd>'}
+        ${f.result ? `<dt>Result</dt><dd style="color:var(--ok);font-weight:600">${f.result}${f.scorers ? ' \u2014 ' + f.scorers : ''}</dd>` : ''}
+      </dl>
+      ${f.warn ? `<p style="margin:12px 0 0;padding:10px 12px;background:var(--warn-wash);color:var(--warn);font-size:13.5px;line-height:1.5;border-radius:2px">${f.warn}</p>` : ''}
+    </div>
+
+    <div class="dcard">
+      <h3>The ground</h3>
+      <dl class="kv">
+        <dt>Stadium</dt><dd>${ground.stadium}</dd>
+        <dt>Where</dt><dd>${ground.area}, ${ground.city}</dd>
+        <dt>Capacity</dt><dd>${ground.cap}</dd>
+        <dt>Nearest rail</dt><dd>${ground.station}</dd>
+      </dl>
+    </div>
+
+    ${c.note ? `<div class="dcard">
+      <h3>The opponent</h3>
+      ${c.last ? `<p class="dsub" style="margin:-4px 0 10px">Last season: ${c.last}</p>` : ''}
+      <p class="note">${c.note}</p>
+      <p class="sign">Programme note \u00b7 The Non-Negotiables</p>
+    </div>` : ''}
+
+    <div class="dcard">
+      <h3>Tickets</h3>
+      <p style="margin:0 0 10px"><span class="badge ${dem.cls}">${dem.lbl}</span></p>
+      <p style="font-size:14.5px;color:var(--ink-2);margin:0 0 12px;line-height:1.6">${dem.tier}</p>
+      <div class="linkgrid">
+        <a class="lnk" href="https://www.arsenal.com/tickets" target="_blank" rel="noopener noreferrer"><b>Buy / ballot</b><span>Arsenal.com \u00b7 official</span></a>
+        <a class="lnk" href="https://www.arsenal.com/ticket-exchange" target="_blank" rel="noopener noreferrer"><b>Ticket Exchange</b><span>The only legal resale</span></a>
+      </div>
+    </div>
+
+    <div class="stub">
+      <h3>${home ? 'Matchday in N5' : 'The away day'}</h3>
+      <p class="dsub" style="margin:-4px 0 12px">Dates pre-filled: ${isoDate(addDays(d,-1),BNE)} \u2192 ${isoDate(addDays(d,1),BNE)}</p>
+      <div class="linkgrid">
+        ${awayLinks(ground,d).map(l => `<a class="lnk" href="${l.u}" target="_blank" rel="noopener noreferrer"><b>${l.b}</b><span>${l.s}</span></a>`).join('')}
+      </div>
+    </div>`;
+
+  lastFocus = document.activeElement;
+  drawer.classList.add('is-open'); scrim.classList.add('is-open');
+  drawer.setAttribute('aria-hidden','false');
+  $('#d-close').focus();
+  document.body.style.overflow = 'hidden';
+}
+function closeDrawer(){
+  drawer.classList.remove('is-open'); scrim.classList.remove('is-open');
+  drawer.setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';
+  if(lastFocus) lastFocus.focus();
+}
+rowsEl.addEventListener('click', e => {
+  const row = e.target.closest('.row');
+  if(row) openDrawer(parseInt(row.dataset.i,10));
+});
+$('#d-close').addEventListener('click', closeDrawer);
+scrim.addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape'){ closeDrawer(); return; }
+  /* Keep Tab inside the drawer while it's open */
+  if(e.key !== 'Tab' || !drawer.classList.contains('is-open')) return;
+  const f = drawer.querySelectorAll('a[href], button:not([disabled])');
+  if(!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+  else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+});
+
+/* ============================================================
+   TICKET DESK
+   ============================================================ */
+$('#tk-rows').innerHTML = FIXTURES.filter((f,i) => i >= NEXT_I).map(f => {
+  const c = CLUBS[f.opp], d = new Date(f.ko);
+  const dem = DEMAND_TEXT[DEMAND[f.opp] || 2];
+  return `<div class="tk__row">
+    <div><b>${f.v === 'H' ? 'Arsenal v ' + c.name : c.name + ' v Arsenal'}</b>
+      <span class="sub">${dayShort(d,LDN)} \u00b7 ${f.v === 'H' ? 'Emirates' : c.stadium}</span></div>
+    <div><span class="badge ${dem.cls}">${dem.lbl}</span></div>
+    <div class="tk__tier">${f.v === 'H' ? 'Members\u2019 sale' : 'Away credits'}</div>
+    <a class="tk__link" href="${f.v === 'H' ? 'https://www.arsenal.com/ticket-exchange' : 'https://www.arsenal.com/tickets'}" target="_blank" rel="noopener noreferrer">${f.v === 'H' ? 'Exchange' : 'Away tickets'}</a>
+  </div>`;
+}).join('');
+
+/* ============================================================
+   EUROPE — cards, now with confirmed dates and Brisbane times.
+   ============================================================ */
+$('#euro-grid').innerHTML = CL.map(m => {
+  const away = m.v === 'A';
+  const d = new Date(m.ko);
+  const place = m.ground + ' ' + m.city;
+  const inD = isoDate(addDays(d,-1), BNE), outD = isoDate(addDays(d,1), BNE);
+  const links = away ? [
+    {t:'Hotels', u:`https://www.booking.com/searchresults.html?ss=${enc(place)}&checkin=${inD}&checkout=${outD}&group_adults=1&no_rooms=1`},
+    {t:'Flights', u:`https://www.google.com/travel/flights?q=${enc('flights to ' + m.city)}`},
+    {t:'What\u2019s on', u:`https://www.songkick.com/search?query=${enc(m.city)}&type=locations`},
+    {t:'Map', u:`https://www.google.com/maps/search/?api=1&query=${enc(place)}`}
+  ] : [
+    {t:'Tickets', u:'https://www.arsenal.com/tickets'},
+    {t:'Exchange', u:'https://www.arsenal.com/ticket-exchange'}
+  ];
+  return `<article class="eu ${away ? 'eu--away' : 'eu--home'}">
+    <div class="eu__top">
+      <span class="eu__md">MD${m.md} \u00b7 ${dayShort(d,LDN)} \u00b7 ${t24(d,LDN)} UK</span>
+      <span class="ha ${away ? 'ha--a' : 'ha--h'}">${away ? 'AWAY' : 'HOME'}</span>
+    </div>
+    <div class="eu__body">
+      <h3 class="eu__name">${m.name}</h3>
+      <p class="eu__grd">${m.ground}${away ? ' \u00b7 ' + m.city : ''}</p>
+      <p class="eu__bne">${t24(d,BNE)} Brisbane \u00b7 ${dayShort(d,BNE)}${isBrutal(d) ? ' <i class="flag">\u25cf</i>' : ''}</p>
+      <p class="eu__note">${m.note}</p>
+      <div class="eu__links">${links.map(l => `<a href="${l.u}" target="_blank" rel="noopener noreferrer">${l.t}</a>`).join('')}</div>
+    </div>
+  </article>`;
+}).join('');
+
+/* ============================================================
+   TRANSFERS — summer 2026. Update as deals confirm.
+   ============================================================ */
+const DEADLINE = '2026-09-01T23:00:00+01:00';
+const MOVES_IN = [
+  {name:'Bruno Guimar\u00e3es', club:'Newcastle United', fee:'\u00a375m'},
+  {name:'Ezri Konsa', club:'Aston Villa', fee:'\u00a351m'},
+  {name:'Christos Tzolis', club:'Club Brugge', fee:'\u00a334m'},
+  {name:'Piero Hincapi\u00e9', club:'Bayer Leverkusen \u00b7 loan made permanent', fee:'\u00a334m'},
+  {name:'Illan Meslier', club:'Leeds United', fee:'Free'}
+];
+const MOVES_OUT = [
+  {name:'Leandro Trossard', club:'Be\u015fikta\u015f', fee:'\u00a317m'},
+  {name:'Jakub Kiwior', club:'Porto', fee:'\u00a314.6m'},
+  {name:'Christian N\u00f8rgaard', club:'Everton', fee:'\u00a36.8m'},
+  {name:'Karl Hein', club:'Werder Bremen', fee:'\u00a32.6m'},
+  {name:'Alexei Rojas', club:'Penafiel', fee:'Free'},
+  {name:'Reiss Nelson', club:'Contract terminated by mutual consent', fee:'Free'},
+  {name:'Ismeal Kabia', club:'St Mirren', fee:'Loan'}
+];
+
+const mvRow = (m, dir) => `<div class="mv__r mv__${dir}">
+  <span><b>${m.name}</b><span class="club">${m.club}</span></span>
+  <span class="mv__fee">${m.fee}</span></div>`;
+$('#mv-in').innerHTML = MOVES_IN.map(m => mvRow(m,'in')).join('');
+$('#mv-out').innerHTML = MOVES_OUT.map(m => mvRow(m,'out')).join('');
+
+function tickDeadline(){
+  const ms = new Date(DEADLINE).getTime() - Date.now();
+  const el = $('#dl-count'), note = $('#dl-bne');
+  if(ms <= 0){ el.textContent = 'CLOSED'; note.textContent = 'The window is shut. Nothing to refresh. Go outside.'; return; }
+  const dd = Math.floor(ms/86400000), hh = Math.floor(ms%86400000/3600000), mm = Math.floor(ms%3600000/60000);
+  el.textContent = `${dd}d ${String(hh).padStart(2,'0')}h ${String(mm).padStart(2,'0')}m`;
+  note.textContent = `That\u2019s ${t24(new Date(DEADLINE),BNE)} on ${dayLong(new Date(DEADLINE),BNE)} in Brisbane \u2014 deadline day is a working morning for you, not a night in.`;
+}
+
+/* ---- Live wire ----
+   Set WIRE_ENDPOINT to your deployed Cloudflare Worker (see worker.js).
+   Until then the wire shows curated source links instead of failing. */
+const WIRE_ENDPOINT = '';   // e.g. 'https://nn-wire.yourname.workers.dev/'
+const WIRE_FALLBACK = [
+  {t:'Arseblog News \u2014 Arsenal news, all day, every day', u:'https://arseblog.news', s:'Arseblog News'},
+  {t:'Arsenal transfer live blog', u:'https://www.skysports.com/arsenal-transfer-news', s:'Sky Sports'},
+  {t:'Official ins and outs, 2026/27', u:'https://www.arsenal.com/news/arsenal-transfers-all-the-ins-and-outs-in-202627-a8qx29v8B1fR', s:'Arsenal.com'},
+  {t:'Arsenal news aggregator \u2014 every outlet, newest first', u:'https://www.newsnow.co.uk/h/Sport/Football/Premier+League/Arsenal/Transfer+News', s:'NewsNow'}
+];
+
+function paintWire(items, live){
+  $('#wire').innerHTML = items.map(i =>
+    `<a class="wire__i" href="${i.u}" target="_blank" rel="noopener noreferrer">
+       <b>${esc(i.t)}</b><span>${esc(i.s)}${i.d ? ' \u00b7 ' + i.d : ''}</span></a>`).join('');
+  $('#wire-note').textContent = live
+    ? 'Live feed \u00b7 refreshed every 15 minutes'
+    : 'Static sources \u2014 set WIRE_ENDPOINT in the source to switch on the live feed.';
+}
+
+async function loadWire(){
+  if(!WIRE_ENDPOINT){ paintWire(WIRE_FALLBACK, false); return; }
+  try{
+    const r = await fetch(WIRE_ENDPOINT, {cache:'no-store'});
+    if(!r.ok) throw new Error(r.status);
+    const data = await r.json();
+    if(!Array.isArray(data.items) || !data.items.length) throw new Error('empty');
+    paintWire(data.items.slice(0,12), true);
+  }catch(e){
+    paintWire(WIRE_FALLBACK, false);
+    $('#wire-note').textContent = 'Live feed unavailable \u2014 showing sources instead.';
+  }
+}
+
+/* crew board — local preview */
+const crewFix = $('#crew-fix');
+crewFix.innerHTML = FIXTURES.filter((f,i) => i >= NEXT_I && f.v === 'A')
+  .map(f => `<option value="${f.n}">${CLUBS[f.opp].name} away \u00b7 ${dayShort(new Date(f.ko),LDN)}</option>`).join('');
+
+const CREW_SEED = [
+  {name:'Toby', from:'Brisbane', n:14},
+  {name:'@gunner_kl', from:'Kuala Lumpur', n:23},
+  {name:'Siobhan', from:'Dublin', n:2}
+];
+const crewList = () => store.get('nn-crew') || CREW_SEED.slice();
+
+function renderCrew(){
+  const list = crewList();
+  $('#crew-list').innerHTML = list.map(c => {
+    const f = FIXTURES.find(x => x.n === Number(c.n));
+    const label = f ? `${CLUBS[f.opp].name} away` : 'A game';
+    return `<div class="crew__item"><b>${esc(c.name)}</b><span>${esc(c.from)} \u2192 ${label}</span></div>`;
+  }).join('') || '<p style="color:var(--mute);font-size:14px;margin:0">Nobody on the board yet.</p>';
+}
+$('#crew-add').addEventListener('click', () => {
+  const name = $('#crew-name').value.trim(), from = $('#crew-from').value.trim();
+  if(!name || !from) return;
+  const list = crewList();
+  list.unshift({name, from, n:crewFix.value});
+  store.set('nn-crew', list.slice(0,40));
+  $('#crew-name').value = ''; $('#crew-from').value = '';
+  renderCrew();
+});
+
+/* ============================================================
+   KEY DATES / SQUAD / JUNIOR
+   ============================================================ */
+$('#dates').innerHTML = KEY_DATES.map(k => `<div class="date"><b>${k.d}</b><span>${k.t}</span></div>`).join('');
+
+$('#squad-grid').innerHTML = SQUAD.map(p => {
+  const url = p.ig ? `https://www.instagram.com/${p.ig}/`
+                   : `https://www.instagram.com/explore/search/keyword/?q=${enc(p.name + ' Arsenal')}`;
+  return `<article class="p">
+    <p class="p__no"><span>${p.no ? '#' + p.no : '\u2014'}</span><span class="p__pos">${p.pos}</span></p>
+    <h3 class="p__name">${p.name}</h3>
+    <p class="p__meta">${p.from}</p>
+    <a class="p__ig" href="${url}" target="_blank" rel="noopener noreferrer">${p.ig ? '@' + p.ig : 'Find on Instagram'}</a>
+  </article>`;
+}).join('');
+
+$('#quiz').innerHTML = QUIZ.map((q,i) => `
+  <div class="q" data-q="${i}">
+    <p class="q__p">${i+1}. ${q.q}</p>
+    <div class="q__opts">${q.a.map((a,j) => `<button class="q__opt" data-j="${j}">${a}</button>`).join('')}</div>
+    <p class="q__fb">${q.f}</p>
+  </div>`).join('');
+
+$('#quiz').addEventListener('click', e => {
+  const opt = e.target.closest('.q__opt');
+  if(!opt) return;
+  const box = opt.closest('.q');
+  const qi = Number(box.dataset.q), j = Number(opt.dataset.j);
+  box.querySelectorAll('.q__opt').forEach(b => b.disabled = true);
+  if(j === QUIZ[qi].c){ opt.classList.add('is-right'); }
+  else {
+    opt.classList.add('is-wrong');
+    box.querySelectorAll('.q__opt')[QUIZ[qi].c].classList.add('is-right');
+  }
+  box.querySelector('.q__fb').classList.add('is-shown');
+});
+
+$('#bingo').innerHTML = BINGO.map(b => `<button type="button">${b}</button>`).join('');
+$('#bingo').addEventListener('click', e => {
+  if(e.target.tagName === 'BUTTON') e.target.classList.toggle('is-on');
+});
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+renderRows();
+paintBoard(boardIdx);
+tickBoard();
+tickDeadline();
+setInterval(tickBoard, 1000);
+setInterval(tickDeadline, 30000);
+loadWire();
+renderCrew();
+
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const io = new IntersectionObserver(entries => {
+    entries.forEach((en,k) => {
+      if(en.isIntersecting){
+        en.target.classList.add('reveal');
+        en.target.style.animationDelay = (k * 28) + 'ms';
+        io.unobserve(en.target);
+      }
+    });
+  }, {rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.row, .p, .date, .read').forEach(el => io.observe(el));
+}
+</script>
+</body>
+</html>
