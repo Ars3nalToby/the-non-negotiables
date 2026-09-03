@@ -2,6 +2,12 @@
 <html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
+<!-- Meta-tag CSP can't do everything a real header can (no frame-ancestors,
+     no report-to) and script-src needs 'unsafe-inline' since this file is a
+     single inline <script> with no build step to add a nonce/hash. Still
+     worth having: it blocks plugin content, locks the page's own base URL,
+     and keeps outbound requests to the wire endpoint and nowhere else. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://*.workers.dev; base-uri 'none'; object-src 'none'; form-action 'none';">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Non-Negotiables — Arsenal 2026/27</title>
 <meta name="description" content="Every Arsenal fixture, the stadium, the opponent, the away-day logistics, the ticket windows, and what time you have to wake up in Brisbane.">
@@ -1763,9 +1769,14 @@ const WIRE_FALLBACK = [
   {t:'Arsenal news aggregator \u2014 every outlet, newest first', u:'https://www.newsnow.co.uk/h/Sport/Football/Premier+League/Arsenal/Transfer+News', s:'NewsNow'}
 ];
 
+/* Wire items come from third-party RSS feeds parsed with a regex, not a
+   real XML parser (see wire/index.js) \u2014 treat every field as untrusted.
+   The Worker already drops non-https links; this filter is defence in
+   depth for whatever WIRE_ENDPOINT ends up pointing at. */
 function paintWire(items, live){
-  $('#wire').innerHTML = items.map(i =>
-    `<a class="wire__i" href="${i.u}" target="_blank" rel="noopener noreferrer">
+  const safe = items.filter(i => /^https:\/\//i.test(i.u));
+  $('#wire').innerHTML = safe.map(i =>
+    `<a class="wire__i" href="${esc(i.u)}" target="_blank" rel="noopener noreferrer">
        <b>${esc(i.t)}</b><span>${esc(i.s)}${i.d ? ' \u00b7 ' + i.d : ''}</span></a>`).join('');
   $('#wire-note').textContent = live
     ? 'Live feed \u00b7 refreshed every 15 minutes'

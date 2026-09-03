@@ -71,7 +71,10 @@ function parseFeed(xml, source) {
       s: source,
       ts: Number.isNaN(ts) ? 0 : ts
     };
-  }).filter(i => i.t && i.u);
+  /* https-only: a feed is untrusted input parsed with a regex, not a real
+     XML parser. Never let a javascript:/data: URI (or anything else) from
+     a compromised or malformed feed reach the client. */
+  }).filter(i => i.t && i.u && /^https:\/\//i.test(i.u));
 }
 
 async function fetchFeed(feed) {
