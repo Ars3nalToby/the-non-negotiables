@@ -147,16 +147,29 @@ actual observation in them. A placeholder is worse than nothing.
 
 ## Design system
 
-Light is the default; dark is the departure board taken full-page.
+Light is the default; dark is the departure board taken full-page. The
+overall language is **matchday broadcast graphics** (Sky Sports / Amazon
+Prime PL coverage) — flat saturated color blocks, angled `clip-path`
+panels, bold tab-style headers — not a reference-doc/infobox look.
+Revised twice already (cool-newsprint → cream/gold → broadcast); if it
+drifts again, ask before another full repaint.
 
 | Token | Light | Role |
 |---|---|---|
-| `--paper` | `#EEF1F4` | Page. Cool newsprint, **not cream** |
-| `--card` | `#FFFFFF` | Surfaces |
-| `--ink` | `#0A1622` | Text, rules, board background |
-| `--red` | `#EF0107` | Arsenal red. Accent only, never large fills |
-| `--navy` | `#063672` | Away fixtures |
-| `--gold` | `#8A7038` | Programme/editorial bylines only |
+| `--paper` | `#F4EEDD` | Page canvas — warm cream, breathing room between graphic panels |
+| `--card` | `#FFFEF8` | Surfaces |
+| `--ink` | `#0A1622` | **Text color only** — flips light/dark between themes, never use as a panel fill |
+| `--board-bg` / `--board-fg` | `#0A1622` / `#FFFFFF` | The "always-dark" pair for broadcast bars — section-title tabs, accordion headers, box/dcard headers, the VS badge. Stays dark in both themes |
+| `--red` | `#EF0107` | Arsenal red. Now used as a **large solid fill** (hero panel, accordion tab, HOME badge) — the old "accent only" rule no longer applies |
+| `--navy` | `#063672` | Away panel fill, AWAY badge |
+| `--gold` | `#AD8A3C` | Champions accent — masthead plaque, MOVED tag, demand badges, VS badge border, "next up" flag |
+
+**Broadcast bar pattern:** any element styled as a bold title/header bar
+(`.section__title`, `.acc__summary`, `.box h3`, `.dcard h3`, `.vs`) uses
+`background:var(--board-bg); color:var(--board-fg)` — **not** `var(--ink)`
++ `#fff`, because `--ink` is a semantic text-color token that inverts
+between themes and will render as a pale, low-contrast bar in dark mode.
+This bit us once already; don't reintroduce it.
 
 Type: **Archivo** (variable, uses the `wdth` axis for display) for UI,
 **Newsreader** for editorial prose, **IBM Plex Mono** for all data —
