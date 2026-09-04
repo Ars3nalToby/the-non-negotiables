@@ -42,7 +42,7 @@
   --card-2:#F5F1E7;
   --ink:#12151B;
   --ink-2:#4B5462;
-  --mute:#8B92A0;
+  --mute:#5C6470;
   --red:#EF0107;
   --red-deep:#B4000A;
   --red-wash:#FCEAEA;
@@ -1806,7 +1806,7 @@ $('#squad-grid').innerHTML = POS_ORDER.filter(pos => SQUAD.some(p => p.pos === p
     <summary class="acc__summary">
       <span class="acc__tab"><span class="acc__chev" aria-hidden="true"></span></span>
       <span class="acc__label">${POS_LABEL[pos]}</span>
-      <span class="acc__meta">${players.length} player${players.length === 1 ? '' : 's'}</span>
+      <span class="acc__meta">${pos === 'MGR' ? 'Head coach' : `${players.length} player${players.length === 1 ? '' : 's'}`}</span>
     </summary>
     <div class="acc__body"><div class="squad">${players.map(squadCardHTML).join('')}</div></div>
   </details>`;
