@@ -752,9 +752,36 @@ button{font:inherit;color:inherit;cursor:pointer}
 .reveal{opacity:0;transform:translateY(8px);animation:rise .5s cubic-bezier(.2,.7,.3,1) forwards}
 @keyframes rise{to{opacity:1;transform:none}}
 
+/* ============================================================
+   INTERACTIVE / MOTION EXTRAS — all opacity+transform only,
+   rAF-throttled where JS-driven, no layout properties touched
+   per frame. Reduced-motion is handled by the rule above.
+   ============================================================ */
+#scroll-progress{
+  position:fixed;top:0;left:0;height:3px;width:0%;z-index:35;
+  background:linear-gradient(90deg,var(--red),var(--gold));
+  transition:width .1s linear;pointer-events:none;
+}
+.back-top{
+  position:fixed;right:20px;bottom:20px;z-index:34;
+  width:46px;height:46px;border-radius:50%;border:1px solid var(--card-border);
+  background:var(--card);color:var(--ink);box-shadow:var(--shadow-md);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:translateY(10px) scale(.9);pointer-events:none;
+  transition:opacity .2s ease,transform .2s ease,border-color .16s ease;
+}
+.back-top.is-visible{opacity:1;transform:none;pointer-events:auto}
+.back-top:hover{border-color:var(--red);color:var(--red)}
+.back-top svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.clock__time.tick-pulse{animation:tickPulse .35s ease}
+@keyframes tickPulse{0%{transform:scale(1)}35%{transform:scale(1.055)}100%{transform:scale(1)}}
+@media (max-width:640px){.back-top{right:14px;bottom:14px;width:44px;height:44px}}
+
 </style>
 </head>
 <body>
+
+<div id="scroll-progress" aria-hidden="true"></div>
 
 <header class="masthead">
   <div class="wrap masthead__in">
@@ -1129,6 +1156,10 @@ button{font:inherit;color:inherit;cursor:pointer}
   </div>
   <div class="drawer__body" id="d-body"></div>
 </aside>
+
+<button class="back-top" id="back-top" aria-label="Back to top" type="button">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
 
 <script>
 /* ============================================================
@@ -1508,9 +1539,20 @@ function tickBoard(){
   }
   const dd = Math.floor(ms/86400000), hh = Math.floor(ms%86400000/3600000),
         mm = Math.floor(ms%3600000/60000), ss = Math.floor(ms%60000/1000);
-  $('#clk-count').textContent = dd > 0
-    ? `${dd}d ${String(hh).padStart(2,'0')}h ${String(mm).padStart(2,'0')}m`
-    : `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
+  const countEl = $('#clk-count');
+  if(dd > 0){
+    countEl.textContent = `${dd}d ${String(hh).padStart(2,'0')}h ${String(mm).padStart(2,'0')}m`;
+  } else {
+    countEl.textContent = `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
+    /* Under 24h, the seconds place actually moves every tick — give it a
+       tiny pulse so the "live" countdown reads as alive, not just text
+       that happens to change. Restart the animation by removing then
+       re-adding the class (re-adding an already-present class doesn't
+       replay a CSS animation). */
+    countEl.classList.remove('tick-pulse');
+    void countEl.offsetWidth;
+    countEl.classList.add('tick-pulse');
+  }
 }
 $('#board-open').addEventListener('click', () => openDrawer(boardIdx));
 
@@ -1860,8 +1902,30 @@ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
       }
     });
   }, {rootMargin:'0px 0px -40px 0px'});
-  document.querySelectorAll('.row, .p, .date, .read').forEach(el => io.observe(el));
+  document.querySelectorAll('.row, .p, .date, .read, .section__head').forEach(el => io.observe(el));
 }
+
+/* Thin scroll-progress bar + a back-to-top button that appears once
+   you've scrolled past the hero. One passive listener, rAF-throttled,
+   touches only style.width/classList — no layout reads on every
+   scroll event. */
+(function scrollFX(){
+  const bar = $('#scroll-progress');
+  const topBtn = $('#back-top');
+  let ticking = false;
+  function update(){
+    const doc = document.documentElement;
+    const scrollable = doc.scrollHeight - doc.clientHeight;
+    bar.style.width = (scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0) + '%';
+    topBtn.classList.toggle('is-visible', window.scrollY > 600);
+    ticking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if(!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, {passive:true});
+  topBtn.addEventListener('click', () => window.scrollTo({top:0}));
+  update();
+})();
 </script>
 </body>
 </html>
