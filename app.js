@@ -70,7 +70,7 @@ const CLUBS = {
    fixture inside 21 days hasn't been re-checked. */
 const FIXTURES = [
   {n:1, ko:'2026-08-21T20:00:00+01:00', opp:'cov', v:'H', result:'W 3-0', scorers:'Havertz, Saka, \u00d8degaard', tv:'Sky Sports', checked:'2026-08-29'},
-  {n:2, ko:'2026-08-31T20:00:00+01:00', opp:'avl', v:'A', tv:'Sky Sports', moved:true, checked:'2026-08-29'},
+  {n:2, ko:'2026-08-31T20:00:00+01:00', opp:'avl', v:'A', result:'W 1-0', scorers:'Saka', tv:'Sky Sports', moved:true, checked:'2026-08-29'},
   {n:3, ko:'2026-09-06T16:30:00+01:00', opp:'che', v:'H', tv:'Sky Sports', moved:true, checked:'2026-08-29'},
   {n:4, ko:'2026-09-12T20:00:00+01:00', opp:'sun', v:'A', tv:'TNT Sports', moved:true, checked:'2026-08-29'},
   {n:5, ko:'2026-09-19T15:00:00+01:00', opp:'bha', v:'A', tv:'Not on UK TV \u00b7 3pm blackout', checked:'2026-08-29'},
@@ -184,7 +184,6 @@ const SQUAD = [
   {no:19,pos:'MF', name:'Declan Rice', from:'England', ig:'declanrice'},
   {no:20,pos:'FW', name:'Kai Havertz', from:'Germany', ig:null},
   {no:21,pos:'MF', name:'Mikel Merino', from:'Spain', ig:null},
-  {no:22,pos:'MF', name:'Ethan Nwaneri', from:'England', ig:null},
   {no:23,pos:'FW', name:'Noni Madueke', from:'England', ig:null},
   {no:0, pos:'MGR',name:'Mikel Arteta', from:'Manager since 2019', ig:null}
 ];
@@ -297,7 +296,10 @@ const MOVES_OUT = [
   {name:'Karl Hein', club:'Werder Bremen', fee:'£2.6m'},
   {name:'Alexei Rojas', club:'Penafiel', fee:'Free'},
   {name:'Reiss Nelson', club:'Contract terminated by mutual consent', fee:'Free'},
-  {name:'Ismeal Kabia', club:'St Mirren', fee:'Loan'}
+  {name:'Ismeal Kabia', club:'St Mirren', fee:'Loan'},
+  {name:'Gabriel Jesus', club:'Barcelona', fee:'£8.6m'},
+  {name:'Fabio Vieira', club:'Hamburg', fee:'£8.6m'},
+  {name:'Ethan Nwaneri', club:'Borussia Dortmund · loan', fee:'Loan'}
 ];
 
 /* ---- Live wire ----
