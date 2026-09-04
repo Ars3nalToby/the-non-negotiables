@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://*.workers.dev; base-uri 'none'; object-src 'none'; form-action 'none';">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The window — The Non-Negotiables</title>
+<meta name="description" content="Summer 2026 transfer window: deadline countdown, ins and outs, and a live Arsenal news wire.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#EF0107" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A1420" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23EF0107'/%3E%3Crect x='14' y='27' width='36' height='6' fill='%23fff'/%3E%3Crect x='14' y='39' width='22' height='6' fill='%23fff'/%3E%3Crect x='14' y='15' width='28' height='6' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<header class="masthead">
+  <div class="wrap masthead__in">
+    <h1 class="wordmark">
+      <b><a href="index.html" style="color:inherit">The <em>Non-</em>Negotiables</a></b>
+      <span>Arsenal 2026/27 · fixtures, away days &amp; wake-up calls</span>
+    </h1>
+    <div class="mh-right">
+      <div class="mh-meta">
+        <strong><svg class="plaque-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 5.1 5.6.6-4.2 3.8 1.2 5.5L12 14.9 6.9 17l1.2-5.5-4.2-3.8 5.6-.6L12 2z"/></svg>Champions of England</strong>
+        Watching from Brisbane since 2009
+      </div>
+      <button class="theme" id="theme-toggle" aria-label="Switch between light and dark">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path class="moon" d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/>
+          <g class="sun"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/></g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav"><div class="wrap nav__in">
+  <a href="index.html">Home</a>
+  <a href="timetable.html">Timetable</a>
+  <a href="tickets.html">Ticket desk</a>
+  <a href="europe.html">Europe</a>
+  <a href="transfers.html" aria-current="page">Transfers</a>
+  <a href="squad.html">Squad</a>
+  <a href="junior.html">Junior Gunners</a>
+  <a href="programme.html">Programme notes</a>
+  <a href="reading.html">Required reading</a>
+</div></nav>
+
+<div class="page-head">
+  <div class="wrap page-head__in">
+    <a class="crumb" href="index.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back to hub</a>
+    <p class="eyebrow">Summer 2026 · Berta's second</p>
+    <h1>The window</h1>
+  </div>
+</div>
+
+<section class="section wrap">
+  <div class="deadline">
+    <div>
+      <p class="deadline__l">Deadline · 11pm BST, Tuesday 1 September</p>
+      <p class="deadline__t" id="dl-count">—</p>
+      <p class="deadline__n" id="dl-bne">—</p>
+    </div>
+    <div>
+      <p class="deadline__l">Net spend so far</p>
+      <p class="deadline__t" style="color:var(--red)">~£153m</p>
+      <p class="deadline__n">Five in, seven out. Refining a title-winning squad rather than rebuilding one.</p>
+    </div>
+  </div>
+
+  <div class="grid grid--2">
+    <div>
+      <h3 style="font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:0 0 10px">In</h3>
+      <div class="mv" id="mv-in"></div>
+    </div>
+    <div>
+      <h3 style="font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:0 0 10px">Out</h3>
+      <div class="mv" id="mv-out"></div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-top:18px">
+    <h3>Still live</h3>
+    <p><strong style="color:var(--ink)">Bradley Barcola (PSG)</strong> — the one deal that would define the window. Arsenal missed on Vinícius Júnior when he extended at Madrid, and the elite left-sided attacker brief never got filled. Reported to need a sale to fund it.</p>
+    <p><strong style="color:var(--ink)">Julián Álvarez (Atlético)</strong> — Spanish press pushing hard on this one. Would be the striker depth behind Gyökeres that Arteta has been circling all summer.</p>
+    <p><strong style="color:var(--ink)">Outgoing:</strong> Fabio Vieira (Hamburg keen, Arsenal holding at €20m+), Ethan Nwaneri (marketable homegrown profit), and Arteta has said publicly that another departure is coming.</p>
+    <p style="margin-bottom:0"><strong style="color:var(--ink)">The actual squad hole:</strong> cover on the right side of defence. Everyone is talking about wingers.</p>
+  </div>
+
+  <div style="margin-top:22px">
+    <h3 style="font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:0 0 10px">Live wire</h3>
+    <div class="wire" id="wire"></div>
+    <p class="wire__note" id="wire-note">Connecting…</p>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div>
+      <h4>Where the data comes from</h4>
+      <p>Squad and transfers: Arsenal.com's official ins-and-outs page. All times UK local, converted live to Australia/Brisbane by your browser.</p>
+    </div>
+    <div>
+      <h4>Tickets</h4>
+      <p>Every ticket link points to Arsenal's own authorised channels. No resale is brokered, listed, advertised or facilitated here — see the ticket desk for why.</p>
+    </div>
+    <div>
+      <h4>Independent</h4>
+      <p>An unofficial fan project. Not affiliated with, endorsed by, or connected to Arsenal Football Club. No club marks, crests or photography used. All written notes are original.</p>
+    </div>
+  </div>
+</footer>
+
+<button class="back-top" id="back-top" aria-label="Back to top" type="button">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="app.js"></script>
+<script>
+/* ============================================================
+   TRANSFERS — deadline countdown, in/out lists, live wire.
+   ============================================================ */
+const mvRow = (m, dir) => `<div class="mv__r mv__${dir}">
+  <span><b>${m.name}</b><span class="club">${m.club}</span></span>
+  <span class="mv__fee">${m.fee}</span></div>`;
+$('#mv-in').innerHTML = MOVES_IN.map(m => mvRow(m,'in')).join('');
+$('#mv-out').innerHTML = MOVES_OUT.map(m => mvRow(m,'out')).join('');
+
+function tickDeadline(){
+  const ms = new Date(DEADLINE).getTime() - Date.now();
+  const el = $('#dl-count'), note = $('#dl-bne');
+  if(ms <= 0){ el.textContent = 'CLOSED'; note.textContent = 'The window is shut. Nothing to refresh. Go outside.'; return; }
+  const dd = Math.floor(ms/86400000), hh = Math.floor(ms%86400000/3600000), mm = Math.floor(ms%3600000/60000);
+  el.textContent = `${dd}d ${String(hh).padStart(2,'0')}h ${String(mm).padStart(2,'0')}m`;
+  note.textContent = `That’s ${t24(new Date(DEADLINE),BNE)} on ${dayLong(new Date(DEADLINE),BNE)} in Brisbane — deadline day is a working morning for you, not a night in.`;
+}
+tickDeadline();
+setInterval(tickDeadline, 30000);
+
+/* Wire items come from third-party RSS feeds parsed with a regex, not a
+   real XML parser (see wire/index.js) — treat every field as untrusted.
+   The Worker already drops non-https links; this filter is defence in
+   depth for whatever WIRE_ENDPOINT ends up pointing at. */
+function paintWire(items, live){
+  const safe = items.filter(i => /^https:\/\//i.test(i.u));
+  $('#wire').innerHTML = safe.map(i =>
+    `<a class="wire__i" href="${esc(i.u)}" target="_blank" rel="noopener noreferrer">
+       <b>${esc(i.t)}</b><span>${esc(i.s)}${i.d ? ' · ' + i.d : ''}</span></a>`).join('');
+  $('#wire-note').textContent = live
+    ? 'Live feed · refreshed every 15 minutes'
+    : 'Static sources — set WIRE_ENDPOINT in the source to switch on the live feed.';
+}
+
+async function loadWire(){
+  if(!WIRE_ENDPOINT){ paintWire(WIRE_FALLBACK, false); return; }
+  try{
+    const r = await fetch(WIRE_ENDPOINT, {cache:'no-store'});
+    if(!r.ok) throw new Error(r.status);
+    const data = await r.json();
+    if(!Array.isArray(data.items) || !data.items.length) throw new Error('empty');
+    paintWire(data.items.slice(0,12), true);
+  }catch(e){
+    paintWire(WIRE_FALLBACK, false);
+    $('#wire-note').textContent = 'Live feed unavailable — showing sources instead.';
+  }
+}
+loadWire();
+</script>
+</body>
+</html>

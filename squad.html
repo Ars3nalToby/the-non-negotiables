@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none';">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The squad — The Non-Negotiables</title>
+<meta name="description" content="The Arsenal first-team squad for 2026/27, grouped by position, with official Instagram links.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#EF0107" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A1420" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23EF0107'/%3E%3Crect x='14' y='27' width='36' height='6' fill='%23fff'/%3E%3Crect x='14' y='39' width='22' height='6' fill='%23fff'/%3E%3Crect x='14' y='15' width='28' height='6' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<header class="masthead">
+  <div class="wrap masthead__in">
+    <h1 class="wordmark">
+      <b><a href="index.html" style="color:inherit">The <em>Non-</em>Negotiables</a></b>
+      <span>Arsenal 2026/27 · fixtures, away days &amp; wake-up calls</span>
+    </h1>
+    <div class="mh-right">
+      <div class="mh-meta">
+        <strong><svg class="plaque-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 5.1 5.6.6-4.2 3.8 1.2 5.5L12 14.9 6.9 17l1.2-5.5-4.2-3.8 5.6-.6L12 2z"/></svg>Champions of England</strong>
+        Watching from Brisbane since 2009
+      </div>
+      <button class="theme" id="theme-toggle" aria-label="Switch between light and dark">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path class="moon" d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/>
+          <g class="sun"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/></g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav"><div class="wrap nav__in">
+  <a href="index.html">Home</a>
+  <a href="timetable.html">Timetable</a>
+  <a href="tickets.html">Ticket desk</a>
+  <a href="europe.html">Europe</a>
+  <a href="transfers.html">Transfers</a>
+  <a href="squad.html" aria-current="page">Squad</a>
+  <a href="junior.html">Junior Gunners</a>
+  <a href="programme.html">Programme notes</a>
+  <a href="reading.html">Required reading</a>
+</div></nav>
+
+<div class="page-head">
+  <div class="wrap page-head__in">
+    <a class="crumb" href="index.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back to hub</a>
+    <p class="eyebrow">Instagram · official accounts only</p>
+    <h1>The squad, and where to follow them</h1>
+  </div>
+</div>
+
+<section class="section wrap">
+  <div id="squad-grid"></div>
+</section>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div>
+      <h4>Where the data comes from</h4>
+      <p>Squad and transfers: Arsenal.com's official ins-and-outs page.</p>
+    </div>
+    <div>
+      <h4>Instagram handles</h4>
+      <p>A blank handle falls back to an Instagram search rather than a guessed link — a wrong handle sends a reader to a stranger's account.</p>
+    </div>
+    <div>
+      <h4>Independent</h4>
+      <p>An unofficial fan project. Not affiliated with, endorsed by, or connected to Arsenal Football Club. No club marks, crests or photography used. All written notes are original.</p>
+    </div>
+  </div>
+</footer>
+
+<button class="back-top" id="back-top" aria-label="Back to top" type="button">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="app.js"></script>
+<script>
+/* ============================================================
+   SQUAD — grouped by position, like a matchday programme roster.
+   ============================================================ */
+const POS_ORDER = ['GK','DF','MF','FW','MGR'];
+const POS_LABEL = {GK:'Goalkeepers', DF:'Defenders', MF:'Midfielders', FW:'Forwards', MGR:'Manager'};
+function squadCardHTML(p){
+  const url = p.ig ? `https://www.instagram.com/${p.ig}/`
+                   : `https://www.instagram.com/explore/search/keyword/?q=${enc(p.name + ' Arsenal')}`;
+  return `<article class="p">
+    <p class="p__no"><span>${p.no ? '#' + p.no : '—'}</span><span class="p__pos">${p.pos}</span></p>
+    <h3 class="p__name">${p.name}</h3>
+    <p class="p__meta">${p.from}</p>
+    <a class="p__ig" href="${url}" target="_blank" rel="noopener noreferrer">${p.ig ? '@' + p.ig : 'Find on Instagram'}</a>
+  </article>`;
+}
+$('#squad-grid').innerHTML = POS_ORDER.filter(pos => SQUAD.some(p => p.pos === pos)).map(pos => {
+  const players = SQUAD.filter(p => p.pos === pos);
+  return `<details class="acc" open>
+    <summary class="acc__summary">
+      <span class="acc__tab"><span class="acc__chev" aria-hidden="true"></span></span>
+      <span class="acc__label">${POS_LABEL[pos]}</span>
+      <span class="acc__meta">${pos === 'MGR' ? 'Head coach' : `${players.length} player${players.length === 1 ? '' : 's'}`}</span>
+    </summary>
+    <div class="acc__body"><div class="squad">${players.map(squadCardHTML).join('')}</div></div>
+  </details>`;
+}).join('');
+</script>
+</body>
+</html>

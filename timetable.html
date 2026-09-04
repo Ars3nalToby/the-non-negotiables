@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none';">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The season timetable — The Non-Negotiables</title>
+<meta name="description" content="All 38 Arsenal Premier League fixtures for 2026/27, with Brisbane kick-off times and the 1am–6am brutal-window flag.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#EF0107" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A1420" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23EF0107'/%3E%3Crect x='14' y='27' width='36' height='6' fill='%23fff'/%3E%3Crect x='14' y='39' width='22' height='6' fill='%23fff'/%3E%3Crect x='14' y='15' width='28' height='6' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<header class="masthead">
+  <div class="wrap masthead__in">
+    <h1 class="wordmark">
+      <b><a href="index.html" style="color:inherit">The <em>Non-</em>Negotiables</a></b>
+      <span>Arsenal 2026/27 · fixtures, away days &amp; wake-up calls</span>
+    </h1>
+    <div class="mh-right">
+      <div class="mh-meta">
+        <strong><svg class="plaque-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 5.1 5.6.6-4.2 3.8 1.2 5.5L12 14.9 6.9 17l1.2-5.5-4.2-3.8 5.6-.6L12 2z"/></svg>Champions of England</strong>
+        Watching from Brisbane since 2009
+      </div>
+      <button class="theme" id="theme-toggle" aria-label="Switch between light and dark">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path class="moon" d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/>
+          <g class="sun"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/></g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav"><div class="wrap nav__in">
+  <a href="index.html">Home</a>
+  <a href="timetable.html" aria-current="page">Timetable</a>
+  <a href="tickets.html">Ticket desk</a>
+  <a href="europe.html">Europe</a>
+  <a href="transfers.html">Transfers</a>
+  <a href="squad.html">Squad</a>
+  <a href="junior.html">Junior Gunners</a>
+  <a href="programme.html">Programme notes</a>
+  <a href="reading.html">Required reading</a>
+</div></nav>
+
+<div class="page-head">
+  <div class="wrap page-head__in">
+    <a class="crumb" href="index.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back to hub</a>
+    <p class="eyebrow">38 league games</p>
+    <h1>The season timetable</h1>
+    <p>Grouped by month, folded into accordions. Tap a row for the full dossier — both kick-off times, the ground, an opponent note, and away-day links.</p>
+  </div>
+</div>
+
+<section class="section wrap">
+  <div class="filters" role="group" aria-label="Filter fixtures">
+    <button class="chip" data-filter="all" aria-pressed="true">All 38</button>
+    <button class="chip" data-filter="H" aria-pressed="false">Emirates</button>
+    <button class="chip" data-filter="A" aria-pressed="false">Away days</button>
+    <button class="chip" data-filter="upcoming" aria-pressed="false">Still to come</button>
+    <button class="chip" data-filter="brutal" aria-pressed="false">Brisbane 1am–6am</button>
+  </div>
+  <div class="tt">
+    <div class="tt__head" aria-hidden="true"><span>#</span><span>Date</span><span>Opponent</span><span>Venue</span><span>Brisbane KO</span><span></span></div>
+    <div id="tt-rows"></div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div>
+      <h4>Where the data comes from</h4>
+      <p>Fixtures and key dates: the published 2026/27 Premier League fixture list (Sky Sports / Arsenal.com). All times UK local, converted live to Australia/Brisbane by your browser.</p>
+      <p>Kick-off times move for TV. Re-check before you book anything.</p>
+    </div>
+    <div>
+      <h4>Tickets</h4>
+      <p>Every ticket link points to Arsenal's own authorised channels. No resale is brokered, listed, advertised or facilitated here — see the ticket desk for why.</p>
+    </div>
+    <div>
+      <h4>Independent</h4>
+      <p>An unofficial fan project. Not affiliated with, endorsed by, or connected to Arsenal Football Club. No club marks, crests or photography used. All written notes are original.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="d-title" aria-hidden="true">
+  <div class="drawer__bar">
+    <p class="eyebrow" id="d-eyebrow">Fixture dossier</p>
+    <button class="x" id="d-close" aria-label="Close dossier">✕</button>
+  </div>
+  <div class="drawer__body" id="d-body"></div>
+</aside>
+
+<button class="back-top" id="back-top" aria-label="Back to top" type="button">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="app.js"></script>
+<script>
+/* ============================================================
+   TIMETABLE — filters + month accordions. Everything else on this
+   page (drawer, theme, motion) is shared chrome from app.js.
+   ============================================================ */
+const rowsEl = $('#tt-rows');
+let activeFilter = 'all';
+
+function passes(f,i){
+  const d = new Date(f.ko);
+  if(activeFilter === 'all') return true;
+  if(activeFilter === 'H' || activeFilter === 'A') return f.v === activeFilter;
+  if(activeFilter === 'upcoming') return i >= NEXT_I;
+  if(activeFilter === 'brutal') return isBrutal(d);
+  return true;
+}
+
+function rowHTML(f,i,d){
+  const c = CLUBS[f.opp];
+  return `<button type="button" class="row${i === NEXT_I ? ' is-next' : ''}${i < NEXT_I ? ' is-done' : ''}" data-i="${i}">
+      <span class="row__no">${String(f.n).padStart(2,'0')}</span>
+      <span class="row__date">${dayShort(d,LDN)}</span>
+      <span class="row__opp"><b>${c.name}</b><span class="row__meta">${f.v === 'H' ? 'Emirates Stadium' : c.stadium} · ${t24(d,LDN)} UK<span class="row__tv">${f.tv ? ' · ' + f.tv : ''}</span>${f.moved ? ' <i class="moved">MOVED</i>' : ''}</span></span>
+      <span class="row__ha"><i class="ha ${f.v === 'H' ? 'ha--h' : 'ha--a'}">${f.v === 'H' ? 'HOME' : 'AWAY'}</i></span>
+      <span class="row__bne">${f.result
+        ? `<b class="row__score">${f.result}</b><span>Full time</span>`
+        : `<b>${t24(d,BNE)}${isBrutal(d) ? ' <i class="flag" title="1am–6am Brisbane">●</i>' : ''}</b>${dayShort(d,BNE)} BNE`}</span>
+      <span class="row__go">→</span></button>`;
+}
+
+function renderRows(){
+  const groups = [];
+  let cur = null;
+  FIXTURES.forEach((f,i) => {
+    if(!passes(f,i)) return;
+    const d = new Date(f.ko), key = monthKey(d);
+    if(!cur || cur.key !== key){ cur = {key, label:monthLabel(d), rows:[], hasNext:false}; groups.push(cur); }
+    if(i === NEXT_I) cur.hasNext = true;
+    cur.rows.push(rowHTML(f,i,d));
+  });
+
+  rowsEl.innerHTML = groups.length ? groups.map(g => {
+    const open = g.hasNext || activeFilter !== 'all';
+    return `<details class="acc"${open ? ' open' : ''}>
+      <summary class="acc__summary">
+        <span class="acc__tab"><span class="acc__chev" aria-hidden="true"></span></span>
+        <span class="acc__label">${g.label}</span>
+        <span class="acc__meta">${g.rows.length} fixture${g.rows.length === 1 ? '' : 's'}${g.hasNext ? ' <i class="acc__flag">● next up</i>' : ''}</span>
+      </summary>
+      <div class="acc__body">${g.rows.join('')}</div>
+    </details>`;
+  }).join('') : '<p style="padding:16px;color:var(--mute);font-family:var(--mono);font-size:13px">No fixtures match this filter.</p>';
+}
+
+document.querySelectorAll('.chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed','false'));
+    chip.setAttribute('aria-pressed','true');
+    activeFilter = chip.dataset.filter;
+    renderRows();
+  });
+});
+
+rowsEl.addEventListener('click', e => {
+  const row = e.target.closest('.row');
+  if(row) openDrawer(parseInt(row.dataset.i,10));
+});
+
+renderRows();
+</script>
+</body>
+</html>

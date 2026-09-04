@@ -8,10 +8,45 @@ does: it tells you what time you have to wake up in Australia.
 
 ## Repo layout
 
+The site is a **hub page plus one sub-page per section** — no single
+page holds the whole thing, so nobody has to scroll forever to reach
+the squad list. Every page shares one stylesheet and one data/helpers
+script; there's still no build step, no bundler.
+
 ```
-index.html              The entire site. Single file, zero build step,
-                        zero runtime dependencies except Google Fonts.
-audit.mjs               Self-audit script. Run before every commit.
+index.html              Hub. Hero match board + a grid of clickable
+                        "widget" cards, one per section, each with a
+                        live teaser pulled from the shared data.
+timetable.html           Full season fixture list (month accordion).
+tickets.html             Ticket desk (sale windows) + Away Crew board.
+europe.html              Champions League cards + key dates.
+transfers.html            Transfer window countdown + live news wire.
+squad.html               First-team squad, grouped by position.
+junior.html               Junior Gunners — read-only, quiz + bingo.
+programme.html            Editorial programme notes.
+reading.html               Arseblog / Tim Stillman tribute + links.
+404.html                 Custom not-found page (intentionally
+                        standalone — not wired into the nav/audit
+                        content-page checks).
+styles.css                All CSS for every page. Two themes,
+                        `[data-theme="light"]` and `[data-theme="dark"]`,
+                        defining **the same token set** — the audit
+                        doesn't check this; if you add a token, add it
+                        to both.
+app.js                    Shared across all pages: data arrays
+                        (CLUBS, FIXTURES, CL, SQUAD, MOVES_IN/OUT,
+                        KEY_DATES, QUIZ, BINGO, DEMAND...), helpers
+                        (esc, fmt, t24, isoDate, store...), theme
+                        toggle, the fixture drawer, away-day links,
+                        scroll motion (progress bar, back-to-top,
+                        reveal-on-scroll). Pages with no drawer markup
+                        get a no-op — the drawer code null-guards.
+                        Render logic for each section's own list/grid
+                        stays in that page's own inline `<script>`,
+                        not in app.js.
+audit.mjs               Self-audit script. Reads app.js for data,
+                        reads every *.html page for compliance/hygiene
+                        checks. Run before every commit.
 worker.js               Cloudflare Worker — RSS/Bluesky aggregator for
                         the live news wire. Deploy separately.
 .github/workflows/
@@ -22,29 +57,29 @@ worker.js               Cloudflare Worker — RSS/Bluesky aggregator for
 ## Commands
 
 ```bash
-node audit.mjs index.html     # must pass before any commit
+node audit.mjs index.html     # must pass before any commit (checks every page)
 python3 -m http.server 8000   # preview at localhost:8000
 npx wrangler deploy           # deploy the wire worker (in its own dir)
 ```
 
 There is no build, no bundler, no package.json for the site itself.
-**Keep it that way** unless index.html passes 150KB — the audit will
-tell you when.
+**Keep it that way.** The audit enforces a size budget per file instead
+of one monolithic ceiling: `styles.css` ≤80KB, `app.js` ≤60KB, each
+individual page ≤40KB.
 
 ---
 
 ## Architecture
 
-Everything lives in `index.html`, in this order:
+The pattern for every content page: same `<head>` (CSP, fonts,
+`styles.css`), same masthead/nav (the current page gets
+`aria-current="page"`), a `.page-head` band with a "Back to hub"
+crumb, the page's own section markup, shared footer/drawer markup,
+`<script src="app.js">`, then a page-specific inline `<script>` for
+that section's own render logic. New pages should copy an existing
+page's chrome rather than reinventing it.
 
-1. `<style>` — CSS custom properties first. Two themes, `[data-theme="light"]`
-   and `[data-theme="dark"]`, defining **the same token set**. The audit
-   does not check this; if you add a token, add it to both.
-2. `<body>` — semantic sections, each with an `id` used by the sticky nav.
-3. `<script>` — data objects at the top, then helpers, then render
-   functions, then a `BOOT` block at the very bottom.
-
-### Data objects (top of the script block)
+### Data objects (top of `app.js`)
 
 | Object | Holds |
 |---|---|

@@ -61,7 +61,7 @@ record at your registrar pointing to `YOUR-USERNAME.github.io`.
 ## After it's live
 
 ```bash
-node audit.mjs index.html    # run this before every commit
+node audit.mjs index.html    # run this before every commit (checks every page)
 ```
 
 Three things to do in the first week, none of which block launch:
@@ -72,7 +72,7 @@ Three things to do in the first week, none of which block launch:
    A wrong handle sends a reader to a stranger.
 
 2. **The news wire.** Deploy the Worker, then set `WIRE_ENDPOINT` in
-   `index.html`. Until then the wire shows static source links, which
+   `app.js`. Until then the wire shows static source links, which
    is fine.
 
    ```bash
@@ -89,11 +89,23 @@ Three things to do in the first week, none of which block launch:
 ## What's in here
 
 ```
-index.html                  The whole site. No build step, no bundler,
-                            no dependencies except Google Fonts.
+index.html                  Hub page — the widget grid, one card per section.
+timetable.html              Full season fixture list.
+tickets.html                Ticket desk + Away Crew board.
+europe.html                 Champions League + key dates.
+transfers.html               Transfer window + live news wire.
+squad.html                  First-team squad.
+junior.html                 Junior Gunners (read-only kids' section).
+programme.html               Editorial notes.
+reading.html                 Arseblog / Tim Stillman tribute.
 404.html                    Custom not-found page.
+styles.css                  All CSS. Shared by every page.
+app.js                       Shared data arrays, helpers, theme toggle,
+                            drawer, scroll motion. No build step, no
+                            bundler, no dependencies except Google Fonts.
 audit.mjs                   Self-audit. Data staleness, timezone drift,
-                            compliance invariants, iOS regressions.
+                            compliance invariants, iOS regressions —
+                            checked across every page.
 CLAUDE.md                   Project rules. Read this before changing
                             anything — especially the ticket rules.
 wire/                       Cloudflare Worker: RSS + Bluesky aggregator.

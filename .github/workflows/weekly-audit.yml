@@ -50,15 +50,8 @@ jobs:
 
       - name: Check the JavaScript still parses
         run: |
-          node -e "
-            const fs=require('fs');
-            const html=fs.readFileSync('index.html','utf8');
-            const js=html.match(/<script>([\s\S]*?)<\/script>/g).pop()
-                         .replace(/^<script>/,'').replace(/<\/script>$/,'');
-            fs.writeFileSync('/tmp/app.js', js);
-          "
-          node --check /tmp/app.js
-          echo "JS parses cleanly"
+          node --check app.js
+          echo "app.js parses cleanly"
 
       - uses: actions/upload-artifact@v4
         with:

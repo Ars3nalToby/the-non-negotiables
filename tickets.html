@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none';">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The ticket desk — The Non-Negotiables</title>
+<meta name="description" content="Why there is no ticket resale on this site, and where the official Arsenal ticket channels actually are.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#EF0107" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A1420" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23EF0107'/%3E%3Crect x='14' y='27' width='36' height='6' fill='%23fff'/%3E%3Crect x='14' y='39' width='22' height='6' fill='%23fff'/%3E%3Crect x='14' y='15' width='28' height='6' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<header class="masthead">
+  <div class="wrap masthead__in">
+    <h1 class="wordmark">
+      <b><a href="index.html" style="color:inherit">The <em>Non-</em>Negotiables</a></b>
+      <span>Arsenal 2026/27 · fixtures, away days &amp; wake-up calls</span>
+    </h1>
+    <div class="mh-right">
+      <div class="mh-meta">
+        <strong><svg class="plaque-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 5.1 5.6.6-4.2 3.8 1.2 5.5L12 14.9 6.9 17l1.2-5.5-4.2-3.8 5.6-.6L12 2z"/></svg>Champions of England</strong>
+        Watching from Brisbane since 2009
+      </div>
+      <button class="theme" id="theme-toggle" aria-label="Switch between light and dark">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path class="moon" d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/>
+          <g class="sun"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/></g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav"><div class="wrap nav__in">
+  <a href="index.html">Home</a>
+  <a href="timetable.html">Timetable</a>
+  <a href="tickets.html" aria-current="page">Ticket desk</a>
+  <a href="europe.html">Europe</a>
+  <a href="transfers.html">Transfers</a>
+  <a href="squad.html">Squad</a>
+  <a href="junior.html">Junior Gunners</a>
+  <a href="programme.html">Programme notes</a>
+  <a href="reading.html">Required reading</a>
+</div></nav>
+
+<div class="page-head">
+  <div class="wrap page-head__in">
+    <a class="crumb" href="index.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back to hub</a>
+    <p class="eyebrow">Official channels only</p>
+    <h1>The ticket desk</h1>
+    <p>No resale, no listings, no exceptions — read why below, then find the real sale window for each upcoming fixture.</p>
+  </div>
+</div>
+
+<section class="section wrap">
+  <div class="legal">
+    <h3>Why there is no resale here, and never will be</h3>
+    <p>In England and Wales it is a criminal offence for anyone not authorised in writing by the club to sell — or otherwise dispose of — a ticket for a designated football match. That is section 166 of the Criminal Justice and Public Order Act 1994, extended to online sales by the Violent Crime Reduction Act 2006 and the Ticket Touting (Designation of Football Matches) Order 2007.</p>
+    <p>The wording is deliberately wide. It catches offering a ticket, exposing one for sale, <code>making a ticket available for sale by another</code>, and <code>advertising that a ticket is available for purchase</code>. Face value doesn't help. Not making a profit doesn't help. A noticeboard counts.</p>
+    <p>So this desk does the honest version instead: it tells you exactly when each fixture goes on sale, which membership tier you realistically need, and sends every transaction to Arsenal's own authorised Ticket Exchange and Ticket Transfer. That is the only legal secondary market for these games, and it is the one that protects your membership.</p>
+  </div>
+
+  <div class="tk">
+    <div id="tk-rows"></div>
+  </div>
+
+  <div class="grid grid--2" style="margin-top:26px">
+    <div class="box">
+      <h3>Away crew board</h3>
+      <h4>Who's travelling, not who's selling</h4>
+      <p>No tickets, no money, no listings. Just a board of who is heading to which away day, so people flying in from Brisbane, Kuala Lumpur or Dublin can find each other for a pre-match pint.</p>
+      <div class="crew" id="crew-list"></div>
+      <div class="crewform">
+        <input id="crew-name" type="text" placeholder="Name or handle" maxlength="40">
+        <input id="crew-from" type="text" placeholder="Travelling from" maxlength="40">
+        <select id="crew-fix"></select>
+        <button class="btn btn--line" id="crew-add">Add me to the board</button>
+      </div>
+      <p style="margin-top:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--mute)">Local preview only — saved in this browser. Wire to Supabase or Firebase to make it shared.</p>
+    </div>
+
+    <div class="box">
+      <h3>A marketplace you can actually run</h3>
+      <h4>Programmes, shirts, badges, memorabilia</h4>
+      <p>The ticket law covers tickets. It does not cover the rest of it — and there is a genuinely underserved market in matchday programmes, retro shirts, pin badges, ticket stubs from finals and old Highbury ephemera.</p>
+      <p>That is a real marketplace, it is completely legal, it fits this site's whole programme-and-archive personality, and nobody has built a good Arsenal-specific one. If you want a marketplace, build that one.</p>
+      <p style="color:var(--ink);font-weight:600">Same escrow logic, same listings UI, none of the criminal liability.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div>
+      <h4>Where the data comes from</h4>
+      <p>Fixtures and key dates: the published 2026/27 Premier League fixture list. All times UK local, converted live to Australia/Brisbane by your browser.</p>
+    </div>
+    <div>
+      <h4>Tickets</h4>
+      <p>Every ticket link points to Arsenal's own authorised channels. No resale is brokered, listed, advertised or facilitated here.</p>
+      <p>Ticket tier estimates are this site's own read on demand, not club information.</p>
+    </div>
+    <div>
+      <h4>Independent</h4>
+      <p>An unofficial fan project. Not affiliated with, endorsed by, or connected to Arsenal Football Club. No club marks, crests or photography used. All written notes are original.</p>
+    </div>
+  </div>
+</footer>
+
+<button class="back-top" id="back-top" aria-label="Back to top" type="button">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="app.js"></script>
+<script>
+/* ============================================================
+   TICKET DESK — upcoming sale windows grouped by month, plus the
+   Away Crew board (localStorage-only preview).
+   ============================================================ */
+function tkRowHTML(f){
+  const c = CLUBS[f.opp], d = new Date(f.ko);
+  const dem = DEMAND_TEXT[DEMAND[f.opp] || 2];
+  return `<div class="tk__row">
+    <div><b>${f.v === 'H' ? 'Arsenal v ' + c.name : c.name + ' v Arsenal'}</b>
+      <span class="sub">${dayShort(d,LDN)} · ${f.v === 'H' ? 'Emirates' : c.stadium}</span></div>
+    <div><span class="badge ${dem.cls}">${dem.lbl}</span></div>
+    <div class="tk__tier">${f.v === 'H' ? 'Members’ sale' : 'Away credits'}</div>
+    <a class="tk__link" href="${f.v === 'H' ? 'https://www.arsenal.com/ticket-exchange' : 'https://www.arsenal.com/tickets'}" target="_blank" rel="noopener noreferrer">${f.v === 'H' ? 'Exchange' : 'Away tickets'}</a>
+  </div>`;
+}
+
+(function renderTicketDesk(){
+  const groups = [];
+  let cur = null;
+  FIXTURES.forEach((f,i) => {
+    if(i < NEXT_I) return;
+    const d = new Date(f.ko), key = monthKey(d);
+    if(!cur || cur.key !== key){ cur = {key, label:monthLabel(d), rows:[]}; groups.push(cur); }
+    cur.rows.push(tkRowHTML(f));
+  });
+  $('#tk-rows').innerHTML = groups.map((g,gi) => `<details class="acc"${gi === 0 ? ' open' : ''}>
+    <summary class="acc__summary">
+      <span class="acc__tab"><span class="acc__chev" aria-hidden="true"></span></span>
+      <span class="acc__label">${g.label}</span>
+      <span class="acc__meta">${g.rows.length} fixture${g.rows.length === 1 ? '' : 's'}</span>
+    </summary>
+    <div class="acc__body">${g.rows.join('')}</div>
+  </details>`).join('');
+})();
+
+/* crew board — local preview */
+const crewFix = $('#crew-fix');
+crewFix.innerHTML = FIXTURES.filter((f,i) => i >= NEXT_I && f.v === 'A')
+  .map(f => `<option value="${f.n}">${CLUBS[f.opp].name} away · ${dayShort(new Date(f.ko),LDN)}</option>`).join('');
+
+const CREW_SEED = [
+  {name:'Toby', from:'Brisbane', n:14},
+  {name:'@gunner_kl', from:'Kuala Lumpur', n:23},
+  {name:'Siobhan', from:'Dublin', n:2}
+];
+const crewList = () => store.get('nn-crew') || CREW_SEED.slice();
+
+function renderCrew(){
+  const list = crewList();
+  $('#crew-list').innerHTML = list.map(c => {
+    const f = FIXTURES.find(x => x.n === Number(c.n));
+    const label = f ? `${CLUBS[f.opp].name} away` : 'A game';
+    return `<div class="crew__item"><b>${esc(c.name)}</b><span>${esc(c.from)} → ${label}</span></div>`;
+  }).join('') || '<p style="color:var(--mute);font-size:14px;margin:0">Nobody on the board yet.</p>';
+}
+$('#crew-add').addEventListener('click', () => {
+  const name = $('#crew-name').value.trim(), from = $('#crew-from').value.trim();
+  if(!name || !from) return;
+  const list = crewList();
+  list.unshift({name, from, n:crewFix.value});
+  store.set('nn-crew', list.slice(0,40));
+  $('#crew-name').value = ''; $('#crew-from').value = '';
+  renderCrew();
+});
+renderCrew();
+</script>
+</body>
+</html>
