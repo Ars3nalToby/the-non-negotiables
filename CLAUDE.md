@@ -47,8 +47,8 @@ app.js                    Shared across all pages: data arrays
 audit.mjs               Self-audit script. Reads app.js for data,
                         reads every *.html page for compliance/hygiene
                         checks. Run before every commit.
-worker.js               Cloudflare Worker — RSS/Bluesky aggregator for
-                        the live news wire. Deploy separately.
+wire/index.js             Cloudflare Worker — RSS/Bluesky aggregator for
+                        the live news wire. Deploy separately (wire/wrangler.toml).
 .github/workflows/
   weekly-audit.yml      Monday 08:00 Brisbane: runs audit, checks links,
                         opens/updates a GitHub issue with findings.
@@ -217,18 +217,16 @@ Motion is restrained and always behind `prefers-reduced-motion`.
 
 ## Current TODOs
 
-1. **Champions League kick-off times.** UEFA has published fixtures by now.
-   Add a `ko` field (ISO + UK offset) to each `CL` entry; the Brisbane
-   conversion is already wired and will light up automatically.
-2. **Instagram handles.** 20 of 24 `SQUAD` entries are `ig: null` and fall
-   back to an Instagram search. Verify each handle manually — do not guess.
-   A wrong handle links a reader to a stranger.
-3. **Live wire.** Deploy `worker.js`, then set `WIRE_ENDPOINT` in
-   `index.html`. Falls back to static source links until you do.
-4. **Away Crew board backend.** Currently `localStorage`, single-browser.
+1. **Instagram handles.** Most `SQUAD` entries are still `ig: null` and fall
+   back to an Instagram search (run `node audit.mjs` for the current count).
+   Verify each handle manually — do not guess. A wrong handle links a
+   reader to a stranger.
+2. **Live wire.** Deploy `wire/index.js`, then set `WIRE_ENDPOINT` in
+   `app.js`. Falls back to static source links until you do.
+3. **Away Crew board backend.** Currently `localStorage`, single-browser.
    Supabase free tier is the intended target. **`esc()` every field on the
    way out** — the moment this is multi-user it's a stored XSS surface.
-5. **Forum.** Discourse on a subdomain, not hand-rolled. Configure watched
+4. **Forum.** Discourse on a subdomain, not hand-rolled. Configure watched
    words for ticket-sale language before launch, per rule 1.
 
 ## Definition of done

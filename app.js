@@ -396,7 +396,10 @@ if(drawer){
   $('#d-close').addEventListener('click', closeDrawer);
   scrim.addEventListener('click', closeDrawer);
   document.addEventListener('keydown', e => {
-    if(e.key === 'Escape'){ closeDrawer(); return; }
+    if(e.key === 'Escape'){
+      if(drawer.classList.contains('is-open')) closeDrawer();
+      return;
+    }
     /* Keep Tab inside the drawer while it's open */
     if(e.key !== 'Tab' || !drawer.classList.contains('is-open')) return;
     const f = drawer.querySelectorAll('a[href], button:not([disabled])');

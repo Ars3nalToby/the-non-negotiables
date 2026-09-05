@@ -83,9 +83,9 @@
       <p>No tickets, no money, no listings. Just a board of who is heading to which away day, so people flying in from Brisbane, Kuala Lumpur or Dublin can find each other for a pre-match pint.</p>
       <div class="crew" id="crew-list"></div>
       <div class="crewform">
-        <input id="crew-name" type="text" placeholder="Name or handle" maxlength="40">
-        <input id="crew-from" type="text" placeholder="Travelling from" maxlength="40">
-        <select id="crew-fix"></select>
+        <input id="crew-name" type="text" placeholder="Name or handle" aria-label="Name or handle" maxlength="40">
+        <input id="crew-from" type="text" placeholder="Travelling from" aria-label="Travelling from" maxlength="40">
+        <select id="crew-fix" aria-label="Which away day"></select>
         <button class="btn btn--line" id="crew-add">Add me to the board</button>
       </div>
       <p style="margin-top:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--mute)">Local preview only — saved in this browser. Wire to Supabase or Firebase to make it shared.</p>
@@ -168,7 +168,7 @@ crewFix.innerHTML = FIXTURES.filter((f,i) => i >= NEXT_I && f.v === 'A')
 const CREW_SEED = [
   {name:'Toby', from:'Brisbane', n:14},
   {name:'@gunner_kl', from:'Kuala Lumpur', n:23},
-  {name:'Siobhan', from:'Dublin', n:2}
+  {name:'Siobhan', from:'Dublin', n:9}
 ];
 const crewList = () => store.get('nn-crew') || CREW_SEED.slice();
 
