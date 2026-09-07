@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none';">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The squad — The Non-Negotiables</title>
-<meta name="description" content="The Arsenal first-team squad for 2026/27, grouped by position, with official Instagram links.">
+<meta name="description" content="The Arsenal first-team squad for 2026/27, grouped by position, with official Instagram and X links.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#EF0107" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0A1420" media="(prefers-color-scheme: dark)">
@@ -53,12 +53,13 @@
   <a href="junior.html">Junior Gunners</a>
   <a href="programme.html">Programme notes</a>
   <a href="reading.html">Required reading</a>
+  <a href="fanart.html">Fan Art</a>
 </div></nav>
 
 <div class="page-head">
   <div class="wrap page-head__in">
     <a class="crumb" href="index.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back to hub</a>
-    <p class="eyebrow">Instagram · official accounts only</p>
+    <p class="eyebrow">Instagram &amp; X · official accounts only</p>
     <h1>The squad, and where to follow them</h1>
   </div>
 </div>
@@ -74,8 +75,8 @@
       <p>Squad and transfers: Arsenal.com's official ins-and-outs page.</p>
     </div>
     <div>
-      <h4>Instagram handles</h4>
-      <p>A blank handle falls back to an Instagram search rather than a guessed link — a wrong handle sends a reader to a stranger's account.</p>
+      <h4>Instagram &amp; X handles</h4>
+      <p>A blank handle falls back to a search rather than a guessed link — a wrong handle sends a reader to a stranger's account.</p>
     </div>
     <div>
       <h4>Independent</h4>
@@ -96,13 +97,18 @@
 const POS_ORDER = ['GK','DF','MF','FW','MGR'];
 const POS_LABEL = {GK:'Goalkeepers', DF:'Defenders', MF:'Midfielders', FW:'Forwards', MGR:'Manager'};
 function squadCardHTML(p){
-  const url = p.ig ? `https://www.instagram.com/${p.ig}/`
-                   : `https://www.instagram.com/explore/search/keyword/?q=${enc(p.name + ' Arsenal')}`;
+  const igUrl = p.ig ? `https://www.instagram.com/${p.ig}/`
+                     : `https://www.instagram.com/explore/search/keyword/?q=${enc(p.name + ' Arsenal')}`;
+  const xUrl = p.x ? `https://x.com/${p.x}`
+                   : `https://x.com/search?q=${enc(p.name + ' Arsenal')}&f=user`;
   return `<article class="p">
     <p class="p__no"><span>${p.no ? '#' + p.no : '—'}</span><span class="p__pos">${p.pos}</span></p>
     <h3 class="p__name">${p.name}</h3>
     <p class="p__meta">${p.from}</p>
-    <a class="p__ig" href="${url}" target="_blank" rel="noopener noreferrer">${p.ig ? '@' + p.ig : 'Find on Instagram'}</a>
+    <div class="p__socials">
+      <a class="p__social" href="${igUrl}" target="_blank" rel="noopener noreferrer">${p.ig ? '@' + p.ig : 'Find on IG'}</a>
+      <a class="p__social" href="${xUrl}" target="_blank" rel="noopener noreferrer">${p.x ? '@' + p.x : 'Find on X'}</a>
+    </div>
   </article>`;
 }
 $('#squad-grid').innerHTML = POS_ORDER.filter(pos => SQUAD.some(p => p.pos === pos)).map(pos => {

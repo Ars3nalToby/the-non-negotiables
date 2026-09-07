@@ -132,10 +132,14 @@ if (!CL.some(m => m.ko)) {
   flag('INFO', 'europe', `All 8 CL fixtures dated. ${clBrutal} of them kick off between 1am and 7am Brisbane.`);
 }
 
-/* ---------- 5. squad / Instagram ---------- */
+/* ---------- 5. squad / Instagram / X ---------- */
 const noIg = SQUAD.filter(p => !p.ig);
 if (noIg.length) {
   flag('TODO', 'squad', `${noIg.length} of ${SQUAD.length} players have no verified Instagram handle: ${noIg.slice(0,5).map(p=>p.name).join(', ')}${noIg.length>5?'…':''}`);
+}
+const noX = SQUAD.filter(p => !p.x);
+if (noX.length) {
+  flag('TODO', 'squad', `${noX.length} of ${SQUAD.length} players have no verified X handle: ${noX.slice(0,5).map(p=>p.name).join(', ')}${noX.length>5?'…':''}`);
 }
 
 /* ---------- 6. legal + safety invariants (must never regress) ----------
