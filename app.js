@@ -77,8 +77,8 @@ const FIXTURES = [
       {who:'Martin Ødegaard', role:'captain', quote:'I think we showed them today our quality with the ball, without the ball, and I think the result reflects that.', source:'Arseblog News', url:'https://arseblog.news/2026/09/odegaard-and-konsa-react-to-2-1-win-over-chelsea/'},
       {who:'Ezri Konsa', role:'defender', quote:'It’s part of football. Things happen, it’s all about how you react.', source:'Arseblog News', url:'https://arseblog.news/2026/09/odegaard-and-konsa-react-to-2-1-win-over-chelsea/'}
     ]}},
-  {n:4, ko:'2026-09-12T20:00:00+01:00', opp:'sun', v:'A', tv:'TNT Sports', moved:true, checked:'2026-08-29'},
-  {n:5, ko:'2026-09-19T15:00:00+01:00', opp:'bha', v:'A', tv:'Not on UK TV \u00b7 3pm blackout', checked:'2026-08-29'},
+  {n:4, ko:'2026-09-12T20:00:00+01:00', opp:'sun', v:'A', tv:'TNT Sports', moved:true, checked:'2026-09-07'},
+  {n:5, ko:'2026-09-19T15:00:00+01:00', opp:'bha', v:'A', tv:'Not on UK TV \u00b7 3pm blackout', checked:'2026-09-07'},
   {n:6, ko:'2026-10-10T12:30:00+01:00', opp:'lee', v:'H', tv:'TNT Sports', moved:true, checked:'2026-08-29'},
   {n:7, ko:'2026-10-18T16:30:00+01:00', opp:'nfo', v:'A', tv:'Sky Sports', moved:true, checked:'2026-08-29'},
   {n:8, ko:'2026-10-24T15:00:00+01:00', opp:'eve', v:'H', tv:'Not on UK TV \u00b7 3pm blackout', checked:'2026-08-29'},
@@ -304,7 +304,8 @@ const MOVES_OUT = [
   {name:'Ismeal Kabia', club:'St Mirren', fee:'Loan'},
   {name:'Gabriel Jesus', club:'Barcelona', fee:'£8.6m'},
   {name:'Fabio Vieira', club:'Hamburg', fee:'£8.6m'},
-  {name:'Ethan Nwaneri', club:'Borussia Dortmund · loan', fee:'Loan'}
+  {name:'Ethan Nwaneri', club:'Borussia Dortmund · loan', fee:'Loan'},
+  {name:'Gabriel Martinelli', club:'Al Hilal', fee:'£60m'}
 ];
 
 /* ---- Live wire ----
