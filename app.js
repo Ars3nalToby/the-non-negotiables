@@ -71,7 +71,12 @@ const CLUBS = {
 const FIXTURES = [
   {n:1, ko:'2026-08-21T20:00:00+01:00', opp:'cov', v:'H', result:'W 3-0', scorers:'Havertz, Saka, \u00d8degaard', tv:'Sky Sports', checked:'2026-08-29'},
   {n:2, ko:'2026-08-31T20:00:00+01:00', opp:'avl', v:'A', result:'W 1-0', scorers:'Saka', tv:'Sky Sports', moved:true, checked:'2026-08-29'},
-  {n:3, ko:'2026-09-06T16:30:00+01:00', opp:'che', v:'H', tv:'Sky Sports', moved:true, checked:'2026-08-29'},
+  {n:3, ko:'2026-09-06T16:30:00+01:00', opp:'che', v:'H', result:'W 2-1', scorers:'Havertz, Ødegaard', tv:'Sky Sports', moved:true, checked:'2026-09-08',
+    reaction:{notes:[
+      {who:'Mikel Arteta', role:'manager', quote:'A proper London derby. We expected that because of the quality of the opposition, because of the individual quality that they have.', source:'Arsenal.com', url:'https://www.arsenal.com/news/every-word-artetas-post-chelsea-presser-4'},
+      {who:'Martin Ødegaard', role:'captain', quote:'I think we showed them today our quality with the ball, without the ball, and I think the result reflects that.', source:'Arseblog News', url:'https://arseblog.news/2026/09/odegaard-and-konsa-react-to-2-1-win-over-chelsea/'},
+      {who:'Ezri Konsa', role:'defender', quote:'It’s part of football. Things happen, it’s all about how you react.', source:'Arseblog News', url:'https://arseblog.news/2026/09/odegaard-and-konsa-react-to-2-1-win-over-chelsea/'}
+    ]}},
   {n:4, ko:'2026-09-12T20:00:00+01:00', opp:'sun', v:'A', tv:'TNT Sports', moved:true, checked:'2026-08-29'},
   {n:5, ko:'2026-09-19T15:00:00+01:00', opp:'bha', v:'A', tv:'Not on UK TV \u00b7 3pm blackout', checked:'2026-08-29'},
   {n:6, ko:'2026-10-10T12:30:00+01:00', opp:'lee', v:'H', tv:'TNT Sports', moved:true, checked:'2026-08-29'},
@@ -344,6 +349,16 @@ function openDrawer(i){
       </dl>
       ${f.warn ? `<p style="margin:12px 0 0;padding:10px 12px;background:var(--warn-wash);color:var(--warn);font-size:13.5px;line-height:1.5;border-radius:2px">${f.warn}</p>` : ''}
     </div>
+
+    ${f.reaction ? `<div class="dcard">
+      <h3>Post-match reaction</h3>
+      ${f.reaction.notes.map(n => `
+        <p class="dsub" style="margin:0 0 3px">${n.who}${n.role ? ', ' + n.role : ''}</p>
+        <p class="note" style="margin:0 0 4px">“${n.quote}”</p>
+        <p style="margin:0 0 16px"><a href="${n.url}" target="_blank" rel="noopener noreferrer" style="font-size:12.5px;color:var(--red);text-decoration:none;font-weight:600">Full reaction at ${n.source} →</a></p>
+      `).join('')}
+      <p class="sign">Quotes attributed and linked to their original source. Nothing here is reproduced beyond a short excerpt.</p>
+    </div>` : ''}
 
     <div class="dcard">
       <h3>The ground</h3>

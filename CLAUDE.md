@@ -25,6 +25,12 @@ squad.html               First-team squad, grouped by position.
 junior.html               Junior Gunners — read-only, quiz + bingo.
 programme.html            Editorial programme notes.
 reading.html               Arseblog / Tim Stillman tribute + links.
+fanart.html                Fan artists, embedded live from their own X
+                        accounts (official embed widget) — never
+                        rehosted. This is the ONE page with a widened
+                        CSP (adds platform.twitter.com,
+                        syndication.twitter.com, pbs.twimg.com) —
+                        every other page keeps the strict default.
 404.html                 Custom not-found page (intentionally
                         standalone — not wired into the nav/audit
                         content-page checks).
@@ -84,10 +90,10 @@ page's chrome rather than reinventing it.
 | Object | Holds |
 |---|---|
 | `CLUBS` | Premier League opponents: stadium, city, capacity, nearest station, editorial note |
-| `FIXTURES` | All 38 league games. `ko` is an ISO string **with an explicit UK offset** |
+| `FIXTURES` | All 38 league games. `ko` is an ISO string **with an explicit UK offset**. A played match gets `result`/`scorers`, and optionally `reaction:{notes:[{who,role,quote,source,url}]}` — short, verified, sourced pull-quotes only, never fabricated, always linked. Renders automatically in the fixture drawer. |
 | `CL` | Champions League league phase — 8 opponents, 4 home / 4 away |
 | `DEMAND` | Ticket demand estimate per opponent, 1–3. **This site's own read, not club data** |
-| `SQUAD` | First team + manager. `ig: null` means no verified Instagram handle |
+| `SQUAD` | First team + manager. `ig: null` / `x: null` means no verified Instagram / X handle — never guess either, both fall back to an in-platform search |
 | `MOVES_IN` / `MOVES_OUT` | Transfer window, current summer |
 | `KEY_DATES` | Cup rounds, CL matchdays, finals |
 | `QUIZ` / `BINGO` | Junior Gunners content |
