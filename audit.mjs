@@ -262,7 +262,89 @@ if (appJs.includes('function') ) {
   catch (e) { flag('BUG', 'frontend', `app.js does not parse as JavaScript: ${e.message}`); }
 }
 
-/* ---------- 8. size budget ----------
+/* ---------- 9. stored-XSS scan across every data literal ----------
+   Every string in CLUBS/FIXTURES/CL/SQUAD/MOVES_IN/MOVES_OUT/etc. gets
+   rendered into a page via innerHTML with NO escaping, because the
+   whole site's design assumes this data is first-party and trusted —
+   written by a human or a scheduled research routine, never by a site
+   visitor. That assumption is currently enforced by a prompt telling
+   the routine to keep everything plain text. A prompt is not a
+   security control. This is: if any data string ever contains
+   something that looks like HTML or a script injection, fail the
+   build outright, regardless of who or what introduced it. */
+function extractDecl(name) {
+  const m = appJs.match(new RegExp(`const ${name} = `));
+  if (!m) return null;
+  let i = m.index + m[0].length;
+  const open = appJs[i];
+  if (open !== '{' && open !== '[') return null;
+  const close = open === '{' ? '}' : ']';
+  let depth = 0, inStr = null, esc = false;
+  const start = i;
+  for (; i < appJs.length; i++) {
+    const c = appJs[i];
+    if (inStr) {
+      if (esc) esc = false;
+      else if (c === '\\') esc = true;
+      else if (c === inStr) inStr = null;
+      continue;
+    }
+    if (c === "'" || c === '"' || c === '`') { inStr = c; continue; }
+    if (c === open) depth++;
+    else if (c === close) { depth--; if (depth === 0) { i++; break; } }
+  }
+  return appJs.slice(start, i);
+}
+function evalDecl(name) {
+  const src = extractDecl(name);
+  if (!src) return null;
+  try { return eval(`(${src})`); }
+  catch (e) { flag('ERROR', 'security', `Could not parse ${name} for the content-safety scan: ${e.message}`); return null; }
+}
+
+const DANGEROUS = [
+  ['<', /</],
+  ['>', />/],
+  ['a javascript: URI', /\bjavascript:/i],
+  ['an inline event handler', /\bon\w+\s*=/i],
+  ['a data:text/html URI', /data:text\/html/i]
+];
+function scanStrings(value, path, seen) {
+  if (value == null) return;
+  if (typeof value === 'string') {
+    for (const [label, re] of DANGEROUS) {
+      if (re.test(value)) {
+        const shown = value.length > 70 ? value.slice(0, 70) + '…' : value;
+        flag('CRITICAL', 'security',
+          `Data string at ${path} contains ${label} — "${shown}". This field is rendered via innerHTML with no escaping and would run in every visitor's browser. Fix the source text; do not commit.`);
+        return; // one flag per string is enough
+      }
+    }
+    return;
+  }
+  if (Array.isArray(value)) { value.forEach((v, i) => scanStrings(v, `${path}[${i}]`, seen)); return; }
+  if (typeof value === 'object') {
+    if (seen.has(value)) return;
+    seen.add(value);
+    for (const [k, v] of Object.entries(value)) scanStrings(v, `${path}.${k}`, seen);
+  }
+}
+const SECURITY_SCAN_TARGETS = ['CLUBS', 'FIXTURES', 'CL', 'DEMAND_TEXT', 'KEY_DATES', 'SQUAD', 'QUIZ', 'BINGO', 'MOVES_IN', 'MOVES_OUT', 'WIRE_FALLBACK'];
+for (const name of SECURITY_SCAN_TARGETS) {
+  const val = evalDecl(name);
+  if (val != null) scanStrings(val, name, new Set());
+}
+
+/* WIRE_ENDPOINT is fetched client-side from every visitor's browser.
+   If it's ever set to a plain http:// URL, the request and its
+   response can be tampered with in transit on a hostile network
+   (airport wifi, a compromised router) before esc() ever runs. */
+const wireMatch = appJs.match(/const WIRE_ENDPOINT = '([^']*)'/);
+if (wireMatch && wireMatch[1] && !wireMatch[1].startsWith('https://')) {
+  flag('CRITICAL', 'security', `WIRE_ENDPOINT is set to a non-https URL (${wireMatch[1]}) — this must be https:// or it can be tampered with in transit.`);
+}
+
+/* ---------- 10. size budget ----------
    The site is now split into a shared stylesheet/script plus one page
    per section, specifically so no single file has to carry everything.
    Budget each kind of file on its own terms instead of one combined cap. */
