@@ -439,6 +439,26 @@ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
   document.querySelectorAll('.row, .p, .date, .read, .section__head').forEach(el => io.observe(el));
 }
 
+/* Mascots roll as you scroll past them — each ball's own rotation
+   tracks the page's scroll position, offset slightly per-ball so a
+   row of them doesn't spin in perfect unison. Runs inside the same
+   rAF-throttled scroll loop as scrollFX below; skipped entirely
+   under reduced-motion. */
+const mascotBalls = [...document.querySelectorAll('[data-mascot]')];
+if(mascotBalls.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const spin = () => {
+    mascotBalls.forEach((el,i) => {
+      const deg = (window.scrollY * (0.22 + i * 0.05)) % 360;
+      el.style.transform = `rotate(${deg}deg)`;
+    });
+  };
+  let mascotTicking = false;
+  window.addEventListener('scroll', () => {
+    if(!mascotTicking){ requestAnimationFrame(() => { spin(); mascotTicking = false; }); mascotTicking = true; }
+  }, {passive:true});
+  spin();
+}
+
 /* Thin scroll-progress bar + a back-to-top button that appears once
    you've scrolled past the hero. One passive listener, rAF-throttled,
    touches only style.width/classList — no layout reads on every

@@ -727,6 +727,34 @@ button{font:inherit;color:inherit;cursor:pointer}
 @keyframes rise{to{opacity:1;transform:none}}
 
 /* ============================================================
+   MASCOT — a small original football character, not a club mark.
+   Outer .mascot handles the idle bob (CSS keyframe); the inner
+   .mascot__ball SVG gets its rotation set directly by JS as you
+   scroll, so the two transforms never fight each other.
+   ============================================================ */
+.mascot-row{display:flex;justify-content:center;margin:34px 0}
+.mascot{width:72px;animation:mascotBob 3.4s ease-in-out infinite}
+.mascot--sm{width:56px}
+.mascot--flip{animation-delay:-1.7s}
+.mascot__ball{width:100%;display:block;filter:drop-shadow(0 8px 16px rgba(0,0,0,.16));transition:transform .05s linear}
+@keyframes mascotBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@media (prefers-reduced-motion:reduce){.mascot{animation:none}}
+
+.floatcard{
+  position:absolute;z-index:2;background:var(--card);color:var(--ink);
+  border-radius:var(--r-md);padding:9px 14px;box-shadow:var(--shadow-md);
+  display:flex;flex-direction:column;line-height:1.15;pointer-events:none;
+  animation:floatBob 4.5s ease-in-out infinite;
+}
+.floatcard b{font-family:var(--mono);font-size:17px;font-weight:700}
+.floatcard span{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.floatcard--a{top:8%;right:4%;transform:rotate(-4deg)}
+.floatcard--b{top:34%;left:2%;transform:rotate(3deg);animation-delay:-2.2s}
+@keyframes floatBob{0%,100%{translate:0 0}50%{translate:0 -7px}}
+@media (max-width:900px){.floatcard{display:none}}
+@media (prefers-reduced-motion:reduce){.floatcard{animation:none}}
+
+/* ============================================================
    INTERACTIVE / MOTION EXTRAS — all opacity+transform only,
    rAF-throttled where JS-driven, no layout properties touched
    per frame. Reduced-motion is handled by the rule above.
