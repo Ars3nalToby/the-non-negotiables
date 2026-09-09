@@ -73,8 +73,8 @@
     </div>
     <div>
       <p class="deadline__l">Net spend so far</p>
-      <p class="deadline__t" style="color:var(--red)">~£153m</p>
-      <p class="deadline__n">Five in, seven out. Refining a title-winning squad rather than rebuilding one.</p>
+      <p class="deadline__t" style="color:var(--red)" id="dl-net">—</p>
+      <p class="deadline__n" id="dl-inout">—</p>
     </div>
   </div>
 
@@ -87,14 +87,6 @@
       <h3 style="font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:0 0 10px">Out</h3>
       <div class="mv" id="mv-out"></div>
     </div>
-  </div>
-
-  <div class="box" style="margin-top:18px">
-    <h3>Still live</h3>
-    <p><strong style="color:var(--ink)">Bradley Barcola (PSG)</strong> — the one deal that would define the window. Arsenal missed on Vinícius Júnior when he extended at Madrid, and the elite left-sided attacker brief never got filled. Reported to need a sale to fund it.</p>
-    <p><strong style="color:var(--ink)">Julián Álvarez (Atlético)</strong> — Spanish press pushing hard on this one. Would be the striker depth behind Gyökeres that Arteta has been circling all summer.</p>
-    <p><strong style="color:var(--ink)">Outgoing:</strong> Fabio Vieira (Hamburg keen, Arsenal holding at €20m+), Ethan Nwaneri (marketable homegrown profit), and Arteta has said publicly that another departure is coming.</p>
-    <p style="margin-bottom:0"><strong style="color:var(--ink)">The actual squad hole:</strong> cover on the right side of defence. Everyone is talking about wingers.</p>
   </div>
 
   <div style="margin-top:22px">
@@ -135,6 +127,17 @@ const mvRow = (m, dir) => `<div class="mv__r mv__${dir}">
   <span class="mv__fee">${m.fee}</span></div>`;
 $('#mv-in').innerHTML = MOVES_IN.map(m => mvRow(m,'in')).join('');
 $('#mv-out').innerHTML = MOVES_OUT.map(m => mvRow(m,'out')).join('');
+
+/* Net spend and the in/out count are computed from the data itself,
+   not hand-typed, so they can never drift out of sync with MOVES_IN /
+   MOVES_OUT the way a hardcoded figure did before. 'Free' and 'Loan'
+   parse as 0 (no digits) — correct, they carry no fee. */
+const feeM = f => { const m = f.match(/[\d.]+/); return m ? parseFloat(m[0]) : 0; };
+const inTotal = MOVES_IN.reduce((s,m) => s + feeM(m.fee), 0);
+const outTotal = MOVES_OUT.reduce((s,m) => s + feeM(m.fee), 0);
+const net = inTotal - outTotal;
+$('#dl-net').textContent = `${net >= 0 ? '' : '+'}£${Math.abs(net).toFixed(net % 1 ? 1 : 0)}m`;
+$('#dl-inout').textContent = `${MOVES_IN.length} in, ${MOVES_OUT.length} out. Refining a title-winning squad rather than rebuilding one.`;
 
 function tickDeadline(){
   const ms = new Date(DEADLINE).getTime() - Date.now();
