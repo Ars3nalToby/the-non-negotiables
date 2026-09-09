@@ -95,8 +95,8 @@
       <a class="btn btn--ghost" href="timetable.html">Full season timetable</a>
     </div>
   </div>
-  <div class="floatcard floatcard--a" aria-hidden="true"><b>38</b><span>fixtures</span></div>
-  <div class="floatcard floatcard--b" aria-hidden="true"><b>60,700</b><span>capacity</span></div>
+  <div class="floatcard floatcard--a" aria-hidden="true"><b data-countup>38</b><span>fixtures</span></div>
+  <div class="floatcard floatcard--b" aria-hidden="true"><b data-countup>60,700</b><span>capacity</span></div>
 </section>
 
 <div class="mascot-row" aria-hidden="true">
@@ -298,6 +298,8 @@ function tickBoard(){
 $('#board-open').addEventListener('click', () => openDrawer(boardIdx));
 
 paintBoard(boardIdx);
+splitWords($('#board-home'));
+splitWords($('#board-away'));
 tickBoard();
 setInterval(tickBoard, 1000);
 

@@ -755,6 +755,17 @@ button{font:inherit;color:inherit;cursor:pointer}
 @media (prefers-reduced-motion:reduce){.floatcard{animation:none}}
 
 /* ============================================================
+   ANIMATED TEXT — big headings split into words and revealed on
+   load, one after another. JS-authored only (splitWords in app.js);
+   if JS never runs, the heading just sits there as normal static
+   text — no hidden-by-default risk.
+   ============================================================ */
+.tw-mask{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+.tw-word{display:inline-block;opacity:0;transform:translateY(105%);animation:twIn .65s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes twIn{to{opacity:1;transform:translateY(0)}}
+@media (prefers-reduced-motion:reduce){.tw-word{animation:none;opacity:1;transform:none}}
+
+/* ============================================================
    INTERACTIVE / MOTION EXTRAS — all opacity+transform only,
    rAF-throttled where JS-driven, no layout properties touched
    per frame. Reduced-motion is handled by the rule above.

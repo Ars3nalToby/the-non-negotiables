@@ -239,6 +239,43 @@ const monthLabel = d => fmt(d,LDN,{month:'long',year:'numeric'});
 const esc = s => String(s).replace(/[&<>"']/g, c => (
   {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
+/* Splits a heading's text into one <span> per word, each masked and
+   slid up into place with its own delay — a one-time load-in
+   flourish for big static headings. Never touch an element another
+   script keeps rewriting via textContent (it'll just get wiped) —
+   this is for static headings only. No-op under reduced-motion, and
+   a no-op if it's ever called twice on the same element. */
+function splitWords(el){
+  if(!el || el.dataset.split || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  el.dataset.split = '1';
+  const words = el.textContent.trim().split(/\s+/);
+  el.innerHTML = words.map((w,i) =>
+    `<span class="tw-mask"><span class="tw-word" style="animation-delay:${i * 55}ms">${esc(w)}</span></span>`
+  ).join(' ');
+}
+
+/* Animates a number counting up from 0 to its target once, the first
+   time the element scrolls into view. Target comes from the element's
+   own current text (digits + commas only) so the static fallback and
+   the animated version can never disagree. */
+function countUp(el, duration = 900){
+  if(!el || el.dataset.counted) return;
+  const target = parseInt(el.textContent.replace(/[^\d]/g, ''), 10);
+  if(!Number.isFinite(target)) return;
+  el.dataset.counted = '1';
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const start = performance.now();
+  const tick = now => {
+    const p = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(target * eased).toLocaleString('en-GB');
+    if(p < 1) requestAnimationFrame(tick);
+    else el.textContent = target.toLocaleString('en-GB');
+  };
+  el.textContent = '0';
+  requestAnimationFrame(tick);
+}
+
 /* ============================================================
    NEXT_I — index of the next unplayed fixture. Shared because the
    hub (which fixture the hero board shows), the timetable ("still to
@@ -438,6 +475,27 @@ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     });
   }, {rootMargin:'0px 0px -40px 0px'});
   document.querySelectorAll('.row, .p, .date, .read, .section__head').forEach(el => io.observe(el));
+}
+
+/* Big static page headings get the word-by-word slide-in on load.
+   .page-head h1 is never rewritten by any page's own script, so this
+   is safe everywhere it appears — one call, once, per page load. */
+document.querySelectorAll('.page-head h1').forEach(splitWords);
+
+/* Stat numbers (floating badges, etc.) count up from 0 the moment
+   they scroll into view. Reuses the same rootMargin as the reveal
+   observer above but is a separate instance since these need
+   isolated once-only triggering distinct from the CSS reveal class. */
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const countEls = document.querySelectorAll('[data-countup]');
+  if(countEls.length){
+    const cio = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if(en.isIntersecting){ countUp(en.target); cio.unobserve(en.target); }
+      });
+    }, {rootMargin:'0px 0px -20px 0px'});
+    countEls.forEach(el => cio.observe(el));
+  }
 }
 
 /* Mascots roll as you scroll past them — each ball's own rotation
