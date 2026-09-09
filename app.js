@@ -305,7 +305,8 @@ const MOVES_OUT = [
   {name:'Gabriel Jesus', club:'Barcelona', fee:'£8.6m'},
   {name:'Fabio Vieira', club:'Hamburg', fee:'£8.6m'},
   {name:'Ethan Nwaneri', club:'Borussia Dortmund · loan', fee:'Loan'},
-  {name:'Gabriel Martinelli', club:'Al Hilal', fee:'£60m'}
+  {name:'Gabriel Martinelli', club:'Al Hilal', fee:'£60m'},
+  {name:'Tommy Setford', club:'Stevenage · loan', fee:'Loan'}
 ];
 
 /* ---- Live wire ----
