@@ -434,6 +434,16 @@ function openDrawer(i){
       </div>
     </div>`;
 
+  /* Stagger the drawer's own cards in just behind the panel's slide-in
+     (.3s), rather than having everything appear at once the instant
+     the panel arrives. */
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    $('#d-body').querySelectorAll(':scope > .dcard, :scope > .stub').forEach((card,k) => {
+      card.classList.add('dcard-in');
+      card.style.setProperty('--dd', (180 + k * 70) + 'ms');
+    });
+  }
+
   lastFocus = document.activeElement;
   drawer.classList.add('is-open'); scrim.classList.add('is-open');
   drawer.setAttribute('aria-hidden','false');
@@ -474,7 +484,7 @@ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
       }
     });
   }, {rootMargin:'0px 0px -40px 0px'});
-  document.querySelectorAll('.row, .p, .date, .read, .section__head').forEach(el => io.observe(el));
+  document.querySelectorAll('.row, .p, .date, .read, .section__head, .widget').forEach(el => io.observe(el));
 }
 
 /* Big static page headings get the word-by-word slide-in on load.
@@ -539,3 +549,79 @@ if(mascotBalls.length && !window.matchMedia('(prefers-reduced-motion: reduce)').
   topBtn.addEventListener('click', () => window.scrollTo({top:0}));
   update();
 })();
+
+/* Hero → next-section handoff (hub only — #board doesn't exist on
+   sub-pages, hence the guard). As the hero board scrolls past the top
+   of the viewport, it eases back slightly (scale + fade) instead of
+   just vanishing under the next section — a cheap way to make the
+   transition feel deliberate without true scroll-driven pinning,
+   which risks real layout bugs stacked on top of the existing sticky
+   nav. rAF-throttled, same pattern as the mascot spin above. */
+(function heroHandoff(){
+  const board = $('#board');
+  if(!board || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let ticking = false;
+  const update = () => {
+    const r = board.getBoundingClientRect();
+    const progress = Math.min(1, Math.max(0, -r.top / r.height));
+    board.style.opacity = String(1 - progress * 0.5);
+    board.style.transform = `scale(${1 - progress * 0.04})`;
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if(!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, {passive:true});
+  update();
+})();
+
+/* Shared accordion open/close animation for every .acc on the site
+   (squad position groups, timetable months, ticket sale windows).
+   Intercepts the click that would normally toggle <details> natively
+   and drives the height transition with the Web Animations API
+   instead, then hands the `open` attribute back at the end — so
+   keyboard activation (Enter/Space fires a click on <summary> same as
+   a pointer click) and the existing chevron-rotation CSS keep working
+   unmodified. Skipped entirely under reduced-motion: native instant
+   toggle is untouched and still fully accessible. */
+function initAccordions(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('.acc').forEach(details => {
+    const summary = details.querySelector(':scope > .acc__summary');
+    const body = details.querySelector(':scope > .acc__body');
+    if(!summary || !body) return;
+    let anim = null, closing = false, expanding = false;
+    summary.addEventListener('click', e => {
+      e.preventDefault();
+      if(closing || !details.open) openAcc();
+      else if(expanding || details.open) closeAcc();
+    });
+    function openAcc(){
+      details.style.overflow = 'hidden';
+      const startHeight = details.offsetHeight;
+      details.open = true;
+      const endHeight = summary.offsetHeight + body.offsetHeight;
+      runAnim(startHeight, endHeight, true);
+    }
+    function closeAcc(){
+      details.style.overflow = 'hidden';
+      const startHeight = details.offsetHeight;
+      const endHeight = summary.offsetHeight;
+      runAnim(startHeight, endHeight, false);
+    }
+    function runAnim(from, to, opening){
+      if(anim) anim.cancel();
+      expanding = opening; closing = !opening;
+      anim = details.animate(
+        {height:[from + 'px', to + 'px']},
+        {duration:300, easing:'cubic-bezier(.22,.7,.3,1)'}
+      );
+      anim.onfinish = () => {
+        details.open = opening;
+        details.style.height = details.style.overflow = '';
+        anim = null; expanding = closing = false;
+      };
+      anim.oncancel = () => { expanding = closing = false; };
+    }
+  });
+}
+initAccordions();
