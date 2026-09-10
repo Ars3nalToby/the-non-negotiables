@@ -192,6 +192,19 @@ button{font:inherit;color:inherit;cursor:pointer}
   -webkit-backdrop-filter:blur(14px) saturate(1.4);
   border-bottom:1px solid var(--card-border);position:sticky;top:0;z-index:30;
 }
+/* The nav has grown to 11 items over several additions and no longer
+   fits most viewports — .nav__in already scrolls (overflow-x:auto),
+   but with no visual cue, an overflowing last item just looks
+   clipped/broken instead of "scroll for more". This fade sits at the
+   true right edge of .nav regardless of whether content overflows:
+   when it doesn't, it just overlays empty space past the last link
+   (harmless); when it does, it recedes the clipped item into the
+   background instead of hard-cutting it mid-letter. */
+.nav::after{
+  content:'';position:absolute;top:0;right:0;bottom:0;width:36px;
+  background:linear-gradient(to right, transparent, var(--paper));
+  pointer-events:none;
+}
 .nav__in{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-top:6px;padding-bottom:6px}
 .nav__in::-webkit-scrollbar{display:none}
 .nav a{
