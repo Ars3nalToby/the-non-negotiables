@@ -629,6 +629,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .pnote:first-of-type{border-top:0;padding-top:0;margin-top:0}
 .pnote h3{margin:0 0 5px;font-variation-settings:'wdth' 108;font-weight:800;font-size:clamp(19px,2.6vw,25px);letter-spacing:-.01em}
 .pnote .byline{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 14px}
+.pnote .standfirst{font-family:var(--serif);font-style:italic;font-weight:500;font-size:19px;line-height:1.55;color:var(--ink-2);margin:0 0 20px;max-width:62ch}
 .pnote p{font-family:var(--serif);font-size:17.5px;line-height:1.68;margin:0 0 15px;color:var(--ink);max-width:68ch}
 .pnote p:last-child{margin-bottom:0}
 .pnote .drop::first-letter{float:left;font-family:var(--sans);font-weight:900;font-size:3.1em;line-height:.82;padding:4px 10px 0 0;color:var(--red);font-variation-settings:'wdth' 112}

@@ -123,6 +123,7 @@
 $('#programme-feed').innerHTML = COLUMNS.map((c,i) => `<article class="pnote">
   <h3>${c.title}</h3>
   <p class="byline">${c.byline}</p>
+  ${c.standfirst ? `<p class="standfirst">${c.standfirst}</p>` : ''}
   ${c.paras.map((p,j) => `<p${i === 0 && j === 0 ? ' class="drop"' : ''}>${p}</p>`).join('')}
 </article>`).join('');
 </script>
