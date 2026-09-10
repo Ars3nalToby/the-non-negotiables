@@ -192,20 +192,11 @@ button{font:inherit;color:inherit;cursor:pointer}
   -webkit-backdrop-filter:blur(14px) saturate(1.4);
   border-bottom:1px solid var(--card-border);position:sticky;top:0;z-index:30;
 }
-/* The nav has grown to 11 items over several additions and no longer
-   fits most viewports — .nav__in already scrolls (overflow-x:auto),
-   but with no visual cue, an overflowing last item just looks
-   clipped/broken instead of "scroll for more". This fade sits at the
-   true right edge of .nav regardless of whether content overflows:
-   when it doesn't, it just overlays empty space past the last link
-   (harmless); when it does, it recedes the clipped item into the
-   background instead of hard-cutting it mid-letter. */
-.nav::after{
-  content:'';position:absolute;top:0;right:0;bottom:0;width:36px;
-  background:linear-gradient(to right, transparent, var(--paper));
-  pointer-events:none;
+.nav__in{
+  display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-top:6px;padding-bottom:6px;
+  -webkit-mask-image:linear-gradient(to right,#000 92%,transparent 100%);
+  mask-image:linear-gradient(to right,#000 92%,transparent 100%);
 }
-.nav__in{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-top:6px;padding-bottom:6px}
 .nav__in::-webkit-scrollbar{display:none}
 .nav a{
   font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;font-weight:500;
@@ -698,7 +689,7 @@ button{font:inherit;color:inherit;cursor:pointer}
   .mh-right{padding-bottom:0}
   .mh-meta{display:none}
   .theme{width:44px;height:44px}
-  .nav__in{-webkit-overflow-scrolling:touch;-webkit-mask-image:linear-gradient(to right,#000 88%,transparent 100%);mask-image:linear-gradient(to right,#000 88%,transparent 100%)}
+  .nav__in{-webkit-overflow-scrolling:touch}
   .nav a{padding:10px 13px;font-size:11.5px}
   .board__in{padding-top:26px;padding-bottom:28px}
   .board__grid{grid-template-columns:1fr;gap:10px;align-items:stretch}
