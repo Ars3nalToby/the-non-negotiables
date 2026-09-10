@@ -764,7 +764,18 @@ button{font:inherit;color:inherit;cursor:pointer}
 .mascot--flip{animation-delay:-1.7s}
 .mascot__ball{width:100%;display:block;filter:drop-shadow(0 8px 16px rgba(0,0,0,.16));transition:transform .05s linear}
 @keyframes mascotBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@media (prefers-reduced-motion:reduce){.mascot{animation:none}}
+/* Hover wobble lives on the OUTER .mascot, not .mascot__ball — the
+   ball's transform is already claimed every frame by the scroll-spin
+   JS, so a hover animation there would fight it. The outer wrapper's
+   animation is CSS-only (mascotBob), so :hover cleanly replacing it
+   for the wobble's duration and reverting after is a plain cascade,
+   no JS/CSS tug-of-war. */
+.mascot:hover{animation:mascotWobble .5s var(--ease-spring)}
+@keyframes mascotWobble{0%,100%{transform:rotate(0)}25%{transform:rotate(-9deg)}75%{transform:rotate(9deg)}}
+/* Pupils get a fast, linear follow — deliberately not eased, so they
+   read as tracking the cursor in real time rather than lagging. */
+.mascot__pupil{transition:cx .1s linear,cy .1s linear}
+@media (prefers-reduced-motion:reduce){.mascot{animation:none}.mascot:hover{animation:none}}
 
 .floatcard{
   position:absolute;z-index:2;background:var(--card);color:var(--ink);
