@@ -119,7 +119,7 @@ const FIXTURES = [
    All eight are 20:00 UK (21:00 CET). GMT from matchday 4 onward. */
 const CL = [
   {md:1, ko:'2026-09-09T20:00:00+01:00', v:'A', name:'Napoli', country:'Italy', pot:3,
-   ground:'Stadio Diego Armando Maradona', city:'Naples',
+   ground:'Stadio Diego Armando Maradona', city:'Naples', result:'W 1-0', scorers:'\u00d8degaard',
    note:'Straight into it. Naples, the Maradona, forty-odd thousand people who treat a European night as a civic event. Opening the league phase away in Campania is about as unforgiving a start as the draw could have given us \u2014 and if you only do one away trip this season, do this one. Then do not attempt to drive anywhere.'},
   {md:2, ko:'2026-10-13T20:00:00+01:00', v:'H', name:'Lille', country:'France', pot:3,
    ground:'Emirates Stadium', city:'London',
@@ -355,6 +355,53 @@ const WIRE_FALLBACK = [
   {t:'Arsenal transfer live blog', u:'https://www.skysports.com/arsenal-transfer-news', s:'Sky Sports'},
   {t:'Official ins and outs, 2026/27', u:'https://www.arsenal.com/news/arsenal-transfers-all-the-ins-and-outs-in-202627-a8qx29v8B1fR', s:'Arsenal.com'},
   {t:'Arsenal news aggregator — every outlet, newest first', u:'https://www.newsnow.co.uk/h/Sport/Football/Premier+League/Arsenal/Transfer+News', s:'NewsNow'}
+];
+
+/* ============================================================
+   NEWS — this site's own original coverage. Every entry: a short
+   original write-up (never a copied sentence) plus a real, working
+   link to the primary source. Newest first — the scheduled routine
+   prepends new items here, it never rewrites news.html itself.
+   ============================================================ */
+const NEWS = [
+  {date:'2026-09-09', headline:'Arsenal open the Champions League with an away win at Napoli',
+   summary:'First points on the board in Europe, and it came the hard way — away, at a ground that does not do quiet nights. Ødegaard settled it with fifteen minutes left, low into the corner off a Tzolis assist. One down, seven to go.',
+   source:'VAVEL', url:'https://www.vavel.com/en-us/soccer/2026/09/09/1270590-napoli-vs-arsenal-live-score-uefa-champions-league.html'},
+  {date:'2026-09-08', headline:'Arsenal sign Crystal Palace academy striker Mylo Bernard',
+   summary:'The ins-and-outs are not only senior-squad business. Palace’s leading Under-18 scorer this season joins as a scholar, with a pro contract already lined up for when he turns seventeen — eight years at Palace, gone in one announcement.',
+   source:'Arsenal.com', url:'https://www.arsenal.com/news/mylo-bernard-joins-arsenal-a6HBo1d0UJCP'},
+  {date:'2026-09-05', headline:'Arteta: Mosquera absence precautionary, Timber closing in on a return',
+   summary:'Arteta downplayed Mosquera sitting out the Chelsea game as precaution rather than a fresh knock, and gave the clearest signal yet that Timber’s long lay-off is nearly over — “in a really good condition,” with a call on his involvement coming after Saturday’s session.',
+   source:'Daily Cannon', url:'https://dailycannon.com/2026/09/arteta-alonso-arsenal-chelsea-injury-updates/'}
+];
+
+/* ============================================================
+   COLUMNS — original opinion writing, in the site's own voice.
+   Newest first. Grows over time (the scheduled routine adds one
+   roughly weekly once the last entry is stale) rather than sitting
+   at a fixed three forever — programme.html just renders whatever's
+   here, it never carries its own hardcoded essays.
+   ============================================================ */
+const COLUMNS = [
+  {date:'2026-09-10', title:'One Napoli night doesn’t make a European campaign', byline:'On matchday 1', paras:[
+    'An away win at a ground that eats away form teams alive is a good habit to start the league phase with, and it is worth saying plainly: Ødegaard scoring the winner with fifteen minutes left, off a Tzolis assist, in Naples, is exactly the kind of result that gets forgotten by January and mattered enormously on the night.',
+    'What it does not do is tell you anything about matchday 3 at the Allianz. Eight games, four pots, and a format specifically designed so that one bad Tuesday in a random city can undo three good ones. The habit that matters is not winning the big away nights — it is not dropping points at home to the sides you are supposed to beat, because that is where league-phase campaigns actually die.',
+    'Enjoy Naples. Then forget about it by Friday.'
+  ]},
+  {date:'2026-08-21', title:'Defending it is a completely different job', byline:'Season opener · August 2026', paras:[
+    'Twenty-two years is a long time to spend explaining to people why the wait was nearly over. Now it is over, and the strange thing nobody warns you about is that winning the thing does not make the next season easier. It makes it louder. Every draw is a wobble. Every substitution is a referendum. Every set-piece conceded gets its own six-minute segment on a channel you have never heard of.',
+    'The squad is better than the one that won it. Bruno Guimarães walking into a midfield that already had Zubimendi, Rice and Ødegaard is faintly obscene. Tzolis gives us a left side that does not depend on one man’s hamstring. Hincapié is permanent. Meslier is a free goalkeeper who has played a hundred Premier League games. This is what a club looks like when it has stopped being sentimental about the gaps.',
+    'What we are actually watching for this year is whether the standards hold when the motivation changes. Chasing is easy. Being chased is the test.'
+  ]},
+  {date:'2026-08-15', title:'In defence of the captain, again, forever', byline:'On Martin Ødegaard', paras:[
+    'Every eighteen months the discourse cycles back to whether the armband should move. It is always framed as a compliment to Declan Rice, which is a neat trick, because it means anyone defending Ødegaard sounds like they are attacking a player everyone loves.',
+    'So let’s be plain about it. Captaincy at this club, under this manager, is not about who wins the most duels. It is about who holds the shape of the idea when the game is going badly — who keeps demanding the ball in the pocket at 0-0 away from home in the 71st minute when the easy thing is to hide. He does that in games where his numbers look ordinary. That is precisely the point.',
+    'Also he scored in the opener and the shot took a deflection, which is the most Ødegaard sentence ever written.'
+  ]},
+  {date:'2026-08-10', title:'A word on watching this from 16,000km away', byline:'The Brisbane clause', paras:[
+    'There is a specific kind of supporter who has never once walked up Drayton Park but can tell you exactly what the away kit looked like in 2011 because they were awake at 2am to see it. That is most of us out here. The fixture list is not a fixture list, it is a sleep schedule, and a 3pm Saturday in London is midnight on Sunday morning in Queensland.',
+    'So this site puts the Brisbane time next to every kick-off, and flags the ones that land between 1am and 6am — the genuinely brutal ones, where you either commit or you spend Sunday morning dodging the score. Both are respectable choices. Only one of them is correct.'
+  ]}
 ];
 
 /* ============================================================

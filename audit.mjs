@@ -41,6 +41,8 @@ const evalArr = (src, label) => {
 const FIXTURES = evalArr(block('FIXTURES'), 'FIXTURES');
 const CL = evalArr(block('CL'), 'CL');
 const SQUAD = evalArr(block('SQUAD'), 'SQUAD');
+const NEWS = evalArr(block('NEWS'), 'NEWS');
+const COLUMNS = evalArr(block('COLUMNS'), 'COLUMNS');
 
 const now = new Date();
 const LDN = 'Europe/London', BNE = 'Australia/Brisbane';
@@ -140,6 +142,27 @@ if (noIg.length) {
 const noX = SQUAD.filter(p => !p.x);
 if (noX.length) {
   flag('TODO', 'squad', `${noX.length} of ${SQUAD.length} players have no verified X handle: ${noX.slice(0,5).map(p=>p.name).join(', ')}${noX.length>5?'…':''}`);
+}
+
+/* ---------- 5b. news / columns freshness ----------
+   The whole point of these two is that they stay current. Flag it
+   the same way stale fixture data gets flagged, rather than letting
+   "News" quietly become a page full of last month's stories. */
+if (!NEWS.length) {
+  flag('TODO', 'news', 'NEWS is empty — news.html will render nothing.');
+} else {
+  const newsAgeDays = (now - new Date(NEWS[0].date)) / 86400000;
+  if (newsAgeDays > 5) {
+    flag('DATA', 'news', `Newest NEWS item is ${Math.round(newsAgeDays)} day(s) old (${NEWS[0].headline}). Due a refresh.`);
+  }
+}
+if (!COLUMNS.length) {
+  flag('TODO', 'columns', 'COLUMNS is empty — programme.html will render nothing.');
+} else {
+  const colAgeDays = (now - new Date(COLUMNS[0].date)) / 86400000;
+  if (colAgeDays > 10) {
+    flag('DATA', 'columns', `Newest column is ${Math.round(colAgeDays)} day(s) old (${COLUMNS[0].title}). A new one is due.`);
+  }
 }
 
 /* ---------- 6. legal + safety invariants (must never regress) ----------
@@ -333,7 +356,7 @@ function scanStrings(value, path, seen) {
     for (const [k, v] of Object.entries(value)) scanStrings(v, `${path}.${k}`, seen);
   }
 }
-const SECURITY_SCAN_TARGETS = ['CLUBS', 'FIXTURES', 'CL', 'DEMAND_TEXT', 'KEY_DATES', 'SQUAD', 'QUIZ', 'BINGO', 'MOVES_IN', 'MOVES_OUT', 'WIRE_FALLBACK'];
+const SECURITY_SCAN_TARGETS = ['CLUBS', 'FIXTURES', 'CL', 'DEMAND_TEXT', 'KEY_DATES', 'SQUAD', 'QUIZ', 'BINGO', 'MOVES_IN', 'MOVES_OUT', 'WIRE_FALLBACK', 'NEWS', 'COLUMNS'];
 for (const name of SECURITY_SCAN_TARGETS) {
   const val = evalDecl(name);
   if (val != null) scanStrings(val, name, new Set());

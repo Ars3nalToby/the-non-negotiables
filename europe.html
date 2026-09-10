@@ -45,6 +45,7 @@
 
 <nav class="nav"><div class="wrap nav__in">
   <a href="index.html">Home</a>
+  <a href="news.html">News</a>
   <a href="timetable.html">Timetable</a>
   <a href="tickets.html">Ticket desk</a>
   <a href="europe.html" aria-current="page">Europe</a>
@@ -161,6 +162,7 @@ $('#euro-grid').innerHTML = CL.map(m => {
       <h3 class="eu__name">${m.name}</h3>
       <p class="eu__grd">${m.ground}${away ? ' · ' + m.city : ''}</p>
       <p class="eu__bne">${t24(d,BNE)} Brisbane · ${dayShort(d,BNE)}${isBrutal(d) ? ' <i class="flag">●</i>' : ''}</p>
+      ${m.result ? `<p class="eu__bne" style="color:var(--ok);font-weight:600">${m.result}${m.scorers ? ' — ' + m.scorers : ''}</p>` : ''}
       <p class="eu__note">${m.note}</p>
       <div class="eu__links">${links.map(l => `<a href="${l.u}" target="_blank" rel="noopener noreferrer">${l.t}</a>`).join('')}</div>
     </div>

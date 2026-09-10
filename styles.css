@@ -545,6 +545,14 @@ button{font:inherit;color:inherit;cursor:pointer}
   letter-spacing:.1em;text-transform:uppercase;color:var(--red-deep);padding-bottom:12px;border-bottom:1px solid var(--rule-soft);
 }
 .dtitle{font-variation-settings:'wdth' 110;font-weight:900;font-size:clamp(24px,5.2vw,34px);line-height:1.05;text-transform:uppercase;letter-spacing:-.02em;margin:0 0 10px}
+/* A real headline inside a .dcard (news items) — .dcard h3 alone is
+   the small mono section-label style used in the fixture drawer
+   ("The ground", "Tickets"), wrong register for a full sentence. */
+.dcard h3.news-h{
+  font-family:var(--sans);font-size:19px;font-weight:800;text-transform:none;
+  letter-spacing:-.01em;color:var(--ink);border-bottom:none;padding-bottom:0;
+  font-variation-settings:'wdth' 106;line-height:1.3;
+}
 .dsub{font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;color:var(--mute);text-transform:uppercase}
 .stub{position:relative;background:var(--card);border:1px solid var(--card-border);padding:20px;margin-bottom:16px;border-radius:var(--r-lg);box-shadow:var(--shadow-sm)}
 .stub::before,.stub::after{display:none}

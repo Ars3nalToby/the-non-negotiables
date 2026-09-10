@@ -17,13 +17,19 @@ script; there's still no build step, no bundler.
 index.html              Hub. Hero match board + a grid of clickable
                         "widget" cards, one per section, each with a
                         live teaser pulled from the shared data.
+news.html                Original news coverage, newest first — short
+                        write-ups in this site's own voice, each
+                        linked to its real source. Renders from NEWS;
+                        never a hardcoded item.
 timetable.html           Full season fixture list (month accordion).
 tickets.html             Ticket desk (sale windows) + Away Crew board.
 europe.html              Champions League cards + key dates.
 transfers.html            Transfer window countdown + live news wire.
 squad.html               First-team squad, grouped by position.
 junior.html               Junior Gunners — read-only, quiz + bingo.
-programme.html            Editorial programme notes.
+programme.html            Original opinion column, newest first — grows
+                        over time (routine adds one roughly weekly).
+                        Renders from COLUMNS; never a hardcoded essay.
 reading.html               Arseblog / Tim Stillman tribute + links.
 fanart.html                Fan artists, embedded live from their own X
                         accounts (official embed widget) — never
@@ -97,6 +103,8 @@ page's chrome rather than reinventing it.
 | `MOVES_IN` / `MOVES_OUT` | Transfer window, current summer |
 | `KEY_DATES` | Cup rounds, CL matchdays, finals |
 | `QUIZ` / `BINGO` | Junior Gunners content |
+| `NEWS` | Original news write-ups, newest first (`news.html`). Every entry: `date`, `headline`, `summary` (original wording, never copied), `source`, `url` (real, working link). audit.mjs flags it stale after 5 days. |
+| `COLUMNS` | Original opinion columns, newest first (`programme.html`). Every entry: `date`, `title`, `byline`, `paras` (array of paragraph strings). audit.mjs flags it stale after 10 days. |
 
 ### The timezone rule (read this before touching any date)
 
