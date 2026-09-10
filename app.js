@@ -574,6 +574,34 @@ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
   }
 }
 
+/* Nav drag-to-scroll — mouse users with no horizontal scroll wheel
+   have no native way to reach nav items past the fold; click-and-drag
+   fixes that without touching layout. Scoped to pointerType 'mouse'
+   only — touch and pen already get real native scrolling, and
+   hijacking those pointer types tends to fight the browser's own
+   momentum/inertia scrolling rather than improve on it. A drag past
+   a few pixels marks the gesture as "real" so the subsequent click
+   doesn't also fire a navigation (handled by the .is-dragging class
+   in CSS turning off pointer-events on the links themselves). */
+document.querySelectorAll('.nav__in').forEach(nav => {
+  let down = false, startX = 0, startScroll = 0;
+  nav.addEventListener('pointerdown', e => {
+    if(e.pointerType !== 'mouse') return;
+    down = true;
+    startX = e.clientX;
+    startScroll = nav.scrollLeft;
+  });
+  nav.addEventListener('pointermove', e => {
+    if(!down) return;
+    const dx = e.clientX - startX;
+    if(!nav.classList.contains('is-dragging') && Math.abs(dx) > 4) nav.classList.add('is-dragging');
+    if(nav.classList.contains('is-dragging')) nav.scrollLeft = startScroll - dx;
+  });
+  const endDrag = () => { down = false; nav.classList.remove('is-dragging'); };
+  nav.addEventListener('pointerup', endDrag);
+  nav.addEventListener('pointerleave', endDrag);
+});
+
 /* Mascots roll as you scroll past them — each ball's own rotation
    tracks the page's scroll position, offset slightly per-ball so a
    row of them doesn't spin in perfect unison. Runs inside the same

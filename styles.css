@@ -192,13 +192,20 @@ button{font:inherit;color:inherit;cursor:pointer}
   -webkit-backdrop-filter:blur(14px) saturate(1.4);
   border-bottom:1px solid var(--card-border);position:sticky;top:0;z-index:30;
 }
-/* Wraps instead of scrolling — every link is always visible with no
-   interaction required. 11 items don't fit one row at most widths;
-   scrolling to reach the rest depends on a gesture some users don't
-   have (no horizontal scroll wheel, unfamiliar trackpad gesture,
-   etc.) and a visual fade only signals "more exists", it doesn't
-   make it reachable. Wrapping has no such dependency. */
-.nav__in{display:flex;flex-wrap:wrap;gap:4px 8px;padding-top:8px;padding-bottom:8px}
+/* Single row, drag-to-scroll (app.js) covers mouse users with no
+   horizontal scroll wheel; native scroll/swipe covers trackpad and
+   touch; the mask fade signals there's more. Wrapping to a second
+   row was tried and looked sparse/unbalanced with only 2 items on
+   it — reverted in favour of drag, which fixes the same reachability
+   problem without the layout cost. */
+.nav__in{
+  display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-top:6px;padding-bottom:6px;
+  cursor:grab;-webkit-mask-image:linear-gradient(to right,#000 92%,transparent 100%);
+  mask-image:linear-gradient(to right,#000 92%,transparent 100%);
+}
+.nav__in::-webkit-scrollbar{display:none}
+.nav__in.is-dragging{cursor:grabbing;scroll-snap-type:none}
+.nav__in.is-dragging a{pointer-events:none}
 .nav a{
   font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;font-weight:500;
   text-transform:uppercase;text-decoration:none;color:var(--ink-2);
