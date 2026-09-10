@@ -76,6 +76,25 @@
   --pad:clamp(20px,4.5vw,48px);
   --maxw:1220px;
   --r-sm:10px;--r-md:16px;--r-lg:22px;--r-xl:28px;--r-pill:999px;
+
+  /* Spacing scale — for new/rebuilt components (Phases 2-4). Existing
+     component padding/gaps are untouched in this phase; retrofitting
+     ~30 stable, working rules for a purely cosmetic scale isn't worth
+     the regression risk on its own. */
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:20px;
+  --sp-6:24px; --sp-7:32px; --sp-8:40px; --sp-9:56px; --sp-10:72px;
+
+  /* Motion tokens. Two duration tiers cover everything on this site:
+     -fast for hover/press feedback, -base for content entrances.
+     Ambient loops (the mascot's idle bob, the hero glow) keep their
+     own bespoke durations — they're deliberately unique rhythms, not
+     UI feedback, so forcing them onto this scale would blur the two
+     apart. -ease-out is the house curve for anything arriving on
+     screen; -ease-spring is reserved for panel/drawer motion. */
+  --dur-fast:160ms; --dur-base:600ms;
+  --ease-out:cubic-bezier(.16,.8,.24,1);
+  --ease-spring:cubic-bezier(.22,.7,.3,1);
+  --ease-in-out:cubic-bezier(.4,0,.2,1);
 }
 
 *{box-sizing:border-box}
@@ -89,7 +108,16 @@ body{
   font-size:16px;line-height:1.6;letter-spacing:-.001em;
   transition:background-color .25s ease,color .25s ease;
   text-wrap:pretty;
+  animation:pageIn .25s var(--ease-out);
 }
+/* Page arrival — opacity only (no transform/translate), so it can
+   never introduce layout shift. This is deliberately NOT a full
+   page-transition system: that would mean intercepting link clicks
+   to fade out before navigating, which risks breaking native
+   middle-click/ctrl-click-to-new-tab and back-button behaviour on a
+   plain multi-page site. An arrival fade gets most of the "polished
+   transition" feeling without touching navigation at all. */
+@keyframes pageIn{from{opacity:0}to{opacity:1}}
 img{max-width:100%}
 a{color:var(--red-deep);text-decoration:none}
 a:hover{color:var(--red)}
@@ -149,9 +177,10 @@ button{font:inherit;color:inherit;cursor:pointer}
 .theme{
   width:44px;height:44px;border:1px solid var(--card-border);background:var(--card);
   border-radius:50%;display:grid;place-items:center;flex:0 0 auto;box-shadow:var(--shadow-sm);
-  transition:border-color .16s ease,box-shadow .16s ease,transform .16s ease;
+  transition:border-color var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out);
 }
 .theme:hover{border-color:var(--red);box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.theme:active{transform:scale(.92)}
 .theme svg{width:19px;height:19px;stroke:var(--ink);fill:none;stroke-width:1.7;stroke-linecap:round}
 [data-theme="light"] .theme .moon{display:block}
 [data-theme="light"] .theme .sun{display:none}
@@ -168,7 +197,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .nav a{
   font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;font-weight:500;
   text-transform:uppercase;text-decoration:none;color:var(--ink-2);
-  padding:10px 16px;white-space:nowrap;border-radius:var(--r-pill);transition:background .16s ease,color .16s ease;
+  padding:10px 16px;white-space:nowrap;border-radius:var(--r-pill);transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out);
 }
 .nav a:hover{color:var(--ink);background:var(--card-2)}
 
@@ -189,7 +218,7 @@ button{font:inherit;color:inherit;cursor:pointer}
   content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
   background:radial-gradient(140% 100% at 8% 0%, rgba(239,1,7,.22), transparent 55%),
              radial-gradient(140% 100% at 92% 0%, rgba(11,46,99,.28), transparent 55%);
-  animation:boardGlow 9s ease-in-out infinite;
+  animation:boardGlow 9s var(--ease-in-out) infinite;
 }
 @keyframes boardGlow{0%,100%{opacity:.55}50%{opacity:1}}
 .board__in{padding-top:44px;padding-bottom:40px;position:relative;z-index:1}
@@ -236,7 +265,7 @@ button{font:inherit;color:inherit;cursor:pointer}
   display:inline-block;font-family:var(--mono);font-size:12.5px;letter-spacing:.09em;font-weight:600;
   text-transform:uppercase;padding:13px 22px;border-radius:var(--r-pill);
   border:1px solid currentColor;background:transparent;text-decoration:none;
-  transition:background .16s ease,color .16s ease,border-color .16s ease,transform .16s ease,box-shadow .16s ease;
+  transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out);
 }
 .btn--solid{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 8px 20px -6px rgba(239,1,7,.5)}
 .btn--solid:hover{background:var(--red-deep);border-color:var(--red-deep);color:#fff;transform:translateY(-1px);box-shadow:0 12px 26px -6px rgba(239,1,7,.6)}
@@ -244,6 +273,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .btn--ghost:hover{background:#fff;color:#0A1622;border-color:#fff;transform:translateY(-1px)}
 .btn--line{color:var(--ink-2);border-color:var(--card-border);background:var(--card)}
 .btn--line:hover{border-color:var(--red);color:var(--red);transform:translateY(-1px)}
+.btn:active{transform:scale(.96)}
 
 /* ============================================================
    SECTIONS
@@ -267,7 +297,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .chip{
   font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
   padding:9px 15px;border:1px solid var(--card-border);background:var(--card);border-radius:var(--r-pill);color:var(--mute);
-  transition:all .14s ease;
+  transition:all var(--dur-fast) var(--ease-out);
 }
 .chip:hover{border-color:var(--red);color:var(--red)}
 .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
@@ -281,7 +311,7 @@ button{font:inherit;color:inherit;cursor:pointer}
   display:grid;grid-template-columns:34px 92px 1fr 78px 132px 30px;gap:12px;align-items:center;
   width:100%;text-align:left;padding:16px 18px;background:var(--card);
   border:1px solid var(--card-border);border-radius:var(--r-md);box-shadow:var(--shadow-sm);
-  transition:box-shadow .14s ease,transform .14s ease,border-color .14s ease;
+  transition:box-shadow var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out);
 }
 .row:hover,.row:focus-visible{box-shadow:var(--shadow-md);transform:translateY(-1px);border-color:var(--card-border)}
 .row:focus-visible{outline:2px solid var(--red);outline-offset:2px}
@@ -299,7 +329,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .row__bne{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;color:var(--ink-2)}
 .row__bne b{display:block;font-size:15px;font-weight:600;color:var(--ink)}
 .row__bne .flag{color:var(--red);font-style:normal}
-.row__go{font-family:var(--mono);font-size:14px;color:var(--rule);text-align:right;transition:color .14s ease}
+.row__go{font-family:var(--mono);font-size:14px;color:var(--rule);text-align:right;transition:color var(--dur-fast) var(--ease-out)}
 .moved{
   font-style:normal;font-weight:700;background:var(--gold);color:#1a1408;
   padding:3px 7px;border-radius:5px;letter-spacing:.08em;font-size:10.5px;
@@ -327,7 +357,10 @@ button{font:inherit;color:inherit;cursor:pointer}
 .acc__summary{
   display:flex;align-items:center;gap:14px;cursor:pointer;padding:16px 18px;
   list-style:none;background:transparent;color:var(--ink);-webkit-tap-highlight-color:transparent;
+  transition:background var(--dur-fast) var(--ease-out);
 }
+.acc__summary:hover{background:var(--card-2)}
+.acc__summary:active{background:var(--rule-soft)}
 .acc__summary::-webkit-details-marker{display:none}
 .acc__summary::marker{content:''}
 .acc__tab{
@@ -337,7 +370,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .acc__chev{
   width:8px;height:8px;flex:0 0 auto;
   border-right:2px solid currentColor;border-bottom:2px solid currentColor;color:var(--mute);
-  transform:rotate(-45deg);transition:transform .18s ease;
+  transform:rotate(-45deg);transition:transform var(--dur-fast) var(--ease-out);
 }
 .acc[open] > .acc__summary .acc__chev{transform:rotate(45deg)}
 .acc__label{
@@ -403,8 +436,9 @@ button{font:inherit;color:inherit;cursor:pointer}
 }
 .tk__row b{display:block;font-weight:700;font-size:15px;font-variation-settings:'wdth' 104}
 .tk__row span.sub{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--mute);margin-top:3px}
-.tk__link{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;text-decoration:none;color:var(--ink-2);border:1px solid var(--card-border);padding:9px 10px;border-radius:var(--r-pill);text-align:center;display:block;transition:.14s ease}
+.tk__link{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;text-decoration:none;color:var(--ink-2);border:1px solid var(--card-border);padding:9px 10px;border-radius:var(--r-pill);text-align:center;display:block;transition:var(--dur-fast) var(--ease-out)}
 .tk__link:hover{border-color:var(--red);color:var(--red);background:var(--red-wash)}
+.tk__link:active{transform:scale(.97)}
 .tk__tier{font-family:var(--mono);font-size:12.5px;color:var(--ink-2)}
 @media (max-width:760px){
   .tk__row{grid-template-columns:1fr auto;row-gap:8px}
@@ -432,7 +466,7 @@ button{font:inherit;color:inherit;cursor:pointer}
    EUROPE
    ============================================================ */
 .euro{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:16px}
-.eu{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-lg);padding:0;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow-sm);transition:box-shadow .16s ease,transform .16s ease}
+.eu{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-lg);padding:0;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow-sm);transition:box-shadow var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out)}
 .eu:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
 .eu__top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 18px;background:var(--card-2)}
 .eu__md{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
@@ -471,7 +505,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .wire{display:grid;gap:10px}
 .wire__i{
   display:block;text-decoration:none;background:var(--card);border:1px solid var(--card-border);
-  padding:14px 16px;border-radius:var(--r-md);box-shadow:var(--shadow-sm);transition:border-color .14s ease,transform .14s ease;
+  padding:14px 16px;border-radius:var(--r-md);box-shadow:var(--shadow-sm);transition:border-color var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out);
   position:relative;padding-left:20px;
 }
 .wire__i::before{content:'';position:absolute;left:0;top:16px;bottom:16px;width:3px;border-radius:3px;background:var(--red)}
@@ -488,10 +522,10 @@ button{font:inherit;color:inherit;cursor:pointer}
 .drawer{
   position:fixed;top:0;right:0;height:100dvh;width:min(560px,100%);background:var(--paper);z-index:50;
   transform:translateX(101%);visibility:hidden;
-  transition:transform .3s cubic-bezier(.22,.7,.3,1), visibility 0s linear .3s;
+  transition:transform .3s var(--ease-spring), visibility 0s linear .3s;
   display:flex;flex-direction:column;box-shadow:var(--shadow-lg);border-radius:var(--r-xl) 0 0 var(--r-xl);
 }
-.drawer.is-open{transform:none;visibility:visible;transition:transform .3s cubic-bezier(.22,.7,.3,1), visibility 0s}
+.drawer.is-open{transform:none;visibility:visible;transition:transform .3s var(--ease-spring), visibility 0s}
 .drawer__bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 22px;background:var(--board-bg);color:#fff;flex:0 0 auto;border-radius:var(--r-xl) 0 0 0}
 .drawer__bar .eyebrow{margin:0;color:rgba(255,255,255,.55)}
 .drawer__bar .eyebrow::before{background:var(--red)}
@@ -499,6 +533,13 @@ button{font:inherit;color:inherit;cursor:pointer}
 .x:hover{background:#fff;color:#0A1622}
 .drawer__body{overflow-y:auto;padding:22px 22px 60px;flex:1 1 auto}
 .dcard{background:var(--card);border:1px solid var(--card-border);padding:20px;margin-bottom:16px;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm)}
+/* Drawer content stagger — JS (openDrawer) adds this class plus an
+   inline --dd delay per card once the panel itself has mostly slid
+   into place, so the cards feel like they're following the panel in,
+   not competing with it. */
+.dcard-in{opacity:0;transform:translateY(14px);animation:dcardIn var(--dur-base) var(--ease-spring) forwards;animation-delay:var(--dd,0ms)}
+@keyframes dcardIn{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.dcard-in{animation:none;opacity:1;transform:none}}
 .dcard h3{
   margin:0 0 14px;font-size:12.5px;font-weight:700;font-family:var(--mono);
   letter-spacing:.1em;text-transform:uppercase;color:var(--red-deep);padding-bottom:12px;border-bottom:1px solid var(--rule-soft);
@@ -511,8 +552,9 @@ button{font:inherit;color:inherit;cursor:pointer}
 .kv dt{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--red-deep);padding-top:3px}
 .kv dd{margin:0;font-weight:500}
 .linkgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:6px}
-.lnk{display:block;text-decoration:none;border:1px solid var(--card-border);background:var(--card-2);padding:13px 14px;border-radius:var(--r-md);transition:border-color .14s ease,transform .14s ease}
+.lnk{display:block;text-decoration:none;border:1px solid var(--card-border);background:var(--card-2);padding:13px 14px;border-radius:var(--r-md);transition:border-color var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out)}
 .lnk:hover{border-color:var(--red);transform:translateY(-1px)}
+.lnk:active{transform:scale(.98)}
 .lnk b{display:block;font-size:13.5px;font-weight:600;color:var(--ink)}
 .lnk span{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--mute);margin-top:4px;text-transform:uppercase}
 .note{font-family:var(--serif);font-size:16.5px;line-height:1.62;color:var(--ink);margin:0}
@@ -522,7 +564,7 @@ button{font:inherit;color:inherit;cursor:pointer}
    SQUAD
    ============================================================ */
 .squad{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:12px}
-.p{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-md);padding:16px;display:flex;flex-direction:column;gap:9px;box-shadow:var(--shadow-sm);transition:box-shadow .14s ease,transform .14s ease}
+.p{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-md);padding:16px;display:flex;flex-direction:column;gap:9px;box-shadow:var(--shadow-sm);transition:box-shadow var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out)}
 .p:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
 .p__no{font-family:var(--mono);font-size:12.5px;color:var(--mute);display:flex;justify-content:space-between;align-items:center}
 .p__pos{background:var(--card-2);padding:4px 8px;border-radius:var(--r-pill);letter-spacing:.08em}
@@ -531,6 +573,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .p__socials{margin-top:auto;display:flex;gap:6px}
 .p__social{flex:1;text-decoration:none;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--card-border);padding:8px 6px;border-radius:var(--r-pill);text-align:center;color:var(--ink-2)}
 .p__social:hover{border-color:var(--red);color:var(--red);background:var(--red-wash)}
+.p__social:active{transform:scale(.97)}
 
 /* ============================================================
    JUNIOR GUNNERS
@@ -550,7 +593,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .q__opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px}
 .q__opt{
   text-align:left;background:var(--card-2);border:1px solid var(--card-border);
-  padding:12px 14px;border-radius:var(--r-md);font-size:14.5px;transition:.14s ease;
+  padding:12px 14px;border-radius:var(--r-md);font-size:14.5px;transition:var(--dur-fast) var(--ease-out);
 }
 .q__opt:hover{border-color:var(--red)}
 .q__opt.is-right{background:var(--ok-wash);border-color:var(--ok);color:var(--ok);font-weight:600}
@@ -596,9 +639,10 @@ button{font:inherit;color:inherit;cursor:pointer}
 .reads{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:24px}
 .read{
   display:block;text-decoration:none;background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.12);padding:18px;border-radius:var(--r-lg);transition:.16s ease;
+  border:1px solid rgba(255,255,255,.12);padding:18px;border-radius:var(--r-lg);transition:var(--dur-fast) var(--ease-out);
 }
 .read:hover{background:rgba(255,255,255,.09);border-color:var(--red);transform:translateY(-2px)}
+.read:active{transform:scale(.98)}
 .read b{display:block;font-size:17px;font-weight:800;font-variation-settings:'wdth' 106;margin-bottom:6px;color:#fff}
 .read span{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--red-deep);margin-bottom:9px}
 .read p{font-family:var(--sans);font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.66);margin:0;max-width:none}
@@ -723,7 +767,7 @@ button{font:inherit;color:inherit;cursor:pointer}
   .verdict{font-size:14.5px;margin-top:14px;padding:12px 14px}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms !important;transition-duration:.001ms !important}}
-.reveal{opacity:0;transform:translateY(8px);animation:rise .5s cubic-bezier(.2,.7,.3,1) forwards}
+.reveal{opacity:0;transform:translateY(8px);animation:rise var(--dur-base) var(--ease-spring) forwards}
 @keyframes rise{to{opacity:1;transform:none}}
 
 /* ============================================================
@@ -733,18 +777,29 @@ button{font:inherit;color:inherit;cursor:pointer}
    scroll, so the two transforms never fight each other.
    ============================================================ */
 .mascot-row{display:flex;justify-content:center;margin:34px 0}
-.mascot{width:72px;animation:mascotBob 3.4s ease-in-out infinite}
+.mascot{width:72px;animation:mascotBob 3.4s var(--ease-in-out) infinite}
 .mascot--sm{width:56px}
 .mascot--flip{animation-delay:-1.7s}
 .mascot__ball{width:100%;display:block;filter:drop-shadow(0 8px 16px rgba(0,0,0,.16));transition:transform .05s linear}
 @keyframes mascotBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@media (prefers-reduced-motion:reduce){.mascot{animation:none}}
+/* Hover wobble lives on the OUTER .mascot, not .mascot__ball — the
+   ball's transform is already claimed every frame by the scroll-spin
+   JS, so a hover animation there would fight it. The outer wrapper's
+   animation is CSS-only (mascotBob), so :hover cleanly replacing it
+   for the wobble's duration and reverting after is a plain cascade,
+   no JS/CSS tug-of-war. */
+.mascot:hover{animation:mascotWobble .5s var(--ease-spring)}
+@keyframes mascotWobble{0%,100%{transform:rotate(0)}25%{transform:rotate(-9deg)}75%{transform:rotate(9deg)}}
+/* Pupils get a fast, linear follow — deliberately not eased, so they
+   read as tracking the cursor in real time rather than lagging. */
+.mascot__pupil{transition:cx .1s linear,cy .1s linear}
+@media (prefers-reduced-motion:reduce){.mascot{animation:none}.mascot:hover{animation:none}}
 
 .floatcard{
   position:absolute;z-index:2;background:var(--card);color:var(--ink);
   border-radius:var(--r-md);padding:9px 14px;box-shadow:var(--shadow-md);
   display:flex;flex-direction:column;line-height:1.15;pointer-events:none;
-  animation:floatBob 4.5s ease-in-out infinite;
+  animation:floatBob 4.5s var(--ease-in-out) infinite;
 }
 .floatcard b{font-family:var(--mono);font-size:17px;font-weight:700}
 .floatcard span{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
@@ -761,7 +816,7 @@ button{font:inherit;color:inherit;cursor:pointer}
    text — no hidden-by-default risk.
    ============================================================ */
 .tw-mask{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
-.tw-word{display:inline-block;opacity:0;transform:translateY(105%);animation:twIn .65s cubic-bezier(.2,.8,.2,1) forwards}
+.tw-word{display:inline-block;opacity:0;transform:translateY(105%);animation:twIn var(--dur-base) var(--ease-out) forwards}
 @keyframes twIn{to{opacity:1;transform:translateY(0)}}
 @media (prefers-reduced-motion:reduce){.tw-word{animation:none;opacity:1;transform:none}}
 
@@ -781,10 +836,11 @@ button{font:inherit;color:inherit;cursor:pointer}
   background:var(--card);color:var(--ink);box-shadow:var(--shadow-md);
   display:flex;align-items:center;justify-content:center;
   opacity:0;transform:translateY(10px) scale(.9);pointer-events:none;
-  transition:opacity .2s ease,transform .2s ease,border-color .16s ease;
+  transition:opacity .2s ease,transform .2s ease,border-color var(--dur-fast) var(--ease-out);
 }
 .back-top.is-visible{opacity:1;transform:none;pointer-events:auto}
 .back-top:hover{border-color:var(--red);color:var(--red)}
+.back-top:active{transform:scale(.9)}
 .back-top svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .clock__time.tick-pulse{animation:tickPulse .35s ease}
 @keyframes tickPulse{0%{transform:scale(1)}35%{transform:scale(1.055)}100%{transform:scale(1)}}
@@ -811,7 +867,7 @@ button{font:inherit;color:inherit;cursor:pointer}
   display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
   font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
   color:rgba(255,255,255,.6);padding:8px 14px 8px 10px;border-radius:var(--r-pill);
-  border:1px solid rgba(255,255,255,.16);transition:border-color .14s ease,color .14s ease;
+  border:1px solid rgba(255,255,255,.16);transition:border-color var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out);
 }
 .crumb:hover{color:#fff;border-color:rgba(255,255,255,.36)}
 .crumb svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -822,7 +878,7 @@ button{font:inherit;color:inherit;cursor:pointer}
   position:relative;overflow:hidden;display:flex;flex-direction:column;gap:10px;
   padding:22px;border-radius:var(--r-lg);background:var(--card);border:1px solid var(--card-border);
   box-shadow:var(--shadow-sm);text-decoration:none;color:var(--ink);
-  transition:box-shadow .18s ease,transform .18s ease,border-color .18s ease;
+  transition:box-shadow var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out);
   -webkit-tap-highlight-color:transparent;isolation:isolate;
 }
 .widget:hover{
@@ -840,7 +896,7 @@ button{font:inherit;color:inherit;cursor:pointer}
   margin-top:auto;display:flex;align-items:center;gap:6px;
   font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--red-deep);
 }
-.widget__go svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .18s ease}
+.widget__go svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--dur-fast) var(--ease-out)}
 .widget:hover .widget__go svg{transform:translateX(3px)}
 /* Ripple: a span sized/positioned by JS at the pointerdown coordinate,
    expanding and fading. Purely additive — a click that fires no JS
@@ -849,7 +905,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .widget__ripple{
   position:absolute;border-radius:50%;background:var(--red-wash);
   transform:scale(0);opacity:.55;pointer-events:none;z-index:-1;
-  animation:rippleOut .5s ease-out forwards;
+  animation:rippleOut .5s var(--ease-out) forwards;
 }
 @keyframes rippleOut{to{transform:scale(2.6);opacity:0}}
 
