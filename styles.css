@@ -250,7 +250,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 }
 .side__club.is-arsenal::after{content:'';display:block;width:38px;height:4px;border-radius:2px;background:var(--gold);margin-top:12px}
 .side--away .side__club.is-arsenal::after{margin-left:auto}
-.side__tag{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.68);margin-top:10px}
+.side__tag{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.68);margin-top:10px;overflow-wrap:anywhere}
 .vs{
   position:relative;z-index:2;align-self:center;font-family:var(--mono);font-weight:700;font-size:12.5px;letter-spacing:.1em;
   text-transform:uppercase;color:var(--board-fg);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);
