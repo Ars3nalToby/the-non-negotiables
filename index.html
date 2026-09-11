@@ -71,33 +71,96 @@
   <a href="fanart.html">Fan Art</a>
 </div></nav>
 
-<section class="board" id="board">
-  <div class="wrap board__in">
-    <p class="eyebrow" id="board-eyebrow">Next match</p>
-    <div class="board__grid">
-      <div class="side">
-        <p class="side__club is-arsenal" id="board-home">Arsenal</p>
-        <p class="side__tag" id="board-home-tag">Home</p>
-      </div>
-      <div class="vs">Premier League</div>
-      <div class="side side--away">
-        <p class="side__club" id="board-away">—</p>
-        <p class="side__tag" id="board-away-tag">Away</p>
-      </div>
+<section class="cinema" id="cinema" aria-label="The 4am kick-off">
+  <div class="cinema__media">
+    <video class="cinema__video" id="cinema-video" autoplay muted loop playsinline preload="metadata" poster="assets/video/hero-poster.jpg" aria-hidden="true">
+      <source src="assets/video/hero-mobile.webm" type="video/webm" media="(max-width:767px)">
+      <source src="assets/video/hero-mobile.mp4" type="video/mp4" media="(max-width:767px)">
+      <source src="assets/video/hero-desktop.webm" type="video/webm">
+      <source src="assets/video/hero-desktop.mp4" type="video/mp4">
+    </video>
+    <div class="cinema__placeholder" aria-hidden="true">
+      <div class="cinema__sweep"></div>
+      <div class="cinema__grain"></div>
     </div>
-    <div class="clocks">
-      <div class="clock"><p class="clock__label">Kick-off · London</p><p class="clock__time" id="clk-uk">—</p><p class="clock__day" id="clk-uk-day">—</p></div>
-      <div class="clock"><p class="clock__label">Kick-off · Brisbane</p><p class="clock__time" id="clk-bne">—</p><p class="clock__day" id="clk-bne-day">—</p></div>
-      <div class="clock"><p class="clock__label">Countdown</p><p class="clock__time" id="clk-count">—</p><p class="clock__day" id="clk-venue">—</p></div>
-    </div>
-    <p class="verdict" id="verdict">—</p>
-    <div class="board__cta">
-      <button class="btn btn--solid" id="board-open">Open the dossier</button>
-      <a class="btn btn--ghost" href="timetable.html">Full season timetable</a>
+    <div class="cinema__grade" aria-hidden="true"></div>
+    <div class="cinema__vignette" aria-hidden="true"></div>
+  </div>
+  <div class="cinema__bar cinema__bar--top" aria-hidden="true"></div>
+  <div class="cinema__bar cinema__bar--bottom" aria-hidden="true"></div>
+  <div class="cinema__content wrap">
+    <p class="cinema__timecode" id="cinema-timecode">04:30 AEST — BRISBANE</p>
+    <p class="cinema__title">
+      <span class="ct-word" style="animation-delay:.3s">The</span>
+      <em><span class="ct-word" style="animation-delay:.5s">Non-</span></em><span class="ct-word" style="animation-delay:.7s">Negotiables</span>
+    </p>
+    <p class="cinema__deck">Fixtures, away days &amp; wake-up calls — watched from 16,000km away, since 2009.</p>
+    <button class="cinema__play" id="cinema-play" type="button" hidden>▶ Play the film</button>
+    <div class="cinema__now" id="cinema-now">
+      <section class="board" id="board">
+        <div class="wrap board__in">
+          <p class="eyebrow" id="board-eyebrow">Next match</p>
+          <div class="board__grid">
+            <div class="side">
+              <p class="side__club is-arsenal" id="board-home">Arsenal</p>
+              <p class="side__tag" id="board-home-tag">Home</p>
+            </div>
+            <div class="vs">Premier League</div>
+            <div class="side side--away">
+              <p class="side__club" id="board-away">—</p>
+              <p class="side__tag" id="board-away-tag">Away</p>
+            </div>
+          </div>
+          <div class="clocks">
+            <div class="clock"><p class="clock__label">Kick-off · London</p><p class="clock__time" id="clk-uk">—</p><p class="clock__day" id="clk-uk-day">—</p></div>
+            <div class="clock"><p class="clock__label">Kick-off · Brisbane</p><p class="clock__time" id="clk-bne">—</p><p class="clock__day" id="clk-bne-day">—</p></div>
+            <div class="clock"><p class="clock__label">Countdown</p><p class="clock__time" id="clk-count">—</p><p class="clock__day" id="clk-venue">—</p></div>
+          </div>
+          <p class="verdict" id="verdict">—</p>
+          <div class="board__cta">
+            <button class="btn btn--solid" id="board-open">Open the dossier</button>
+            <a class="btn btn--ghost" href="timetable.html">Full season timetable</a>
+          </div>
+        </div>
+        <div class="floatcard floatcard--a" aria-hidden="true"><b data-countup>38</b><span>fixtures</span></div>
+        <div class="floatcard floatcard--b" aria-hidden="true"><b data-countup>60,700</b><span>capacity</span></div>
+      </section>
     </div>
   </div>
-  <div class="floatcard floatcard--a" aria-hidden="true"><b data-countup>38</b><span>fixtures</span></div>
-  <div class="floatcard floatcard--b" aria-hidden="true"><b data-countup>60,700</b><span>capacity</span></div>
+  <div class="cinema__scrollcue" aria-hidden="true"></div>
+</section>
+
+<section class="chapter" data-chapter="1">
+  <div class="chapter__pin">
+    <div class="chapter__bg" style="background:linear-gradient(160deg,#131a26,#05070c 70%)" aria-hidden="true"></div>
+    <div class="chapter__grade" aria-hidden="true"></div>
+    <div class="chapter__in">
+      <p class="chapter__time">04:30 AEST — a dark room, a phone glow</p>
+      <p class="chapter__line">Nobody chose this timezone. We just refused to choose a different team.</p>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" data-chapter="2">
+  <div class="chapter__pin">
+    <div class="chapter__bg" style="background:linear-gradient(160deg,#1a1410,#05070c 70%)" aria-hidden="true"></div>
+    <div class="chapter__grade" aria-hidden="true"></div>
+    <div class="chapter__in">
+      <p class="chapter__time">Kettle on — the river, the city lights, blue hour</p>
+      <p class="chapter__line">Sixteen thousand kilometres away, the floodlights are already on.</p>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" data-chapter="3">
+  <div class="chapter__pin">
+    <div class="chapter__bg" style="background:linear-gradient(160deg,#1c0f10,#05070c 70%)" aria-hidden="true"></div>
+    <div class="chapter__grade" aria-hidden="true"></div>
+    <div class="chapter__in">
+      <p class="chapter__time">19:30 UK — N5, red smoke through the beams</p>
+      <p class="chapter__line">First light hits the window. The match is on.</p>
+    </div>
+  </div>
 </section>
 
 <div class="mascot-row" aria-hidden="true">
@@ -128,7 +191,7 @@
     <h2 class="section__title">Everything else</h2>
     <p class="section__note">Tap in — each one's its own page</p>
   </div>
-  <div class="widgets" id="widgets">
+  <div class="widgets widgets--credits" id="widgets">
     <a class="widget" href="news.html">
       <span class="widget__icon"><svg viewBox="0 0 24 24"><path d="M4 4h13a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4z"/><path d="M8 9h8M8 13h8M8 17h5"/><path d="M19 8v10a2 2 0 0 0 2-2V8"/></svg></span>
       <h3 class="widget__title">News</h3>
@@ -352,6 +415,83 @@ document.querySelectorAll('.widget').forEach(card => {
     span.addEventListener('animationend', () => span.remove());
   });
 });
+
+/* ============================================================
+   CINEMA HERO — "The 4am Kick-off". Homepage only; #cinema doesn't
+   exist on any other page. Default visual state (placeholder gradient
+   + grain, video hidden behind it) is correct even with zero JS or
+   before any footage exists — this script only reveals the real
+   video once it's confirmed playing, and covers the two paths where
+   it deliberately shouldn't autoplay at all.
+   ============================================================ */
+(function cinema(){
+  const section = $('#cinema');
+  if(!section) return;
+  const video = $('#cinema-video');
+  const playBtn = $('#cinema-play');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const conn = navigator.connection;
+  const saveData = !!(conn && (conn.saveData || /2g/.test(conn.effectiveType || '')));
+
+  function showFallback(){
+    section.classList.remove('cinema--ready');
+    section.classList.add('cinema--fallback');
+    if(video){ video.pause(); video.removeAttribute('autoplay'); }
+    if(playBtn) playBtn.hidden = false;
+  }
+
+  if(playBtn) playBtn.addEventListener('click', () => {
+    section.classList.remove('cinema--fallback');
+    playBtn.hidden = true;
+    if(video) video.play().catch(() => {});
+  });
+
+  if(reducedMotion || saveData){
+    showFallback();
+  } else if(video){
+    let settled = false;
+    video.addEventListener('playing', () => { settled = true; section.classList.add('cinema--ready'); }, {once:true});
+    video.addEventListener('error', () => { if(!settled) showFallback(); });
+    /* Belt-and-braces: some browsers never fire 'error' on the <video>
+       itself when every <source> 404s, they just sit at HAVE_NOTHING
+       forever. Don't leave the placeholder up with no explanation. */
+    setTimeout(() => { if(!settled && video.readyState < 2) showFallback(); }, 4000);
+
+    /* Pause when off-screen or the tab is hidden — no point decoding
+       frames nobody's looking at. One combined check so the scroll
+       observer and the visibility listener can't fight each other. */
+    let inView = false;
+    const sync = () => {
+      if(inView && !document.hidden) video.play().catch(() => {});
+      else video.pause();
+    };
+    new IntersectionObserver(entries => {
+      entries.forEach(en => { inView = en.isIntersecting; sync(); });
+    }, {threshold:0.1}).observe(section);
+    document.addEventListener('visibilitychange', sync);
+  }
+
+  /* The timecode caption changes as the film moves between chapters —
+     the hero itself, then each pinned scroll chapter below it. */
+  const timecode = $('#cinema-timecode');
+  const codes = {1:'04:30 AEST — BRISBANE', 2:'KETTLE ON — BLUE HOUR', 3:'19:30 UK — N5'};
+  const chapters = document.querySelectorAll('.chapter');
+  if(reducedMotion){
+    chapters.forEach(c => c.classList.add('is-active'));
+  } else if(chapters.length){
+    const chapterIo = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        const chapter = en.target.closest('.chapter');
+        chapter.classList.toggle('is-active', en.isIntersecting);
+        if(en.isIntersecting){
+          const code = codes[Number(chapter.dataset.chapter)];
+          if(timecode && code) timecode.textContent = code;
+        }
+      });
+    }, {threshold:0.5});
+    chapters.forEach(c => chapterIo.observe(c.querySelector('.chapter__pin')));
+  }
+})();
 </script>
 </body>
 </html>
