@@ -90,10 +90,10 @@ const FIXTURES = [
   {n:14,ko:'2026-12-05T15:00:00+00:00', opp:'tot', v:'A'},
   {n:15,ko:'2026-12-12T15:00:00+00:00', opp:'bou', v:'H', warn:'Arsenal have said this is set to move \u2014 Bournemouth are in Europa League action the preceding Thursday.'},
   {n:16,ko:'2026-12-19T15:00:00+00:00', opp:'mun', v:'H'},
-  {n:17,ko:'2026-12-26T15:00:00+00:00', opp:'cry', v:'A'},
-  {n:18,ko:'2026-12-30T20:00:00+00:00', opp:'ful', v:'A'},
+  {n:17,ko:'2026-12-27T19:00:00+00:00', opp:'cry', v:'A', tv:'Sky Sports', moved:true, checked:'2026-09-11'},
+  {n:18,ko:'2026-12-30T19:30:00+00:00', opp:'ful', v:'A', tv:'Sky Sports', moved:true, checked:'2026-09-11'},
   {n:19,ko:'2027-01-02T15:00:00+00:00', opp:'ips', v:'H'},
-  {n:20,ko:'2027-01-06T20:00:00+00:00', opp:'bre', v:'H'},
+  {n:20,ko:'2027-01-05T19:30:00+00:00', opp:'bre', v:'H', tv:'Sky Sports', moved:true, checked:'2026-09-11'},
   {n:21,ko:'2027-01-16T15:00:00+00:00', opp:'hul', v:'A'},
   {n:22,ko:'2027-01-23T15:00:00+00:00', opp:'new', v:'H'},
   {n:23,ko:'2027-01-30T15:00:00+00:00', opp:'mci', v:'A'},
@@ -120,7 +120,11 @@ const FIXTURES = [
 const CL = [
   {md:1, ko:'2026-09-09T20:00:00+01:00', v:'A', name:'Napoli', country:'Italy', pot:3,
    ground:'Stadio Diego Armando Maradona', city:'Naples', result:'W 1-0', scorers:'\u00d8degaard',
-   note:'Straight into it. Naples, the Maradona, forty-odd thousand people who treat a European night as a civic event. Opening the league phase away in Campania is about as unforgiving a start as the draw could have given us \u2014 and if you only do one away trip this season, do this one. Then do not attempt to drive anywhere.'},
+   note:'Straight into it. Naples, the Maradona, forty-odd thousand people who treat a European night as a civic event. Opening the league phase away in Campania is about as unforgiving a start as the draw could have given us \u2014 and if you only do one away trip this season, do this one. Then do not attempt to drive anywhere.',
+   reaction:{notes:[
+     {who:'Mikel Arteta', role:'manager', quote:'But to do what we\u2019ve done today in this stadium against this opponent, is remarkable from the team.', source:'Yahoo Sports', url:'https://uk.sports.yahoo.com/news/arteta-lauds-form-odegaard-remarkable-224202694.html'},
+     {who:'Declan Rice', role:'midfielder', quote:'It could\u2019ve been four or five tonight if we were a bit more clinical.', source:'VAVEL International', url:'https://www.vavel.com/en/football/2026/09/09/arsenal/1270797-declan-rice-we-played-with-fluidity.html'}
+   ]}},
   {md:2, ko:'2026-10-13T20:00:00+01:00', v:'H', name:'Lille', country:'France', pot:3,
    ground:'Emirates Stadium', city:'London',
    note:'First European night back at the Emirates. Lille are always better than the seeding suggests \u2014 well coached, quick in transition, completely unbothered by reputations. A home banana skin dressed up as a comfortable evening.'},
@@ -364,9 +368,18 @@ const WIRE_FALLBACK = [
    prepends new items here, it never rewrites news.html itself.
    ============================================================ */
 const NEWS = [
+  {date:'2026-09-11', headline:'Arsenal get a clean bill ahead of Sunderland: White in, Timber close, Mosquera not far behind',
+   summary:'Arteta’s pre-Sunderland briefing was about as good as these things get this early in the season. Ben White has trained through his knock and travels to the Stadium of Light. Jurrien Timber, out since the spring, has been working with the group for several days and is now a genuine selection option rather than a hopeful one. Cristhian Mosquera, sidelined since the Villa game, is being talked about in terms of this weekend or the next rather than in the abstract. Five games unbeaten and the treatment room is finally starting to look normal.',
+   source:'Yahoo Sports', url:'https://ca.sports.yahoo.com/news/arteta-provides-injury-updates-arsenal-085000743.html'},
+  {date:'2026-09-10', headline:'Festive fixtures land: Palace moves to a Sunday, Fulham and Brentford both shift kick-off times',
+   summary:'The Premier League’s Boxing Day round is never actually all on Boxing Day, and this year Arsenal’s trip to Selhurst Park is the one that moves — Crystal Palace away is now Sunday 27 December, 7pm, live on Sky. The following Fulham trip stays on the 30th but shunts back half an hour to 7.30pm, also live. Brentford at home loses a day off the calendar too, sliding from the 6th to Tuesday 5 January, again 7.30pm and again on Sky. Only the Ipswich game on New Year’s weekend survives untouched — 3pm on the 2nd, and still nowhere on UK television. Book accordingly.',
+   source:'Arsenal.com', url:'https://www.arsenal.com/news/premier-league-festive-fixture-details-confirmed-atjUt4t54LGl'},
   {date:'2026-09-09', headline:'Arsenal open the Champions League with an away win at Napoli',
    summary:'First points on the board in Europe, and it came the hard way — away, at a ground that does not do quiet nights. Ødegaard settled it with fifteen minutes left, low into the corner off a Tzolis assist. One down, seven to go.',
    source:'VAVEL', url:'https://www.vavel.com/en-us/soccer/2026/09/09/1270590-napoli-vs-arsenal-live-score-uefa-champions-league.html'},
+  {date:'2026-09-08', headline:'Rice, Saliba and Gabriel picked for Ballon d’Or shortlist, Raya up for the Yashin Trophy',
+   summary:'Three names on the 30-man shortlist for the game’s biggest individual prize, which tells you something about where this squad has got to even if none of them will be troubling the podium. Declan Rice and William Saliba return to the list, Gabriel makes it for the first time, and David Raya’s season earns him a nomination for the Yashin Trophy instead, the goalkeeper-specific award. Arteta’s own body of work has him shortlisted for Men’s Coach of the Year alongside a small group that includes Unai Emery. The ceremony is in London on 26 October, which for once means nobody has to stay up for it.',
+   source:'Yahoo Sports', url:'https://sports.yahoo.com/articles/arsenal-rack-nominations-ballon-d-120500413.html'},
   {date:'2026-09-08', headline:'Arsenal sign Crystal Palace academy striker Mylo Bernard',
    summary:'The ins-and-outs are not only senior-squad business. Palace’s leading Under-18 scorer this season joins as a scholar, with a pro contract already lined up for when he turns seventeen — eight years at Palace, gone in one announcement.',
    source:'Arsenal.com', url:'https://www.arsenal.com/news/mylo-bernard-joins-arsenal-a6HBo1d0UJCP'},
