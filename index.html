@@ -88,6 +88,17 @@
   </div>
   <div class="cinema__bar cinema__bar--top" aria-hidden="true"></div>
   <div class="cinema__bar cinema__bar--bottom" aria-hidden="true"></div>
+  <audio id="cinema-ambient" loop preload="none">
+    <source src="assets/audio/ambient.mp3" type="audio/mpeg">
+    <source src="assets/audio/ambient.ogg" type="audio/ogg">
+  </audio>
+  <button class="cinema__sound" id="cinema-sound" type="button" hidden aria-pressed="false" aria-label="Play ambient sound">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 9v6h4l5 5V4L7 9H3z"/>
+      <g class="snd-on"><path d="M16.5 8a5 5 0 0 1 0 8"/><path d="M19 5.5a9 9 0 0 1 0 13"/></g>
+      <g class="snd-off"><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></g>
+    </svg>
+  </button>
   <div class="cinema__content wrap">
     <p class="cinema__timecode" id="cinema-timecode">04:30 AEST — BRISBANE</p>
     <p class="cinema__title">
@@ -469,6 +480,37 @@ document.querySelectorAll('.widget').forEach(card => {
       entries.forEach(en => { inView = en.isIntersecting; sync(); });
     }, {threshold:0.1}).observe(section);
     document.addEventListener('visibilitychange', sync);
+  }
+
+  /* Ambient sound — strictly opt-in, never the video's own audio (the
+     video stays muted regardless). The toggle stays hidden until
+     assets/audio/ambient.* proves it can actually load; if it never
+     exists, the button simply never appears, same as the video
+     fallback never showing when there's nothing to fall back from. */
+  const ambient = $('#cinema-ambient');
+  const soundBtn = $('#cinema-sound');
+  if(ambient && soundBtn && !saveData){
+    ambient.addEventListener('loadedmetadata', () => { soundBtn.hidden = false; }, {once:true});
+    ambient.preload = 'metadata';
+    ambient.load();
+
+    soundBtn.addEventListener('click', () => {
+      const on = soundBtn.getAttribute('aria-pressed') === 'true';
+      if(on){
+        ambient.pause();
+        soundBtn.setAttribute('aria-pressed', 'false');
+        soundBtn.setAttribute('aria-label', 'Play ambient sound');
+      } else {
+        ambient.play().catch(() => {});
+        soundBtn.setAttribute('aria-pressed', 'true');
+        soundBtn.setAttribute('aria-label', 'Mute ambient sound');
+      }
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if(document.hidden) ambient.pause();
+      else if(soundBtn.getAttribute('aria-pressed') === 'true') ambient.play().catch(() => {});
+    });
   }
 
   /* The timecode caption changes as the film moves between chapters —
