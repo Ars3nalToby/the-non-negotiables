@@ -183,6 +183,10 @@ function tkRowHTML(f){
     </summary>
     <div class="acc__body">${g.rows.join('')}</div>
   </details>`).join('');
+  /* app.js's initAccordions() runs once at load, before this innerHTML
+     assignment exists — the .acc elements it needs to bind aren't in the
+     DOM yet at that point. Re-run it now that they are. */
+  initAccordions();
 })();
 
 /* crew board — local preview */

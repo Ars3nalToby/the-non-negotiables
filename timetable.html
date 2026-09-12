@@ -187,6 +187,10 @@ function renderRows(){
       <div class="acc__body">${g.rows.join('')}</div>
     </details>`;
   }).join('') : '<p style="padding:16px;color:var(--mute);font-family:var(--mono);font-size:13px">No fixtures match this filter.</p>';
+  /* app.js's initAccordions() runs once at load, before any of this
+     innerHTML assignment exists — and the markup is rebuilt from scratch
+     on every filter click, so re-run it every time, not just once. */
+  initAccordions();
 }
 
 document.querySelectorAll('.chip').forEach(chip => {

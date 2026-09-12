@@ -146,6 +146,10 @@ $('#squad-grid').innerHTML = POS_ORDER.filter(pos => SQUAD.some(p => p.pos === p
     <div class="acc__body"><div class="squad">${players.map(squadCardHTML).join('')}</div></div>
   </details>`;
 }).join('');
+/* app.js's initAccordions() runs once at load, before this innerHTML
+   assignment exists — the .acc elements it needs to bind aren't in the
+   DOM yet at that point. Re-run it now that they are. */
+initAccordions();
 </script>
 </body>
 </html>
