@@ -6,8 +6,9 @@
      no report-to) and script-src needs 'unsafe-inline' since app.js and
      the page scripts have no build step to add a nonce/hash. Still worth
      having: it blocks plugin content, locks the page's own base URL, and
-     (this page makes no fetch() calls, so connect-src stays 'self' —
-     transfers.html is the one that needs the wire endpoint host). -->
+     pins connect-src to exactly one external host — the Supabase project
+     that serves the visit counter, the crew board and the news wire.
+     junior.html deliberately does NOT carry that host; see CLAUDE.md. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://anueveizfqxnloncuvmf.supabase.co; base-uri 'none'; object-src 'none'; form-action 'none';">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Non-Negotiables — Arsenal 2026/27</title>
@@ -61,12 +62,12 @@
   <a href="index.html" aria-current="page">Home</a>
   <a href="news.html">News</a>
   <a href="timetable.html">Timetable</a>
-  <a href="tickets.html">Ticket desk</a>
+  <a href="tickets.html">Tickets</a>
   <a href="europe.html">Europe</a>
   <a href="transfers.html">Transfers</a>
   <a href="squad.html">Squad</a>
-  <a href="junior.html">Junior Gunners</a>
-  <a href="programme.html">Programme notes</a>
+  <a href="junior.html">Juniors</a>
+  <a href="programme.html">Blog</a>
   <a href="reading.html">Required reading</a>
   <a href="fanart.html">Fan Art</a>
 </div></nav>
@@ -106,7 +107,6 @@
       <em><span class="ct-word" style="animation-delay:.5s">Non-</span></em><span class="ct-word" style="animation-delay:.7s">Negotiables</span>
     </p>
     <p class="cinema__deck">Fixtures, away days &amp; wake-up calls — watched from 16,000km away, since 2009.</p>
-    <button class="cinema__play" id="cinema-play" type="button" hidden>▶ Play the film</button>
     <div class="cinema__now" id="cinema-now">
       <section class="board" id="board">
         <div class="wrap board__in">
@@ -247,7 +247,7 @@
     </a>
     <a class="widget" href="programme.html">
       <span class="widget__icon"><svg viewBox="0 0 24 24"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M8 12h8M8 16h5"/></svg></span>
-      <h3 class="widget__title">Programme notes</h3>
+      <h3 class="widget__title">Blog</h3>
       <p class="widget__teaser">Original writing, not the club's</p>
       <span class="widget__go">Open<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </a>
@@ -439,23 +439,19 @@ document.querySelectorAll('.widget').forEach(card => {
   const section = $('#cinema');
   if(!section) return;
   const video = $('#cinema-video');
-  const playBtn = $('#cinema-play');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const conn = navigator.connection;
   const saveData = !!(conn && (conn.saveData || /2g/.test(conn.effectiveType || '')));
 
+  /* No footage, slow connection, or reduced-motion: quietly stay on the
+     placeholder. There's deliberately no "play" button — until real
+     footage exists there is nothing for it to play, and a button that
+     does nothing is worse than no button. */
   function showFallback(){
     section.classList.remove('cinema--ready');
     section.classList.add('cinema--fallback');
     if(video){ video.pause(); video.removeAttribute('autoplay'); }
-    if(playBtn) playBtn.hidden = false;
   }
-
-  if(playBtn) playBtn.addEventListener('click', () => {
-    section.classList.remove('cinema--fallback');
-    playBtn.hidden = true;
-    if(video) video.play().catch(() => {});
-  });
 
   if(reducedMotion || saveData){
     showFallback();
@@ -465,7 +461,9 @@ document.querySelectorAll('.widget').forEach(card => {
     video.addEventListener('error', () => { if(!settled) showFallback(); });
     /* Belt-and-braces: some browsers never fire 'error' on the <video>
        itself when every <source> 404s, they just sit at HAVE_NOTHING
-       forever. Don't leave the placeholder up with no explanation. */
+       forever, still nominally "loading". Settle it either way so the
+       grain/sweep animation isn't left running for a video that is
+       never going to arrive. */
     setTimeout(() => { if(!settled && video.readyState < 2) showFallback(); }, 4000);
 
     /* Pause when off-screen or the tab is hidden — no point decoding

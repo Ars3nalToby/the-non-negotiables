@@ -625,6 +625,69 @@ document.querySelectorAll('.nav__in').forEach(nav => {
   nav.addEventListener('pointerleave', endDrag);
 });
 
+/* Nav overflow arrows — the fade mask on its own wasn't telling anyone
+   that Fan Art (and whatever else is last) exists off to the right.
+   These are real buttons, and they only appear when there is genuinely
+   something hidden that way, so a nav that fits shows no chrome at all.
+   Built here rather than in the markup so all 12 pages get it without
+   12 copies of the same three elements. */
+document.querySelectorAll('.nav__in').forEach(nav => {
+  const parent = nav.parentElement;
+  if(!parent) return;
+  parent.classList.add('nav__wrap');
+
+  let prev, next;
+  const sync = () => {
+    const max = nav.scrollWidth - nav.clientWidth;
+    /* 2px slack: sub-pixel layout means scrollLeft rarely lands exactly
+       on 0 or on max, and a permanently-lit arrow that does nothing is
+       the same broken-feeling thing as no arrow at all. */
+    if(prev) prev.dataset.show = nav.scrollLeft > 2 ? '1' : '0';
+    if(next) next.dataset.show = nav.scrollLeft < max - 2 ? '1' : '0';
+  };
+
+  const arrow = dir => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = `nav__arrow nav__arrow--${dir === -1 ? 'prev' : 'next'}`;
+    b.setAttribute('aria-label', dir === -1 ? 'Scroll navigation left' : 'More sections');
+    b.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${dir === -1 ? 'M15 5l-7 7 7 7' : 'M9 5l7 7-7 7'}"/></svg>`;
+    b.addEventListener('click', () => {
+      const max = nav.scrollWidth - nav.clientWidth;
+      const from = nav.scrollLeft;
+      const to = Math.max(0, Math.min(max, from + dir * Math.max(160, nav.clientWidth * 0.7)));
+      if(from === to) return;
+      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ nav.scrollLeft = to; sync(); return; }
+      /* setInterval rather than requestAnimationFrame, and sync() called
+         directly on each tick rather than trusting the scroll event:
+         both rAF and scroll events are starved in some embedded
+         contexts (verified here — neither fired), which left the arrow
+         either dead or stuck lit the wrong way. A 16ms timer plus an
+         explicit sync always runs. */
+      const t0 = Date.now(), dur = 280;
+      const ease = p => 1 - Math.pow(1 - p, 3);
+      const id = setInterval(() => {
+        const p = Math.min(1, (Date.now() - t0) / dur);
+        nav.scrollLeft = from + (to - from) * ease(p);
+        sync();
+        if(p >= 1) clearInterval(id);
+      }, 16);
+    });
+    parent.appendChild(b);
+    return b;
+  };
+
+  prev = arrow(-1);
+  next = arrow(1);
+
+  sync();
+  nav.addEventListener('scroll', sync, {passive:true});
+  window.addEventListener('resize', sync);
+  /* Web fonts land after first paint and change every label's width,
+     which changes whether anything overflows at all. */
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
+});
+
 /* Mascots roll as you scroll past them — each ball's own rotation
    tracks the page's scroll position, offset slightly per-ball so a
    row of them doesn't spin in perfect unison. Runs inside the same

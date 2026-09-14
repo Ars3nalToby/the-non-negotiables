@@ -192,6 +192,22 @@ button{font:inherit;color:inherit;cursor:pointer}
   -webkit-backdrop-filter:blur(14px) saturate(1.4);
   border-bottom:1px solid var(--card-border);position:sticky;top:0;z-index:30;
 }
+/* The fade mask alone wasn't enough of a signal — people genuinely
+   didn't know Fan Art was over there. These are real buttons, shown
+   by app.js only when there is actually something off-screen in that
+   direction, so nothing is hidden behind a gesture you have to guess. */
+.nav__wrap{position:relative}
+.nav__arrow{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:2;
+  width:30px;height:30px;border-radius:50%;display:none;place-items:center;
+  background:var(--card);border:1px solid var(--card-border);color:var(--ink-2);
+  cursor:pointer;box-shadow:var(--shadow-sm);
+}
+.nav__arrow[data-show="1"]{display:grid}
+.nav__arrow:hover{color:var(--red);border-color:var(--red)}
+.nav__arrow svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.nav__arrow--prev{left:2px}
+.nav__arrow--next{right:2px}
 /* Single row, drag-to-scroll (app.js) covers mouse users with no
    horizontal scroll wheel; native scroll/swipe covers trackpad and
    touch; the mask fade signals there's more. Wrapping to a second
@@ -590,8 +606,15 @@ button{font:inherit;color:inherit;cursor:pointer}
 .p__pos{background:var(--card-2);padding:4px 8px;border-radius:var(--r-pill);letter-spacing:.08em}
 .p__name{font-weight:700;font-size:15.5px;line-height:1.25;font-variation-settings:'wdth' 104;margin:0}
 .p__meta{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;color:var(--mute)}
-.p__socials{margin-top:auto;display:flex;gap:6px}
-.p__social{flex:1;text-decoration:none;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--card-border);padding:8px 6px;border-radius:var(--r-pill);text-align:center;color:var(--ink-2)}
+/* Stacked, not side-by-side. Two pills sharing one ~168px card row
+   gives each about 13 characters, and plenty of real handles are
+   longer than that (@myleslewisskelly, @_gabrielmagalhaes). They were
+   spilling out of the card entirely, because a flex item's default
+   min-width:auto refuses to shrink below its own unbreakable text.
+   min-width:0 + overflow:hidden is the actual fix; full-width rows
+   mean it almost never has to truncate in the first place. */
+.p__socials{margin-top:auto;display:flex;flex-direction:column;gap:6px}
+.p__social{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-decoration:none;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--card-border);padding:8px 6px;border-radius:var(--r-pill);text-align:center;color:var(--ink-2)}
 .p__social:hover{border-color:var(--red);color:var(--red);background:var(--red-wash)}
 .p__social:active{transform:scale(.97)}
 
@@ -742,7 +765,9 @@ button{font:inherit;color:inherit;cursor:pointer}
   .mv__r b{font-size:14.5px}
   .squad{grid-template-columns:1fr 1fr;gap:10px}
   .p{padding:13px}
-  .p__social{padding:12px 4px;min-height:44px;display:flex;align-items:center;justify-content:center}
+  /* Block, not flex — text-overflow:ellipsis doesn't apply to a flex
+     container. Padding + line-height hits the same 44px touch target. */
+  .p__social{padding:12px 6px;min-height:44px;line-height:20px}
   .linkgrid{grid-template-columns:1fr 1fr;gap:8px}
   .lnk{padding:12px 12px;min-height:56px}
   .eu__links a{padding:10px 11px;min-height:40px;display:flex;align-items:center}
@@ -1082,18 +1107,6 @@ button{font:inherit;color:inherit;cursor:pointer}
 }
 .cinema__scrollcue::after{content:'';position:absolute;left:50%;top:0;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:rgba(255,255,255,.75);animation:scrollCueDrop 2.4s ease-in-out infinite}
 @keyframes scrollCueDrop{0%{top:0;opacity:0}15%{opacity:1}85%{opacity:1}100%{top:100%;opacity:0}}
-
-/* Save-Data / slow connection / video failed entirely: no video, no
-   grain animation, a plain "Play the film" affordance instead. */
-.cinema__play{
-  position:relative;z-index:2;align-self:flex-start;margin-bottom:8px;
-  display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:var(--r-pill);
-  padding:11px 20px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
-  cursor:pointer;transition:background var(--dur-fast) var(--ease-out);
-}
-.cinema__play[hidden]{display:none}
-.cinema__play:hover{background:rgba(255,255,255,.16)}
 
 @media (prefers-reduced-motion:reduce){
   .cinema__bar{animation:none;height:0}
