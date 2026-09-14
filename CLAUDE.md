@@ -29,7 +29,8 @@ squad.html               First-team squad, grouped by position.
 junior.html               Junior Gunners — read-only, quiz + bingo.
 programme.html            Original opinion column, newest first — grows
                         over time (routine adds one roughly weekly).
-                        Renders from COLUMNS; never a hardcoded essay.
+                        Renders from COLUMNS (columns.js); never a
+                        hardcoded essay.
 reading.html               Arseblog / Tim Stillman tribute + links.
 fanart.html                Fan artists, embedded live from their own X
                         accounts (official embed widget) — never
@@ -56,9 +57,15 @@ app.js                    Shared across all pages: data arrays
                         Render logic for each section's own list/grid
                         stays in that page's own inline `<script>`,
                         not in app.js.
-audit.mjs               Self-audit script. Reads app.js for data,
-                        reads every *.html page for compliance/hygiene
-                        checks. Run before every commit.
+columns.js                COLUMNS only — split out of app.js because it
+                        grows indefinitely (one entry added roughly
+                        weekly, never trimmed) and only programme.html
+                        needs it; every other page shouldn't pay its
+                        byte cost. Loaded by programme.html alone, right
+                        after app.js.
+audit.mjs               Self-audit script. Reads app.js and columns.js
+                        for data, reads every *.html page for
+                        compliance/hygiene checks. Run before every commit.
 wire/index.js             Cloudflare Worker — RSS/Bluesky aggregator for
                         the live news wire. Deploy separately (wire/wrangler.toml).
 .github/workflows/
@@ -76,7 +83,8 @@ npx wrangler deploy           # deploy the wire worker (in its own dir)
 
 There is no build, no bundler, no package.json for the site itself.
 **Keep it that way.** The audit enforces a size budget per file instead
-of one monolithic ceiling: `styles.css` ≤80KB, `app.js` ≤60KB, each
+of one monolithic ceiling: `styles.css` ≤80KB, `app.js` ≤60KB,
+`columns.js` ≤120KB (single-page file, but still not unbounded), each
 individual page ≤40KB.
 
 ---
@@ -91,7 +99,7 @@ crumb, the page's own section markup, shared footer/drawer markup,
 that section's own render logic. New pages should copy an existing
 page's chrome rather than reinventing it.
 
-### Data objects (top of `app.js`)
+### Data objects (top of `app.js`, except `COLUMNS` — see below)
 
 | Object | Holds |
 |---|---|
@@ -104,7 +112,7 @@ page's chrome rather than reinventing it.
 | `KEY_DATES` | Cup rounds, CL matchdays, finals |
 | `QUIZ` / `BINGO` | Junior Gunners content |
 | `NEWS` | Original news write-ups, newest first (`news.html`). Every entry: `date`, `headline`, `summary` (original wording, never copied), `source`, `url` (real, working link). audit.mjs flags it stale after 5 days. |
-| `COLUMNS` | Original opinion columns, newest first (`programme.html`). Every entry: `date`, `title`, `byline`, `paras` (array of paragraph strings). audit.mjs flags it stale after 10 days. |
+| `COLUMNS` (in `columns.js`, not `app.js`) | Original opinion columns, newest first (`programme.html`). Every entry: `date`, `title`, `byline`, `paras` (array of paragraph strings). audit.mjs flags it stale after 10 days. Kept in its own file — see `columns.js` in Repo layout above — because it's the one dataset that grows without bound. |
 
 ### The timezone rule (read this before touching any date)
 
