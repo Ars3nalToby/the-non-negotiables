@@ -77,8 +77,8 @@ const FIXTURES = [
       {who:'Martin Ødegaard', role:'captain', quote:'I think we showed them today our quality with the ball, without the ball, and I think the result reflects that.', source:'Arseblog News', url:'https://arseblog.news/2026/09/odegaard-and-konsa-react-to-2-1-win-over-chelsea/'},
       {who:'Ezri Konsa', role:'defender', quote:'It’s part of football. Things happen, it’s all about how you react.', source:'Arseblog News', url:'https://arseblog.news/2026/09/odegaard-and-konsa-react-to-2-1-win-over-chelsea/'}
     ]}},
-  {n:4, ko:'2026-09-12T20:00:00+01:00', opp:'sun', v:'A', tv:'TNT Sports', moved:true, checked:'2026-09-07'},
-  {n:5, ko:'2026-09-19T15:00:00+01:00', opp:'bha', v:'A', tv:'Not on UK TV \u00b7 3pm blackout', checked:'2026-09-07'},
+  {n:4, ko:'2026-09-12T20:00:00+01:00', opp:'sun', v:'A', result:'W 2-0', scorers:'Bruno Guimarães, Saka (pen)', tv:'TNT Sports', moved:true, checked:'2026-09-15'},
+  {n:5, ko:'2026-09-19T15:00:00+01:00', opp:'bha', v:'A', tv:'Not on UK TV \u00b7 3pm blackout', checked:'2026-09-15'},
   {n:6, ko:'2026-10-10T12:30:00+01:00', opp:'lee', v:'H', tv:'TNT Sports', moved:true, checked:'2026-08-29'},
   {n:7, ko:'2026-10-18T16:30:00+01:00', opp:'nfo', v:'A', tv:'Sky Sports', moved:true, checked:'2026-08-29'},
   {n:8, ko:'2026-10-24T15:00:00+01:00', opp:'eve', v:'H', tv:'Not on UK TV \u00b7 3pm blackout', checked:'2026-08-29'},
@@ -351,9 +351,14 @@ const MOVES_OUT = [
 ];
 
 /* ---- Live wire ----
-   Set WIRE_ENDPOINT to your deployed Cloudflare Worker (see wire/index.js).
-   Until then the wire shows curated source links instead of failing. */
-const WIRE_ENDPOINT = '';   // e.g. 'https://nn-wire.yourname.workers.dev/'
+   Live Arsenal headlines, pulled server-side from RSS (Arseblog, BBC,
+   Guardian, Sky) + Bluesky and merged newest-first. Runs as a Supabase
+   Edge Function — see wire/supabase-edge.ts for the source and for why
+   it isn't the Cloudflare Worker in wire/index.js. Needs the same
+   publishable key as everything else, so call it with sbHeaders().
+   If it's ever unreachable the pages fall back to WIRE_FALLBACK's
+   curated source links rather than showing nothing. */
+const WIRE_ENDPOINT = 'https://anueveizfqxnloncuvmf.supabase.co/functions/v1/wire';
 const WIRE_FALLBACK = [
   {t:'Arseblog News — Arsenal news, all day, every day', u:'https://arseblog.news', s:'Arseblog News'},
   {t:'Arsenal transfer live blog', u:'https://www.skysports.com/arsenal-transfer-news', s:'Sky Sports'},

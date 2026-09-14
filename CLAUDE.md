@@ -66,8 +66,14 @@ columns.js                COLUMNS only — split out of app.js because it
 audit.mjs               Self-audit script. Reads app.js and columns.js
                         for data, reads every *.html page for
                         compliance/hygiene checks. Run before every commit.
-wire/index.js             Cloudflare Worker — RSS/Bluesky aggregator for
-                        the live news wire. Deploy separately (wire/wrangler.toml).
+wire/supabase-edge.ts     THE LIVE ONE. RSS/Bluesky aggregator running as
+                        a Supabase Edge Function ("wire"). Feeds news.html
+                        and transfers.html (?filter=transfers). Deployed
+                        via the Supabase MCP tools, not wrangler.
+wire/index.js             Cloudflare Worker version — NOT deployed, kept as
+                        a working alternative. Publishing it needs a
+                        workers.dev subdomain that wouldn't provision.
+                        Change a feed in one file, change it in both.
 .github/workflows/
   weekly-audit.yml      Monday 08:00 Brisbane: runs audit, checks links,
                         opens/updates a GitHub issue with findings.
@@ -97,6 +103,11 @@ the audience), ref `anueveizfqxnloncuvmf`.
   load — see `logVisit()` in `app.js`), no IP, no cookie, no
   identifying data at all. `renderVisitCount()` in `app.js` reads just
   the count (`HEAD` + `Prefer: count=exact`), never the rows.
+- **Edge Function `wire`** — the live news wire, source in
+  `wire/supabase-edge.ts`. `verify_jwt` is on, so call it with
+  `sbHeaders()` like everything else. Touches no tables; it only
+  fetches public RSS/Bluesky server-side (which is the point — the
+  browser can't, CORS blocks it).
 
 Both live in `app.js`'s "Community backend" block: `SUPABASE_URL` +
 `SUPABASE_KEY` (Supabase's public **publishable** key — safe to ship
@@ -280,8 +291,11 @@ Motion is restrained and always behind `prefers-reduced-motion`.
    back to an Instagram search (run `node audit.mjs` for the current count).
    Verify each handle manually — do not guess. A wrong handle links a
    reader to a stranger.
-2. **Live wire.** Deploy `wire/index.js`, then set `WIRE_ENDPOINT` in
-   `app.js`. Falls back to static source links until you do.
+2. ~~Live wire.~~ Done — `wire/supabase-edge.ts` is deployed as the
+   Supabase Edge Function `wire`, `WIRE_ENDPOINT` is set, and both
+   `news.html` and `transfers.html` pull it fresh on every page load
+   (5-minute server-side cache so we don't hammer Arseblog/BBC).
+   Falls back to `WIRE_FALLBACK`'s curated links if it's unreachable.
 3. ~~Away Crew board backend.~~ Done — Supabase free tier project
    `the-non-negotiables` (org `thenonnegotiablog.com`, `ap-southeast-2`),
    see Community backend below. `esc()` is still applied at render time

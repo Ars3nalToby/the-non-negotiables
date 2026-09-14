@@ -1,5 +1,13 @@
 /* ============================================================
-   The Non-Negotiables — live wire
+   The Non-Negotiables — live wire (Cloudflare version, NOT DEPLOYED)
+   ------------------------------------------------------------
+   NOT THE LIVE ONE. The wire that actually runs the site is
+   wire/supabase-edge.ts, deployed as a Supabase Edge Function —
+   publishing this Worker needs a workers.dev subdomain that would
+   not provision on the account, and Supabase was already set up
+   and already allowed in every page's CSP. Kept because it's
+   working code if you ever move back to Cloudflare; if you change
+   the feed list, change it in BOTH files or they'll drift.
    ------------------------------------------------------------
    A Cloudflare Worker that pulls Arsenal RSS feeds, merges them,
    sorts newest-first and serves JSON to the site. Solves CORS

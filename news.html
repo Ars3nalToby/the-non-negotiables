@@ -67,6 +67,13 @@
 </div>
 
 <section class="section wrap">
+  <div style="margin-bottom:34px">
+    <h3 style="font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:0 0 10px">Live wire · everything, newest first</h3>
+    <div class="wire" id="wire"></div>
+    <p class="wire__note" id="wire-note">Connecting…</p>
+  </div>
+
+  <h3 style="font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:0 0 14px">Written here · this site's own words</h3>
   <div id="news-feed"></div>
 </section>
 
@@ -128,6 +135,34 @@ $('#news-feed').innerHTML = NEWS.map(n => `<div class="dcard">
   <p class="note" style="margin:0 0 14px">${n.summary}</p>
   <a href="${n.url}" target="_blank" rel="noopener noreferrer" style="font-size:13px;color:var(--red);text-decoration:none;font-weight:600">Full story at ${n.source} →</a>
 </div>`).join('');
+
+/* Live wire — pulled fresh on every page load so this page is never
+   stale, however long it's been since the last written write-up above.
+   Feed items are third-party RSS parsed with a regex (see
+   wire/supabase-edge.ts), so treat every field as untrusted: esc()
+   everything and re-check the https-only rule client-side too. */
+function paintWire(items, live){
+  const safe = items.filter(i => /^https:\/\//i.test(i.u));
+  $('#wire').innerHTML = safe.map(i =>
+    `<a class="wire__i" href="${esc(i.u)}" target="_blank" rel="noopener noreferrer">
+       <b>${esc(i.t)}</b><span>${esc(i.s)}${i.d ? ' · ' + i.d : ''}</span></a>`).join('');
+  $('#wire-note').textContent = live
+    ? 'Live feed · pulled fresh every time you open this page'
+    : 'Live feed unavailable — showing sources instead.';
+}
+
+(async function loadWire(){
+  if(!WIRE_ENDPOINT){ paintWire(WIRE_FALLBACK, false); return; }
+  try{
+    const r = await fetch(WIRE_ENDPOINT, {cache:'no-store', headers: sbHeaders()});
+    if(!r.ok) throw new Error(r.status);
+    const data = await r.json();
+    if(!Array.isArray(data.items) || !data.items.length) throw new Error('empty');
+    paintWire(data.items.slice(0,12), true);
+  }catch(e){
+    paintWire(WIRE_FALLBACK, false);
+  }
+})();
 </script>
 </body>
 </html>

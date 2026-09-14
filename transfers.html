@@ -2,7 +2,7 @@
 <html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://*.workers.dev https://anueveizfqxnloncuvmf.supabase.co; base-uri 'none'; object-src 'none'; form-action 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://anueveizfqxnloncuvmf.supabase.co; base-uri 'none'; object-src 'none'; form-action 'none';">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The window — The Non-Negotiables</title>
 <meta name="description" content="Summer 2026 transfer window: deadline countdown, ins and outs, and a live Arsenal news wire.">
@@ -184,14 +184,14 @@ function paintWire(items, live){
     `<a class="wire__i" href="${esc(i.u)}" target="_blank" rel="noopener noreferrer">
        <b>${esc(i.t)}</b><span>${esc(i.s)}${i.d ? ' · ' + i.d : ''}</span></a>`).join('');
   $('#wire-note').textContent = live
-    ? 'Live feed · refreshed every 15 minutes'
-    : 'Static sources — set WIRE_ENDPOINT in the source to switch on the live feed.';
+    ? 'Live feed · transfer stories only, pulled fresh every time you open this page'
+    : 'Live feed unavailable — showing curated sources instead.';
 }
 
 async function loadWire(){
   if(!WIRE_ENDPOINT){ paintWire(WIRE_FALLBACK, false); return; }
   try{
-    const r = await fetch(WIRE_ENDPOINT, {cache:'no-store'});
+    const r = await fetch(WIRE_ENDPOINT + '?filter=transfers', {cache:'no-store', headers: sbHeaders()});
     if(!r.ok) throw new Error(r.status);
     const data = await r.json();
     if(!Array.isArray(data.items) || !data.items.length) throw new Error('empty');
