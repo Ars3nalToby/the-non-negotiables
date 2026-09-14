@@ -361,6 +361,59 @@ const WIRE_FALLBACK = [
   {t:'Arsenal news aggregator — every outlet, newest first', u:'https://www.newsnow.co.uk/h/Sport/Football/Premier+League/Arsenal/Transfer+News', s:'NewsNow'}
 ];
 
+/* ---- Community backend (Supabase) ----
+   Powers the Away Crew board (tickets.html) and the site-wide visit
+   line in the footer. SUPABASE_KEY is Supabase's public "publishable"
+   key — safe to ship in client code by design (this is how Supabase
+   is meant to be used from a static site); it is not a secret, and
+   it grants nothing beyond what the row-level-security policies on
+   these two tables explicitly allow: crew_posts (anyone can read,
+   anyone can insert a post) and pageviews (anyone can log one,
+   anyone can read the total count). No admin access, no way to read
+   or alter anything else. Plain fetch() throughout — no SDK — so
+   this stays vanilla JS, no new dependency. */
+const SUPABASE_URL = 'https://anueveizfqxnloncuvmf.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_D40Bu8mh3MtExE82Nt2zXA_BMeXtWRw';
+const sbHeaders = extra => Object.assign({apikey:SUPABASE_KEY, Authorization:'Bearer '+SUPABASE_KEY}, extra || {});
+
+/* One anonymous visit logged per browser tab session, not per page —
+   click around the site all you like, it's still one visit. No IP,
+   no cookie, no identifying data of any kind, just a timestamp and
+   which page you landed on. Skipped entirely on junior.html: Junior
+   Gunners stays free of any analytics, full stop, no exceptions. */
+(function logVisit(){
+  if(location.pathname.endsWith('junior.html')) return;
+  if(sessionStorage.getItem('nn-visit-logged')) return;
+  sessionStorage.setItem('nn-visit-logged', '1');
+  fetch(`${SUPABASE_URL}/rest/v1/pageviews`, {
+    method:'POST',
+    headers: sbHeaders({'Content-Type':'application/json', Prefer:'return=minimal'}),
+    body: JSON.stringify({page: location.pathname.replace(/^\//, '') || 'index.html'})
+  }).catch(() => {});
+})();
+
+/* A quiet "people have actually visited" line in the footer, on
+   every page. HEAD + count=exact asks Postgres for just the number,
+   never the rows themselves. Fails silently (no line shown) if the
+   request is blocked or offline — this is a nice-to-have, not load
+   bearing for anything else on the page. */
+(async function renderVisitCount(){
+  const grid = document.querySelector('.foot .foot__grid');
+  if(!grid) return;
+  try{
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/pageviews?select=id`, {
+      method:'HEAD', headers: sbHeaders({Prefer:'count=exact'})
+    });
+    const range = res.headers.get('content-range');
+    const total = range && Number(range.split('/')[1]);
+    if(!total) return;
+    const p = document.createElement('p');
+    p.className = 'foot__visits';
+    p.textContent = `${total.toLocaleString()} visit${total === 1 ? '' : 's'} logged since launch — real people, no cookies, no tracking.`;
+    grid.insertAdjacentElement('afterend', p);
+  }catch(e){}
+})();
+
 /* ============================================================
    NEWS — this site's own original coverage. Every entry: a short
    original write-up (never a copied sentence) plus a real, working

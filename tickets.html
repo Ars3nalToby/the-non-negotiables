@@ -2,8 +2,8 @@
 <html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none';">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://anueveizfqxnloncuvmf.supabase.co; base-uri 'none'; object-src 'none'; form-action 'none';">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The ticket desk — The Non-Negotiables</title>
 <meta name="description" content="Why there is no ticket resale on this site, and where the official Arsenal ticket channels actually are.">
 <meta name="color-scheme" content="light dark">
@@ -90,7 +90,7 @@
         <select id="crew-fix" aria-label="Which away day"></select>
         <button class="btn btn--line" id="crew-add">Add me to the board</button>
       </div>
-      <p style="margin-top:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--mute)">Local preview only — saved in this browser. Wire to Supabase or Firebase to make it shared.</p>
+      <p style="margin-top:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--mute)">Shared board — everyone who posts here shows up for every visitor.</p>
     </div>
 
     <div class="box">
@@ -189,36 +189,63 @@ function tkRowHTML(f){
   initAccordions();
 })();
 
-/* crew board — local preview */
+/* Away Crew board — backed by Supabase (see the "Community backend"
+   block in app.js for the client, the key, and why it's safe to ship
+   publicly). Real, shared across every visitor's browser, not just
+   yours. CREW_SEED is shown only while the real board is empty or
+   unreachable (first day live, or a network hiccup) so the section
+   never looks broken or embarrassingly bare. */
 const crewFix = $('#crew-fix');
 crewFix.innerHTML = FIXTURES.filter((f,i) => i >= NEXT_I && f.v === 'A')
   .map(f => `<option value="${f.n}">${CLUBS[f.opp].name} away · ${dayShort(new Date(f.ko),LDN)}</option>`).join('');
 
 const CREW_SEED = [
-  {name:'Toby', from:'Brisbane', n:14},
-  {name:'@gunner_kl', from:'Kuala Lumpur', n:23},
-  {name:'Siobhan', from:'Dublin', n:9}
+  {name:'Toby', from_city:'Brisbane', fixture_n:14},
+  {name:'@gunner_kl', from_city:'Kuala Lumpur', fixture_n:23},
+  {name:'Siobhan', from_city:'Dublin', fixture_n:9}
 ];
-const crewList = () => store.get('nn-crew') || CREW_SEED.slice();
 
-function renderCrew(){
-  const list = crewList();
+function paintCrew(list){
   $('#crew-list').innerHTML = list.map(c => {
-    const f = FIXTURES.find(x => x.n === Number(c.n));
+    const f = FIXTURES.find(x => x.n === Number(c.fixture_n));
     const label = f ? `${CLUBS[f.opp].name} away` : 'A game';
-    return `<div class="crew__item"><b>${esc(c.name)}</b><span>${esc(c.from)} → ${label}</span></div>`;
+    return `<div class="crew__item"><b>${esc(c.name)}</b><span>${esc(c.from_city)} → ${label}</span></div>`;
   }).join('') || '<p style="color:var(--mute);font-size:14px;margin:0">Nobody on the board yet.</p>';
 }
-$('#crew-add').addEventListener('click', () => {
-  const name = $('#crew-name').value.trim(), from = $('#crew-from').value.trim();
-  if(!name || !from) return;
-  const list = crewList();
-  list.unshift({name, from, n:crewFix.value});
-  store.set('nn-crew', list.slice(0,40));
-  $('#crew-name').value = ''; $('#crew-from').value = '';
-  renderCrew();
+
+async function loadCrew(){
+  try{
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/crew_posts?select=name,from_city,fixture_n&order=created_at.desc&limit=40`,
+      {headers: sbHeaders()});
+    if(!res.ok) throw new Error('bad response');
+    const rows = await res.json();
+    paintCrew(rows.length ? rows : CREW_SEED);
+  }catch(e){
+    paintCrew(CREW_SEED);
+  }
+}
+
+$('#crew-add').addEventListener('click', async () => {
+  const name = $('#crew-name').value.trim(), from_city = $('#crew-from').value.trim();
+  if(!name || !from_city) return;
+  const btn = $('#crew-add');
+  btn.disabled = true;
+  try{
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/crew_posts`, {
+      method:'POST',
+      headers: sbHeaders({'Content-Type':'application/json', Prefer:'return=minimal'}),
+      body: JSON.stringify({name, from_city, fixture_n:Number(crewFix.value)})
+    });
+    if(!res.ok) throw new Error('bad response');
+    $('#crew-name').value = ''; $('#crew-from').value = '';
+    await loadCrew();
+  }catch(e){
+    alert('Could not post to the board right now — try again in a moment.');
+  }finally{
+    btn.disabled = false;
+  }
 });
-renderCrew();
+loadCrew();
 </script>
 </body>
 </html>

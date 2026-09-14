@@ -81,6 +81,36 @@ python3 -m http.server 8000   # preview at localhost:8000
 npx wrangler deploy           # deploy the wire worker (in its own dir)
 ```
 
+## Community backend (Supabase)
+
+Two features are backed by a real Supabase project, not `localStorage`:
+the Away Crew board (`tickets.html`) and the site-wide visit line in
+every page's footer. Project `the-non-negotiables`, org
+`thenonnegotiablog.com`, region `ap-southeast-2` (Sydney — closest to
+the audience), ref `anueveizfqxnloncuvmf`.
+
+- **`crew_posts`** — `name`, `from_city`, `fixture_n`, `created_at`.
+  RLS: anon can `select` and `insert`, nothing else. `esc()` at render
+  time in `tickets.html` (unchanged from the old localStorage version).
+- **`pageviews`** — `page`, `created_at`. RLS: anon can `select` and
+  `insert`, nothing else. One row per browser *session* (not per page
+  load — see `logVisit()` in `app.js`), no IP, no cookie, no
+  identifying data at all. `renderVisitCount()` in `app.js` reads just
+  the count (`HEAD` + `Prefer: count=exact`), never the rows.
+
+Both live in `app.js`'s "Community backend" block: `SUPABASE_URL` +
+`SUPABASE_KEY` (Supabase's public **publishable** key — safe to ship
+client-side by design, this is the intended way to use Supabase from a
+static site; security comes from the RLS policies above, not from
+keeping the key secret) + a small `sbHeaders()` helper. Plain
+`fetch()` calls to Supabase's REST API throughout — no `supabase-js`
+SDK, so this stays vanilla JS and doesn't violate "no new dependency."
+
+**Every page except `junior.html`** needs the project's host
+(`https://anueveizfqxnloncuvmf.supabase.co`) in its CSP `connect-src`,
+or these fetches get silently blocked. `junior.html` is deliberately
+excluded — see Child safety, rule 2, above.
+
 There is no build, no bundler, no package.json for the site itself.
 **Keep it that way.** The audit enforces a size budget per file instead
 of one monolithic ceiling: `styles.css` ≤80KB, `app.js` ≤60KB,
@@ -169,6 +199,13 @@ submissions, no uploads, no messaging, no contact forms, no analytics
 that profile children. If a feature would let a child post anything or
 be contacted by anyone, it does not go in.
 
+The site-wide visit counter and the Away Crew board (see Community
+backend below) are both explicitly excluded from `junior.html` — not
+just in the JS, but at the CSP level too: that page's `connect-src`
+deliberately does not include the Supabase host, so even a bug in the
+JS guard can't leak a request out. If you ever add another Supabase
+call anywhere, do not add the Supabase host to `junior.html`'s CSP.
+
 ### 3. Copyright and trademarks
 
 - No Arsenal crest, cannon, wordmark, kit imagery, or club photography.
@@ -245,9 +282,10 @@ Motion is restrained and always behind `prefers-reduced-motion`.
    reader to a stranger.
 2. **Live wire.** Deploy `wire/index.js`, then set `WIRE_ENDPOINT` in
    `app.js`. Falls back to static source links until you do.
-3. **Away Crew board backend.** Currently `localStorage`, single-browser.
-   Supabase free tier is the intended target. **`esc()` every field on the
-   way out** — the moment this is multi-user it's a stored XSS surface.
+3. ~~Away Crew board backend.~~ Done — Supabase free tier project
+   `the-non-negotiables` (org `thenonnegotiablog.com`, `ap-southeast-2`),
+   see Community backend below. `esc()` is still applied at render time
+   in `tickets.html`, same as before.
 4. **Forum.** Discourse on a subdomain, not hand-rolled. Configure watched
    words for ticket-sale language before launch, per rule 1.
 

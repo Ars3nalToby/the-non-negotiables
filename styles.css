@@ -683,12 +683,16 @@ button{font:inherit;color:inherit;cursor:pointer}
 .foot p{margin:0 0 10px;line-height:1.62}
 .foot a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.3)}
 .foot a:hover{color:var(--red-deep)}
+.foot__visits{
+  margin:26px 0 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:rgba(255,255,255,.4);
+}
 
 /* ============================================================
    MOBILE
    ============================================================ */
 @media (max-width:640px){
-  :root{--pad:18px}
+  :root{--pad:22px}
   body{font-size:16px}
   section[id]{scroll-margin-top:60px}
   .masthead__in{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding-top:20px;padding-bottom:16px}
