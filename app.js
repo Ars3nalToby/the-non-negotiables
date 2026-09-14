@@ -77,7 +77,12 @@ const FIXTURES = [
       {who:'Martin Ødegaard', role:'captain', quote:'I think we showed them today our quality with the ball, without the ball, and I think the result reflects that.', source:'Arseblog News', url:'https://arseblog.news/2026/09/odegaard-and-konsa-react-to-2-1-win-over-chelsea/'},
       {who:'Ezri Konsa', role:'defender', quote:'It’s part of football. Things happen, it’s all about how you react.', source:'Arseblog News', url:'https://arseblog.news/2026/09/odegaard-and-konsa-react-to-2-1-win-over-chelsea/'}
     ]}},
-  {n:4, ko:'2026-09-12T20:00:00+01:00', opp:'sun', v:'A', result:'W 2-0', scorers:'Bruno Guimarães, Saka (pen)', tv:'TNT Sports', moved:true, checked:'2026-09-15'},
+  {n:4, ko:'2026-09-12T20:00:00+01:00', opp:'sun', v:'A', result:'W 2-0', scorers:'Bruno Guimarães, Saka (pen)', tv:'TNT Sports', moved:true, checked:'2026-09-15',
+    reaction:{notes:[
+      {who:'Mikel Arteta', role:'manager', quote:'The personality that he has, and this was a special game for him as well, what it means for him. How he grabs the game, making decisions that he’s made.', source:'VAVEL International', url:'https://www.vavel.com/en/football/2026/09/12/arsenal/1271211-arteta-praises-guimaraes-for-grabbing-the-game-against-sunderland.html'},
+      {who:'Bruno Guimarães', role:'midfielder', quote:'I score a beautiful goal, beautiful moment for me and my family and I am happy.', source:'VAVEL International', url:'https://www.vavel.com/en/football/2026/09/12/arsenal/1271210-guimaraes-a-beautiful-goal-beautiful-moment.html'},
+      {who:'David Raya', role:'goalkeeper', quote:'For the players and the team to have that faith and keep going and win the game, two minutes after we score. Even if we conceded a goal, we had the faith to get back in the game.', source:'VAVEL International', url:'https://www.vavel.com/en/football/2026/09/12/arsenal/1271208-raya-reacts-to-penalty-save-against-sunderland.html'}
+    ]}},
   {n:5, ko:'2026-09-19T15:00:00+01:00', opp:'bha', v:'A', tv:'Not on UK TV \u00b7 3pm blackout', checked:'2026-09-15'},
   {n:6, ko:'2026-10-10T12:30:00+01:00', opp:'lee', v:'H', tv:'TNT Sports', moved:true, checked:'2026-08-29'},
   {n:7, ko:'2026-10-18T16:30:00+01:00', opp:'nfo', v:'A', tv:'Sky Sports', moved:true, checked:'2026-08-29'},
@@ -426,6 +431,15 @@ const sbHeaders = extra => Object.assign({apikey:SUPABASE_KEY, Authorization:'Be
    prepends new items here, it never rewrites news.html itself.
    ============================================================ */
 const NEWS = [
+  {date:'2026-09-14', headline:'Timber gets through Sunderland unscathed — and looks set for his first start of the season',
+   summary:'Buried under two separate fitness worries was the update this site has been waiting a month for. Ben White didn’t make it to half-time at the Stadium of Light, withdrawn with what looked like a groin complaint, and William Saliba is now out of Monday’s Carabao Cup trip to Portman Road with a back problem. But Jurrien Timber came through his second-half cameo against Sunderland with nothing wrong, and Arteta all but confirmed he’ll start against Ipswich — the actual return, not another round of “closing in.” Cristhian Mosquera remains a doubt of his own.',
+   source:'Sports Mole', url:'https://www.sportsmole.co.uk/football/arsenal/league-cup/team-news/ipswich-vs-arsenal-injury-suspension-list-predicted-xis_605060.html'},
+  {date:'2026-09-13', headline:'Arsenal want Pro Ref to explain the Sunderland penalty, VAR and all',
+   summary:'David Raya saved it, so the three points were never really at risk, but the club aren’t letting the decision go quietly. Referee John Brooks gave Sunderland a spot-kick for a challenge by Ezri Konsa on Dan Ballard that looked soft from every angle shown, VAR checked it and waved it through regardless, and Arsenal have now asked Pro Ref — the body that oversees Premier League officials — for an explanation of both calls. Arteta’s verdict from the press conference, delivered once he’d had a day to cool off, was that it simply shouldn’t happen at this level.',
+   source:'ESPN', url:'https://www.espn.com/soccer/story/_/id/49939662/arsenal-contact-pro-ref-sunderland-penalty-incident-source'},
+  {date:'2026-09-13', headline:'Twenty years of the Emirates, told in a handful of numbers',
+   summary:'Two decades since the move from Highbury, and the club marked it with a stat sheet rather than a ceremony, which feels about right for a ground built on financial discipline rather than sentiment. The shirt-and-stadium sponsorship is still the longest-running of its kind in the Premier League. Gilberto Silva scored the first competitive goal there, wearing No. 19. Eighteen hat-tricks have gone in since and not one of them belonged to the visitors, and the heaviest scoreline anyone has managed in a single game there is still ten goals, set the afternoon Arsenal put seven past Newcastle in 2012.',
+   source:'Arsenal.com', url:'https://arsenal.com/news/emirates-at-20-the-stats-breakdown-aiV0A9T0lVxm'},
   {date:'2026-09-11', headline:'Arsenal get a clean bill ahead of Sunderland: White in, Timber close, Mosquera not far behind',
    summary:'Arteta’s pre-Sunderland briefing was about as good as these things get this early in the season. Ben White has trained through his knock and travels to the Stadium of Light. Jurrien Timber, out since the spring, has been working with the group for several days and is now a genuine selection option rather than a hopeful one. Cristhian Mosquera, sidelined since the Villa game, is being talked about in terms of this weekend or the next rather than in the abstract. Five games unbeaten and the treatment room is finally starting to look normal.',
    source:'Yahoo Sports', url:'https://ca.sports.yahoo.com/news/arteta-provides-injury-updates-arsenal-085000743.html'},
