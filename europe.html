@@ -169,7 +169,31 @@ $('#euro-grid').innerHTML = CL.map(m => {
   </article>`;
 }).join('');
 
-$('#dates').innerHTML = KEY_DATES.map(k => `<div class="date"><b>${k.d}</b><span>${k.t}</span></div>`).join('');
+/* Key dates are written as '9 Sep 2026' strings. Parsed explicitly with
+   a month map rather than handed to new Date(str): that format is not
+   in the spec and engines are free to disagree about it, and this file
+   is the one place on the site where getting a date wrong is silent —
+   it just mislabels something as still-to-come. Compared at end of day
+   so a date isn't "done" while it's still happening. */
+const KD_MONTHS = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+function keyDateEnd(s){
+  const m = /^(\d{1,2}) ([A-Za-z]{3}) (\d{4})$/.exec(s.trim());
+  if(!m || !(m[2] in KD_MONTHS)) return NaN;
+  return Date.UTC(+m[3], KD_MONTHS[m[2]], +m[1], 23, 59, 59);
+}
+const kdNow = Date.now();
+const kdNextI = KEY_DATES.findIndex(k => {
+  const t = keyDateEnd(k.d);
+  return !Number.isNaN(t) && t >= kdNow;
+});
+$('#dates').innerHTML = KEY_DATES.map((k, i) => {
+  const t = keyDateEnd(k.d);
+  /* An unparseable date gets no class at all — better to show it plain
+     than to confidently label it done or next on a bad parse. */
+  let cls = '';
+  if(!Number.isNaN(t)) cls = t < kdNow ? ' is-done' : (i === kdNextI ? ' is-next' : '');
+  return `<div class="date${cls}"><b>${k.d}</b><span>${k.t}</span></div>`;
+}).join('');
 </script>
 </body>
 </html>
