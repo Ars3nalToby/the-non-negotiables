@@ -1063,6 +1063,7 @@ button{font:inherit;color:inherit;cursor:pointer}
   border:1px solid rgba(255,255,255,.18);cursor:pointer;
   transition:background var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out);
 }
+.cinema__sound[hidden]{display:none}
 .cinema__sound:hover{background:rgba(8,11,18,.75);border-color:rgba(255,255,255,.35)}
 .cinema__sound svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .cinema__sound .snd-on{display:none}
@@ -1087,6 +1088,7 @@ button{font:inherit;color:inherit;cursor:pointer}
   padding:11px 20px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
   cursor:pointer;transition:background var(--dur-fast) var(--ease-out);
 }
+.cinema__play[hidden]{display:none}
 .cinema__play:hover{background:rgba(255,255,255,.16)}
 
 @media (prefers-reduced-motion:reduce){
@@ -1135,7 +1137,9 @@ button{font:inherit;color:inherit;cursor:pointer}
   position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;
   display:flex;align-items:flex-end;background:#05070c;color:#fff;
 }
-.chapter__bg{position:absolute;inset:0;opacity:0;transition:opacity 1s var(--ease-out)}
+/* Oversized (-12%/+124% instead of inset:0) so the parallax drift the
+   cinema() script applies via transform never exposes an edge. */
+.chapter__bg{position:absolute;left:0;right:0;top:-12%;height:124%;opacity:0;transition:opacity 1s var(--ease-out);will-change:transform}
 .chapter.is-active .chapter__bg{opacity:1}
 .chapter__grade{position:absolute;inset:0;background:linear-gradient(0deg, rgba(4,7,14,.75), rgba(4,7,14,.1) 55%)}
 .chapter__in{position:relative;z-index:1;padding:0 var(--pad) clamp(40px,8vh,90px);max-width:760px}
@@ -1145,7 +1149,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 @media (prefers-reduced-motion:reduce){
   .chapter{height:auto}
   .chapter__pin{position:relative;height:auto;min-height:60vh;padding:60px 0}
-  .chapter__bg{opacity:1}
+  .chapter__bg{opacity:1;transform:none!important;top:0;height:100%}
   .chapter__time,.chapter__line{opacity:1;transform:none;transition:none}
 }
 
