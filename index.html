@@ -89,10 +89,9 @@
   </div>
   <div class="cinema__bar cinema__bar--top" aria-hidden="true"></div>
   <div class="cinema__bar cinema__bar--bottom" aria-hidden="true"></div>
-  <audio id="cinema-ambient" loop preload="none">
-    <source src="assets/audio/ambient.mp3" type="audio/mpeg">
-    <source src="assets/audio/ambient.ogg" type="audio/ogg">
-  </audio>
+  <!-- No <source> children: a two-track playlist needs its src set
+       programmatically (see the cinema() script), not a static list. -->
+  <audio id="cinema-ambient" preload="none"></audio>
   <button class="cinema__sound" id="cinema-sound" type="button" hidden aria-pressed="false" aria-label="Play ambient sound">
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M3 9v6h4l5 5V4L7 9H3z"/>
@@ -481,15 +480,29 @@ document.querySelectorAll('.widget').forEach(card => {
   }
 
   /* Ambient sound — strictly opt-in, never the video's own audio (the
-     video stays muted regardless). The toggle stays hidden until
-     assets/audio/ambient.* proves it can actually load; if it never
-     exists, the button simply never appears, same as the video
-     fallback never showing when there's nothing to fall back from. */
+     video stays muted regardless). Two original tracks, played as a
+     playlist rather than one looped file: Dawn plays first (matches the
+     hero's own "before kick-off" moment), hands off to Crown when it
+     ends, then loops back to Dawn. The toggle stays hidden until the
+     first track proves it can actually load; if it never exists, the
+     button simply never appears, same as the video fallback never
+     showing when there's nothing to fall back from. */
   const ambient = $('#cinema-ambient');
   const soundBtn = $('#cinema-sound');
+  const AMBIENT_TRACKS = [
+    'assets/audio/dawn-on-the-hallowed-turf.mp3',
+    'assets/audio/crown-of-the-pitch.mp3'
+  ];
   if(ambient && soundBtn && !saveData){
+    let track = 0;
     ambient.addEventListener('loadedmetadata', () => { soundBtn.hidden = false; }, {once:true});
+    ambient.addEventListener('ended', () => {
+      track = (track + 1) % AMBIENT_TRACKS.length;
+      ambient.src = AMBIENT_TRACKS[track];
+      ambient.play().catch(() => {});
+    });
     ambient.preload = 'metadata';
+    ambient.src = AMBIENT_TRACKS[track];
     ambient.load();
 
     soundBtn.addEventListener('click', () => {
