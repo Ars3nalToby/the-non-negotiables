@@ -431,6 +431,9 @@ const sbHeaders = extra => Object.assign({apikey:SUPABASE_KEY, Authorization:'Be
    prepends new items here, it never rewrites news.html itself.
    ============================================================ */
 const NEWS = [
+  {date:'2026-09-15', headline:'Max Dowman becomes Arsenal’s youngest-ever starter — and scores twice to sink Ipswich',
+   summary:'Sixteen years and 258 days old, handed a start in a heavily rotated side at Portman Road, and the response was two goals in a 4-2 Carabao Cup win — one either side of strikes from Madueke and Merino, with Ipswich pulling two back late through Mehmeti and Akpom that never threatened the result. It made him the youngest player ever to start a match for this club. Arteta’s read on him afterwards was the tell: “A tiny smile, that’s what you get with him... he doesn’t make a big fuss of it.” Arsenal are through to round four.',
+   source:'Sky Sports', url:'https://www.skysports.com/football/news/11095/13582699/ipswich-2-4-arsenal-max-dowman-shines-with-two-goals-as-gunners-ease-into-carabao-cup-fourth-round'},
   {date:'2026-09-14', headline:'Timber gets through Sunderland unscathed — and looks set for his first start of the season',
    summary:'Buried under two separate fitness worries was the update this site has been waiting a month for. Ben White didn’t make it to half-time at the Stadium of Light, withdrawn with what looked like a groin complaint, and William Saliba is now out of Monday’s Carabao Cup trip to Portman Road with a back problem. But Jurrien Timber came through his second-half cameo against Sunderland with nothing wrong, and Arteta all but confirmed he’ll start against Ipswich — the actual return, not another round of “closing in.” Cristhian Mosquera remains a doubt of his own.',
    source:'Sports Mole', url:'https://www.sportsmole.co.uk/football/arsenal/league-cup/team-news/ipswich-vs-arsenal-injury-suspension-list-predicted-xis_605060.html'},
