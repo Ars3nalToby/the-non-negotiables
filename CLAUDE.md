@@ -19,8 +19,8 @@ index.html              Hub. Hero match board + a grid of clickable
                         live teaser pulled from the shared data.
 news.html                Original news coverage, newest first — short
                         write-ups in this site's own voice, each
-                        linked to its real source. Renders from NEWS;
-                        never a hardcoded item.
+                        linked to its real source. Renders from NEWS
+                        (news-data.js); never a hardcoded item.
 timetable.html           Full season fixture list (month accordion).
 tickets.html             Ticket desk (sale windows) + Away Crew board.
 europe.html              Champions League cards + key dates.
@@ -63,9 +63,17 @@ columns.js                COLUMNS only — split out of app.js because it
                         needs it; every other page shouldn't pay its
                         byte cost. Loaded by programme.html alone, right
                         after app.js.
-audit.mjs               Self-audit script. Reads app.js and columns.js
-                        for data, reads every *.html page for
-                        compliance/hygiene checks. Run before every commit.
+news-data.js              NEWS only — same reasoning as columns.js: this
+                        grows indefinitely (the scheduled routine
+                        prepends an item every few days) and tripped
+                        app.js's 60KB budget once it did. Loaded by
+                        both index.html (just NEWS[0], for the homepage
+                        widget teaser) and news.html (the full list),
+                        right after app.js on each.
+audit.mjs               Self-audit script. Reads app.js, columns.js and
+                        news-data.js for data, reads every *.html page
+                        for compliance/hygiene checks. Run before every
+                        commit.
 wire/supabase-edge.ts     THE LIVE ONE. RSS/Bluesky aggregator running as
                         a Supabase Edge Function ("wire"). Feeds news.html
                         and transfers.html (?filter=transfers). Deployed
@@ -125,8 +133,14 @@ excluded — see Child safety, rule 2, above.
 There is no build, no bundler, no package.json for the site itself.
 **Keep it that way.** The audit enforces a size budget per file instead
 of one monolithic ceiling: `styles.css` ≤80KB, `app.js` ≤60KB,
-`columns.js` ≤120KB (single-page file, but still not unbounded), each
-individual page ≤40KB.
+`columns.js` and `news-data.js` ≤120KB each (few-page files, but still
+not unbounded), each individual page ≤40KB.
+
+**If `app.js` trips its budget again**, the fix is almost certainly
+"extract another ever-growing array," not "trim something." It's
+already happened twice — COLUMNS, then NEWS — both because a dataset
+the scheduled routine keeps appending to lived in the one file every
+page loads. Check which array grew, not what to cut.
 
 ---
 
@@ -140,7 +154,7 @@ crumb, the page's own section markup, shared footer/drawer markup,
 that section's own render logic. New pages should copy an existing
 page's chrome rather than reinventing it.
 
-### Data objects (top of `app.js`, except `COLUMNS` — see below)
+### Data objects (top of `app.js`, except `NEWS` and `COLUMNS` — see below)
 
 | Object | Holds |
 |---|---|
@@ -152,7 +166,7 @@ page's chrome rather than reinventing it.
 | `MOVES_IN` / `MOVES_OUT` | Transfer window, current summer |
 | `KEY_DATES` | Cup rounds, CL matchdays, finals |
 | `QUIZ` / `BINGO` | Junior Gunners content |
-| `NEWS` | Original news write-ups, newest first (`news.html`). Every entry: `date`, `headline`, `summary` (original wording, never copied), `source`, `url` (real, working link). audit.mjs flags it stale after 5 days. |
+| `NEWS` (in `news-data.js`, not `app.js`) | Original news write-ups, newest first (`news.html`, plus `NEWS[0]` on the homepage widget). Every entry: `date`, `headline`, `summary` (original wording, never copied), `source`, `url` (real, working link). audit.mjs flags it stale after 5 days. Kept in its own file for the same reason as COLUMNS — it grows without bound and tripped `app.js`'s budget once it did. |
 | `COLUMNS` (in `columns.js`, not `app.js`) | Original opinion columns, newest first (`programme.html`). Every entry: `date`, `title`, `byline`, `paras` (array of paragraph strings). audit.mjs flags it stale after 10 days. Kept in its own file — see `columns.js` in Repo layout above — because it's the one dataset that grows without bound. |
 
 ### The timezone rule (read this before touching any date)

@@ -22,6 +22,7 @@ const flag = (level, area, msg) => findings.push({ level, area, msg });
 
 const appJs = await readFile(join(DIR, 'app.js'), 'utf8');
 const columnsJs = await readFile(join(DIR, 'columns.js'), 'utf8');
+const newsJs = await readFile(join(DIR, 'news-data.js'), 'utf8');
 const cssFile = await readFile(join(DIR, 'styles.css'), 'utf8');
 const pageNames = (await readdir(DIR)).filter(f => f.endsWith('.html')).sort();
 const pages = {};
@@ -42,7 +43,7 @@ const evalArr = (src, label, file = 'app.js') => {
 const FIXTURES = evalArr(block(appJs, 'FIXTURES'), 'FIXTURES');
 const CL = evalArr(block(appJs, 'CL'), 'CL');
 const SQUAD = evalArr(block(appJs, 'SQUAD'), 'SQUAD');
-const NEWS = evalArr(block(appJs, 'NEWS'), 'NEWS');
+const NEWS = evalArr(block(newsJs, 'NEWS'), 'NEWS', 'news-data.js');
 const COLUMNS = evalArr(block(columnsJs, 'COLUMNS'), 'COLUMNS', 'columns.js');
 
 const now = new Date();
@@ -357,13 +358,15 @@ function scanStrings(value, path, seen) {
     for (const [k, v] of Object.entries(value)) scanStrings(v, `${path}.${k}`, seen);
   }
 }
-const SECURITY_SCAN_TARGETS = ['CLUBS', 'FIXTURES', 'CL', 'DEMAND_TEXT', 'KEY_DATES', 'SQUAD', 'QUIZ', 'BINGO', 'MOVES_IN', 'MOVES_OUT', 'WIRE_FALLBACK', 'NEWS'];
+const SECURITY_SCAN_TARGETS = ['CLUBS', 'FIXTURES', 'CL', 'DEMAND_TEXT', 'KEY_DATES', 'SQUAD', 'QUIZ', 'BINGO', 'MOVES_IN', 'MOVES_OUT', 'WIRE_FALLBACK'];
 for (const name of SECURITY_SCAN_TARGETS) {
   const val = evalDecl(appJs, name);
   if (val != null) scanStrings(val, name, new Set());
 }
 const columnsVal = evalDecl(columnsJs, 'COLUMNS');
 if (columnsVal != null) scanStrings(columnsVal, 'COLUMNS', new Set());
+const newsVal = evalDecl(newsJs, 'NEWS');
+if (newsVal != null) scanStrings(newsVal, 'NEWS', new Set());
 
 /* WIRE_ENDPOINT is fetched client-side from every visitor's browser.
    If it's ever set to a plain http:// URL, the request and its
@@ -379,10 +382,11 @@ if (wireMatch && wireMatch[1] && !wireMatch[1].startsWith('https://')) {
    per section, specifically so no single file has to carry everything.
    Budget each kind of file on its own terms instead of one combined cap. */
 const kb = buf => Math.round(Buffer.byteLength(buf) / 1024);
-flag('INFO', 'perf', `styles.css is ${kb(cssFile)}KB, app.js is ${kb(appJs)}KB, columns.js is ${kb(columnsJs)}KB.`);
+flag('INFO', 'perf', `styles.css is ${kb(cssFile)}KB, app.js is ${kb(appJs)}KB, columns.js is ${kb(columnsJs)}KB, news-data.js is ${kb(newsJs)}KB.`);
 if (kb(cssFile) > 80) flag('BUG', 'perf', `styles.css is ${kb(cssFile)}KB — getting big for a single stylesheet.`);
 if (kb(appJs) > 60) flag('BUG', 'perf', `app.js is ${kb(appJs)}KB — getting big for shared data+logic.`);
 if (kb(columnsJs) > 120) flag('BUG', 'perf', `columns.js is ${kb(columnsJs)}KB — programme.html only, but even a single-page file needs a ceiling.`);
+if (kb(newsJs) > 120) flag('BUG', 'perf', `news-data.js is ${kb(newsJs)}KB — index.html and news.html only, but even that needs a ceiling.`);
 for (const [name, html] of Object.entries(pages)) {
   const pkb = kb(html);
   if (pkb > 40) flag('BUG', 'perf', `${name} is ${pkb}KB of markup — that's a lot for one page now that styles/data are shared.`);
