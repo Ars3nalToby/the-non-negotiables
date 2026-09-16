@@ -1197,8 +1197,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .cinema__now .side--away{transform:perspective(900px) rotate3d(0,1,0,6deg)}
 .cinema__now .side:hover{transform:perspective(900px) rotate3d(0,1,0,0deg) translateY(-4px) scale(1.015);box-shadow:var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.18)}
 .cinema__now .side::before{
-  content:'';position:absolute;inset:-50%;z-index:0;pointer-events:none;mix-blend-mode:overlay;
-  background:conic-gradient(from 0deg, transparent 0%, rgba(255,255,255,.4) 6%, transparent 14%, transparent 100%);
+  content:'';position:absolute;inset:-50%;z-index:0;pointer-events:none;
+  background:conic-gradient(from 0deg, transparent 0%, rgba(255,255,255,.22) 6%, transparent 16%, transparent 100%);
   animation:sideRingSpin 9s linear infinite;
 }
 .cinema__now .side--away::before{animation-duration:11s;animation-direction:reverse}
