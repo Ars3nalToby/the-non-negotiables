@@ -74,19 +74,23 @@
 
 <section class="cinema" id="cinema" aria-label="The 4am kick-off">
   <div class="cinema__media">
-    <video class="cinema__video" id="cinema-video" autoplay muted loop playsinline preload="metadata" poster="assets/video/hero-poster.jpg" aria-hidden="true">
-      <source src="assets/video/hero-mobile.webm" type="video/webm" media="(max-width:767px)">
-      <source src="assets/video/hero-mobile.mp4" type="video/mp4" media="(max-width:767px)">
-      <source src="assets/video/hero-desktop.webm" type="video/webm">
-      <source src="assets/video/hero-desktop.mp4" type="video/mp4">
-    </video>
-    <div class="cinema__placeholder" aria-hidden="true">
-      <div class="cinema__sweep"></div>
-      <div class="cinema__grain"></div>
+    <div class="cinema__bg" id="cinema-bg" aria-hidden="true">
+      <div class="cinema__bg-drift"></div>
     </div>
-    <div class="cinema__grade" aria-hidden="true"></div>
-    <div class="cinema__vignette" aria-hidden="true"></div>
+    <svg class="cinema__pitch" aria-hidden="true" viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice">
+      <rect x="14" y="14" width="372" height="197" fill="none" stroke="#fff" stroke-width="1"/>
+      <line x1="200" y1="14" x2="200" y2="211" stroke="#fff" stroke-width="1"/>
+      <circle cx="200" cy="112.5" r="32" fill="none" stroke="#fff" stroke-width="1"/>
+      <circle cx="200" cy="112.5" r="1.6" fill="#fff"/>
+      <circle cx="58" cy="46" r="1.6" fill="#fff"/>
+      <circle cx="336" cy="64" r="1.6" fill="#fff"/>
+      <circle cx="74" cy="176" r="1.6" fill="#fff"/>
+      <circle cx="318" cy="158" r="1.6" fill="#fff"/>
+      <circle cx="142" cy="28" r="1.6" fill="#fff"/>
+      <circle cx="256" cy="198" r="1.6" fill="#fff"/>
+    </svg>
   </div>
+  <div class="cinema__spotlight" aria-hidden="true"></div>
   <div class="cinema__bar cinema__bar--top" aria-hidden="true"></div>
   <div class="cinema__bar cinema__bar--bottom" aria-hidden="true"></div>
   <!-- No <source> children: a two-track playlist needs its src set
@@ -439,47 +443,9 @@ document.querySelectorAll('.widget').forEach(card => {
 (function cinema(){
   const section = $('#cinema');
   if(!section) return;
-  const video = $('#cinema-video');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const conn = navigator.connection;
   const saveData = !!(conn && (conn.saveData || /2g/.test(conn.effectiveType || '')));
-
-  /* No footage, slow connection, or reduced-motion: quietly stay on the
-     placeholder. There's deliberately no "play" button — until real
-     footage exists there is nothing for it to play, and a button that
-     does nothing is worse than no button. */
-  function showFallback(){
-    section.classList.remove('cinema--ready');
-    section.classList.add('cinema--fallback');
-    if(video){ video.pause(); video.removeAttribute('autoplay'); }
-  }
-
-  if(reducedMotion || saveData){
-    showFallback();
-  } else if(video){
-    let settled = false;
-    video.addEventListener('playing', () => { settled = true; section.classList.add('cinema--ready'); }, {once:true});
-    video.addEventListener('error', () => { if(!settled) showFallback(); });
-    /* Belt-and-braces: some browsers never fire 'error' on the <video>
-       itself when every <source> 404s, they just sit at HAVE_NOTHING
-       forever, still nominally "loading". Settle it either way so the
-       grain/sweep animation isn't left running for a video that is
-       never going to arrive. */
-    setTimeout(() => { if(!settled && video.readyState < 2) showFallback(); }, 4000);
-
-    /* Pause when off-screen or the tab is hidden — no point decoding
-       frames nobody's looking at. One combined check so the scroll
-       observer and the visibility listener can't fight each other. */
-    let inView = false;
-    const sync = () => {
-      if(inView && !document.hidden) video.play().catch(() => {});
-      else video.pause();
-    };
-    new IntersectionObserver(entries => {
-      entries.forEach(en => { inView = en.isIntersecting; sync(); });
-    }, {threshold:0.1}).observe(section);
-    document.addEventListener('visibilitychange', sync);
-  }
 
   /* Ambient sound — strictly opt-in, never the video's own audio (the
      video stays muted regardless). Two original tracks, played as a
@@ -572,33 +538,24 @@ document.querySelectorAll('.widget').forEach(card => {
     updateParallax();
   }
 
-  /* Cursor-reactive match card — 3D tilt on the whole card, a glow
-     layer parallaxing opposite the cursor, a spotlight that follows
-     it. Skipped entirely under reduced-motion, and naturally inert on
-     touch since there's no mousemove to drive it — the untouched,
-     centred pose the card already has is a fine resting state on its
-     own, not a broken one waiting for a hover that will never come. */
-  const boardEl = $('#board');
-  if(boardEl && !reducedMotion){
-    boardEl.addEventListener('mousemove', e => {
-      const r = boardEl.getBoundingClientRect();
-      const nx = (e.clientX - r.left) / r.width;
-      const ny = (e.clientY - r.top) / r.height;
-      const dx = nx - 0.5, dy = ny - 0.5;
-      boardEl.style.setProperty('--board-ty', `${dx * 14}deg`);
-      boardEl.style.setProperty('--board-tx', `${dy * -10}deg`);
-      boardEl.style.setProperty('--board-mx', dx * 2);
-      boardEl.style.setProperty('--board-my', dy * 2);
-      boardEl.style.setProperty('--board-sx', `${nx * 100}%`);
-      boardEl.style.setProperty('--board-sy', `${ny * 100}%`);
+  /* Cursor-reactive hero — one normalized {mx,my} tracked across the
+     whole section (not just the card), read by the background parallax,
+     the spotlight, and the card's own tilt/glow via CSS calc() off two
+     custom properties. Skipped entirely under reduced-motion, and
+     naturally inert on touch since there's no mousemove to drive it —
+     the centred 0.5/0.5 default (set in CSS) is a fine resting state
+     on its own, not a broken one waiting for a hover that never comes. */
+  if(!reducedMotion){
+    section.addEventListener('mousemove', e => {
+      const r = section.getBoundingClientRect();
+      const mx = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+      const my = Math.min(1, Math.max(0, (e.clientY - r.top) / r.height));
+      section.style.setProperty('--hero-mx', mx);
+      section.style.setProperty('--hero-my', my);
     });
-    boardEl.addEventListener('mouseleave', () => {
-      boardEl.style.setProperty('--board-tx', '0deg');
-      boardEl.style.setProperty('--board-ty', '0deg');
-      boardEl.style.setProperty('--board-mx', 0);
-      boardEl.style.setProperty('--board-my', 0);
-      boardEl.style.setProperty('--board-sx', '50%');
-      boardEl.style.setProperty('--board-sy', '50%');
+    section.addEventListener('mouseleave', () => {
+      section.style.setProperty('--hero-mx', 0.5);
+      section.style.setProperty('--hero-my', 0.5);
     });
   }
 })();
