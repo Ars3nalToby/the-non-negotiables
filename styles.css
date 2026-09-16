@@ -35,6 +35,7 @@
   --shadow-md:0 10px 30px -8px rgba(20,24,32,.14), 0 2px 8px rgba(20,24,32,.06);
   --shadow-lg:0 30px 70px -16px rgba(20,24,32,.22), 0 6px 18px rgba(20,24,32,.08);
   --card-border:rgba(20,24,32,.08);
+  --tag-amber:#96700E;--tag-blue:#1D5FC2;--tag-violet:#7241DE;--tag-teal:#0B7C72;--tag-sage:#4C7A3D;
 }
 [data-theme="dark"]{
   --paper:#0A0D13;
@@ -67,6 +68,7 @@
   --shadow-md:0 10px 30px -8px rgba(0,0,0,.5), 0 2px 8px rgba(0,0,0,.3);
   --shadow-lg:0 30px 70px -16px rgba(0,0,0,.6), 0 6px 18px rgba(0,0,0,.35);
   --card-border:rgba(255,255,255,.08);
+  --tag-amber:#E8C878;--tag-blue:#7DAEFF;--tag-violet:#B49CFF;--tag-teal:#5FD8CB;--tag-sage:#8FC77A;
 }
 
 :root{
@@ -530,16 +532,68 @@ button{font:inherit;color:inherit;cursor:pointer}
 .mv__in .mv__fee{color:var(--red-deep)}
 .mv__out .mv__fee{color:var(--ok)}
 
+/* Live wire — filter chips, a featured lead card, the rest as a
+   timeline. Tags are colored by outlet family (grouped in the JS), so
+   a new RSS source degrades to slate instead of going untagged. */
+.wire-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.wire-head .eyebrow{margin:0}
+.wire-count{text-transform:none;letter-spacing:0;font-weight:400;color:var(--mute)}
+#wire-kicker::before{animation:dotPulse 1.6s var(--ease-in-out) infinite}
+.wire-filters{display:flex;gap:7px;flex-wrap:wrap}
+.wire-chip{
+  font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:6px 13px;border-radius:var(--r-pill);border:1px solid var(--card-border);
+  background:transparent;color:var(--mute);transition:all var(--dur-fast) var(--ease-out);
+}
+.wire-chip:hover{border-color:rgba(239,1,7,.4);color:var(--ink)}
+.wire-chip.is-active{background:linear-gradient(135deg,var(--red),#ff7a3d);border-color:transparent;color:#fff}
+.wire__tag{
+  font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  padding:3px 8px;border-radius:var(--r-pill);border:1px solid transparent;display:inline-block;
+}
+.wire__tag--amber{color:var(--tag-amber);background:rgba(217,164,6,.15);border-color:rgba(217,164,6,.4)}
+.wire__tag--blue{color:var(--tag-blue);background:rgba(29,111,224,.14);border-color:rgba(29,111,224,.38)}
+.wire__tag--violet{color:var(--tag-violet);background:rgba(124,77,255,.15);border-color:rgba(124,77,255,.4)}
+.wire__tag--teal{color:var(--tag-teal);background:rgba(14,148,136,.16);border-color:rgba(14,148,136,.4)}
+.wire__tag--sage{color:var(--tag-sage);background:rgba(92,138,74,.17);border-color:rgba(92,138,74,.4)}
+.wire__tag--slate{color:var(--mute);background:rgba(120,130,140,.15);border-color:rgba(120,130,140,.32)}
+@keyframes wireGlow{50%{box-shadow:var(--shadow-sm),0 0 34px rgba(239,1,7,.16)}}
+.wire__featured{
+  display:block;position:relative;text-decoration:none;color:inherit;
+  padding:22px 24px;margin-bottom:14px;border-radius:var(--r-lg);
+  background:linear-gradient(160deg,var(--card),var(--card-2));
+  border:1px solid var(--card-border);animation:wireGlow 3.2s var(--ease-in-out) infinite;
+  transition:border-color var(--dur-fast) var(--ease-out);
+}
+.wire__featured:hover{border-color:rgba(239,1,7,.32)}
+.wire__featured b{display:block;margin-top:10px;font-size:clamp(18px,2.3vw,24px);line-height:1.3;font-weight:800;color:var(--ink)}
+.wire__when{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--mute)}
+.wire__featured .wire__when{margin-top:10px}
+.wire__i .wire__when{margin-top:6px}
+.wire__badge{
+  position:absolute;top:16px;right:16px;font-family:var(--mono);font-size:9.5px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:#fff;padding:4px 10px;border-radius:var(--r-pill);
+  background:linear-gradient(135deg,var(--red),var(--red-deep));
+}
+.wire__timeline{position:relative;padding-left:22px}
+.wire__timeline::before{content:'';position:absolute;left:6px;top:2px;bottom:2px;width:2px;border-radius:2px;background:linear-gradient(var(--red),transparent)}
+@keyframes wireItemIn{to{opacity:1;transform:none}}
 .wire{display:grid;gap:10px}
 .wire__i{
   display:block;text-decoration:none;background:var(--card);border:1px solid var(--card-border);
-  padding:14px 16px;border-radius:var(--r-md);box-shadow:var(--shadow-sm);transition:border-color var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out);
-  position:relative;padding-left:20px;
+  padding:12px 14px;margin-bottom:8px;border-radius:var(--r-md);box-shadow:var(--shadow-sm);
+  position:relative;
+  opacity:0;transform:translateY(10px);animation:wireItemIn .5s var(--ease-spring) forwards;animation-delay:var(--wd,0ms);
+  transition:all var(--dur-fast) var(--ease-out);
 }
-.wire__i::before{content:'';position:absolute;left:0;top:16px;bottom:16px;width:3px;border-radius:3px;background:var(--red)}
-.wire__i:hover{border-color:rgba(239,1,7,.3);transform:translateX(2px)}
-.wire__i b{display:block;font-size:15px;font-weight:600;line-height:1.4;color:var(--ink)}
-.wire__i span{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--mute);margin-top:6px}
+.wire__i:last-child{margin-bottom:0}
+.wire__i::before{
+  content:'';position:absolute;left:-20px;top:50%;margin-top:-4px;width:8px;height:8px;
+  border-radius:50%;background:var(--paper);border:2px solid var(--red);
+}
+.wire__i:hover{border-color:rgba(239,1,7,.3);transform:translateX(4px);box-shadow:var(--shadow-md)}
+.wire__i .wire__tag{margin-right:8px}
+.wire__i b{display:inline;font-size:14.5px;font-weight:600;line-height:1.4;color:var(--ink)}
 .wire__note{font-family:var(--mono);font-size:12px;letter-spacing:.05em;color:var(--mute);margin:12px 0 0}
 
 /* ============================================================
@@ -582,6 +636,15 @@ button{font:inherit;color:inherit;cursor:pointer}
   font-variation-settings:'wdth' 106;line-height:1.3;
 }
 .dsub{font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;color:var(--mute);text-transform:uppercase}
+/* #news-feed scopes these to news.html — .dcard above is shared with
+   the fixture drawer. Amber dot, distinct from the wire's red one. */
+#written-kicker::before{background:var(--gold);animation:dotPulse 1.6s var(--ease-in-out) infinite}
+#news-feed .dcard{
+  opacity:0;transform:translateY(14px);animation:newsHeadIn .6s var(--ease-spring) forwards;animation-delay:var(--nd,0ms);
+  transition:all var(--dur-fast) var(--ease-out);
+}
+#news-feed .dcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:rgba(239,1,7,.25)}
+#news-feed .note{color:var(--mute)}
 .stub{position:relative;background:var(--card);border:1px solid var(--card-border);padding:20px;margin-bottom:16px;border-radius:var(--r-lg);box-shadow:var(--shadow-sm)}
 .stub::before,.stub::after{display:none}
 .kv{display:grid;grid-template-columns:110px 1fr;gap:9px 12px;font-size:14px}
@@ -920,13 +983,27 @@ button{font:inherit;color:inherit;cursor:pointer}
 }
 .page-head p{margin:0;font-family:var(--serif);font-size:16px;line-height:1.6;color:rgba(255,255,255,.78);max-width:64ch}
 .crumb{
-  display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
+  display:inline-flex;align-items:center;gap:6px;align-self:flex-start;white-space:nowrap;
   font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
   color:rgba(255,255,255,.6);padding:8px 14px 8px 10px;border-radius:var(--r-pill);
-  border:1px solid rgba(255,255,255,.16);transition:border-color var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out);
+  border:1px solid rgba(255,255,255,.16);transition:all var(--dur-fast) var(--ease-out);
 }
 .crumb:hover{color:#fff;border-color:rgba(255,255,255,.36)}
 .crumb svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* #news-head dresses up the shared .page-head band for News only —
+   Timetable, Tickets etc. keep the plain strip. */
+@keyframes dotPulse{0%,100%{opacity:.5;transform:scale(.85)}50%{opacity:1;transform:scale(1.2)}}
+@keyframes newsHeadIn{to{opacity:1;transform:none}}
+#news-head .eyebrow::before{animation:dotPulse 1.6s var(--ease-in-out) infinite}
+#news-head h1{
+  font-size:clamp(34px,7vw,56px);
+  background:linear-gradient(180deg,#fff 40%,rgba(255,255,255,.68));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 46px rgba(239,1,7,.45),0 0 14px rgba(239,1,7,.3);
+}
+#news-head .news-divider{height:2px;max-width:220px;margin-top:6px;border-radius:2px;background:linear-gradient(90deg,var(--red),transparent);box-shadow:0 0 18px 1px rgba(239,1,7,.6)}
+#news-head .page-head__in > *{opacity:0;transform:translateY(10px);animation:newsHeadIn .6s var(--ease-out) forwards;animation-delay:var(--rd,0ms)}
 
 /* Widget grid — the hub's clickable section cards */
 .widgets{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}

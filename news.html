@@ -57,23 +57,27 @@
   <a href="fanart.html">Fan Art</a>
 </div></nav>
 
-<div class="page-head">
+<div class="page-head" id="news-head">
   <div class="wrap page-head__in">
-    <a class="crumb" href="index.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back to hub</a>
-    <p class="eyebrow">This site's words, real sources, always linked</p>
-    <h1>News</h1>
-    <p>Short, original write-ups of what's actually happening at the club — never a copied sentence. Every item links to where it really came from; go there for the full story.</p>
+    <a class="crumb" href="index.html" style="--rd:0ms"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back to hub</a>
+    <p class="eyebrow" style="--rd:60ms">This site's words, real sources, always linked</p>
+    <h1 style="--rd:120ms">News</h1>
+    <p style="--rd:180ms">Short, original write-ups of what's actually happening at the club — never a copied sentence. Every item links to where it really came from; go there for the full story.</p>
+    <div class="news-divider" style="--rd:240ms" aria-hidden="true"></div>
   </div>
 </div>
 
 <section class="section wrap">
   <div style="margin-bottom:34px">
-    <h3 style="font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:0 0 10px">Live wire · everything, newest first</h3>
+    <div class="wire-head">
+      <p class="eyebrow" id="wire-kicker">Live wire · everything, newest first <span class="wire-count" id="wire-count"></span></p>
+      <div class="wire-filters" id="wire-filters"></div>
+    </div>
     <div class="wire" id="wire"></div>
     <p class="wire__note" id="wire-note">Connecting…</p>
   </div>
 
-  <h3 style="font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:0 0 14px">Written here · this site's own words</h3>
+  <p class="eyebrow" id="written-kicker">Written here · this site's own words</p>
   <div id="news-feed"></div>
 </section>
 
@@ -130,7 +134,7 @@
    scheduled routine grows the data instead of touching markup.
    ============================================================ */
 const newsDate = iso => dayLong(new Date(iso + 'T12:00:00Z'), 'UTC');
-$('#news-feed').innerHTML = NEWS.map(n => `<div class="dcard">
+$('#news-feed').innerHTML = NEWS.map((n,k) => `<div class="dcard" style="--nd:${k * 80}ms">
   <p class="dsub" style="margin:0 0 4px">${newsDate(n.date)}</p>
   <h3 class="news-h" style="margin:0 0 10px">${n.headline}</h3>
   <p class="note" style="margin:0 0 14px">${n.summary}</p>
@@ -141,12 +145,68 @@ $('#news-feed').innerHTML = NEWS.map(n => `<div class="dcard">
    stale, however long it's been since the last written write-up above.
    Feed items are third-party RSS parsed with a regex (see
    wire/supabase-edge.ts), so treat every field as untrusted: esc()
-   everything and re-check the https-only rule client-side too. */
+   everything and re-check the https-only rule client-side too.
+
+   Sources are grouped into families (not one exact-name match each) so
+   a feed the edge function adds later — or a Bluesky handle, which
+   varies per post — still gets a sensible tag and filter chip instead
+   of falling through untagged. Filtering/rendering is done from one
+   cached `allWireItems` array, entirely client-side — no re-fetch. */
+let allWireItems = [];
+let wireFilter = 'All';
+
+function wireGroup(s){
+  if(/arseblog/i.test(s) || s.startsWith('@')) return 'Arseblog';
+  if(/^bbc/i.test(s)) return 'BBC Sport';
+  if(/guardian/i.test(s)) return 'Guardian';
+  if(/sky/i.test(s)) return 'Sky Sports';
+  if(/arsenal\.com/i.test(s)) return 'Official';
+  return s;
+}
+const WIRE_HUE = {Arseblog:'amber', 'BBC Sport':'blue', Guardian:'violet', 'Sky Sports':'teal', Official:'sage'};
+const wireHue = group => WIRE_HUE[group] || 'slate';
+
+function renderWireFilters(safe){
+  const counts = [];
+  safe.forEach(i => { const g = wireGroup(i.s); if(!counts.includes(g)) counts.push(g); });
+  const chips = ['All', ...counts];
+  $('#wire-filters').innerHTML = chips.map(c =>
+    `<button type="button" class="wire-chip${c === wireFilter ? ' is-active' : ''}" data-filter="${esc(c)}">${esc(c)}</button>`).join('');
+}
+
+function renderWireList(safe){
+  const items = wireFilter === 'All' ? safe : safe.filter(i => wireGroup(i.s) === wireFilter);
+  $('#wire-count').textContent = items.length ? `(${items.length})` : '';
+  if(!items.length){ $('#wire').innerHTML = ''; return; }
+  const [first, ...rest] = items;
+  const tag = i => `<span class="wire__tag wire__tag--${wireHue(wireGroup(i.s))}">${esc(i.s)}</span>`;
+  const featured = `<a class="wire__featured" href="${esc(first.u)}" target="_blank" rel="noopener noreferrer">
+    <span class="wire__badge">Just in</span>
+    ${tag(first)}
+    <b>${esc(first.t)}</b>
+    ${first.d ? `<span class="wire__when">${esc(first.d)}</span>` : ''}
+  </a>`;
+  const timeline = rest.map((i,k) => `<a class="wire__i" style="--wd:${k * 60}ms" href="${esc(i.u)}" target="_blank" rel="noopener noreferrer">
+    ${tag(i)}<b>${esc(i.t)}</b>${i.d ? `<span class="wire__when">${esc(i.d)}</span>` : ''}
+  </a>`).join('');
+  $('#wire').innerHTML = featured + (rest.length ? `<div class="wire__timeline">${timeline}</div>` : '');
+}
+
+$('#wire-filters').addEventListener('click', e => {
+  const btn = e.target.closest('.wire-chip');
+  if(!btn) return;
+  wireFilter = btn.dataset.filter;
+  const safe = allWireItems.filter(i => /^https:\/\//i.test(i.u));
+  renderWireFilters(safe);
+  renderWireList(safe);
+});
+
 function paintWire(items, live){
+  allWireItems = items;
+  wireFilter = 'All';
   const safe = items.filter(i => /^https:\/\//i.test(i.u));
-  $('#wire').innerHTML = safe.map(i =>
-    `<a class="wire__i" href="${esc(i.u)}" target="_blank" rel="noopener noreferrer">
-       <b>${esc(i.t)}</b><span>${esc(i.s)}${i.d ? ' · ' + i.d : ''}</span></a>`).join('');
+  renderWireFilters(safe);
+  renderWireList(safe);
   $('#wire-note').textContent = live
     ? 'Live feed · pulled fresh every time you open this page'
     : 'Live feed unavailable — showing sources instead.';
