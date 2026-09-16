@@ -108,6 +108,7 @@
     <p class="cinema__deck">Fixtures, away days &amp; wake-up calls — watched from 16,000km away, since 2009.</p>
     <div class="cinema__now" id="cinema-now">
       <section class="board" id="board">
+        <div class="board__ring" aria-hidden="true"></div>
         <div class="wrap board__in">
           <p class="eyebrow" id="board-eyebrow">Next match</p>
           <div class="board__grid">
@@ -372,7 +373,7 @@ function tickBoard(){
         mm = Math.floor(ms%3600000/60000), ss = Math.floor(ms%60000/1000);
   const countEl = $('#clk-count');
   if(dd > 0){
-    countEl.textContent = `${dd}d ${String(hh).padStart(2,'0')}h ${String(mm).padStart(2,'0')}m`;
+    countEl.textContent = `${dd}d ${String(hh).padStart(2,'0')}h ${String(mm).padStart(2,'0')}m ${String(ss).padStart(2,'0')}s`;
   } else {
     countEl.textContent = `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
     countEl.classList.remove('tick-pulse');
@@ -569,6 +570,36 @@ document.querySelectorAll('.widget').forEach(card => {
       if(!ticking){ requestAnimationFrame(updateParallax); ticking = true; }
     }, {passive:true});
     updateParallax();
+  }
+
+  /* Cursor-reactive match card — 3D tilt on the whole card, a glow
+     layer parallaxing opposite the cursor, a spotlight that follows
+     it. Skipped entirely under reduced-motion, and naturally inert on
+     touch since there's no mousemove to drive it — the untouched,
+     centred pose the card already has is a fine resting state on its
+     own, not a broken one waiting for a hover that will never come. */
+  const boardEl = $('#board');
+  if(boardEl && !reducedMotion){
+    boardEl.addEventListener('mousemove', e => {
+      const r = boardEl.getBoundingClientRect();
+      const nx = (e.clientX - r.left) / r.width;
+      const ny = (e.clientY - r.top) / r.height;
+      const dx = nx - 0.5, dy = ny - 0.5;
+      boardEl.style.setProperty('--board-ty', `${dx * 14}deg`);
+      boardEl.style.setProperty('--board-tx', `${dy * -10}deg`);
+      boardEl.style.setProperty('--board-mx', dx * 2);
+      boardEl.style.setProperty('--board-my', dy * 2);
+      boardEl.style.setProperty('--board-sx', `${nx * 100}%`);
+      boardEl.style.setProperty('--board-sy', `${ny * 100}%`);
+    });
+    boardEl.addEventListener('mouseleave', () => {
+      boardEl.style.setProperty('--board-tx', '0deg');
+      boardEl.style.setProperty('--board-ty', '0deg');
+      boardEl.style.setProperty('--board-mx', 0);
+      boardEl.style.setProperty('--board-my', 0);
+      boardEl.style.setProperty('--board-sx', '50%');
+      boardEl.style.setProperty('--board-sy', '50%');
+    });
   }
 })();
 </script>

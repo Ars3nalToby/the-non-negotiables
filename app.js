@@ -746,10 +746,14 @@ if(mascotBalls.length && !window.matchMedia('(prefers-reduced-motion: reduce)').
    just vanishing under the next section — a cheap way to make the
    transition feel deliberate without true scroll-driven pinning,
    which risks real layout bugs stacked on top of the existing sticky
-   nav. rAF-throttled, same pattern as the mascot spin above. */
+   nav. rAF-throttled, same pattern as the mascot spin above.
+   Skipped when #board lives inside .cinema__now: there it's the
+   cursor-tilt card, and this effect's inline transform:scale(...)
+   would silently clobber that card's CSS transform (inline always
+   wins over a stylesheet rule), killing the tilt. */
 (function heroHandoff(){
   const board = $('#board');
-  if(!board || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if(!board || board.closest('.cinema__now') || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   let ticking = false;
   const update = () => {
     const r = board.getBoundingClientRect();
