@@ -1125,7 +1125,7 @@ button{font:inherit;color:inherit;cursor:pointer}
    #board itself, and every id inside it, is completely untouched —
    this only wraps and restyles it. */
 .cinema__now{
-  opacity:0;transform:translateY(14px);
+  position:relative;opacity:0;transform:translateY(14px);
   animation:cinemaFade 1s 2.6s var(--ease-out) forwards, cinemaRise 1s 2.6s var(--ease-out) forwards;
   max-width:640px;
 }
@@ -1148,7 +1148,12 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* Tension ring, just behind the card — same 1.6s rhythm as the live
    eyebrow dot below, so the two feel like one heartbeat rather than
    two unrelated animations that happen to both move. Border colour
-   pulses too (not just scale/opacity), per the exact brief. */
+   pulses too (not just scale/opacity), per the exact brief.
+   Lives as .board's SIBLING (inset against .cinema__now), not its
+   child: .board carries the cursor-tilt's perspective+rotate, and a
+   ring nested inside it would inherit that same 3D transform — under
+   real rotation, perspective foreshortens its outer edges enough to
+   visually collapse it back inside the card instead of framing it. */
 .cinema__now .board__ring{
   position:absolute;inset:-4px;z-index:-1;border-radius:32px;
   border:2px solid rgba(255,90,53,.55);animation:tensionPulse 1.6s var(--ease-in-out) infinite;
