@@ -1057,10 +1057,9 @@ button{font:inherit;color:inherit;cursor:pointer}
   --hero-mx:.5;--hero-my:.5;
 }
 .cinema__media{position:absolute;inset:0;overflow:hidden}
-/* Background: an outer wrapper the cursor pushes opposite itself
-   (parallax depth), wrapping an inner layer that owns its own slow
-   14s drift — two elements because both need to animate `transform`
-   independently without one fighting the other for the property. */
+/* Outer wrapper the cursor pushes opposite itself (parallax); inner
+   layer owns its own 14s drift — split so each can animate `transform`
+   without the two fighting over the same property. */
 .cinema__bg{
   position:absolute;inset:-24px;
   transform:translate(calc((.5 - var(--hero-mx)) * 24px), calc((.5 - var(--hero-my)) * 24px)) scale(1.05);
@@ -1076,21 +1075,17 @@ button{font:inherit;color:inherit;cursor:pointer}
   animation:heroDrift 14s var(--ease-in-out) infinite alternate;
 }
 @keyframes heroDrift{from{transform:translate(0,0)}to{transform:translate(40px,-40px)}}
-/* Faint pitch markings — generic football-pitch geometry (no crest, no
-   kit), just enough texture to read as "a match", not a blank void. */
+/* Generic pitch geometry (no crest/kit) — texture, not a blank void. */
 .cinema__pitch{position:absolute;inset:0;width:100%;height:100%;opacity:.14;mix-blend-mode:screen;pointer-events:none}
-/* Spotlight sits above the background, below the card content
-   (z-index:1 vs .cinema__content's 2) — one shared layer for the
-   whole hero, not a second one duplicated on the card. */
+/* Above the background, below the card (z-index:1 vs content's 2) —
+   one shared spotlight for the hero, not duplicated on the card. */
 .cinema__spotlight{
   position:absolute;inset:0;z-index:1;pointer-events:none;
   background:radial-gradient(650px circle at calc(var(--hero-mx) * 100%) calc(var(--hero-my) * 100%), rgba(255,150,100,.16), transparent 60%);
 }
 
-/* Curtain bars — a one-time reveal on load, not a persistent
-   letterbox (the aspect-ratio on .cinema__media handles that on its
-   own for any viewport). Bars start covering the full height and
-   animate to nothing. */
+/* Curtain bars — a one-time reveal on load, covering full height and
+   animating to nothing, not a persistent letterbox. */
 .cinema__bar{position:absolute;left:0;right:0;background:#000;z-index:5;pointer-events:none}
 .cinema__bar--top{top:0;height:50%;animation:curtainTop 1.6s .2s var(--ease-out) both}
 .cinema__bar--bottom{bottom:0;height:50%;animation:curtainBottom 1.6s .2s var(--ease-out) both}
@@ -1145,17 +1140,12 @@ button{font:inherit;color:inherit;cursor:pointer}
   transition:transform .12s var(--ease-out);
 }
 .cinema__now .floatcard{display:none}
-/* Tension ring, just behind the card — same 1.6s rhythm as the live
-   eyebrow dot below, so the two feel like one heartbeat rather than
-   two unrelated animations that happen to both move. Border colour
-   pulses too (not just scale/opacity), per the exact brief.
-   Lives as .board's SIBLING (inset against .cinema__now), not its
-   child: .board carries the cursor-tilt's perspective+rotate, and a
-   ring nested inside it would inherit that same 3D transform — under
-   real rotation, perspective foreshortens its outer edges enough to
-   visually collapse it back inside the card instead of framing it. */
+/* Tension ring — same 1.6s pulse as the live eyebrow dot below. Lives
+   as .board's sibling, not its child: nested inside, it would inherit
+   .board's own cursor-tilt rotation, and perspective foreshortening
+   under real rotation collapses it back inside the card. */
 .cinema__now .board__ring{
-  position:absolute;inset:-4px;z-index:-1;border-radius:32px;
+  position:absolute;inset:-7px;z-index:-1;border-radius:32px;
   border:2px solid rgba(255,90,53,.55);animation:tensionPulse 1.6s var(--ease-in-out) infinite;
 }
 @keyframes tensionPulse{
@@ -1164,17 +1154,12 @@ button{font:inherit;color:inherit;cursor:pointer}
 }
 .cinema__now .eyebrow::before{animation:tensionPulse 1.6s var(--ease-in-out) infinite}
 .cinema__now .board__in{padding:0}
-/* The original #board was designed as a full-width dark hero section
-   with generous padding throughout (30px+ on the side panels alone).
-   Nested inside a 640px-wide card, that adds up to ~600px tall and
-   pushes the title text above the fold. Compact every nested piece,
-   not just the outer card. */
+/* #board's own generous padding pushes the title above the fold once
+   nested in a 640px card — compact every piece, not just the card. */
 .cinema__now .eyebrow{font-size:10.5px;margin-bottom:8px}
 .cinema__now .board__grid{gap:8px}
-/* Opposing static tilt, corrected on hover — not cursor-tracked like
-   the card itself, just a fixed "leaning toward each other" pose that
-   straightens and lifts when you touch one. overflow:hidden clips the
-   rotating ring and sweep to the panel's own rounded rect. */
+/* Opposing static tilt, corrected on hover; overflow:hidden clips the
+   rotating ring/sweep to the panel's own rounded rect. */
 .cinema__now .side{
   padding:14px 16px;overflow:hidden;
   border-top:1px solid rgba(255,255,255,.28);border-left:1px solid rgba(255,255,255,.14);
@@ -1215,17 +1200,25 @@ button{font:inherit;color:inherit;cursor:pointer}
 .cinema__now .clocks{margin-top:12px;gap:8px}
 .cinema__now .clock{padding:9px 11px;transition:transform .15s var(--ease-out),box-shadow .15s var(--ease-out)}
 .cinema__now .clock:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
-/* Countdown is always the third clock — the one card that isn't just a
-   kickoff time, so it gets its own warm gradient instead of the two
-   plain dark ones either side of it. */
-.cinema__now .clocks .clock:nth-child(3){
+/* Countdown gets its own warm gradient, not the two plain dark clocks
+   either side. Base .clock:last-child rules (641-900px, ≤760px) make
+   the standalone board's last clock span the full row — unscoped, so
+   it was also hijacking this card, dropping Countdown to its own row
+   instead of the third column. Match its selector shape to cancel it
+   with enough specificity to always win here. */
+.cinema__now .clocks .clock:last-child{
+  grid-column:auto;display:block;
   background:linear-gradient(160deg,#3a2010,#1c0f08);border-color:rgba(255,120,50,.3);
   box-shadow:0 10px 24px -12px rgba(255,120,50,.35);
 }
-.cinema__now .clocks .clock:nth-child(3):hover{box-shadow:0 16px 32px -12px rgba(255,120,50,.5)}
+.cinema__now .clocks .clock:last-child:hover{box-shadow:0 16px 32px -12px rgba(255,120,50,.5)}
+.cinema__now .clocks .clock:last-child .clock__label{width:auto}
 .cinema__now .clock__label{font-size:10px}
-.cinema__now .clock__time{font-size:16px;font-weight:800}
-.cinema__now .clock__day{font-size:11px}
+.cinema__now .clock__time,.cinema__now .clocks .clock:last-child .clock__time{font-size:16px;font-weight:800}
+.cinema__now .clocks .clock:last-child .clock__day{margin-top:4px}
+/* Date/venue caption — plain and readable, not a label, so it skips
+   the mono uppercase treatment the real labels above it use. */
+.cinema__now .clock__day{font-family:var(--sans);letter-spacing:normal;font-size:11px}
 .cinema__now .verdict{display:none}
 .cinema__now .board__cta{margin-top:12px;gap:8px}
 .cinema__now .btn{padding:9px 16px;font-size:11px}
