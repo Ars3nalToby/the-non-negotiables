@@ -1125,13 +1125,9 @@ button{font:inherit;color:inherit;cursor:pointer}
   max-width:640px;
 }
 @keyframes cinemaRise{to{transform:none}}
-/* Opaque, not glass — crisp-edged per the redesign brief, no
-   backdrop-filter. Sits on `perspective` so the cursor-tilt below has
-   real 3D depth to rotate into, not a flat card faking it. Tilt reads
-   off the same --hero-mx/my the hero background and spotlight use, so
-   the whole section is one shared cursor state, not a card-local one —
-   the card reacts even when the cursor's over the title, not just when
-   it's directly over the card. */
+/* Opaque, not glass — no backdrop-filter. Tilt reads off the same
+   --hero-mx/my the background/spotlight use, so the card reacts to the
+   cursor anywhere in the hero, not just when it's over the card. */
 .cinema__now .board{
   background:var(--board-bg);
   border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);box-shadow:0 30px 70px -20px rgba(0,0,0,.7);
@@ -1140,10 +1136,9 @@ button{font:inherit;color:inherit;cursor:pointer}
   transition:transform .12s var(--ease-out);
 }
 .cinema__now .floatcard{display:none}
-/* Tension ring — same 1.6s pulse as the live eyebrow dot below. Lives
-   as .board's sibling, not its child: nested inside, it would inherit
-   .board's own cursor-tilt rotation, and perspective foreshortening
-   under real rotation collapses it back inside the card. */
+/* Tension ring — same 1.6s pulse as the eyebrow dot below. .board's
+   sibling, not its child: nested inside it would inherit the tilt, and
+   perspective would collapse it back inside the card under rotation. */
 .cinema__now .board__ring{
   position:absolute;inset:-7px;z-index:-1;border-radius:32px;
   border:2px solid rgba(255,90,53,.55);animation:tensionPulse 1.6s var(--ease-in-out) infinite;
@@ -1203,9 +1198,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* Countdown gets its own warm gradient, not the two plain dark clocks
    either side. Base .clock:last-child rules (641-900px, ≤760px) make
    the standalone board's last clock span the full row — unscoped, so
-   it was also hijacking this card, dropping Countdown to its own row
-   instead of the third column. Match its selector shape to cancel it
-   with enough specificity to always win here. */
+   it was hijacking this card too. Match its selector shape to cancel
+   it with enough specificity to always win here. */
 .cinema__now .clocks .clock:last-child{
   grid-column:auto;display:block;
   background:linear-gradient(160deg,#3a2010,#1c0f08);border-color:rgba(255,120,50,.3);
@@ -1222,17 +1216,23 @@ button{font:inherit;color:inherit;cursor:pointer}
 .cinema__now .verdict{display:none}
 .cinema__now .board__cta{margin-top:12px;gap:8px}
 .cinema__now .btn{padding:9px 16px;font-size:11px}
-/* "One quiet call to action" (the brief's own words) — the secondary
-   ghost link still exists everywhere else; this compact card keeps
-   just the one primary button. */
+/* One quiet call to action — the ghost link stays elsewhere, not here. */
 .cinema__now .board__cta .btn--ghost{display:none}
-/* A hard drop-edge instead of a soft glow shadow — the button reads as
-   a physical 3D key that compresses into its own base on click, not a
-   flat rectangle with a blur under it. */
+/* A hard drop-edge, not a soft glow — reads as a key that compresses
+   into its own base on click, not a flat rectangle with a blur. */
 .cinema__now .board__cta .btn--solid{
+  position:relative;
   background:linear-gradient(135deg,#ff5a35,var(--red));border-color:transparent;
   box-shadow:0 4px 0 #7a1409, 0 10px 22px -10px rgba(255,90,53,.5);
   transition:transform .1s var(--ease-out),box-shadow .1s var(--ease-out),background var(--dur-fast) var(--ease-out);
+}
+/* Live wire-coverage count, set by index.html; hidden when there's none
+   so the button never claims freshness it can't back up. */
+.btn__badge{
+  position:absolute;top:-8px;right:-8px;min-width:20px;height:20px;padding:0 5px;
+  display:grid;place-items:center;border-radius:999px;
+  background:#fff;color:var(--red);font-family:var(--mono);font-size:11px;font-weight:800;
+  border:2px solid var(--red);animation:dotPulse 1.6s var(--ease-in-out) infinite;
 }
 .cinema__now .board__cta .btn--solid:hover{
   background:linear-gradient(135deg,#ff6a42,var(--red-deep));

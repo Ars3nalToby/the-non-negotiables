@@ -133,7 +133,7 @@
           </div>
           <p class="verdict" id="verdict">—</p>
           <div class="board__cta">
-            <button class="btn btn--solid" id="board-open">Open the dossier</button>
+            <button class="btn btn--solid" id="board-open">Open the dossier<span class="btn__badge" id="board-open-badge" hidden></span></button>
             <a class="btn btn--ghost" href="timetable.html">Full season timetable</a>
           </div>
         </div>
@@ -391,6 +391,27 @@ function tickBoard(){
   }
 }
 $('#board-open').addEventListener('click', () => openDrawer(boardIdx));
+
+/* A quiet signal that the dossier isn't just static copy — if the
+   live wire actually has coverage naming this fixture's opponent, the
+   button says so before you even open it. Reuses app.js's shared
+   getWireItems() cache, so this doesn't cost a second fetch beyond
+   whatever the dossier itself triggers on click. Says nothing if the
+   feed is down (WIRE_FALLBACK's generic links never name-match), which
+   is the correct degrade — no badge is honest, a wrong one isn't. */
+(async function dossierBadge(){
+  const badge = $('#board-open-badge');
+  if(!badge || !window.getWireItems) return;
+  const items = await getWireItems();
+  const opp = CLUBS[FIXTURES[boardIdx].opp];
+  const short = opp.name.split(' ')[0];
+  const count = items.filter(i => new RegExp(short,'i').test(i.t)).length;
+  if(count > 0){
+    badge.textContent = count > 9 ? '9+' : String(count);
+    badge.hidden = false;
+    $('#board-open').setAttribute('aria-label', `Open the dossier — ${count} fresh update${count === 1 ? '' : 's'} on ${opp.name}`);
+  }
+})();
 
 paintBoard(boardIdx);
 splitWords($('#board-home'));

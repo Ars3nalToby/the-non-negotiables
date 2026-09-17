@@ -370,6 +370,26 @@ const WIRE_FALLBACK = [
   {t:'Official ins and outs, 2026/27', u:'https://www.arsenal.com/news/arsenal-transfers-all-the-ins-and-outs-in-202627-a8qx29v8B1fR', s:'Arsenal.com'},
   {t:'Arsenal news aggregator — every outlet, newest first', u:'https://www.newsnow.co.uk/h/Sport/Football/Premier+League/Arsenal/Transfer+News', s:'NewsNow'}
 ];
+/* Shared fetch + 5-minute cache, reused by the fixture drawer's "Latest
+   on [opponent]" card below and by the hero's dossier-button badge
+   (index.html) — exposed on window so that second consumer doesn't
+   need its own copy of this logic or trigger a duplicate fetch. */
+let wireCache = null, wireCacheAt = 0;
+async function getWireItems(){
+  if(wireCache && Date.now() - wireCacheAt < 5*60*1000) return wireCache;
+  try{
+    const r = await fetch(WIRE_ENDPOINT, {cache:'no-store', headers: sbHeaders()});
+    if(!r.ok) throw new Error(r.status);
+    const data = await r.json();
+    if(!Array.isArray(data.items) || !data.items.length) throw new Error('empty');
+    wireCache = data.items.filter(i => /^https:\/\//i.test(i.u));
+  }catch(e){
+    wireCache = WIRE_FALLBACK;
+  }
+  wireCacheAt = Date.now();
+  return wireCache;
+}
+window.getWireItems = getWireItems;
 
 /* ---- Community backend (Supabase) ----
    Powers the Away Crew board (tickets.html) and the site-wide visit
@@ -432,12 +452,36 @@ const sbHeaders = extra => Object.assign({apikey:SUPABASE_KEY, Authorization:'Be
 const drawer = $('#drawer'), scrim = $('#scrim');
 let lastFocus = null;
 
+/* Filters the shared wire down to whichever opponent's drawer is open
+   (falls back to the general feed if fewer than 2 items name-match \u2014
+   a fixture months out won't have opponent-specific coverage yet, and
+   an empty card reads as broken, not "nothing new"). `token` guards
+   against a slow response landing after the visitor closed this
+   drawer or opened a different fixture's. */
+let drawerToken = 0;
+async function loadDrawerNews(token, opponentName){
+  const items = await getWireItems();
+  if(token !== drawerToken) return;
+  const short = opponentName.split(' ')[0];
+  let relevant = items.filter(i => new RegExp(short,'i').test(i.t));
+  if(relevant.length < 2) relevant = items;
+  relevant = relevant.slice(0,3);
+  const el = $('#d-news-body');
+  if(!el) return;
+  el.innerHTML = relevant.length ? relevant.map(i => `
+    <a href="${esc(i.u)}" target="_blank" rel="noopener noreferrer" style="display:block;text-decoration:none;margin-bottom:10px">
+      <p style="margin:0;font-size:14px;font-weight:600;color:var(--ink);line-height:1.4">${esc(i.t)}</p>
+      <p style="margin:2px 0 0;font-family:var(--mono);font-size:11px;color:var(--mute);text-transform:uppercase">${esc(i.s)}${i.d ? ' \u00b7 ' + i.d : ''}</p>
+    </a>`).join('') : `<p class="note" style="margin:0">Nothing fresh on the wire right now \u2014 the full feed is on the <a href="news.html" style="color:var(--red)">News page</a>.</p>`;
+}
+
 function openDrawer(i){
   if(!drawer) return;
   const f = FIXTURES[i], c = CLUBS[f.opp], d = new Date(f.ko);
   const home = f.v === 'H';
   const ground = home ? CLUBS.ars : c;
   const dem = DEMAND_TEXT[DEMAND[f.opp] || 2];
+  const myToken = ++drawerToken;
 
   $('#d-eyebrow').textContent = `Matchweek ${f.n} \u00b7 ${home ? 'Home' : 'Away'}`;
   $('#d-body').innerHTML = `
@@ -454,6 +498,11 @@ function openDrawer(i){
         ${f.result ? `<dt>Result</dt><dd style="color:var(--ok);font-weight:600">${f.result}${f.scorers ? ' \u2014 ' + f.scorers : ''}</dd>` : ''}
       </dl>
       ${f.warn ? `<p style="margin:12px 0 0;padding:10px 12px;background:var(--warn-wash);color:var(--warn);font-size:13.5px;line-height:1.5;border-radius:2px">${f.warn}</p>` : ''}
+    </div>
+
+    <div class="dcard">
+      <h3>Latest on ${c.name}</h3>
+      <div id="d-news-body"><p class="note" style="margin:0;color:var(--mute)">Checking the wire\u2026</p></div>
     </div>
 
     ${f.reaction ? `<div class="dcard">
@@ -500,6 +549,8 @@ function openDrawer(i){
         ${awayLinks(ground,d).map(l => `<a class="lnk" href="${l.u}" target="_blank" rel="noopener noreferrer"><b>${l.b}</b><span>${l.s}</span></a>`).join('')}
       </div>
     </div>`;
+
+  loadDrawerNews(myToken, c.name);
 
   /* Stagger the drawer's own cards in just behind the panel's slide-in
      (.3s), rather than having everything appear at once the instant
