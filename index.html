@@ -116,15 +116,15 @@
         <div class="wrap board__in">
           <p class="eyebrow" id="board-eyebrow">Next match</p>
           <div class="board__grid">
-            <div class="side">
+            <a class="side" id="board-home-link" href="https://www.arsenal.com" target="_blank" rel="noopener noreferrer" aria-label="Visit Arsenal's official website">
               <p class="side__club is-arsenal" id="board-home">Arsenal</p>
               <p class="side__tag" id="board-home-tag">Home</p>
-            </div>
+            </a>
             <div class="vs">Premier League</div>
-            <div class="side side--away">
+            <a class="side side--away" id="board-away-link" href="https://www.arsenal.com" target="_blank" rel="noopener noreferrer" aria-label="Visit the opponent's official website">
               <p class="side__club" id="board-away">—</p>
               <p class="side__tag" id="board-away-tag">Away</p>
-            </div>
+            </a>
           </div>
           <div class="clocks">
             <div class="clock"><p class="clock__label">Kick-off · London</p><p class="clock__time" id="clk-uk">—</p><p class="clock__day" id="clk-uk-day">—</p></div>
@@ -346,6 +346,11 @@ function paintBoard(i){
   $('#board-away').className = 'side__club' + (home ? '' : ' is-arsenal');
   $('#board-home-tag').textContent = home ? 'Home' : c.area;
   $('#board-away-tag').textContent = home ? c.area : 'Away end';
+  const ARS = CLUBS.ars.site;
+  $('#board-home-link').href = home ? ARS : c.site;
+  $('#board-home-link').setAttribute('aria-label', `Visit ${home ? 'Arsenal' : c.name}'s official website`);
+  $('#board-away-link').href = home ? c.site : ARS;
+  $('#board-away-link').setAttribute('aria-label', `Visit ${home ? c.name : 'Arsenal'}'s official website`);
   $('#clk-uk').textContent = t24(d,LDN);
   $('#clk-uk-day').textContent = dayLong(d,LDN);
   const brutal = isBrutal(d);
