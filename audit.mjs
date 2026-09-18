@@ -21,6 +21,7 @@ const findings = [];
 const flag = (level, area, msg) => findings.push({ level, area, msg });
 
 const appJs = await readFile(join(DIR, 'app.js'), 'utf8');
+const drawerJs = await readFile(join(DIR, 'drawer.js'), 'utf8');
 const columnsJs = await readFile(join(DIR, 'columns.js'), 'utf8');
 const newsJs = await readFile(join(DIR, 'news-data.js'), 'utf8');
 const cssFile = await readFile(join(DIR, 'styles.css'), 'utf8');
@@ -279,16 +280,17 @@ for (const [name, html] of Object.entries(pages)) {
 }
 
 /* ---------- 7d. brace balance ---------- */
-for (const [label, src] of [['styles.css', cssFile], ['app.js', appJs]]) {
+for (const [label, src] of [['styles.css', cssFile], ['app.js', appJs], ['drawer.js', drawerJs]]) {
   if ((src.match(/{/g) || []).length !== (src.match(/}/g) || []).length) {
     flag('BUG', 'frontend', `Unbalanced braces in ${label}.`);
   }
 }
-if (appJs.includes('function') ) {
-  // app.js is real JS (unlike the old inline <script>), so let node's own
-  // parser be the authority on whether it's syntactically valid at all.
-  try { new Function(appJs); }
-  catch (e) { flag('BUG', 'frontend', `app.js does not parse as JavaScript: ${e.message}`); }
+for (const [label, src] of [['app.js', appJs], ['drawer.js', drawerJs]]) {
+  if (!src.includes('function')) continue;
+  // Real JS (unlike the old inline <script>), so let node's own parser be
+  // the authority on whether it's syntactically valid at all.
+  try { new Function(src); }
+  catch (e) { flag('BUG', 'frontend', `${label} does not parse as JavaScript: ${e.message}`); }
 }
 
 /* ---------- 9. stored-XSS scan across every data literal ----------
@@ -382,9 +384,10 @@ if (wireMatch && wireMatch[1] && !wireMatch[1].startsWith('https://')) {
    per section, specifically so no single file has to carry everything.
    Budget each kind of file on its own terms instead of one combined cap. */
 const kb = buf => Math.round(Buffer.byteLength(buf) / 1024);
-flag('INFO', 'perf', `styles.css is ${kb(cssFile)}KB, app.js is ${kb(appJs)}KB, columns.js is ${kb(columnsJs)}KB, news-data.js is ${kb(newsJs)}KB.`);
+flag('INFO', 'perf', `styles.css is ${kb(cssFile)}KB, app.js is ${kb(appJs)}KB, drawer.js is ${kb(drawerJs)}KB, columns.js is ${kb(columnsJs)}KB, news-data.js is ${kb(newsJs)}KB.`);
 if (kb(cssFile) > 80) flag('BUG', 'perf', `styles.css is ${kb(cssFile)}KB — getting big for a single stylesheet.`);
 if (kb(appJs) > 60) flag('BUG', 'perf', `app.js is ${kb(appJs)}KB — getting big for shared data+logic.`);
+if (kb(drawerJs) > 60) flag('BUG', 'perf', `drawer.js is ${kb(drawerJs)}KB — index.html and timetable.html only, but even that needs a ceiling.`);
 if (kb(columnsJs) > 120) flag('BUG', 'perf', `columns.js is ${kb(columnsJs)}KB — programme.html only, but even a single-page file needs a ceiling.`);
 if (kb(newsJs) > 120) flag('BUG', 'perf', `news-data.js is ${kb(newsJs)}KB — index.html and news.html only, but even that needs a ceiling.`);
 for (const [name, html] of Object.entries(pages)) {

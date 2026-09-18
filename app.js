@@ -21,44 +21,44 @@
    ============================================================ */
 
 const CLUBS = {
-  ars:{name:'Arsenal',stadium:'Emirates Stadium',city:'London',area:'Islington, N5',cap:'60,700',station:'Arsenal (Piccadilly line)',site:'https://www.arsenal.com',note:''},
-  cov:{name:'Coventry City',stadium:'Coventry Building Society Arena',city:'Coventry',area:'Rowley\u2019s Green',cap:'32,600',station:'Coventry Arena',last:'Promoted from the Championship',site:'https://www.ccfc.co.uk',
+  ars:{name:'Arsenal',stadium:'Emirates Stadium',city:'London',area:'Islington, N5',cap:'60,700',station:'Arsenal (Piccadilly line)',site:'https://www.arsenal.com',lat:51.555,lon:-0.1086,note:''},
+  cov:{name:'Coventry City',stadium:'Coventry Building Society Arena',city:'Coventry',area:'Rowley\u2019s Green',cap:'32,600',station:'Coventry Arena',last:'Promoted from the Championship',site:'https://www.ccfc.co.uk',lat:52.4483,lon:-1.4954,
     note:'Their first season in the top flight in twenty-five years, and they have waited long enough that the away end will sing for ninety minutes regardless of the score. The trap here is treating it as a formality \u2014 newly promoted sides in August are all adrenaline and no fear.'},
-  avl:{name:'Aston Villa',stadium:'Villa Park',city:'Birmingham',area:'Aston, B6',cap:'42,600',station:'Witton or Aston',last:'Champions League qualification',site:'https://www.avfc.co.uk',
+  avl:{name:'Aston Villa',stadium:'Villa Park',city:'Birmingham',area:'Aston, B6',cap:'42,600',station:'Witton or Aston',last:'Champions League qualification',site:'https://www.avfc.co.uk',lat:52.5092,lon:-1.8848,
     note:'Emery has never needed much of an excuse, and Villa Park under lights on a Monday is one of the genuinely hostile away days left \u2014 a proper old ground with the Holte End behind one goal and no patience for anyone playing out from the back. They beat us here 2-1 last season, Buend\u00eda in the 95th minute, and they did the double over us in 2023/24. They arrive off a 4-0 hiding at Brighton with Jo\u00e3o Gomes suspended, which historically makes them more dangerous rather than less. Watch the second ball.'},
-  che:{name:'Chelsea',stadium:'Stamford Bridge',city:'London',area:'Fulham, SW6',cap:'40,300',station:'Fulham Broadway',last:'Xabi Alonso\u2019s first full season',site:'https://www.chelseafc.com',
+  che:{name:'Chelsea',stadium:'Stamford Bridge',city:'London',area:'Fulham, SW6',cap:'40,300',station:'Fulham Broadway',last:'Xabi Alonso\u2019s first full season',site:'https://www.chelseafc.com',lat:51.4817,lon:-0.191,
     note:'A London derby with a manager who wants his side to control the game in exactly the way we do, which usually produces either a chess match or an absolute mess. Nothing in between. The Bridge is compact and the away allocation is tucked into the corner of the Shed End.'},
-  sun:{name:'Sunderland',stadium:'Stadium of Light',city:'Sunderland',area:'Monkwearmouth',cap:'48,700',station:'Stadium of Light (Metro)',last:'Europa League qualification',site:'https://www.safc.com',
+  sun:{name:'Sunderland',stadium:'Stadium of Light',city:'Sunderland',area:'Monkwearmouth',cap:'48,700',station:'Stadium of Light (Metro)',last:'Europa League qualification',site:'https://www.safc.com',lat:54.9144,lon:-1.3883,
     note:'Forty-eight thousand people who have decided, collectively and without discussion, that this is the year. The Stadium of Light on a night game is a genuinely great football experience and an extremely bad place to be one goal down.'},
-  bha:{name:'Brighton & Hove Albion',stadium:'American Express Stadium',city:'Brighton',area:'Falmer',cap:'31,800',station:'Falmer',last:'Conference League qualification',site:'https://www.brightonandhovealbion.com',
+  bha:{name:'Brighton & Hove Albion',stadium:'American Express Stadium',city:'Brighton',area:'Falmer',cap:'31,800',station:'Falmer',last:'Conference League qualification',site:'https://www.brightonandhovealbion.com',lat:50.8617,lon:-0.0837,
     note:'Brighton have spent a decade being the smartest club in the division, and the Amex is the only ground where the away end genuinely cannot get a taxi afterwards \u2014 Falmer station empties 30,000 people through two platforms. Their build-up is designed to bait a press and punish it. Patience is the whole game plan.'},
-  lee:{name:'Leeds United',stadium:'Elland Road',city:'Leeds',area:'Beeston',cap:'37,600',station:'Leeds (then a 25-minute walk)',site:'https://www.leedsunited.com',
+  lee:{name:'Leeds United',stadium:'Elland Road',city:'Leeds',area:'Beeston',cap:'37,600',station:'Leeds (then a 25-minute walk)',site:'https://www.leedsunited.com',lat:53.7778,lon:-1.5722,
     note:'Elland Road does not do quiet. Loud, old, close to the pitch, and utterly indifferent to whether you are the champions. We put five past them at the Emirates in August 2025; nobody at Leeds has forgotten that, and they will not let us forget that they have not forgotten.'},
-  nfo:{name:'Nottingham Forest',stadium:'The City Ground',city:'Nottingham',area:'West Bridgford',cap:'30,400',station:'Nottingham (walk over Trent Bridge)',site:'https://www.nottinghamforest.co.uk',
+  nfo:{name:'Nottingham Forest',stadium:'The City Ground',city:'Nottingham',area:'West Bridgford',cap:'30,400',station:'Nottingham (walk over Trent Bridge)',site:'https://www.nottinghamforest.co.uk',lat:52.94,lon:-1.1327,
     note:'The nicest walk to any away ground in England \u2014 over the river, past the swans, into a stand that has been shaking since 1980. Forest transition faster than almost anyone and will happily give us the ball for an hour to get one chance.'},
-  eve:{name:'Everton',stadium:'Hill Dickinson Stadium',city:'Liverpool',area:'Bramley-Moore Dock',cap:'52,900',station:'Sandhills',site:'https://www.evertonfc.com',
+  eve:{name:'Everton',stadium:'Hill Dickinson Stadium',city:'Liverpool',area:'Bramley-Moore Dock',cap:'52,900',station:'Sandhills',site:'https://www.evertonfc.com',lat:53.4308,lon:-2.9615,
     note:'The new dock ground is a proper piece of architecture and considerably nastier to visit than late-period Goodison, because 52,000 Evertonians in a steep bowl have rediscovered their voice. Everton away is never routine, whatever the table says.'},
-  liv:{name:'Liverpool',stadium:'Anfield',city:'Liverpool',area:'Anfield, L4',cap:'61,000',station:'Liverpool Lime Street',site:'https://www.liverpoolfc.com',
+  liv:{name:'Liverpool',stadium:'Anfield',city:'Liverpool',area:'Anfield, L4',cap:'61,000',station:'Liverpool Lime Street',site:'https://www.liverpoolfc.com',lat:53.4308,lon:-2.9608,
     note:'You know what Anfield is. The expanded Anfield Road End made it louder rather than more corporate, which nobody predicted. First fifteen minutes is a survival exercise. Get through it at 0-0 and the ground gets nervous quicker than any big stadium in the country.'},
-  hul:{name:'Hull City',stadium:'MKM Stadium',city:'Hull',area:'West Park',cap:'25,600',station:'Hull Paragon',site:'https://www.hullcity.co.uk',
+  hul:{name:'Hull City',stadium:'MKM Stadium',city:'Hull',area:'West Park',cap:'25,600',station:'Hull Paragon',site:'https://www.hullcity.co.uk',lat:53.7461,lon:-0.3667,
     note:'Newly promoted, a long way from London, and a ground in a park that feels more like a Sunday than a title defence. Which is exactly the danger. These are the six points that decide leagues \u2014 the games nobody writes about in May because you won them 2-0 and forgot.'},
-  new:{name:'Newcastle United',stadium:'St James\u2019 Park',city:'Newcastle upon Tyne',area:'City centre',cap:'52,300',station:'Newcastle Central',site:'https://www.nufc.co.uk',
+  new:{name:'Newcastle United',stadium:'St James\u2019 Park',city:'Newcastle upon Tyne',area:'City centre',cap:'52,300',station:'Newcastle Central',site:'https://www.nufc.co.uk',lat:54.9756,lon:-1.6217,
     note:'St James\u2019 sits right in the middle of the city, which makes it the best away weekend on the calendar and the hardest one to be sensible on. The away end is in the gods \u2014 bring shoes with grip. Selling Bruno to us has not improved their mood.'},
-  mci:{name:'Manchester City',stadium:'Etihad Stadium',city:'Manchester',area:'Eastlands',cap:'61,000',station:'Etihad Campus (tram)',last:'Runners-up, 78 points',site:'https://www.mancity.com',
+  mci:{name:'Manchester City',stadium:'Etihad Stadium',city:'Manchester',area:'Eastlands',cap:'61,000',station:'Etihad Campus (tram)',last:'Runners-up, 78 points',site:'https://www.mancity.com',lat:53.4831,lon:-2.2004,
     note:'The team we beat to it, in the first post-Guardiola era anyone has had to imagine. We put three past them in the Community Shield in August, which is worth precisely nothing in February and everything in the group chat.'},
-  bre:{name:'Brentford',stadium:'Gtech Community Stadium',city:'London',area:'Brentford, TW8',cap:'17,250',station:'Kew Bridge',site:'https://www.brentfordfc.com',
+  bre:{name:'Brentford',stadium:'Gtech Community Stadium',city:'London',area:'Brentford, TW8',cap:'17,250',station:'Kew Bridge',site:'https://www.brentfordfc.com',lat:51.4907,lon:-0.2886,
     note:'Seventeen thousand people crammed into a box next to the M4, playing the most annoying football in London. Long throws, set-piece coaches, a goalkeeper starting attacks with 60-yard passes. A genuinely well-run football club and an absolutely miserable Tuesday night.'},
-  tot:{name:'Tottenham Hotspur',stadium:'Tottenham Hotspur Stadium',city:'London',area:'N17',cap:'62,850',station:'White Hart Lane or Seven Sisters',site:'https://www.tottenhamhotspur.com',
+  tot:{name:'Tottenham Hotspur',stadium:'Tottenham Hotspur Stadium',city:'London',area:'N17',cap:'62,850',station:'White Hart Lane or Seven Sisters',site:'https://www.tottenhamhotspur.com',lat:51.6043,lon:-0.0664,
     note:'The North London derby, away, in December, in a stadium that cost more than some countries. Everything else about the season is a rehearsal for this. There is no tactical note worth writing here. Just win it.'},
-  bou:{name:'AFC Bournemouth',stadium:'Vitality Stadium',city:'Bournemouth',area:'Kings Park',cap:'11,300',station:'Bournemouth or Pokesdown',last:'Europa League qualification',site:'https://www.afcb.co.uk',
+  bou:{name:'AFC Bournemouth',stadium:'Vitality Stadium',city:'Bournemouth',area:'Kings Park',cap:'11,300',station:'Bournemouth or Pokesdown',last:'Europa League qualification',site:'https://www.afcb.co.uk',lat:50.7352,lon:-1.8382,
     note:'The smallest ground in the division and one of the most awkward fixtures in it \u2014 Bournemouth press with real aggression and the tight pitch does half their work. Eleven thousand people close enough to hear individually.'},
-  mun:{name:'Manchester United',stadium:'Old Trafford',city:'Manchester',area:'Trafford',cap:'74,300',station:'Old Trafford (tram) or Piccadilly',last:'Champions League qualification',site:'https://www.manutd.com',
+  mun:{name:'Manchester United',stadium:'Old Trafford',city:'Manchester',area:'Trafford',cap:'74,300',station:'Old Trafford (tram) or Piccadilly',last:'Champions League qualification',site:'https://www.manutd.com',lat:53.4631,lon:-2.2913,
     note:'Seventy-four thousand seats, a leaking roof, and a fanbase that has spent a decade being told next season is the one. It is still Old Trafford and it is still the fixture that makes older Gunners go quiet. February away is a proper test of where the season actually is.'},
-  cry:{name:'Crystal Palace',stadium:'Selhurst Park',city:'London',area:'South Norwood, SE25',cap:'25,500',station:'Selhurst or Norwood Junction',site:'https://www.cpfc.co.uk',
+  cry:{name:'Crystal Palace',stadium:'Selhurst Park',city:'London',area:'South Norwood, SE25',cap:'25,500',station:'Selhurst or Norwood Junction',site:'https://www.cpfc.co.uk',lat:51.3983,lon:-0.0855,
     note:'Boxing Day at Selhurst is a cruel piece of scheduling and the Holmesdale End will make sure you feel it. Old ground, terrible sightlines, brilliant noise. Palace have been a bogey side often enough that pretending otherwise is tempting fate.'},
-  ful:{name:'Fulham',stadium:'Craven Cottage',city:'London',area:'Fulham, SW6',cap:'29,600',station:'Putney Bridge',site:'https://www.fulhamfc.com',
+  ful:{name:'Fulham',stadium:'Craven Cottage',city:'London',area:'Fulham, SW6',cap:'29,600',station:'Putney Bridge',site:'https://www.fulhamfc.com',lat:51.4749,lon:-0.2217,
     note:'The prettiest ground in the league \u2014 riverside, Victorian pavilion, the walk through Bishop\u2019s Park. It is also 8pm on the 30th of December, which means four degrees and everyone having had a difficult week. Fulham at home are far better than their reputation.'},
-  ips:{name:'Ipswich Town',stadium:'Portman Road',city:'Ipswich',area:'Town centre',cap:'30,300',station:'Ipswich',site:'https://www.itfc.co.uk',
+  ips:{name:'Ipswich Town',stadium:'Portman Road',city:'Ipswich',area:'Town centre',cap:'30,300',station:'Ipswich',site:'https://www.itfc.co.uk',lat:52.0552,lon:1.1447,
     note:'Back up again, and Portman Road remains one of the proper old grounds \u2014 right in the town, stands close to the pitch, a crowd that knows when to get behind them. McKenna\u2019s sides are coached to within an inch of their lives. Nothing is loose against them.'}
 };
 
@@ -311,25 +311,6 @@ $('#theme-toggle').addEventListener('click', () => {
 });
 
 /* ============================================================
-   AWAY-DAY LINKS (keyless, date pre-filled)
-   ============================================================ */
-function awayLinks(club, koDate){
-  const inD = isoDate(addDays(koDate,-1), BNE);
-  const outD = isoDate(addDays(koDate,1), BNE);
-  const place = club.stadium + ' ' + club.city;
-  return [
-    {b:'Hotels near the ground', s:'Booking.com \u00b7 dates set', u:`https://www.booking.com/searchresults.html?ss=${enc(place)}&checkin=${inD}&checkout=${outD}&group_adults=1&no_rooms=1`},
-    {b:'Compare nightly rates', s:'Google Hotels', u:`https://www.google.com/search?q=${enc('hotels near ' + place)}&hl=en-GB`},
-    {b:'Gigs that weekend', s:'Songkick \u00b7 ' + club.city, u:`https://www.songkick.com/search?query=${enc(club.city)}&type=locations`},
-    {b:'What\u2019s on in town', s:'Skiddle \u00b7 ' + club.city, u:`https://www.skiddle.com/whats-on/${enc(club.city)}/`},
-    {b:'Everything else on', s:'Eventbrite', u:`https://www.eventbrite.co.uk/d/united-kingdom--${enc(club.city.toLowerCase())}/events/`},
-    {b:'Getting there', s:'Maps \u00b7 ' + club.station, u:`https://www.google.com/maps/search/?api=1&query=${enc(place)}`},
-    {b:'Trains', s:'Trainline', u:'https://www.thetrainline.com/'},
-    {b:'Official tickets', s:'Arsenal.com', u:'https://www.arsenal.com/tickets'}
-  ];
-}
-
-/* ============================================================
    TRANSFERS + WIRE — data only. Render logic lives on transfers.html.
    ============================================================ */
 const DEADLINE = '2026-09-01T23:00:00+01:00';
@@ -443,154 +424,6 @@ const sbHeaders = extra => Object.assign({apikey:SUPABASE_KEY, Authorization:'Be
     grid.insertAdjacentElement('afterend', p);
   }catch(e){}
 })();
-
-/* ============================================================
-   DRAWER — shared because both index.html (hero "open the dossier")
-   and timetable.html (row click) use it. Guarded: pages without the
-   drawer markup (#drawer/#scrim) just skip this whole block.
-   ============================================================ */
-const drawer = $('#drawer'), scrim = $('#scrim');
-let lastFocus = null;
-
-/* Filters the shared wire down to whichever opponent's drawer is open
-   (falls back to the general feed if fewer than 2 items name-match \u2014
-   a fixture months out won't have opponent-specific coverage yet, and
-   an empty card reads as broken, not "nothing new"). `token` guards
-   against a slow response landing after the visitor closed this
-   drawer or opened a different fixture's. */
-let drawerToken = 0;
-async function loadDrawerNews(token, opponentName){
-  const items = await getWireItems();
-  if(token !== drawerToken) return;
-  const short = opponentName.split(' ')[0];
-  let relevant = items.filter(i => new RegExp(short,'i').test(i.t));
-  if(relevant.length < 2) relevant = items;
-  relevant = relevant.slice(0,3);
-  const el = $('#d-news-body');
-  if(!el) return;
-  el.innerHTML = relevant.length ? relevant.map(i => `
-    <a href="${esc(i.u)}" target="_blank" rel="noopener noreferrer" style="display:block;text-decoration:none;margin-bottom:10px">
-      <p style="margin:0;font-size:14px;font-weight:600;color:var(--ink);line-height:1.4">${esc(i.t)}</p>
-      <p style="margin:2px 0 0;font-family:var(--mono);font-size:11px;color:var(--mute);text-transform:uppercase">${esc(i.s)}${i.d ? ' \u00b7 ' + i.d : ''}</p>
-    </a>`).join('') : `<p class="note" style="margin:0">Nothing fresh on the wire right now \u2014 the full feed is on the <a href="news.html" style="color:var(--red)">News page</a>.</p>`;
-}
-
-function openDrawer(i){
-  if(!drawer) return;
-  const f = FIXTURES[i], c = CLUBS[f.opp], d = new Date(f.ko);
-  const home = f.v === 'H';
-  const ground = home ? CLUBS.ars : c;
-  const dem = DEMAND_TEXT[DEMAND[f.opp] || 2];
-  const myToken = ++drawerToken;
-
-  $('#d-eyebrow').textContent = `Matchweek ${f.n} \u00b7 ${home ? 'Home' : 'Away'}`;
-  $('#d-body').innerHTML = `
-    <p class="dsub">${dayLong(d,LDN)} \u00b7 ${t24(d,LDN)} UK</p>
-    <h2 class="dtitle" id="d-title">${home ? 'Arsenal v ' + c.name : c.name + ' v Arsenal'}</h2>
-
-    <div class="dcard">
-      <h3>Kick-off, both ends of the world</h3>
-      <dl class="kv">
-        <dt>London</dt><dd>${t24(d,LDN)} \u00b7 ${dayLong(d,LDN)}</dd>
-        <dt>Brisbane</dt><dd>${t24(d,BNE)} \u00b7 ${dayLong(d,BNE)} ${isBrutal(d) ? '<span style="color:var(--red)">\u25cf brutal window</span>' : ''}</dd>
-        ${f.tv ? `<dt>On TV</dt><dd>${f.tv}${f.moved ? ' \u2014 moved from the original slot' : ''}</dd>` : ''}
-        ${f.checked ? `<dt>Verified</dt><dd style="color:var(--mute);font-size:13px">${f.checked}</dd>` : '<dt>Verified</dt><dd style="color:var(--warn);font-size:13px">Not re-checked \u2014 confirm before booking</dd>'}
-        ${f.result ? `<dt>Result</dt><dd style="color:var(--ok);font-weight:600">${f.result}${f.scorers ? ' \u2014 ' + f.scorers : ''}</dd>` : ''}
-      </dl>
-      ${f.warn ? `<p style="margin:12px 0 0;padding:10px 12px;background:var(--warn-wash);color:var(--warn);font-size:13.5px;line-height:1.5;border-radius:2px">${f.warn}</p>` : ''}
-    </div>
-
-    <div class="dcard">
-      <h3>Latest on ${c.name}</h3>
-      <div id="d-news-body"><p class="note" style="margin:0;color:var(--mute)">Checking the wire\u2026</p></div>
-    </div>
-
-    ${f.reaction ? `<div class="dcard">
-      <h3>Post-match reaction</h3>
-      ${f.reaction.notes.map(n => `
-        <p class="dsub" style="margin:0 0 3px">${n.who}${n.role ? ', ' + n.role : ''}</p>
-        <p class="note" style="margin:0 0 4px">“${n.quote}”</p>
-        <p style="margin:0 0 16px"><a href="${n.url}" target="_blank" rel="noopener noreferrer" style="font-size:12.5px;color:var(--red);text-decoration:none;font-weight:600">Full reaction at ${n.source} →</a></p>
-      `).join('')}
-      <p class="sign">Quotes attributed and linked to their original source. Nothing here is reproduced beyond a short excerpt.</p>
-    </div>` : ''}
-
-    <div class="dcard">
-      <h3>The ground</h3>
-      <dl class="kv">
-        <dt>Stadium</dt><dd>${ground.stadium}</dd>
-        <dt>Where</dt><dd>${ground.area}, ${ground.city}</dd>
-        <dt>Capacity</dt><dd>${ground.cap}</dd>
-        <dt>Nearest rail</dt><dd>${ground.station}</dd>
-      </dl>
-    </div>
-
-    ${c.note ? `<div class="dcard">
-      <h3>The opponent</h3>
-      ${c.last ? `<p class="dsub" style="margin:-4px 0 10px">Last season: ${c.last}</p>` : ''}
-      <p class="note">${c.note}</p>
-      <p class="sign">Programme note \u00b7 The Non-Negotiables</p>
-    </div>` : ''}
-
-    <div class="dcard">
-      <h3>Tickets</h3>
-      <p style="margin:0 0 10px"><span class="badge ${dem.cls}">${dem.lbl}</span></p>
-      <p style="font-size:14.5px;color:var(--ink-2);margin:0 0 12px;line-height:1.6">${dem.tier}</p>
-      <div class="linkgrid">
-        <a class="lnk" href="https://www.arsenal.com/tickets" target="_blank" rel="noopener noreferrer"><b>Buy / ballot</b><span>Arsenal.com \u00b7 official</span></a>
-        <a class="lnk" href="https://www.arsenal.com/ticket-exchange" target="_blank" rel="noopener noreferrer"><b>Ticket Exchange</b><span>The only legal resale</span></a>
-      </div>
-    </div>
-
-    <div class="stub">
-      <h3>${home ? 'Matchday in N5' : 'The away day'}</h3>
-      <p class="dsub" style="margin:-4px 0 12px">Dates pre-filled: ${isoDate(addDays(d,-1),BNE)} \u2192 ${isoDate(addDays(d,1),BNE)}</p>
-      <div class="linkgrid">
-        ${awayLinks(ground,d).map(l => `<a class="lnk" href="${l.u}" target="_blank" rel="noopener noreferrer"><b>${l.b}</b><span>${l.s}</span></a>`).join('')}
-      </div>
-    </div>`;
-
-  loadDrawerNews(myToken, c.name);
-
-  /* Stagger the drawer's own cards in just behind the panel's slide-in
-     (.3s), rather than having everything appear at once the instant
-     the panel arrives. */
-  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    $('#d-body').querySelectorAll(':scope > .dcard, :scope > .stub').forEach((card,k) => {
-      card.classList.add('dcard-in');
-      card.style.setProperty('--dd', (180 + k * 70) + 'ms');
-    });
-  }
-
-  lastFocus = document.activeElement;
-  drawer.classList.add('is-open'); scrim.classList.add('is-open');
-  drawer.setAttribute('aria-hidden','false');
-  $('#d-close').focus();
-  document.body.style.overflow = 'hidden';
-}
-function closeDrawer(){
-  drawer.classList.remove('is-open'); scrim.classList.remove('is-open');
-  drawer.setAttribute('aria-hidden','true');
-  document.body.style.overflow = '';
-  if(lastFocus) lastFocus.focus();
-}
-if(drawer){
-  $('#d-close').addEventListener('click', closeDrawer);
-  scrim.addEventListener('click', closeDrawer);
-  document.addEventListener('keydown', e => {
-    if(e.key === 'Escape'){
-      if(drawer.classList.contains('is-open')) closeDrawer();
-      return;
-    }
-    /* Keep Tab inside the drawer while it's open */
-    if(e.key !== 'Tab' || !drawer.classList.contains('is-open')) return;
-    const f = drawer.querySelectorAll('a[href], button:not([disabled])');
-    if(!f.length) return;
-    const first = f[0], last = f[f.length - 1];
-    if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
-    else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
-  });
-}
 
 if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
   const io = new IntersectionObserver(entries => {

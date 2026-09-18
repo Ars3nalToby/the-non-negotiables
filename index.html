@@ -9,7 +9,7 @@
      pins connect-src to exactly one external host — the Supabase project
      that serves the visit counter, the crew board and the news wire.
      junior.html deliberately does NOT carry that host; see CLAUDE.md. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://anueveizfqxnloncuvmf.supabase.co; base-uri 'none'; object-src 'none'; form-action 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://anueveizfqxnloncuvmf.supabase.co https://api.open-meteo.com; base-uri 'none'; object-src 'none'; form-action 'none';">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Non-Negotiables — Arsenal 2026/27</title>
 <meta name="description" content="Every Arsenal fixture, the stadium, the opponent, the away-day logistics, the ticket windows, and what time you have to wake up in Brisbane.">
@@ -327,6 +327,7 @@
 </button>
 
 <script src="app.js"></script>
+<script src="drawer.js"></script>
 <script src="news-data.js"></script>
 <script>
 /* ============================================================

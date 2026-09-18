@@ -49,14 +49,20 @@ styles.css                All CSS for every page. Two themes,
 app.js                    Shared across all pages: data arrays
                         (CLUBS, FIXTURES, CL, SQUAD, MOVES_IN/OUT,
                         KEY_DATES, QUIZ, BINGO, DEMAND...), helpers
-                        (esc, fmt, t24, isoDate, store...), theme
-                        toggle, the fixture drawer, away-day links,
-                        scroll motion (progress bar, back-to-top,
-                        reveal-on-scroll). Pages with no drawer markup
-                        get a no-op — the drawer code null-guards.
-                        Render logic for each section's own list/grid
-                        stays in that page's own inline `<script>`,
-                        not in app.js.
+                        (esc, fmt, t24, isoDate, store, getWireItems...),
+                        theme toggle, scroll motion (progress bar,
+                        back-to-top, reveal-on-scroll). Render logic
+                        for each section's own list/grid stays in that
+                        page's own inline `<script>`, not in app.js.
+drawer.js                 The fixture dossier (openDrawer/closeDrawer),
+                        away-day links, live match weather (Open-Meteo,
+                        no key), the .ics calendar download, and the
+                        share button — split out of app.js because only
+                        index.html (hero "open the dossier") and
+                        timetable.html (row click) ever use any of it;
+                        every other page was loading it and never
+                        touching a byte. Loaded right after app.js, on
+                        those two pages only.
 columns.js                COLUMNS only — split out of app.js because it
                         grows indefinitely (one entry added roughly
                         weekly, never trimmed) and only programme.html
@@ -70,10 +76,10 @@ news-data.js              NEWS only — same reasoning as columns.js: this
                         both index.html (just NEWS[0], for the homepage
                         widget teaser) and news.html (the full list),
                         right after app.js on each.
-audit.mjs               Self-audit script. Reads app.js, columns.js and
-                        news-data.js for data, reads every *.html page
-                        for compliance/hygiene checks. Run before every
-                        commit.
+audit.mjs               Self-audit script. Reads app.js, drawer.js,
+                        columns.js and news-data.js for data/syntax,
+                        reads every *.html page for compliance/hygiene
+                        checks. Run before every commit.
 wire/supabase-edge.ts     THE LIVE ONE. RSS/Bluesky aggregator running as
                         a Supabase Edge Function ("wire"). Feeds news.html
                         and transfers.html (?filter=transfers). Deployed
@@ -130,11 +136,15 @@ SDK, so this stays vanilla JS and doesn't violate "no new dependency."
 or these fetches get silently blocked. `junior.html` is deliberately
 excluded — see Child safety, rule 2, above.
 
+`index.html` and `timetable.html` also need `https://api.open-meteo.com`
+in `connect-src` — `drawer.js`'s away-day weather calls it directly, no
+key, no proxy. Same silent-failure risk if it's ever removed.
+
 There is no build, no bundler, no package.json for the site itself.
 **Keep it that way.** The audit enforces a size budget per file instead
 of one monolithic ceiling: `styles.css` ≤80KB, `app.js` ≤60KB,
-`columns.js` and `news-data.js` ≤120KB each (few-page files, but still
-not unbounded), each individual page ≤40KB.
+`drawer.js` ≤60KB, `columns.js` and `news-data.js` ≤120KB each
+(few-page files, but still not unbounded), each individual page ≤40KB.
 
 **If `app.js` trips its budget again**, the fix is almost certainly
 "extract another ever-growing array," not "trim something." It's
