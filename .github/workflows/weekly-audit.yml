@@ -76,7 +76,7 @@ jobs:
             --exclude instagram\.com
             --exclude eventbrite
             --max-concurrency 4
-            index.html
+            ./*.html
           output: link-report.md
       - uses: actions/upload-artifact@v4
         with:

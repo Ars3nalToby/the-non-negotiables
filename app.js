@@ -83,8 +83,8 @@ const FIXTURES = [
       {who:'Bruno Guimarães', role:'midfielder', quote:'I score a beautiful goal, beautiful moment for me and my family and I am happy.', source:'VAVEL International', url:'https://www.vavel.com/en/football/2026/09/12/arsenal/1271210-guimaraes-a-beautiful-goal-beautiful-moment.html'},
       {who:'David Raya', role:'goalkeeper', quote:'For the players and the team to have that faith and keep going and win the game, two minutes after we score. Even if we conceded a goal, we had the faith to get back in the game.', source:'VAVEL International', url:'https://www.vavel.com/en/football/2026/09/12/arsenal/1271208-raya-reacts-to-penalty-save-against-sunderland.html'}
     ]}},
-  {n:5, ko:'2026-09-19T15:00:00+01:00', opp:'bha', v:'A', tv:'Not on UK TV \u00b7 3pm blackout', checked:'2026-09-15'},
-  {n:6, ko:'2026-10-10T12:30:00+01:00', opp:'lee', v:'H', tv:'TNT Sports', moved:true, checked:'2026-08-29'},
+  {n:5, ko:'2026-09-19T15:00:00+01:00', opp:'bha', v:'A', tv:'Not on UK TV \u00b7 3pm blackout', result:'L 0-3', checked:'2026-09-19'},
+  {n:6, ko:'2026-10-10T12:30:00+01:00', opp:'lee', v:'H', tv:'TNT Sports', moved:true, checked:'2026-09-19'},
   {n:7, ko:'2026-10-18T16:30:00+01:00', opp:'nfo', v:'A', tv:'Sky Sports', moved:true, checked:'2026-08-29'},
   {n:8, ko:'2026-10-24T15:00:00+01:00', opp:'eve', v:'H', tv:'Not on UK TV \u00b7 3pm blackout', checked:'2026-08-29'},
   {n:9, ko:'2026-11-01T16:30:00+00:00', opp:'liv', v:'A', tv:'Sky Sports', moved:true, checked:'2026-08-29'},
