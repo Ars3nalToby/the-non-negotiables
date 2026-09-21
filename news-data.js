@@ -15,6 +15,15 @@
    prepends new items here, it never rewrites news.html itself.
    ============================================================ */
 const NEWS = [
+  {date:'2026-09-21', headline:'Three centre-backs, three different clocks, one shared target of 10 October',
+   summary:'The international-break update, stripped of the caveats: Ben White is still nursing the groin problem that has dogged him since the season’s opening weeks, Cristhian Mosquera has a genuine shot at being back for Leeds having sat out Brighton as a precaution rather than a fresh injury, and William Saliba remains on his own, slower timeline with the back problem that has kept him out since August. None of it is a confirmed return date. All of it is at least a plan to build the interlull around.',
+   source:'AOL', url:'https://www.aol.co.uk/articles/arsenal-injury-ben-white-cristhian-050024000.html'},
+  {date:'2026-09-20', headline:'Hincapié left out of Ecuador’s squad — a groin, not a snub',
+   summary:'Ecuador have named their squad for a pair of friendlies against South Korea and Japan and Piero Hincapié isn’t in it, ruled out with a groin strain that has left him short of full match fitness. He isn’t alone — Chelsea’s Moisés Caicedo misses the same window for the same reason — so read it as a federation being careful with two Premier League bodies rather than anything specific to Arsenal. A quiet fortnight is arguably the best outcome for a player who only just fought his way back into the back four.',
+   source:'Daily Cannon', url:'https://dailycannon.com/2026/09/hincapie-ecuador-injury-absence/'},
+  {date:'2026-09-19', headline:'Arteta won’t rule out a Dowman loan — just not yet',
+   summary:'Put on the spot about whether Max Dowman could eventually be loaned out, Arteta didn’t shut the door — the club say they will keep reviewing it every six months, while stressing the plan for now is simply to keep developing him inside the first-team bubble rather than send him away from it. Luton Town, managed by Dowman’s former youth coach Jack Wilshere, are already being credited with interest, though nothing can happen before New Year’s Eve, when Dowman turns 17 and becomes old enough to move.',
+   source:'Football365', url:'https://www.football365.com/news/arsenal-arteta-max-dowman-transfer-decision'},
   {date:'2026-09-18', headline:'Saliba and Mosquera both out, White a doubt as Arsenal head to the Amex',
    summary:'A perfect four from four goes to Brighton with two centre-backs missing rather than the usual one. William Saliba and Cristhian Mosquera are both unavailable for Saturday, and Ben White is only a doubt on top of that, leaving Arteta thin at the back again. The one genuine bit of good news is Jurrien Timber, back on the pitch for 53 minutes against Sunderland after five months out, though Arteta was clear afterwards that his minutes will keep being managed rather than handed over all at once. Arsenal arrive having conceded once all season; Brighton arrive without a single fit right winger.',
    source:'Yahoo Sports', url:'https://sports.yahoo.com/articles/arsenal-brighton-premier-league-preview-144500099.html'},
