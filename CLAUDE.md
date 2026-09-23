@@ -66,7 +66,7 @@ drawer.js                 The fixture dossier (openDrawer/closeDrawer),
                         those two pages only.
 junior.js / junior.css    The Junior Gunners arcade: quiz, penalties,
                         keepy-uppy, who-am-I (reads SQUAD live), memory,
-                        kit maker, bingo — plus the QUIZ and BINGO data.
+                        kit maker, bingo — plus the JG_QUIZ and JG_BINGO data.
                         junior.html only. 100% client-side: no fetch, no
                         submissions; best scores in localStorage key
                         `jg-best` and nowhere else. Keepy-uppy runs on
@@ -184,7 +184,7 @@ page's chrome rather than reinventing it.
 | `SQUAD` | First team + manager. `ig: null` / `x: null` means no verified Instagram / X handle — never guess either, both fall back to an in-platform search |
 | `MOVES_IN` / `MOVES_OUT` | Transfer window, current summer |
 | `KEY_DATES` | Cup rounds, CL matchdays, finals |
-| `QUIZ` / `BINGO` (in `junior.js`, not `app.js`) | Junior Gunners content — QUIZ is 16 questions, 10 drawn per round; BINGO is a 20-item pool, 12 dealt per card |
+| `JG_QUIZ` / `JG_BINGO` (in `junior.js`, not `app.js`) | Junior Gunners content — QUIZ is 16 questions, 10 drawn per round; BINGO is a 20-item pool, 12 dealt per card |
 | `NEWS` (in `news-data.js`, not `app.js`) | Original news write-ups, newest first (`news.html`, plus `NEWS[0]` on the homepage widget). Every entry: `date`, `headline`, `summary` (original wording, never copied), `source`, `url` (real, working link). audit.mjs flags it stale after 5 days. Kept in its own file for the same reason as COLUMNS — it grows without bound and tripped `app.js`'s budget once it did. |
 | `COLUMNS` (in `columns.js`, not `app.js`) | Original opinion columns, newest first (`programme.html`). Every entry: `date`, `title`, `byline`, `paras` (array of paragraph strings). audit.mjs flags it stale after 10 days. Kept in its own file — see `columns.js` in Repo layout above — because it's the one dataset that grows without bound. |
 

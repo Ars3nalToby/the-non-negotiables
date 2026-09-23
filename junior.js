@@ -7,7 +7,10 @@
    Depends on app.js ($, store, SQUAD), so it loads right after it.
    ============================================================ */
 
-const QUIZ = [
+/* JG_-prefixed on purpose: these used to be QUIZ/BINGO in app.js, and a
+   visitor with that older app.js still cached would hit a duplicate
+   `const` declaration and lose every game on the page. */
+const JG_QUIZ = [
   {q:'What is the name of Arsenal’s home ground?', a:['Emirates Stadium','Highbury','Old Trafford'], c:0,
    f:'Arsenal moved there in 2006 from Highbury, which was just down the road.'},
   {q:'What is on the Arsenal badge?', a:['A cannon','A lion','An eagle'], c:0,
@@ -42,7 +45,7 @@ const QUIZ = [
    f:'Max Dowman, aged 16, against Ipswich in September 2026 — and he scored twice.'}
 ];
 
-const BINGO = ['Arsenal win a corner','Someone shouts at the referee','Saka takes on a defender','A shot hits the post',
+const JG_BINGO = ['Arsenal win a corner','Someone shouts at the referee','Saka takes on a defender','A shot hits the post',
   'The keeper makes a save','A player gets a yellow card','Arsenal score','Someone slides on their knees',
   'The commentator says “Arteta”','A substitute comes on','The ball goes in the crowd','Full time whistle',
   'A header at goal','The offside flag goes up','A free kick near the box','The keeper kicks it long',
@@ -117,7 +120,7 @@ const quiz = (() => {
   const el = $('#quiz');
   let qs, i, score, answered;
   function start(){
-    qs = shuffle(QUIZ).slice(0, 10).map(q => {
+    qs = shuffle(JG_QUIZ).slice(0, 10).map(q => {
       const order = shuffle(q.a.map((_, j) => j));
       return {q:q.q, a:order.map(j => q.a[j]), c:order.indexOf(q.c), f:q.f};
     });
@@ -530,7 +533,7 @@ const bingo = (() => {
   const IDLE = 'Tap a square when it happens during the match. A full row or column is BINGO.';
   let card, on, lines;
   function deal(){
-    card = shuffle(BINGO).slice(0, COLS * ROWS); on = new Set(); lines = 0;
+    card = shuffle(JG_BINGO).slice(0, COLS * ROWS); on = new Set(); lines = 0;
     el.innerHTML = card.map((t, i) => `<button type="button" data-i="${i}" aria-pressed="false">${t}</button>`).join('');
     msg.textContent = IDLE;
   }

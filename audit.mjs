@@ -367,7 +367,7 @@ for (const name of SECURITY_SCAN_TARGETS) {
   const val = evalDecl(appJs, name);
   if (val != null) scanStrings(val, name, new Set());
 }
-for (const name of ['QUIZ', 'BINGO']) {
+for (const name of ['JG_QUIZ', 'JG_BINGO']) {
   const val = evalDecl(juniorJs, name);
   if (val != null) scanStrings(val, name, new Set());
 }
