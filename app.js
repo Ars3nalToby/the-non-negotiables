@@ -300,6 +300,8 @@ $('#theme-toggle').addEventListener('click', () => {
    TRANSFERS + WIRE — data only. Render logic lives on transfers.html.
    ============================================================ */
 const DEADLINE = '2026-09-01T23:00:00+01:00';
+const JAN_WINDOW_OPEN = '2027-01-01T00:00:00Z';
+const JAN_WINDOW_CLOSE = '2027-02-01T23:00:00Z';
 const MOVES_IN = [
   {name:'Bruno Guimarães', club:'Newcastle United', fee:'£75m'},
   {name:'Ezri Konsa', club:'Aston Villa', fee:'£51m'},

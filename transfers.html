@@ -68,7 +68,7 @@
 <section class="section wrap">
   <div class="deadline">
     <div>
-      <p class="deadline__l">Deadline · 11pm BST, Tuesday 1 September</p>
+      <p class="deadline__l" id="dl-label">Deadline · 11pm BST, Tuesday 1 September</p>
       <p class="deadline__t" id="dl-count">—</p>
       <p class="deadline__n" id="dl-bne">—</p>
     </div>
@@ -163,13 +163,36 @@ const net = inTotal - outTotal;
 $('#dl-net').textContent = `${net >= 0 ? '' : '+'}£${Math.abs(net).toFixed(net % 1 ? 1 : 0)}m`;
 $('#dl-inout').textContent = `${MOVES_IN.length} in, ${MOVES_OUT.length} out. Refining a title-winning squad rather than rebuilding one.`;
 
+/* Three windows, in order: the summer deadline just gone, the January
+   window opening, then the January window's own deadline. Once all
+   three have passed the page falls back to a plain CLOSED state —
+   by then next summer's dates will have replaced these anyway. */
 function tickDeadline(){
-  const ms = new Date(DEADLINE).getTime() - Date.now();
-  const el = $('#dl-count'), note = $('#dl-bne');
-  if(ms <= 0){ el.textContent = 'CLOSED'; note.textContent = 'The window is shut. Nothing to refresh. Go outside.'; return; }
+  const el = $('#dl-count'), note = $('#dl-bne'), label = $('#dl-label');
+  const now = Date.now();
+  let target, labelText, tail;
+  if(new Date(DEADLINE).getTime() - now > 0){
+    target = DEADLINE;
+    labelText = 'Deadline · 11pm BST, Tuesday 1 September';
+    tail = 'deadline day is a working morning for you, not a night in.';
+  } else if(new Date(JAN_WINDOW_OPEN).getTime() - now > 0){
+    target = JAN_WINDOW_OPEN;
+    labelText = 'January window opens';
+    tail = 'the market reopens — the wire below is worth checking again from here.';
+  } else if(new Date(JAN_WINDOW_CLOSE).getTime() - now > 0){
+    target = JAN_WINDOW_CLOSE;
+    labelText = 'January window closes · 11pm GMT, Monday 1 February';
+    tail = 'deadline day, round two.';
+  } else {
+    el.textContent = 'CLOSED';
+    note.textContent = 'The window is shut. Nothing to refresh. Go outside.';
+    return;
+  }
+  label.textContent = labelText;
+  const ms = new Date(target).getTime() - now;
   const dd = Math.floor(ms/86400000), hh = Math.floor(ms%86400000/3600000), mm = Math.floor(ms%3600000/60000);
   el.textContent = `${dd}d ${String(hh).padStart(2,'0')}h ${String(mm).padStart(2,'0')}m`;
-  note.textContent = `That’s ${t24(new Date(DEADLINE),BNE)} on ${dayLong(new Date(DEADLINE),BNE)} in Brisbane — deadline day is a working morning for you, not a night in.`;
+  note.textContent = `That’s ${t24(new Date(target),BNE)} on ${dayLong(new Date(target),BNE)} in Brisbane — ${tail}`;
 }
 tickDeadline();
 setInterval(tickDeadline, 30000);
