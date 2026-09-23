@@ -205,23 +205,6 @@ const SQUAD = [
   {no:0, pos:'MGR',name:'Mikel Arteta', from:'Manager since 2019', ig:'mikelarteta', x:'m8arteta'}
 ];
 
-const QUIZ = [
-  {q:'What is the name of Arsenal\u2019s home ground?',a:['Emirates Stadium','Highbury','Old Trafford'],c:0,
-   f:'Correct. Arsenal moved there in 2006 from Highbury, which was just down the road.'},
-  {q:'Which animal is NOT on the Arsenal badge?',a:['A cannon','A lion','Neither \u2014 it\u2019s just a cannon'],c:2,
-   f:'The badge is a cannon. Arsenal started as a team of workers at a weapons factory in Woolwich in 1886.'},
-  {q:'Who wears number 8 and wears the captain\u2019s armband?',a:['Bukayo Saka','Martin \u00d8degaard','Declan Rice'],c:1,
-   f:'Martin \u00d8degaard, from Norway. He is the one always pointing at where he wants everyone to run.'},
-  {q:'What is a \u201cclean sheet\u201d?',a:['A new kit','The other team scored zero','Half-time'],c:1,
-   f:'Right. The goalkeeper and defenders get most of the credit \u2014 and they will remind you of it.'},
-  {q:'How many players from each team are on the pitch at kick-off?',a:['Nine','Eleven','Fifteen'],c:1,
-   f:'Eleven each, including the goalkeeper. Five can be swapped for substitutes during the game.'}
-];
-
-const BINGO = ['Arsenal win a corner','Someone shouts at the referee','Saka takes on a defender','A shot hits the post',
-  'The keeper makes a save','A player gets a yellow card','Arsenal score','Someone slides on their knees',
-  'The commentator says \u201cArteta\u201d','A substitute comes on','The ball goes in the crowd','Full time whistle'];
-
 /* ============================================================
    HELPERS
    ============================================================ */
@@ -412,6 +395,7 @@ const sbHeaders = extra => Object.assign({apikey:SUPABASE_KEY, Authorization:'Be
    request is blocked or offline — this is a nice-to-have, not load
    bearing for anything else on the page. */
 (async function renderVisitCount(){
+  if(location.pathname.endsWith('junior.html')) return;
   const grid = document.querySelector('.foot .foot__grid');
   if(!grid) return;
   try{

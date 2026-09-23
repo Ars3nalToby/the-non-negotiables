@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none';">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Junior Gunners — The Non-Negotiables</title>
-<meta name="description" content="A read-only guide for young Arsenal fans: positions, glossary, a quiz and matchday bingo.">
+<meta name="description" content="A read-only corner for young Arsenal fans: positions, a glossary, and seven games — penalties, keepy-uppy, a quiz, guess the player, memory, a kit maker and matchday bingo.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#EF0107" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0A1420" media="(prefers-color-scheme: dark)">
@@ -17,6 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="junior.css">
 </head>
 <body>
 
@@ -72,6 +73,7 @@
       <span class="jg__age">Ages 6–12</span>
     </div>
     <p>Welcome. You have picked a team that plays in red and white, has a cannon on its badge, and made a lot of grown-ups wait twenty-two years for a Premier League trophy. They are champions now. Here is everything you need to know to keep up at the dinner table.</p>
+    <a class="btn btn--solid jg__skip" href="#games">Skip to the games ↓</a>
 
     <h4 style="font-size:15px;font-family:var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:26px 0 0">Where everyone stands</h4>
     <svg class="pitch" viewBox="0 0 400 300" role="img" aria-label="A football pitch showing where each Arsenal position stands">
@@ -112,16 +114,118 @@
       <div class="word"><b>The Invincibles</b><span>The 2003–04 Arsenal team that played a whole league season without losing once. Nobody has done it since.</span></div>
     </div>
 
-    <h4 style="font-size:15px;font-family:var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:32px 0 0">Quiz: are you paying attention?</h4>
-    <div class="quiz" id="quiz"></div>
+  </div>
+</section>
 
-    <h4 style="font-size:15px;font-family:var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--mute);margin:32px 0 0">Matchday bingo</h4>
-    <p style="font-size:14.5px">Tap a square when it happens. Get a full row and you're allowed to be smug.</p>
-    <div class="bingo" id="bingo"></div>
-
-    <div style="border-top:1px solid var(--rule-soft);margin-top:28px;padding-top:20px">
-      <p style="font-size:14.5px;margin:0"><b style="color:var(--ink)">A note for the grown-up reading this:</b> most Premier League kick-offs land between midnight and 6am in Australia. The results are on this site the next morning, spoiler-free until you tap. Nobody needs to be awake at 2am to be a proper supporter.</p>
+<section class="section wrap" id="games">
+  <div class="arcade">
+    <div class="arcade__hd">
+      <h2>Game time</h2>
+      <p>Seven games. Your best scores stay on this device — nothing gets sent anywhere.</p>
     </div>
+
+    <div class="arcade__menu" id="arcade-menu">
+      <button class="arcade__tile" type="button" data-game="quiz" aria-controls="arcade-stage" aria-pressed="false"><span class="arcade__ico" aria-hidden="true">❓</span><b>Quiz</b><small data-idle="10 questions">10 questions</small></button>
+      <button class="arcade__tile" type="button" data-game="pens" aria-controls="arcade-stage" aria-pressed="false"><span class="arcade__ico" aria-hidden="true">🥅</span><b>Penalties</b><small data-idle="Shoot or save">Shoot or save</small></button>
+      <button class="arcade__tile" type="button" data-game="keepy" aria-controls="arcade-stage" aria-pressed="false"><span class="arcade__ico" aria-hidden="true">⚽</span><b>Keepy-uppy</b><small data-idle="Don’t let it drop">Don’t let it drop</small></button>
+      <button class="arcade__tile" type="button" data-game="who" aria-controls="arcade-stage" aria-pressed="false"><span class="arcade__ico" aria-hidden="true">🕵️</span><b>Who am I?</b><small data-idle="Guess the player">Guess the player</small></button>
+      <button class="arcade__tile" type="button" data-game="memory" aria-controls="arcade-stage" aria-pressed="false"><span class="arcade__ico" aria-hidden="true">🧠</span><b>Memory</b><small data-idle="Match the pairs">Match the pairs</small></button>
+      <button class="arcade__tile" type="button" data-game="kit" aria-controls="arcade-stage" aria-pressed="false"><span class="arcade__ico" aria-hidden="true">👕</span><b>Kit maker</b><small data-idle="Design your shirt">Design your shirt</small></button>
+      <button class="arcade__tile" type="button" data-game="bingo" aria-controls="arcade-stage" aria-pressed="false"><span class="arcade__ico" aria-hidden="true">🎯</span><b>Bingo</b><small data-idle="Play along live">Play along live</small></button>
+    </div>
+
+    <div class="arcade__stage" id="arcade-stage">
+      <div class="arcade__panel" data-panel="quiz">
+        <h3>Quiz: are you paying attention?</h3>
+        <p class="arcade__intro">Ten questions, picked at random every time you play.</p>
+        <div class="quiz" id="quiz"></div>
+      </div>
+
+      <div class="arcade__panel" data-panel="pens" hidden>
+        <h3>Penalty shootout</h3>
+        <p class="arcade__intro">Five penalties. Take them, or go in goal and try to save them. Top corners are hardest to stop — and easiest to blast over the bar.</p>
+        <div class="jmode" id="pens-mode">
+          <button type="button" data-mode="shoot" aria-pressed="true">Take the penalties</button>
+          <button type="button" data-mode="save" aria-pressed="false">Go in goal</button>
+        </div>
+        <div class="pens__dots" id="pens-dots"></div>
+        <div class="pens__pitch" id="pens-pitch">
+          <div class="pens__goal" id="pens-goal">
+            <div class="pens__keeper" id="pens-keeper" aria-hidden="true">
+              <svg viewBox="0 0 40 58"><path d="M13 18 L3 7 M27 18 L37 7" stroke="#F5D90A" stroke-width="5" stroke-linecap="round"/><circle cx="3" cy="7" r="4" fill="#fff" stroke="#333" stroke-width="1"/><circle cx="37" cy="7" r="4" fill="#fff" stroke="#333" stroke-width="1"/><rect x="11" y="15" width="18" height="22" rx="5" fill="#F5D90A"/><circle cx="20" cy="9" r="6" fill="#E0AC69"/><rect x="12" y="36" width="6" height="20" rx="2" fill="#1d1d1d"/><rect x="22" y="36" width="6" height="20" rx="2" fill="#1d1d1d"/></svg>
+            </div>
+            <div class="pens__zones">
+              <button type="button" data-z="0"></button><button type="button" data-z="1"></button><button type="button" data-z="2"></button>
+              <button type="button" data-z="3"></button><button type="button" data-z="4"></button><button type="button" data-z="5"></button>
+            </div>
+          </div>
+          <span class="pens__ball" id="pens-ball" aria-hidden="true">⚽</span>
+        </div>
+        <p class="jmsg" id="pens-msg" aria-live="polite"></p>
+        <div class="jfoot"><button class="btn btn--line" type="button" id="pens-reset">New shootout</button></div>
+      </div>
+
+      <div class="arcade__panel" data-panel="keepy" hidden>
+        <h3>Keepy-uppy</h3>
+        <p class="arcade__intro">Tap the ball to kick it back up. It gets a little faster the longer you keep it going. On a keyboard, press space when it drops low.</p>
+        <div class="keepy" id="keepy-arena" tabindex="0" aria-label="Keepy-uppy pitch">
+          <span class="keepy__count" id="keepy-count" aria-live="polite">0</span>
+          <span class="keepy__ball" id="keepy-ball" aria-hidden="true">⚽</span>
+          <button class="btn btn--solid keepy__start" type="button" id="keepy-start">Start</button>
+        </div>
+        <p class="jmsg" id="keepy-msg" aria-live="polite">Press Start, then tap the ball to keep it in the air.</p>
+      </div>
+
+      <div class="arcade__panel" data-panel="who" hidden>
+        <h3>Who am I?</h3>
+        <p class="arcade__intro">Guess the Arsenal player from the clues. Get it on the first clue for four points; every extra clue or wrong guess costs one.</p>
+        <div id="who"></div>
+      </div>
+
+      <div class="arcade__panel" data-panel="memory" hidden>
+        <h3>Memory match</h3>
+        <p class="arcade__intro">Flip two cards at a time and find the matching pairs.</p>
+        <div class="jstats"><span>Moves <b id="memory-moves">0</b></span></div>
+        <div class="mem-grid" id="memory-grid"></div>
+        <p class="jmsg" id="memory-msg" aria-live="polite"></p>
+        <div class="jfoot"><button class="btn btn--line" type="button" id="memory-new">Shuffle and restart</button></div>
+      </div>
+
+      <div class="arcade__panel" data-panel="kit" hidden>
+        <h3>Kit maker</h3>
+        <p class="arcade__intro">Design your own shirt, then put your name and number on the back.</p>
+        <div class="kit">
+          <svg class="kit__svg" viewBox="0 0 200 220" role="img" aria-label="Your shirt design">
+            <defs><clipPath id="kit-clip"><path d="M58 28 Q78 20 86 18 Q100 30 114 18 Q122 20 142 28 L146 206 Q100 214 54 206 Z"/></clipPath></defs>
+            <path id="kit-sl-l" d="M58 28 L26 48 L12 96 L44 108 L56 74 Z"/>
+            <path id="kit-sl-r" d="M142 28 L174 48 L188 96 L156 108 L144 74 Z"/>
+            <path id="kit-body" d="M58 28 Q78 20 86 18 Q100 30 114 18 Q122 20 142 28 L146 206 Q100 214 54 206 Z"/>
+            <g id="kit-pattern" clip-path="url(#kit-clip)"></g>
+            <path id="kit-collar" d="M86 18 Q100 30 114 18" fill="none" stroke-width="6" stroke-linecap="round"/>
+            <path id="kit-cuff-l" d="M12 96 L44 108" fill="none" stroke-width="6" stroke-linecap="round"/>
+            <path id="kit-cuff-r" d="M188 96 L156 108" fill="none" stroke-width="6" stroke-linecap="round"/>
+            <text id="kit-name" x="100" y="74" font-size="17">YOUR NAME</text>
+            <text id="kit-num" x="100" y="156" font-size="68">7</text>
+          </svg>
+          <div id="kit-ctl"></div>
+        </div>
+      </div>
+
+      <div class="arcade__panel" data-panel="bingo" hidden>
+        <h3>Matchday bingo</h3>
+        <p class="arcade__intro">Keep this open while the game’s on. A full row or column is BINGO — fill the whole card for a full house.</p>
+        <div class="bingo bingo--fixed" id="bingo"></div>
+        <p class="jmsg" id="bingo-msg" aria-live="polite"></p>
+        <div class="jfoot"><button class="btn btn--line" type="button" id="bingo-new">Deal a new card</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap">
+  <div class="jg">
+    <p style="font-size:14.5px;margin:0"><b style="color:var(--ink)">A note for the grown-up reading this:</b> most Premier League kick-offs land between midnight and 6am in Australia. The results are on this site the next morning, spoiler-free until you tap. Nobody needs to be awake at 2am to be a proper supporter.</p>
+    <p style="font-size:14.5px;margin:12px 0 0">Every game on this page runs entirely in the browser. There are no accounts and nothing to submit; best scores are kept only in this device’s local storage, and the page is blocked at the browser level from talking to any server but this one.</p>
   </div>
 </section>
 
@@ -170,35 +274,6 @@
 </button>
 
 <script src="app.js"></script>
-<script>
-/* ============================================================
-   JUNIOR GUNNERS — quiz + bingo.
-   ============================================================ */
-$('#quiz').innerHTML = QUIZ.map((q,i) => `
-  <div class="q" data-q="${i}">
-    <p class="q__p">${i+1}. ${q.q}</p>
-    <div class="q__opts">${q.a.map((a,j) => `<button class="q__opt" data-j="${j}">${a}</button>`).join('')}</div>
-    <p class="q__fb">${q.f}</p>
-  </div>`).join('');
-
-$('#quiz').addEventListener('click', e => {
-  const opt = e.target.closest('.q__opt');
-  if(!opt) return;
-  const box = opt.closest('.q');
-  const qi = Number(box.dataset.q), j = Number(opt.dataset.j);
-  box.querySelectorAll('.q__opt').forEach(b => b.disabled = true);
-  if(j === QUIZ[qi].c){ opt.classList.add('is-right'); }
-  else {
-    opt.classList.add('is-wrong');
-    box.querySelectorAll('.q__opt')[QUIZ[qi].c].classList.add('is-right');
-  }
-  box.querySelector('.q__fb').classList.add('is-shown');
-});
-
-$('#bingo').innerHTML = BINGO.map(b => `<button type="button">${b}</button>`).join('');
-$('#bingo').addEventListener('click', e => {
-  if(e.target.tagName === 'BUTTON') e.target.classList.toggle('is-on');
-});
-</script>
+<script src="junior.js"></script>
 </body>
 </html>

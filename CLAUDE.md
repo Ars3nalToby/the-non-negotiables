@@ -26,7 +26,8 @@ tickets.html             Ticket desk (sale windows) + Away Crew board.
 europe.html              Champions League cards + key dates.
 transfers.html            Transfer window countdown + live news wire.
 squad.html               First-team squad, grouped by position.
-junior.html               Junior Gunners — read-only, quiz + bingo.
+junior.html               Junior Gunners — read-only, positions/glossary
+                        plus a seven-game arcade (junior.js/.css).
 programme.html            Original opinion column, newest first — grows
                         over time (routine adds one roughly weekly).
                         Renders from COLUMNS (columns.js); never a
@@ -48,7 +49,7 @@ styles.css                All CSS for every page. Two themes,
                         to both.
 app.js                    Shared across all pages: data arrays
                         (CLUBS, FIXTURES, CL, SQUAD, MOVES_IN/OUT,
-                        KEY_DATES, QUIZ, BINGO, DEMAND...), helpers
+                        KEY_DATES, DEMAND...), helpers
                         (esc, fmt, t24, isoDate, store, getWireItems...),
                         theme toggle, scroll motion (progress bar,
                         back-to-top, reveal-on-scroll). Render logic
@@ -63,6 +64,13 @@ drawer.js                 The fixture dossier (openDrawer/closeDrawer),
                         every other page was loading it and never
                         touching a byte. Loaded right after app.js, on
                         those two pages only.
+junior.js / junior.css    The Junior Gunners arcade: quiz, penalties,
+                        keepy-uppy, who-am-I (reads SQUAD live), memory,
+                        kit maker, bingo — plus the QUIZ and BINGO data.
+                        junior.html only. 100% client-side: no fetch, no
+                        submissions; best scores in localStorage key
+                        `jg-best` and nowhere else. Keepy-uppy runs on
+                        setInterval, not rAF, so it stays testable.
 columns.js                COLUMNS only — split out of app.js because it
                         grows indefinitely (one entry added roughly
                         weekly, never trimmed) and only programme.html
@@ -77,7 +85,8 @@ news-data.js              NEWS only — same reasoning as columns.js: this
                         widget teaser) and news.html (the full list),
                         right after app.js on each.
 audit.mjs               Self-audit script. Reads app.js, drawer.js,
-                        columns.js and news-data.js for data/syntax,
+                        junior.js/.css, columns.js and news-data.js for
+                        data/syntax/size,
                         reads every *.html page for compliance/hygiene
                         checks. Run before every commit.
 wire/supabase-edge.ts     THE LIVE ONE. RSS/Bluesky aggregator running as
@@ -143,7 +152,7 @@ key, no proxy. Same silent-failure risk if it's ever removed.
 There is no build, no bundler, no package.json for the site itself.
 **Keep it that way.** The audit enforces a size budget per file instead
 of one monolithic ceiling: `styles.css` ≤80KB, `app.js` ≤60KB,
-`drawer.js` ≤60KB, `columns.js` and `news-data.js` ≤120KB each
+`drawer.js` ≤60KB, `junior.js` ≤60KB, `junior.css` ≤30KB, `columns.js` and `news-data.js` ≤120KB each
 (few-page files, but still not unbounded), each individual page ≤40KB.
 
 **If `app.js` trips its budget again**, the fix is almost certainly
@@ -175,7 +184,7 @@ page's chrome rather than reinventing it.
 | `SQUAD` | First team + manager. `ig: null` / `x: null` means no verified Instagram / X handle — never guess either, both fall back to an in-platform search |
 | `MOVES_IN` / `MOVES_OUT` | Transfer window, current summer |
 | `KEY_DATES` | Cup rounds, CL matchdays, finals |
-| `QUIZ` / `BINGO` | Junior Gunners content |
+| `QUIZ` / `BINGO` (in `junior.js`, not `app.js`) | Junior Gunners content — QUIZ is 16 questions, 10 drawn per round; BINGO is a 20-item pool, 12 dealt per card |
 | `NEWS` (in `news-data.js`, not `app.js`) | Original news write-ups, newest first (`news.html`, plus `NEWS[0]` on the homepage widget). Every entry: `date`, `headline`, `summary` (original wording, never copied), `source`, `url` (real, working link). audit.mjs flags it stale after 5 days. Kept in its own file for the same reason as COLUMNS — it grows without bound and tripped `app.js`'s budget once it did. |
 | `COLUMNS` (in `columns.js`, not `app.js`) | Original opinion columns, newest first (`programme.html`). Every entry: `date`, `title`, `byline`, `paras` (array of paragraph strings). audit.mjs flags it stale after 10 days. Kept in its own file — see `columns.js` in Repo layout above — because it's the one dataset that grows without bound. |
 
