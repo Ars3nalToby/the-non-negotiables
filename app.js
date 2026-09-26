@@ -184,7 +184,7 @@ const SQUAD = [
   {no:1, pos:'GK', name:'David Raya', from:'Spain', ig:'d.raya1', x:'daviidraya1'},
   {no:2, pos:'DF', name:'William Saliba', from:'France', ig:'wsaliba4', x:'w_saliba4'},
   {no:3, pos:'DF', name:'Myles Lewis-Skelly', from:'England', ig:'myleslewisskelly', x:'lewisskelly49'},
-  {no:4, pos:'DF', name:'Ben White', from:'England', ig:null, x:'ben6white'},
+  {no:4, pos:'DF', name:'Ben White', from:'England', ig:'benwhite', x:'ben6white'},
   {no:5, pos:'MF', name:'Bruno Guimar\u00e3es', from:'Brazil \u00b7 new', ig:'brunoguimaraes', x:'brunoog97'},
   {no:6, pos:'DF', name:'Gabriel Magalh\u00e3es', from:'Brazil', ig:'_gabrielmagalhaes', x:'biel_m04'},
   {no:7, pos:'FW', name:'Bukayo Saka', from:'England', ig:'bukayosaka87', x:'BukayoSaka87'},
