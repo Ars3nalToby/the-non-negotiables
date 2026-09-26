@@ -152,7 +152,7 @@
 <script>
 /* ============================================================
    TICKET DESK — upcoming sale windows grouped by month, plus the
-   Away Crew board (localStorage-only preview).
+   Away Crew board (Supabase-backed, shared across every visitor).
    ============================================================ */
 function tkRowHTML(f){
   const c = CLUBS[f.opp], d = new Date(f.ko);
