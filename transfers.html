@@ -206,7 +206,7 @@ function paintWire(items, live){
   const safe = items.filter(i => /^https:\/\//i.test(i.u));
   $('#wire').innerHTML = safe.map(i =>
     `<a class="wire__i" href="${esc(i.u)}" target="_blank" rel="noopener noreferrer">
-       <b>${esc(i.t)}</b><span>${esc(i.s)}${i.d ? ' · ' + i.d : ''}</span></a>`).join('');
+       <b>${esc(i.t)}</b><span class="wire__when">${esc(i.s)}${i.d ? ' · ' + i.d : ''}</span></a>`).join('');
   $('#wire-note').textContent = live
     ? 'Live feed · transfer stories only, pulled fresh every time you open this page'
     : 'Live feed unavailable — showing curated sources instead.';
