@@ -114,7 +114,10 @@ async function fetchBluesky(handle) {
         s: '@' + (p.author?.handle || handle).replace('.bsky.social', ''),
         ts: Date.parse(p.record?.createdAt || p.indexedAt || 0) || 0
       };
-    }).filter(i => i.t && i.u);
+    /* https-only: same rule as parseFeed above — never let a
+       javascript:/data: URI from a malformed response reach the client.
+       supabase-edge.ts already enforces this; keep both in sync. */
+    }).filter(i => i.t && i.u && /^https:\/\//i.test(i.u));
   } catch {
     return [];
   }

@@ -308,7 +308,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* ============================================================
    SECTIONS
    ============================================================ */
-.section{padding:clamp(48px,7vw,88px) 0}
+.section{padding-top:clamp(48px,7vw,88px);padding-bottom:clamp(48px,7vw,88px)}
 .section--tight{padding-top:clamp(28px,4vw,44px)}
 .section__head{
   display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;
@@ -785,7 +785,7 @@ button{font:inherit;color:inherit;cursor:pointer}
    MOBILE
    ============================================================ */
 @media (max-width:640px){
-  :root{--pad:22px}
+  :root{--pad:26px}
   body{font-size:16px}
   section[id]{scroll-margin-top:60px}
   .masthead__in{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding-top:20px;padding-bottom:16px}
@@ -975,7 +975,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* Sub-page intro band — a compact title strip replacing the full
    hero match board on every page except the hub. */
 .page-head{background:var(--board-bg);color:var(--board-fg);border-bottom:3px solid var(--red)}
-.page-head__in{padding:30px 0 34px;display:flex;flex-direction:column;gap:10px}
+.page-head__in{padding-top:30px;padding-bottom:34px;display:flex;flex-direction:column;gap:10px}
 .page-head .eyebrow{color:rgba(255,255,255,.55)}
 .page-head h1{
   margin:0;font-variation-settings:'wdth' 110;font-weight:800;
