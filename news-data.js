@@ -15,6 +15,9 @@
    prepends new items here, it never rewrites news.html itself.
    ============================================================ */
 const NEWS = [
+  {date:'2026-09-26', headline:'The scan comes back kind: Havertz’s problem is a strain, not a tear',
+   summary:'Two days after being withdrawn against the Netherlands, Havertz has his answer, and it is the one everyone at London Colney was hoping for — imaging shows a muscle strain rather than anything requiring surgery. Nobody at the club is putting a number of weeks on it publicly, and Arteta has more sense than to promise a return date this early, but the arithmetic is kind too: nothing else on the calendar before Leeds visit on the tenth, and more than a fortnight to use it.',
+   source:'CBS Sports', url:'https://www.cbssports.com/soccer/news/kai-havertz-arsenal-muscle-strain-germany/'},
   {date:'2026-09-24', headline:'Havertz’s international window ends early with a hamstring complaint',
    summary:'Germany’s Nations League opener against the Netherlands, the first match of the Jürgen Klopp era, finished 1-1 at a heaving Johan Cruyff Arena — and Havertz didn’t see much of it, withdrawn just past the half-hour with a problem in his hamstring. He has already flown back to north London to be assessed by Arsenal’s own medical staff rather than staying with the squad, which cuts both ways: concerning enough to want him home straight away, reassuring in that there are still sixteen days to go before Leeds visit the Emirates on the tenth of October.',
    source:'Sky Sports', url:'https://www.skysports.com/football/news/13591713/kai-havertz-returning-to-arsenal-to-be-assessed-after-suffering-injury-for-germany-against-netherlands'},
