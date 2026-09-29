@@ -2,10 +2,10 @@
 <html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://platform.twitter.com https://syndication.twitter.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://pbs.twimg.com https://syndication.twitter.com; frame-src https://platform.twitter.com https://syndication.twitter.com; connect-src 'self' https://anueveizfqxnloncuvmf.supabase.co; base-uri 'none'; object-src 'none'; form-action 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://anueveizfqxnloncuvmf.supabase.co; base-uri 'none'; object-src 'none'; form-action 'none';">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Voices — The Non-Negotiables</title>
-<meta name="description" content="The journalists and fan accounts on X worth following for Arsenal news and takes — embedded straight from their own accounts, never copied.">
+<meta name="description" content="The journalists and fan accounts on X worth following for Arsenal news and takes — one tap to their own profile, nothing copied.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#EF0107" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0A1420" media="(prefers-color-scheme: dark)">
@@ -17,6 +17,36 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<style>
+.vgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px;margin-top:26px}
+.vcard{
+  display:flex;flex-direction:column;gap:14px;text-decoration:none;color:#fff;
+  background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-lg);
+  padding:20px;transition:border-color .2s var(--ease-out),background .2s var(--ease-out),transform .2s var(--ease-out);
+}
+.vcard:hover,.vcard:focus-visible{border-color:var(--red);background:rgba(255,255,255,.09);transform:translateY(-2px)}
+.vcard:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.vcard__top{display:flex;align-items:center;gap:14px}
+.vcard__av{
+  flex:0 0 auto;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--red),#ff7a3d);color:#fff;
+  font-family:var(--sans);font-weight:900;font-size:17px;letter-spacing:.02em;
+}
+.vcard__id{min-width:0;display:flex;flex-direction:column;gap:2px}
+.vcard__name{font-family:var(--sans);font-weight:800;font-size:18px;line-height:1.2;color:#fff}
+.vcard__handle{font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:rgba(255,255,255,.6);overflow-wrap:anywhere}
+.vcard__tag{
+  align-self:flex-start;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:#ffd9b8;background:rgba(255,122,61,.14);border:1px solid rgba(255,122,61,.4);border-radius:999px;padding:4px 10px;
+}
+.vcard__note{font-family:var(--serif);font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.82);flex:1}
+.vcard__go{
+  align-self:flex-start;font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+  color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:10px 16px;min-height:44px;display:inline-flex;align-items:center;
+}
+.vcard:hover .vcard__go{background:var(--red);border-color:var(--red)}
+@media (max-width:640px){.vcard{padding:18px}.vcard__name{font-size:17px}}
+</style>
 </head>
 <body>
 
@@ -61,7 +91,7 @@
 <div class="page-head">
   <div class="wrap page-head__in">
     <a class="crumb" href="index.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back to hub</a>
-    <p class="eyebrow">Embedded straight from X · nothing copied</p>
+    <p class="eyebrow">Who to follow on X · one tap, nothing copied</p>
     <h1>Voices</h1>
   </div>
 </div>
@@ -70,53 +100,59 @@
   <div class="tribute">
     <p class="eyebrow">Not a scoreboard, not a listicle</p>
     <h3>The best Arsenal information isn't on this site — it's on theirs</h3>
-    <p>Nothing below is copied. Every post is embedded straight from that account's own X feed, using X's own embed code — the same mechanic as the Fan Art page. It shows their real handle, their real avatar, and a follow button, and every click goes to x.com, not here. If an embed doesn't load (ad blockers and privacy browsers often stop it deliberately), the link underneath goes straight to their profile instead.</p>
-    <p>This isn't a ranking of follower counts. It's a short list of people who reliably say something true, first, or better than the rest of Arsenal Twitter — each one added because their handle was checked by hand, not pulled off a "who to follow" listicle.</p>
+    <p>Five accounts that reliably say something true, first, or better than the rest of Arsenal Twitter. Tap a card and it opens their own profile on X, so the follower, the like and the reply all go to them, not to us. Nothing here is copied, and there's no widget to fail on your phone.</p>
+    <p>This isn't a ranking of follower counts. Each one is here because their handle was checked by hand, not pulled off a "who to follow" listicle.</p>
 
-    <div class="fanart-embed">
-      <p class="fanart-embed__label">The one who actually knows first</p>
-      <a class="twitter-timeline" data-height="480" data-theme="light" href="https://twitter.com/David_Ornstein?ref_src=twsrc%5Etfw">Posts by @David_Ornstein on X</a>
-      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-      <p class="fanart-embed__caption">
-        <a href="https://x.com/David_Ornstein" target="_blank" rel="noopener noreferrer">@David_Ornstein on X →</a>
-        — The Athletic's football correspondent, and the account half of Arsenal Twitter has muted and immediately unmuted again. If it's confirmed, it was usually confirmed here first.
-      </p>
-    </div>
+    <div class="vgrid">
+      <a class="vcard" href="https://x.com/David_Ornstein" target="_blank" rel="noopener noreferrer">
+        <span class="vcard__tag">The one who knows first</span>
+        <span class="vcard__top">
+          <span class="vcard__av" aria-hidden="true">DO</span>
+          <span class="vcard__id"><b class="vcard__name">David Ornstein</b><span class="vcard__handle">@David_Ornstein</span></span>
+        </span>
+        <span class="vcard__note">The Athletic's football correspondent, and the account half of Arsenal Twitter has muted and immediately unmuted again. If it's confirmed, it was usually confirmed here first.</span>
+        <span class="vcard__go">Open on X →</span>
+      </a>
 
-    <div class="fanart-embed">
-      <p class="fanart-embed__label">Every presser, every away day</p>
-      <a class="twitter-timeline" data-height="480" data-theme="light" href="https://twitter.com/charles_watts?ref_src=twsrc%5Etfw">Posts by @charles_watts on X</a>
-      <p class="fanart-embed__caption">
-        <a href="https://x.com/charles_watts" target="_blank" rel="noopener noreferrer">@charles_watts on X →</a>
-        — an independent Arsenal reporter who's at the training ground and the away end more often than most club staff. Less scoop-chasing, more just relentlessly present.
-      </p>
-    </div>
+      <a class="vcard" href="https://x.com/charles_watts" target="_blank" rel="noopener noreferrer">
+        <span class="vcard__tag">Every presser, every away day</span>
+        <span class="vcard__top">
+          <span class="vcard__av" aria-hidden="true">CW</span>
+          <span class="vcard__id"><b class="vcard__name">Charles Watts</b><span class="vcard__handle">@charles_watts</span></span>
+        </span>
+        <span class="vcard__note">An independent Arsenal reporter who runs his own news service and podcast, and wrote <em>Revolution</em>, the book on Arteta's Arsenal. Less scoop-chasing, more just relentlessly present.</span>
+        <span class="vcard__go">Open on X →</span>
+      </a>
 
-    <div class="fanart-embed">
-      <p class="fanart-embed__label">The Athletic's Arsenal correspondent</p>
-      <a class="twitter-timeline" data-height="480" data-theme="light" href="https://twitter.com/gunnerblog?ref_src=twsrc%5Etfw">Posts by @gunnerblog on X</a>
-      <p class="fanart-embed__caption">
-        <a href="https://x.com/gunnerblog" target="_blank" rel="noopener noreferrer">@gunnerblog on X →</a>
-        — James McNicholas covers Arsenal for The Athletic and co-hosts Arseblog's Arsecast Extra. The handle's a decade-old holdover from his old blog; the writing's still worth the follow.
-      </p>
-    </div>
+      <a class="vcard" href="https://x.com/gunnerblog" target="_blank" rel="noopener noreferrer">
+        <span class="vcard__tag">The Athletic's Arsenal man</span>
+        <span class="vcard__top">
+          <span class="vcard__av" aria-hidden="true">JM</span>
+          <span class="vcard__id"><b class="vcard__name">James McNicholas</b><span class="vcard__handle">@gunnerblog</span></span>
+        </span>
+        <span class="vcard__note">Covers Arsenal for The Athletic and co-hosts Arseblog's Arsecast Extra. The handle is a holdover from his old blog; the writing is still worth the follow.</span>
+        <span class="vcard__go">Open on X →</span>
+      </a>
 
-    <div class="fanart-embed">
-      <p class="fanart-embed__label">The outlet, not just the blog</p>
-      <a class="twitter-timeline" data-height="480" data-theme="light" href="https://twitter.com/arseblognews?ref_src=twsrc%5Etfw">Posts by @arseblognews on X</a>
-      <p class="fanart-embed__caption">
-        <a href="https://x.com/arseblognews" target="_blank" rel="noopener noreferrer">@arseblognews on X →</a>
-        — the news arm of the site that already gets its own tribute on this one. See Required Reading for why; this is just where they post first.
-      </p>
-    </div>
+      <a class="vcard" href="https://x.com/arseblognews" target="_blank" rel="noopener noreferrer">
+        <span class="vcard__tag">The outlet, not just the blog</span>
+        <span class="vcard__top">
+          <span class="vcard__av" aria-hidden="true">AB</span>
+          <span class="vcard__id"><b class="vcard__name">Arseblog News</b><span class="vcard__handle">@arseblognews</span></span>
+        </span>
+        <span class="vcard__note">The news arm of the site that already gets its own tribute on this one. See Required Reading for why; this is just where they post first.</span>
+        <span class="vcard__go">Open on X →</span>
+      </a>
 
-    <div class="fanart-embed">
-      <p class="fanart-embed__label">Tactics, no filler</p>
-      <a class="twitter-timeline" data-height="480" data-theme="light" href="https://twitter.com/nonewthing?ref_src=twsrc%5Etfw">Posts by @nonewthing on X</a>
-      <p class="fanart-embed__caption">
-        <a href="https://x.com/nonewthing" target="_blank" rel="noopener noreferrer">@nonewthing on X →</a>
-        — anonymous, allergic to hot takes, and better at reading what Arteta is actually doing than most people paid to do it.
-      </p>
+      <a class="vcard" href="https://x.com/nonewthing" target="_blank" rel="noopener noreferrer">
+        <span class="vcard__tag">Tactics, no filler</span>
+        <span class="vcard__top">
+          <span class="vcard__av" aria-hidden="true">NN</span>
+          <span class="vcard__id"><b class="vcard__name">nonewthing</b><span class="vcard__handle">@nonewthing</span></span>
+        </span>
+        <span class="vcard__note">Pseudonymous, allergic to hot takes, and better at reading what Arteta is actually doing than most people paid to do it.</span>
+        <span class="vcard__go">Open on X →</span>
+      </a>
     </div>
 
     <p style="margin-top:24px">This page is small on purpose and will grow slowly. If you know an account that consistently earns its place here, that's exactly what this page is for.</p>
@@ -150,7 +186,7 @@
   <div class="wrap foot__grid">
     <div>
       <h4>Nothing is reproduced</h4>
-      <p>Every embed on this page is loaded live from x.com using X's own embed code. No post, quote, or image is copied, stored, or hosted on this site.</p>
+      <p>Every card on this page links out to the account's own profile on x.com. No post, quote, or image is copied, stored, or hosted on this site.</p>
     </div>
     <div>
       <h4>Tickets</h4>

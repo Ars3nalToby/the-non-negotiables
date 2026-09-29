@@ -39,6 +39,12 @@ fanart.html                Fan artists, embedded live from their own X
                         CSP (adds platform.twitter.com,
                         syndication.twitter.com, pbs.twimg.com) —
                         every other page keeps the strict default.
+voices.html                Who-to-follow cards for journalists and fan accounts
+                        on X. Link-out cards only (monogram, handle, one
+                        line, "Open on X") — no widgets.js, strict default
+                        CSP. The X timeline embeds it launched with showed
+                        blank white boxes on iPhone. Every handle and
+                        description must be checked by hand.
 404.html                 Custom not-found page (intentionally
                         standalone — not wired into the nav/audit
                         content-page checks).

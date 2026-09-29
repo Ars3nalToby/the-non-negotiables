@@ -17,6 +17,26 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<style>
+.season{background:var(--board-bg);color:var(--board-fg);border-radius:var(--r-lg);padding:clamp(20px,3vw,28px);margin-bottom:22px}
+.season[hidden]{display:none}
+.season__head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 18px}
+.season__title{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);margin:0}
+.season__title::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-right:10px}
+.season__stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.season__stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);padding:14px 16px}
+.season__stat b{display:block;font-family:var(--mono);font-size:clamp(24px,4vw,32px);font-weight:600;line-height:1.1;color:#fff}
+.season__stat span{display:block;margin-top:6px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.season__form{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:18px}
+.season__form > span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-right:4px}
+.season__dot{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:13px;color:#fff}
+.season__dot--W{background:#1f9d55}
+.season__dot--D{background:#8a94a3}
+.season__dot--L{background:var(--red)}
+.season__sleep{margin:18px 0 0;font-family:var(--serif);font-size:16px;line-height:1.6;color:rgba(255,255,255,.82)}
+.season__sleep b{font-family:var(--mono);color:#fff;font-weight:600}
+@media (max-width:640px){.season__stats{grid-template-columns:1fr 1fr}}
+</style>
 </head>
 <body>
 
@@ -68,6 +88,7 @@
 </div>
 
 <section class="section wrap">
+  <div class="season" id="season" hidden></div>
   <div class="filters" role="group" aria-label="Filter fixtures">
     <button class="chip" data-filter="all" aria-pressed="true">All 38</button>
     <button class="chip" data-filter="H" aria-pressed="false">Emirates</button>
@@ -209,6 +230,40 @@ rowsEl.addEventListener('click', e => {
   if(row) openDrawer(parseInt(row.dataset.i,10));
 });
 
+/* Season so far — derived entirely from FIXTURES' own result strings
+   ("W 3-0", Arsenal's score first), so it can never drift from the rows
+   below it. Hidden until at least one league result exists. */
+function renderSeason(){
+  const played = FIXTURES.filter(f => f.result && /^[WDL] \d+-\d+$/.test(f.result));
+  const box = $('#season');
+  if(!played.length){ box.hidden = true; return; }
+  let w = 0, d = 0, l = 0, gf = 0, ga = 0, brutal = 0;
+  played.forEach(f => {
+    const m = f.result.match(/^([WDL]) (\d+)-(\d+)$/);
+    if(m[1] === 'W') w++; else if(m[1] === 'D') d++; else l++;
+    gf += +m[2]; ga += +m[3];
+    if(isBrutal(new Date(f.ko))) brutal++;
+  });
+  const left = FIXTURES.filter(f => !f.result && isBrutal(new Date(f.ko))).length;
+  const gd = gf - ga;
+  const dots = played.map(f => {
+    const r = f.result[0], c = CLUBS[f.opp];
+    return `<span class="season__dot season__dot--${r}" title="${f.v === 'H' ? 'v' : 'at'} ${c.name} ${f.result.slice(2)}">${r}</span>`;
+  }).join('');
+  box.innerHTML = `
+    <div class="season__head"><p class="season__title">The season so far · league only</p></div>
+    <div class="season__stats">
+      <div class="season__stat"><b>${played.length}</b><span>Played</span></div>
+      <div class="season__stat"><b>${w}–${d}–${l}</b><span>W – D – L</span></div>
+      <div class="season__stat"><b>${w * 3 + d}</b><span>Points</span></div>
+      <div class="season__stat"><b>${gf}:${ga}</b><span>Goals ${gd >= 0 ? '+' : ''}${gd}</span></div>
+    </div>
+    <div class="season__form"><span>Form</span>${dots}</div>
+    <p class="season__sleep">Kick-offs inside the 1am–6am Brisbane window so far: <b>${brutal} of ${played.length}</b>. Still to come this season: <b>${left}</b>.</p>`;
+  box.hidden = false;
+}
+
+renderSeason();
 renderRows();
 </script>
 </body>
