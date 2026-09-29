@@ -45,6 +45,13 @@ voices.html                Who-to-follow cards for journalists and fan accounts
                         CSP. The X timeline embeds it launched with showed
                         blank white boxes on iPhone. Every handle and
                         description must be checked by hand.
+ledger.html                Man City decision tracker: what the independent
+                        Commission found, charge by charge, from the
+                        League's 29 Sep 2026 statement and redacted core
+                        decision. Every line attributed ("the Commission
+                        found"), original wording, no sanction guessing.
+                        Update it when the sanction hearing or appeal
+                        resolves; the appeal-deadline box flips itself.
 404.html                 Custom not-found page (intentionally
                         standalone — not wired into the nav/audit
                         content-page checks).

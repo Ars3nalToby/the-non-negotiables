@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://anueveizfqxnloncuvmf.supabase.co; base-uri 'none'; object-src 'none'; form-action 'none';">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Ledger — The Non-Negotiables</title>
+<meta name="description" content="What the independent Premier League Commission found against Manchester City, charge by charge, in plain language — and what is still undecided.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#EF0107" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A1420" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23EF0107'/%3E%3Crect x='14' y='27' width='36' height='6' fill='%23fff'/%3E%3Crect x='14' y='39' width='22' height='6' fill='%23fff'/%3E%3Crect x='14' y='15' width='28' height='6' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.lg-note{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--mute);margin:0 0 22px}
+.lg-status{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:34px}
+.lg-st{background:var(--board-bg);color:var(--board-fg);border-radius:var(--r-lg);padding:20px}
+.lg-st__k{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);margin:0 0 10px}
+.lg-st__v{display:inline-block;font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:5px 12px;margin:0 0 12px}
+.lg-st__v--done{background:var(--red);color:#fff}
+.lg-st__v--wait{background:rgba(217,164,6,.2);color:#f3cf6a;border:1px solid rgba(217,164,6,.5)}
+.lg-st__v--open{background:rgba(29,111,224,.22);color:#9cc4ff;border:1px solid rgba(29,111,224,.5)}
+.lg-st p{margin:0;font-family:var(--serif);font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.82)}
+.lg-nums{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:38px}
+.lg-num{border:1px solid var(--card-border);background:var(--card);border-radius:var(--r-md);padding:16px 18px}
+.lg-num b{display:block;font-family:var(--mono);font-size:clamp(24px,3.6vw,34px);font-weight:600;line-height:1.1;color:var(--ink)}
+.lg-num span{display:block;margin-top:8px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;line-height:1.45;color:var(--mute)}
+.lg-h{font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:0 0 12px}
+.lg-list{display:grid;gap:12px;margin-bottom:38px}
+.lg-card{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-lg);padding:20px 22px}
+.lg-card__id{grid-row:span 2;font-family:var(--mono);font-weight:600;font-size:13px;letter-spacing:.06em;color:#fff;background:var(--board-bg);border-radius:var(--r-md);padding:10px 12px;align-self:start;text-align:center;min-width:64px}
+.lg-card h3{margin:0;font-family:var(--sans);font-weight:800;font-size:18px;line-height:1.3;color:var(--ink)}
+.lg-card p{margin:0;font-family:var(--serif);font-size:16.5px;line-height:1.65;color:var(--ink-2)}
+.lg-card__v{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:3px 10px;margin-left:8px;vertical-align:middle;color:#fff;background:var(--red)}
+.lg-card__v--no{background:#5c6b7d}
+.lg-card--no .lg-card__id{background:#5c6b7d}
+.lg-quote{background:var(--board-bg);color:var(--board-fg);border-radius:var(--r-lg);padding:clamp(22px,3.4vw,34px);margin-bottom:38px}
+.lg-quote h3{margin:0 0 14px;font-family:var(--sans);font-weight:900;font-size:clamp(20px,3vw,28px);line-height:1.2;text-transform:uppercase;letter-spacing:-.01em;color:#fff}
+.lg-quote p{margin:0 0 12px;font-family:var(--serif);font-size:17px;line-height:1.68;color:rgba(255,255,255,.84);max-width:68ch}
+.lg-quote p:last-child{margin:0}
+.lg-src a{color:var(--red);font-weight:700}
+@media (max-width:820px){.lg-nums{grid-template-columns:1fr 1fr}.lg-status{grid-template-columns:1fr}}
+@media (max-width:640px){.lg-card{grid-template-columns:1fr}.lg-card__id{grid-row:auto;justify-self:start}.lg-card{padding:18px}}
+</style>
+</head>
+<body>
+
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<header class="masthead">
+  <div class="wrap masthead__in">
+    <h1 class="wordmark">
+      <b><a href="index.html" style="color:inherit">The <em>Non-</em>Negotiables</a></b>
+      <span>Arsenal 2026/27 · fixtures, away days &amp; wake-up calls</span>
+    </h1>
+    <div class="mh-right">
+      <div class="mh-meta">
+        <strong><svg class="plaque-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 5.1 5.6.6-4.2 3.8 1.2 5.5L12 14.9 6.9 17l1.2-5.5-4.2-3.8 5.6-.6L12 2z"/></svg>Champions of England</strong>
+        Watching from Brisbane since 2009
+      </div>
+      <button class="theme" id="theme-toggle" aria-label="Switch between light and dark">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path class="moon" d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/>
+          <g class="sun"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/></g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav"><div class="wrap nav__in">
+  <a href="index.html">Home</a>
+  <a href="news.html">News</a>
+  <a href="timetable.html">Timetable</a>
+  <a href="tickets.html">Tickets</a>
+  <a href="europe.html">Europe</a>
+  <a href="transfers.html">Transfers</a>
+  <a href="squad.html">Squad</a>
+  <a href="junior.html">Juniors</a>
+  <a href="programme.html">Blog</a>
+  <a href="reading.html">Required reading</a>
+  <a href="fanart.html">Fan Art</a>
+  <a href="voices.html">Voices</a>
+  <a href="ledger.html" aria-current="page">Ledger</a>
+</div></nav>
+
+<div class="page-head">
+  <div class="wrap page-head__in">
+    <a class="crumb" href="index.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back to hub</a>
+    <p class="eyebrow">Manchester City · the Commission's decision</p>
+    <h1>The Ledger</h1>
+    <p>What an independent Premier League Commission found against Manchester City, charge by charge, in plain language. Every line comes from the published decision or the League's own statement. Where something isn't decided yet, it says so.</p>
+  </div>
+</div>
+
+<section class="section wrap">
+  <p class="lg-note">Updated 30 September 2026 · Manchester City denied every charge throughout the proceedings and have the right to appeal.</p>
+
+  <div class="lg-status" role="list">
+    <div class="lg-st" role="listitem">
+      <p class="lg-st__k">Liability</p>
+      <span class="lg-st__v lg-st__v--done">Decided</span>
+      <p>The Commission found every charge proven except one, Charge 4(B). The League published a redacted core decision on 29 September 2026.</p>
+    </div>
+    <div class="lg-st" role="listitem">
+      <p class="lg-st__k">Sanction</p>
+      <span class="lg-st__v lg-st__v--wait">Not decided</span>
+      <p>Handled separately, in a further hearing with the same Commission. No penalty has been set, and none is guessed at on this page.</p>
+    </div>
+    <div class="lg-st" role="listitem">
+      <p class="lg-st__k">Appeal</p>
+      <span class="lg-st__v lg-st__v--open" id="lg-appeal-v">Open</span>
+      <p id="lg-appeal-t">City have until Friday 2 October 2026 to appeal the Commission's findings.</p>
+    </div>
+  </div>
+
+  <div class="lg-nums">
+    <div class="lg-num"><b>9</b><span>seasons covered, 2009/10 to 2017/18</span></div>
+    <div class="lg-num"><b>£900m+</b><span>revenue inflated and costs reduced, per the League</span></div>
+    <div class="lg-num"><b>42</b><span>hearing days in late 2024</span></div>
+    <div class="lg-num"><b>27</b><span>factual witnesses heard</span></div>
+  </div>
+
+  <h2 class="lg-h">The charges, one by one</h2>
+  <div class="lg-list">
+    <article class="lg-card">
+      <span class="lg-card__id">1(A)</span>
+      <h3>Sponsorship income <span class="lg-card__v">Proven</span></h3>
+      <p>The Commission found that most of City's deals with Abu Dhabi sponsors did not work the way the paperwork said. The sponsor paid only a fraction of the recorded fee; the balance came from the club's owner and was still booked as commercial revenue. It found City knew, or was reckless about, whether its accounts gave a true and fair view, and that it clearly intended to get around the rules. Income was overstated by over £830 million across the nine seasons.</p>
+    </article>
+    <article class="lg-card">
+      <span class="lg-card__id">1(B)</span>
+      <h3>Payments to individuals, kept off the books <span class="lg-card__v">Proven</span></h3>
+      <p>Three separate arrangements, with names redacted in the published decision, in which the owner paid sums that were really the club's own liabilities: £8.866 million, £7.4 million and £0.5 million. None appeared as club expenses. The Commission found them to be shams, or not what they appeared to be, and again found City knew or was reckless about it.</p>
+    </article>
+    <article class="lg-card">
+      <span class="lg-card__id">1(C)</span>
+      <h3>The Fordham arrangement <span class="lg-card__v">Proven</span></h3>
+      <p>An image-rights deal that came out of Project Longbow, the club's programme for boosting revenue. The Commission accepted that most of Longbow's strands were genuine, and said one was not. £24.5 million recorded as income should have been treated as owner funding, and £49.414 million of costs paid by the owner was left out of expenses.</p>
+    </article>
+    <article class="lg-card">
+      <span class="lg-card__id">1(D)</span>
+      <h3>Related-party disclosure <span class="lg-card__v">Proven</span></h3>
+      <p>The sponsorship deals were with entities linked to the owner and should have been disclosed as related-party transactions, in every one of the nine seasons. They weren't. The Commission said the missing disclosure alone did not make the accounts untrue, but it did mean they weren't prepared to the required standard.</p>
+    </article>
+    <article class="lg-card">
+      <span class="lg-card__id">2</span>
+      <h3>UEFA break-even rules <span class="lg-card__v">Proven</span></h3>
+      <p>With the accounts restated to remove the overstated income and add the hidden costs, City missed UEFA's break-even requirement in every season charged, "by a very substantial amount", and so breached the Premier League rule that requires clubs to comply with UEFA regulations.</p>
+    </article>
+    <article class="lg-card">
+      <span class="lg-card__id">3</span>
+      <h3>Premier League profitability and sustainability <span class="lg-card__v">Proven</span></h3>
+      <p>Same exercise, domestic rules. Restated, City missed the League's own losses limit, £105 million over a rolling three years, by a very substantial amount in every season charged.</p>
+    </article>
+    <article class="lg-card">
+      <span class="lg-card__id">4</span>
+      <h3>Cooperating with the investigation <span class="lg-card__v">Mostly proven</span></h3>
+      <p>The Commission found City breached its duty to cooperate in the majority of the ways alleged in Charge 4(A), in every way alleged in 4(C) and in the way alleged in 4(D), and found the club made concerted efforts to stop and frustrate the League's investigation.</p>
+    </article>
+    <article class="lg-card lg-card--no">
+      <span class="lg-card__id">4(B)</span>
+      <h3>The one that wasn't proven <span class="lg-card__v lg-card__v--no">Not proven</span></h3>
+      <p>The Commission found City did not breach its duty of cooperation in the way alleged in Charge 4(B). It is the only charge not proven at all.</p>
+    </article>
+  </div>
+
+  <div class="lg-quote">
+    <h3>The witnesses</h3>
+    <p>The Commission heard from 27 witnesses of fact and concluded that most were doing their best to give honest evidence.</p>
+    <p>But it also concluded that evidence from a number of important witnesses called by City was false in a number of key respects, and that certain of those witnesses gave evidence at the hearing that they knew to be untrue, and so had been dishonest. It also rejected City's criticisms of the League's investigation and of how it brought the case.</p>
+  </div>
+
+  <h2 class="lg-h">What is not decided</h2>
+  <div class="lg-list">
+    <article class="lg-card">
+      <span class="lg-card__id">Sanction</span>
+      <h3>Nobody knows the penalty yet</h3>
+      <p>The League says the sanction will be dealt with in a further hearing. Anything you read about points, fines or titles before that hearing is speculation, and this page will not add to it.</p>
+    </article>
+    <article class="lg-card">
+      <span class="lg-card__id">Full text</span>
+      <h3>This is the redacted core decision</h3>
+      <p>The published document has names and some figures blacked out. The League says it intends to publish the full decision and its appendices as soon as confidentiality allows.</p>
+    </article>
+  </div>
+
+  <p class="lg-note lg-src">Sources: <a href="https://www.premierleague.com/en/news/4727779/premier-league-statement-manchester-city-fc/" target="_blank" rel="noopener noreferrer">the Premier League's statement</a>, 29 September 2026, and the redacted core decision it links to. Summaries are this site's own wording. Read the decision itself for the exact findings.</p>
+</section>
+
+<div class="mascot-row" aria-hidden="true">
+  <div class="mascot mascot--sm">
+    <svg class="mascot__ball" data-mascot viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="46" fill="var(--card)" stroke="var(--ink)" stroke-width="3"/>
+      <g stroke="var(--ink)" stroke-width="3" stroke-linecap="round">
+        <line x1="50" y1="37" x2="50" y2="6"/>
+        <line x1="62.37" y1="45.98" x2="93.75" y2="35.79"/>
+        <line x1="57.64" y1="60.51" x2="77.03" y2="87.22"/>
+        <line x1="42.36" y1="60.51" x2="22.97" y2="87.22"/>
+        <line x1="37.63" y1="45.98" x2="6.25" y2="35.79"/>
+      </g>
+      <polygon points="50,37 62.37,45.98 57.64,60.51 42.36,60.51 37.63,45.98" fill="var(--ink)"/>
+      <circle cx="40" cy="24" r="5.5" fill="var(--card)"/>
+      <circle cx="60" cy="24" r="5.5" fill="var(--card)"/>
+      <circle class="mascot__pupil" data-eye data-bx="40" data-by="24" cx="40" cy="24" r="2.6" fill="var(--ink)"/>
+      <circle class="mascot__pupil" data-eye data-bx="60" data-by="24" cx="60" cy="24" r="2.6" fill="var(--ink)"/>
+      <path d="M38,70 Q50,82 62,70" fill="none" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round"/>
+      <ellipse cx="38" cy="93" rx="9" ry="5" fill="var(--red)"/>
+      <ellipse cx="62" cy="93" rx="9" ry="5" fill="var(--red)"/>
+    </svg>
+  </div>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div>
+      <h4>Where the data comes from</h4>
+      <p>The Premier League's statement and the redacted core decision of the independent Commission, both published 29 September 2026. Nothing is copied; every summary is original.</p>
+    </div>
+    <div>
+      <h4>Tickets</h4>
+      <p>Every ticket link points to Arsenal's own authorised channels. No resale is brokered, listed, advertised or facilitated here.</p>
+    </div>
+    <div>
+      <h4>Independent</h4>
+      <p>An unofficial fan project. Not affiliated with, endorsed by, or connected to Arsenal Football Club. No club marks, crests or photography used.</p>
+    </div>
+  </div>
+</footer>
+
+<button class="back-top" id="back-top" aria-label="Back to top" type="button">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="app.js"></script>
+<script>
+/* The League gave City until Friday 2 October to appeal. This page is
+   static, so once that day has passed stop asserting the window is open. */
+if(Date.now() > new Date('2026-10-03T00:00:00+01:00').getTime()){
+  $('#lg-appeal-v').textContent = 'Deadline passed';
+  $('#lg-appeal-t').textContent = 'The appeal window closed on 2 October 2026. Check the Premier League’s site for whether City appealed and what happened next.';
+}
+</script>
+</body>
+</html>
