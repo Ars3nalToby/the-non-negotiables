@@ -21,7 +21,12 @@ news.html                Original news coverage, newest first — short
                         write-ups in this site's own voice, each
                         linked to its real source. Renders from NEWS
                         (news-data.js); never a hardcoded item.
-timetable.html           Full season fixture list (month accordion).
+timetable.html           Full season fixture list (month accordion), a
+                        season-so-far panel, and the season calendar:
+                        one .ics of every match still to come (league +
+                        CL), built client-side from FIXTURES/CL with an
+                        optional VALARM. UIDs match drawer.js's
+                        per-fixture ics so re-imports update, not dupe.
 tickets.html             Ticket desk (sale windows) + Away Crew board.
 europe.html              Champions League cards + key dates.
 transfers.html            Transfer window countdown + live news wire.

@@ -36,6 +36,23 @@
 .season__sleep{margin:18px 0 0;font-family:var(--serif);font-size:16px;line-height:1.6;color:rgba(255,255,255,.82)}
 .season__sleep b{font-family:var(--mono);color:#fff;font-weight:600}
 @media (max-width:640px){.season__stats{grid-template-columns:1fr 1fr}}
+.cal{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-lg);padding:clamp(20px,3vw,28px);margin-bottom:22px}
+.cal__title{font-family:var(--sans);font-weight:900;font-size:clamp(20px,3vw,26px);line-height:1.2;text-transform:uppercase;letter-spacing:-.01em;word-spacing:.12em;color:var(--ink);margin:0 0 8px}
+.cal__lede{font-family:var(--serif);font-size:16.5px;line-height:1.6;color:var(--ink-2);margin:0 0 18px;max-width:62ch}
+.cal fieldset{border:0;margin:0 0 16px;padding:0}
+.cal legend{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);padding:0;margin:0 0 8px}
+.cal__row{display:flex;flex-wrap:wrap;gap:8px}
+.cal__chip{position:relative;display:inline-flex}
+.cal__chip input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.cal__chip span{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--card-border);background:var(--card-2);font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--ink-2);transition:all .15s var(--ease-out)}
+.cal__chip input:checked + span{background:var(--board-bg);border-color:var(--board-bg);color:#fff}
+.cal__chip input:focus-visible + span{outline:2px solid var(--red);outline-offset:2px}
+.cal__check{display:flex;align-items:center;gap:10px;font-family:var(--sans);font-size:15px;color:var(--ink-2);min-height:44px;cursor:pointer}
+.cal__check input{width:20px;height:20px;accent-color:var(--red)}
+.cal__go{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:6px}
+.cal__count{font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--mute)}
+.cal__hint{margin:14px 0 0;font-family:var(--mono);font-size:12px;line-height:1.55;letter-spacing:.03em;color:var(--mute);max-width:70ch}
+.cal .btn[disabled]{opacity:.45;cursor:not-allowed}
 </style>
 </head>
 <body>
@@ -90,6 +107,33 @@
 
 <section class="section wrap">
   <div class="season" id="season" hidden></div>
+  <div class="cal" id="cal">
+    <h2 class="cal__title">Never sleep through a kick-off</h2>
+    <p class="cal__lede">Put every match still to come into your phone's calendar, each with an alarm. The times are saved in universal time, so your calendar shows them in whatever timezone you are in.</p>
+    <fieldset>
+      <legend>Alarm</legend>
+      <div class="cal__row">
+        <label class="cal__chip"><input type="radio" name="cal-lead" value="15"><span>15 min before</span></label>
+        <label class="cal__chip"><input type="radio" name="cal-lead" value="30" checked><span>30 min before</span></label>
+        <label class="cal__chip"><input type="radio" name="cal-lead" value="60"><span>1 hour before</span></label>
+        <label class="cal__chip"><input type="radio" name="cal-lead" value="120"><span>2 hours before</span></label>
+        <label class="cal__chip"><input type="radio" name="cal-lead" value="0"><span>No alarm</span></label>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Which matches</legend>
+      <div class="cal__row">
+        <label class="cal__chip"><input type="radio" name="cal-scope" value="all" checked><span>Everything</span></label>
+        <label class="cal__chip"><input type="radio" name="cal-scope" value="brutal"><span>Only the 1am–6am Brisbane ones</span></label>
+      </div>
+      <label class="cal__check"><input type="checkbox" id="cal-europe" checked>Include the Champions League</label>
+    </fieldset>
+    <div class="cal__go">
+      <button class="btn btn--solid" id="cal-dl" type="button">Download calendar</button>
+      <span class="cal__count" id="cal-count" aria-live="polite"></span>
+    </div>
+    <p class="cal__hint">On iPhone, tap “Add All” when it opens. Kick-off times move for TV, so download it again whenever one changes: it updates the same events rather than doubling them.</p>
+  </div>
   <div class="filters" role="group" aria-label="Filter fixtures">
     <button class="chip" data-filter="all" aria-pressed="true">All 38</button>
     <button class="chip" data-filter="H" aria-pressed="false">Emirates</button>
@@ -263,6 +307,78 @@ function renderSeason(){
     <p class="season__sleep">Kick-offs inside the 1am–6am Brisbane window so far: <b>${brutal} of ${played.length}</b>. Still to come this season: <b>${left}</b>.</p>`;
   box.hidden = false;
 }
+
+/* Season calendar — one .ics for every match still to come, built here
+   from FIXTURES and CL so it can never drift from the rows below it.
+   UIDs match the per-fixture "Add to calendar" button in drawer.js, so
+   re-importing updates events instead of duplicating them. DTSTART is UTC;
+   the visitor's calendar shows it in their own timezone. */
+function calEvents(scope, europe){
+  const now = Date.now(), out = [];
+  FIXTURES.forEach(f => {
+    const d = new Date(f.ko);
+    if(f.result || d.getTime() < now) return;
+    const c = CLUBS[f.opp], home = f.v === 'H';
+    out.push({uid:`nn-mw${f.n}`, d, title: home ? `Arsenal v ${c.name}` : `${c.name} v Arsenal`,
+      where: home ? `${CLUBS.ars.stadium}, ${CLUBS.ars.city}` : `${c.stadium}, ${c.city}`,
+      comp:`Premier League, matchweek ${f.n}`});
+  });
+  if(europe) CL.forEach(m => {
+    const d = new Date(m.ko);
+    if(m.result || d.getTime() < now) return;
+    out.push({uid:`nn-cl${m.md}`, d, title: `${m.v === 'H' ? 'Arsenal v ' + m.name : m.name + ' v Arsenal'} (Champions League)`,
+      where:`${m.ground}, ${m.city}`, comp:`Champions League, matchday ${m.md}`});
+  });
+  return out.filter(e => scope === 'all' || isBrutal(e.d)).sort((a,b) => a.d - b.d);
+}
+function calFold(line){
+  const out = []; let s = line;
+  while(s.length > 60){ out.push(s.slice(0,60)); s = ' ' + s.slice(60); }
+  out.push(s);
+  return out.join('\r\n');
+}
+function buildSeasonICS(events, lead){
+  const stamp = d => d.toISOString().replace(/[-:]/g,'').split('.')[0] + 'Z';
+  const seq = Math.floor((Date.now() - Date.UTC(2026,0,1)) / 86400000);
+  const lines = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//The Non-Negotiables//EN','CALSCALE:GREGORIAN','METHOD:PUBLISH',
+    'X-WR-CALNAME:Arsenal 2026/27 · The Non-Negotiables'];
+  events.forEach(e => {
+    lines.push('BEGIN:VEVENT',
+      `UID:${e.uid}@thenonnegotiablog.com`,
+      `DTSTAMP:${stamp(new Date())}`, `SEQUENCE:${seq}`,
+      `DTSTART:${stamp(e.d)}`, `DTEND:${stamp(new Date(e.d.getTime() + 2*3600*1000))}`,
+      `SUMMARY:${icsEsc(e.title)}`, `LOCATION:${icsEsc(e.where)}`,
+      `DESCRIPTION:${icsEsc(`${e.comp}. Kick-off ${t24(e.d,LDN)} UK, ${t24(e.d,BNE)} Brisbane. Kick-off times move for TV: re-download at thenonnegotiablog.com/timetable.html if one changes.`)}`);
+    if(lead > 0) lines.push('BEGIN:VALARM','ACTION:DISPLAY',
+      `DESCRIPTION:${icsEsc(e.title)} kicks off in ${lead >= 60 ? (lead/60) + (lead === 60 ? ' hour' : ' hours') : lead + ' minutes'}`,
+      `TRIGGER:-PT${lead}M`,'END:VALARM');
+    lines.push('END:VEVENT');
+  });
+  lines.push('END:VCALENDAR');
+  return lines.map(calFold).join('\r\n');
+}
+const calOpt = () => ({
+  lead: parseInt(document.querySelector('input[name="cal-lead"]:checked').value, 10),
+  scope: document.querySelector('input[name="cal-scope"]:checked').value,
+  europe: $('#cal-europe').checked
+});
+function calRefresh(){
+  const o = calOpt(), n = calEvents(o.scope, o.europe).length;
+  $('#cal-count').textContent = n ? `${n} match${n === 1 ? '' : 'es'} will be added` : 'Nothing left to add for that choice';
+  $('#cal-dl').disabled = !n;
+}
+document.querySelectorAll('#cal input').forEach(i => i.addEventListener('change', calRefresh));
+$('#cal-dl').addEventListener('click', () => {
+  const o = calOpt(), events = calEvents(o.scope, o.europe);
+  if(!events.length) return;
+  const blob = new Blob([buildSeasonICS(events, o.lead)], {type:'text/calendar'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `arsenal-2026-27-${o.scope === 'brutal' ? '1am-6am' : 'all'}.ics`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
+calRefresh();
 
 renderSeason();
 renderRows();
