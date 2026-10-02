@@ -71,8 +71,8 @@
 <section class="section wrap">
   <div class="box" style="margin-bottom:18px">
     <h3>All eight, confirmed</h3>
-    <p style="margin:0 0 8px">UEFA published the full league-phase schedule on <strong style="color:var(--ink)">29 August</strong>. Every one of Arsenal's eight matches kicks off at <strong style="color:var(--ink)">20:00 UK</strong> — which is 05:00 Brisbane for the first three and 06:00 for the rest.</p>
-    <p style="margin:0;color:var(--ink)"><strong>There is no such thing as a convenient Champions League night in Queensland.</strong> Every single one is a working morning. Plan accordingly.</p>
+    <p style="margin:0 0 8px">UEFA published the full league-phase schedule on <strong style="color:var(--ink)">29 August</strong>. Every one of Arsenal's eight matches kicks off at <strong style="color:var(--ink)">20:00 UK</strong> — <span id="euro-tz-line">which is 05:00 Brisbane for the first three and 06:00 for the rest</span>.</p>
+    <p style="margin:0;color:var(--ink)" id="euro-flavour"><strong>There is no such thing as a convenient Champions League night in Queensland.</strong> Every single one is a working morning. Plan accordingly.</p>
   </div>
 
   <div class="euro" id="euro-grid"></div>
@@ -139,13 +139,19 @@
 <script src="app.js"></script>
 <script>
 /* ============================================================
-   EUROPE — cards, now with confirmed dates and Brisbane times.
+   EUROPE — cards, now with confirmed dates and the visitor's own times.
    ============================================================ */
+const PG_TZ = window.NN_TZ || {city:'Brisbane', abbr:'BNE'};
+if(PG_TZ.city !== 'Brisbane') $('#euro-flavour').innerHTML = '<strong>Every one is an evening kick-off in the UK.</strong> Check the time on each card below for your own clock.';
+$('#euro-tz-line').textContent = `which is ${CL.map(m => t24(new Date(m.ko),BNE)).filter((t,i,a) => a.indexOf(t) === i).join(' or ')} in ${PG_TZ.city}`;
 $('#euro-grid').innerHTML = CL.map(m => {
   const away = m.v === 'A';
   const d = new Date(m.ko);
   const place = m.ground + ' ' + m.city;
-  const inD = isoDate(addDays(d,-1), BNE), outD = isoDate(addDays(d,1), BNE);
+  /* Hotel dates are the match's own (UK-calendar) dates, not the visitor's:
+     a 20:00 UK kick-off is already "tomorrow" in Brisbane, which used to
+     push check-in a day late. */
+  const inD = isoDate(addDays(d,-1), LDN), outD = isoDate(addDays(d,1), LDN);
   const links = away ? [
     {t:'Hotels', u:`https://www.booking.com/searchresults.html?ss=${enc(place)}&checkin=${inD}&checkout=${outD}&group_adults=1&no_rooms=1`},
     {t:'Flights', u:`https://www.google.com/travel/flights?q=${enc('flights to ' + m.city)}`},
@@ -163,7 +169,7 @@ $('#euro-grid').innerHTML = CL.map(m => {
     <div class="eu__body">
       <h3 class="eu__name">${m.name}</h3>
       <p class="eu__grd">${m.ground}${away ? ' · ' + m.city : ''}</p>
-      <p class="eu__bne">${t24(d,BNE)} Brisbane · ${dayShort(d,BNE)}${isBrutal(d) ? ' <i class="flag">●</i>' : ''}</p>
+      <p class="eu__bne">${t24(d,BNE)} ${PG_TZ.city} · ${dayShort(d,BNE)}${isBrutal(d) ? ' <i class="flag">●</i>' : ''}</p>
       ${m.result ? `<p class="eu__bne" style="color:var(--ok);font-weight:600">${m.result}${m.scorers ? ' — ' + m.scorers : ''}</p>` : ''}
       <p class="eu__note">${m.note}</p>
       <div class="eu__links">${links.map(l => `<a href="${l.u}" target="_blank" rel="noopener noreferrer">${l.t}</a>`).join('')}</div>

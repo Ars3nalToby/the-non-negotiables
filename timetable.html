@@ -124,7 +124,7 @@
       <legend>Which matches</legend>
       <div class="cal__row">
         <label class="cal__chip"><input type="radio" name="cal-scope" value="all" checked><span>Everything</span></label>
-        <label class="cal__chip"><input type="radio" name="cal-scope" value="brutal"><span>Only the 1am–6am Brisbane ones</span></label>
+        <label class="cal__chip"><input type="radio" name="cal-scope" value="brutal"><span id="cal-brutal-label">Only the 1am–6am Brisbane ones</span></label>
       </div>
       <label class="cal__check"><input type="checkbox" id="cal-europe" checked>Include the Champions League</label>
     </fieldset>
@@ -142,7 +142,7 @@
     <button class="chip" data-filter="brutal" aria-pressed="false">Brisbane 1am–6am</button>
   </div>
   <div class="tt">
-    <div class="tt__head" aria-hidden="true"><span>#</span><span>Date</span><span>Opponent</span><span>Venue</span><span>Brisbane KO</span><span></span></div>
+    <div class="tt__head" aria-hidden="true"><span>#</span><span>Date</span><span>Opponent</span><span>Venue</span><span id="tt-tz-h">Brisbane KO</span><span></span></div>
     <div id="tt-rows"></div>
   </div>
 </section>
@@ -208,6 +208,10 @@
    TIMETABLE — filters + month accordions. Everything else on this
    page (drawer, theme, motion) is shared chrome from app.js.
    ============================================================ */
+const PG_TZ = window.NN_TZ || {city:'Brisbane', abbr:'BNE'};
+$('#tt-tz-h').textContent = PG_TZ.abbr + ' KO';
+document.querySelector('.chip[data-filter="brutal"]').textContent = PG_TZ.city + ' 1am–6am';
+$('#cal-brutal-label').textContent = 'Only the 1am–6am ' + PG_TZ.city + ' ones';
 const rowsEl = $('#tt-rows');
 let activeFilter = 'all';
 
@@ -229,7 +233,7 @@ function rowHTML(f,i,d){
       <span class="row__ha"><i class="ha ${f.v === 'H' ? 'ha--h' : 'ha--a'}">${f.v === 'H' ? 'HOME' : 'AWAY'}</i></span>
       <span class="row__bne">${f.result
         ? `<b class="row__score">${f.result}</b><span>Full time</span>`
-        : `<b>${t24(d,BNE)}${isBrutal(d) ? ' <i class="flag" title="1am–6am Brisbane">●</i>' : ''}</b>${dayShort(d,BNE)} BNE`}</span>
+        : `<b>${t24(d,BNE)}${isBrutal(d) ? ' <i class="flag" title="1am–6am ${PG_TZ.city}">●</i>' : ''}</b>${dayShort(d,BNE)} ${PG_TZ.abbr}`}</span>
       <span class="row__go">→</span></button>`;
 }
 
@@ -304,7 +308,9 @@ function renderSeason(){
       <div class="season__stat"><b>${gf}:${ga}</b><span>Goals ${gd >= 0 ? '+' : ''}${gd}</span></div>
     </div>
     <div class="season__form"><span>Form</span>${dots}</div>
-    <p class="season__sleep">Kick-offs inside the 1am–6am Brisbane window so far: <b>${brutal} of ${played.length}</b>. Still to come this season: <b>${left}</b>.</p>`;
+    <p class="season__sleep">${brutal + left === 0
+      ? `None of the league kick-offs fall in the 1am–6am window in ${PG_TZ.city}. The fixture list is kind to you.`
+      : `Kick-offs inside the 1am–6am ${PG_TZ.city} window so far: <b>${brutal} of ${played.length}</b>. Still to come this season: <b>${left}</b>.`}</p>`;
   box.hidden = false;
 }
 
@@ -348,7 +354,7 @@ function buildSeasonICS(events, lead){
       `DTSTAMP:${stamp(new Date())}`, `SEQUENCE:${seq}`,
       `DTSTART:${stamp(e.d)}`, `DTEND:${stamp(new Date(e.d.getTime() + 2*3600*1000))}`,
       `SUMMARY:${icsEsc(e.title)}`, `LOCATION:${icsEsc(e.where)}`,
-      `DESCRIPTION:${icsEsc(`${e.comp}. Kick-off ${t24(e.d,LDN)} UK, ${t24(e.d,BNE)} Brisbane. Kick-off times move for TV: re-download at thenonnegotiablog.com/timetable.html if one changes.`)}`);
+      `DESCRIPTION:${icsEsc(`${e.comp}. Kick-off ${t24(e.d,LDN)} UK, ${t24(e.d,BNE)} ${PG_TZ.city}. Kick-off times move for TV: re-download at thenonnegotiablog.com/timetable.html if one changes.`)}`);
     if(lead > 0) lines.push('BEGIN:VALARM','ACTION:DISPLAY',
       `DESCRIPTION:${icsEsc(e.title)} kicks off in ${lead >= 60 ? (lead/60) + (lead === 60 ? ' hour' : ' hours') : lead + ' minutes'}`,
       `TRIGGER:-PT${lead}M`,'END:VALARM');

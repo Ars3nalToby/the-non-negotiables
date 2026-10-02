@@ -209,7 +209,17 @@ page's chrome rather than reinventing it.
 ### The timezone rule (read this before touching any date)
 
 Every `ko` carries an explicit UK offset, and the browser converts to
-`Australia/Brisbane` at render time. **Never store Brisbane times.**
+the visitor's chosen timezone at render time (Brisbane by default).
+**Never store Brisbane times.**
+
+The choice lives in `TZ_LIST`/`TZ_PICK` in `app.js` (localStorage key
+`nn-tz`, a "This device" auto option, a slim picker bar injected under
+the nav on every page; a change reloads the page). The constant `BNE`
+keeps its old name but now holds the chosen IANA zone, and
+`window.NN_TZ` ({id, city, abbr}) carries labels. Never hard-code the
+word "Brisbane" in a time label; use `NN_TZ.city` with a Brisbane
+fallback so a briefly stale cached app.js can't break a page. Travel
+dates (hotel check-in/out) use `LDN`, not `BNE`.
 
 - BST (`+01:00`): 29 Mar – 25 Oct 2026, and 28 Mar – 31 Oct 2027
 - GMT (`+00:00`): everything between

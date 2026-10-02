@@ -194,7 +194,7 @@ function tickDeadline(){
   const ms = new Date(target).getTime() - now;
   const dd = Math.floor(ms/86400000), hh = Math.floor(ms%86400000/3600000), mm = Math.floor(ms%3600000/60000);
   el.textContent = `${dd}d ${String(hh).padStart(2,'0')}h ${String(mm).padStart(2,'0')}m`;
-  note.textContent = `That’s ${t24(new Date(target),BNE)} on ${dayLong(new Date(target),BNE)} in Brisbane — ${tail}`;
+  note.textContent = `That’s ${t24(new Date(target),BNE)} on ${dayLong(new Date(target),BNE)} in ${(window.NN_TZ || {city:'Brisbane'}).city} — ${tail}`;
 }
 tickDeadline();
 setInterval(tickDeadline, 30000);

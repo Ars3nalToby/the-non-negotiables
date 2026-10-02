@@ -210,12 +210,49 @@ const SQUAD = [
    ============================================================ */
 const $ = s => document.querySelector(s);
 const enc = encodeURIComponent;
-const BNE = 'Australia/Brisbane';
 const LDN = 'Europe/London';
 const store = {
   get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } },
   set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
 };
+/* The visitor's own "wake-up" timezone. The constant keeps its old name,
+   BNE, because ~40 call sites already pass it to fmt()/t24()/isBrutal();
+   it now simply holds whichever zone they picked (Brisbane by default).
+   TZ_LIST rows: IANA id, option label, short name for sentences, abbreviation
+   for tight columns. Pages read the choice from window.NN_TZ with a Brisbane
+   fallback, so a briefly stale cached app.js can't break them. */
+const TZ_LIST = [
+  ['Australia/Brisbane','Brisbane','Brisbane','BNE'], ['Australia/Sydney','Sydney · Melbourne · Canberra','Sydney','SYD'],
+  ['Australia/Adelaide','Adelaide','Adelaide','ADL'], ['Australia/Perth','Perth','Perth','PER'],
+  ['Australia/Darwin','Darwin','Darwin','DRW'], ['Pacific/Auckland','Auckland','Auckland','AKL'],
+  ['Asia/Kuala_Lumpur','Kuala Lumpur','Kuala Lumpur','KUL'], ['Asia/Singapore','Singapore','Singapore','SIN'],
+  ['Asia/Hong_Kong','Hong Kong','Hong Kong','HKG'], ['Asia/Manila','Manila','Manila','MNL'],
+  ['Asia/Jakarta','Jakarta','Jakarta','JKT'], ['Asia/Bangkok','Bangkok','Bangkok','BKK'],
+  ['Asia/Tokyo','Tokyo','Tokyo','TYO'], ['Asia/Seoul','Seoul','Seoul','SEL'],
+  ['Asia/Kolkata','Mumbai · Delhi','Mumbai','BOM'], ['Asia/Dubai','Dubai','Dubai','DXB'],
+  ['Africa/Johannesburg','Johannesburg','Johannesburg','JNB'], ['Africa/Lagos','Lagos','Lagos','LOS'],
+  ['Africa/Nairobi','Nairobi','Nairobi','NBO'], ['Europe/Dublin','Dublin','Dublin','DUB'],
+  ['America/New_York','New York','New York','NYC'], ['America/Chicago','Chicago','Chicago','CHI'],
+  ['America/Denver','Denver','Denver','DEN'], ['America/Los_Angeles','Los Angeles','Los Angeles','LAX'],
+  ['America/Toronto','Toronto','Toronto','YYZ']
+];
+const TZ_PICK = (() => {
+  const saved = store.get('nn-tz');
+  if(saved === 'auto'){
+    try{
+      const id = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      new Intl.DateTimeFormat('en-GB',{timeZone:id});
+      const known = TZ_LIST.find(t => t[0] === id);
+      if(known) return {id, city:known[2], abbr:known[3], auto:true};
+      const city = id.split('/').pop().replace(/_/g,' ');
+      return {id, city, abbr:city.slice(0,3).toUpperCase(), auto:true};
+    }catch(e){}
+  }
+  const hit = TZ_LIST.find(t => t[0] === saved) || TZ_LIST[0];
+  return {id:hit[0], city:hit[2], abbr:hit[3], auto:false};
+})();
+const BNE = TZ_PICK.id;
+window.NN_TZ = {id:TZ_PICK.id, city:TZ_PICK.city, abbr:TZ_PICK.abbr};
 const fmt = (d,tz,o) => new Intl.DateTimeFormat('en-GB', Object.assign({timeZone:tz}, o)).format(d);
 /* hourCycle:'h23' not hour12:false — some engines render midnight as "24:00"
    with hour12:false, and Villa away is exactly 00:00 Brisbane. */
@@ -295,6 +332,43 @@ $('#theme-toggle').addEventListener('click', () => {
   document.documentElement.dataset.theme = next;
   store.set('nn-theme', next);
 });
+
+/* ============================================================
+   TIMEZONE PICKER — a slim bar under the nav on every page. A native
+   <select> on purpose: it gets the OS picker on phones for free and
+   stays accessible. Every page renders its times once at load, so a
+   change just reloads rather than patching each page's markup.
+   ============================================================ */
+(function initTzPicker(){
+  const nav = document.querySelector('.nav');
+  if(!nav) return;
+  let detected = null;
+  try{
+    const id = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    new Intl.DateTimeFormat('en-GB',{timeZone:id});
+    detected = id.split('/').pop().replace(/_/g,' ');
+  }catch(e){}
+  const cur = TZ_PICK.auto ? 'auto' : TZ_PICK.id;
+  const opts = (detected ? [`<option value="auto"${cur === 'auto' ? ' selected' : ''}>This device · ${esc(detected)}</option>`] : [])
+    .concat(TZ_LIST.map(t => `<option value="${t[0]}"${cur === t[0] ? ' selected' : ''}>${t[1]}</option>`)).join('');
+  const css = document.createElement('style');
+  css.textContent = `.tzbar{background:var(--paper);border-bottom:1px solid var(--rule)}
+.tzbar__in{display:flex;align-items:center;justify-content:flex-end;gap:12px;padding-top:6px;padding-bottom:6px}
+.tzbar label{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.tzbar select{flex:1 1 auto;min-width:0;font-family:var(--sans);font-size:16px;color:var(--ink);background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%238a94a3' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 14px center;border:1px solid var(--card-border);border-radius:999px;min-height:44px;max-width:62vw;padding:0 36px 0 16px;appearance:none;-webkit-appearance:none;cursor:pointer}
+.tzbar select:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.tzbar label{white-space:nowrap}
+@media (min-width:641px){.tzbar select{flex:0 0 auto}}`;
+  document.head.appendChild(css);
+  const bar = document.createElement('div');
+  bar.className = 'tzbar';
+  bar.innerHTML = `<div class="wrap tzbar__in"><label for="tz-select">Times in</label><select id="tz-select">${opts}</select></div>`;
+  nav.after(bar);
+  $('#tz-select').addEventListener('change', e => {
+    store.set('nn-tz', e.target.value);
+    location.reload();
+  });
+})();
 
 /* ============================================================
    TRANSFERS + WIRE — data only. Render logic lives on transfers.html.

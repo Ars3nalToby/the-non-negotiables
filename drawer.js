@@ -12,8 +12,8 @@
    AWAY-DAY LINKS (keyless, date pre-filled)
    ============================================================ */
 function awayLinks(club, koDate){
-  const inD = isoDate(addDays(koDate,-1), BNE);
-  const outD = isoDate(addDays(koDate,1), BNE);
+  const inD = isoDate(addDays(koDate,-1), LDN);
+  const outD = isoDate(addDays(koDate,1), LDN);
   const place = club.stadium + ' ' + club.city;
   return [
     {b:'Hotels near the ground', s:'Booking.com · dates set', u:`https://www.booking.com/searchresults.html?ss=${enc(place)}&checkin=${inD}&checkout=${outD}&group_adults=1&no_rooms=1`},
@@ -77,6 +77,7 @@ async function matchWeather(club, koDate){
    this site's own controlled data, never visitor input.
    ============================================================ */
 const icsEsc = s => String(s).replace(/([,;])/g, '\\$1').replace(/\n/g, '\\n');
+const DRW_TZ = window.NN_TZ || {city:'Brisbane', abbr:'BNE'};
 function downloadFixtureICS(f, c, ground, koDate){
   const stamp = iso => iso.replace(/[-:]/g,'').split('.')[0] + 'Z';
   const start = koDate, end = new Date(koDate.getTime() + 2*3600*1000);
@@ -90,7 +91,7 @@ function downloadFixtureICS(f, c, ground, koDate){
     `DTEND:${stamp(end.toISOString())}`,
     `SUMMARY:${icsEsc(title)}`,
     `LOCATION:${icsEsc(ground.stadium + ', ' + ground.city)}`,
-    `DESCRIPTION:${icsEsc(`Kick-off ${t24(start,LDN)} UK · ${t24(start,BNE)} Brisbane.`)}`,
+    `DESCRIPTION:${icsEsc(`Kick-off ${t24(start,LDN)} UK · ${t24(start,BNE)} ${DRW_TZ.city}.`)}`,
     'END:VEVENT','END:VCALENDAR'
   ].join('\r\n');
   const blob = new Blob([ics], {type:'text/calendar'});
@@ -159,7 +160,7 @@ function openDrawer(i){
       <h3>Kick-off, both ends of the world</h3>
       <dl class="kv">
         <dt>London</dt><dd>${t24(d,LDN)} · ${dayLong(d,LDN)}</dd>
-        <dt>Brisbane</dt><dd>${t24(d,BNE)} · ${dayLong(d,BNE)} ${isBrutal(d) ? '<span style="color:var(--red)">● brutal window</span>' : ''}</dd>
+        <dt>${DRW_TZ.city}</dt><dd>${t24(d,BNE)} · ${dayLong(d,BNE)} ${isBrutal(d) ? '<span style="color:var(--red)">● brutal window</span>' : ''}</dd>
         ${f.tv ? `<dt>On TV</dt><dd>${f.tv}${f.moved ? ' — moved from the original slot' : ''}</dd>` : ''}
         ${f.checked ? `<dt>Verified</dt><dd style="color:var(--mute);font-size:13px">${f.checked}</dd>` : '<dt>Verified</dt><dd style="color:var(--warn);font-size:13px">Not re-checked — confirm before booking</dd>'}
         ${f.result ? `<dt>Result</dt><dd style="color:var(--ok);font-weight:600">${f.result}${f.scorers ? ' — ' + f.scorers : ''}</dd>` : ''}
@@ -211,7 +212,7 @@ function openDrawer(i){
 
     <div class="stub">
       <h3>${home ? 'Matchday in N5' : 'The away day'}</h3>
-      <p class="dsub" style="margin:-4px 0 12px">Dates pre-filled: ${isoDate(addDays(d,-1),BNE)} → ${isoDate(addDays(d,1),BNE)}</p>
+      <p class="dsub" style="margin:-4px 0 12px">Dates pre-filled: ${isoDate(addDays(d,-1),LDN)} → ${isoDate(addDays(d,1),LDN)}</p>
       <p id="d-weather" style="font-size:13.5px;color:var(--ink-2);margin:0 0 14px;line-height:1.5">⛅ Checking the forecast…</p>
       <div class="linkgrid">
         ${awayLinks(ground,d).map(l => `<a class="lnk" href="${l.u}" target="_blank" rel="noopener noreferrer"><b>${l.b}</b><span>${l.s}</span></a>`).join('')}

@@ -350,6 +350,7 @@
    from app.js.
    ============================================================ */
 let boardIdx = NEXT_I;
+const PG_TZ = window.NN_TZ || {city:'Brisbane', abbr:'BNE'};
 
 function paintBoard(i){
   const f = FIXTURES[i], c = CLUBS[f.opp], d = new Date(f.ko);
@@ -371,16 +372,17 @@ function paintBoard(i){
   const brutal = isBrutal(d);
   const bneEl = $('#clk-bne');
   bneEl.textContent = t24(d,BNE);
+  bneEl.previousElementSibling.textContent = 'Kick-off · ' + PG_TZ.city;
   bneEl.className = 'clock__time' + (brutal ? ' is-hot' : '');
   $('#clk-bne-day').textContent = dayLong(d,BNE);
   $('#clk-venue').textContent = (home ? 'Emirates Stadium' : c.stadium) + ' · ' + c.cap;
 
   const h = bneHour(d);
   $('#verdict').innerHTML = brutal
-    ? `Kick-off lands at <b>${t24(d,BNE)}</b> on ${dayLong(d,BNE)} in Brisbane. Squarely in the brutal window. Set two alarms, put the phone across the room, and do not look at the group chat before you’ve watched it.`
+    ? `Kick-off lands at <b>${t24(d,BNE)}</b> on ${dayLong(d,BNE)} in ${PG_TZ.city}. Squarely in the brutal window. Set two alarms, put the phone across the room, and do not look at the group chat before you’ve watched it.`
     : (h >= 22 || h < 1)
-      ? `<b>${t24(d,BNE)}</b> Brisbane time, ${dayLong(d,BNE)}. Late but civilised — you can stay up for this one without ruining the next day.`
-      : `<b>${t24(d,BNE)}</b> Brisbane time, ${dayLong(d,BNE)}. A rare gift: a kick-off you can watch like a normal person.`;
+      ? `<b>${t24(d,BNE)}</b> ${PG_TZ.city} time, ${dayLong(d,BNE)}. Late but civilised — you can stay up for this one without ruining the next day.`
+      : `<b>${t24(d,BNE)}</b> ${PG_TZ.city} time, ${dayLong(d,BNE)}. A rare gift: a kick-off you can watch like a normal person.`;
 }
 
 function tickBoard(){
