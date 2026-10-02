@@ -57,6 +57,20 @@ ledger.html                Man City decision tracker: what the independent
                         found"), original wording, no sanction guessing.
                         Update it when the sanction hearing or appeal
                         resolves; the appeal-deadline box flips itself.
+digest.html               "The Week": next ten days of kick-offs in the
+                        visitor's timezone, the last week's news and the
+                        latest column, built live from FIXTURES/CL/NEWS/
+                        COLUMNS. Also hosts the weekly-email signup card.
+digest.mjs                Builds the email edition from the same arrays:
+                        `node digest.mjs` writes digest/issue-DATE.md
+                        (Markdown) with a marked slot for the author's own
+                        2-3 lines. Sends nothing, holds no key. The
+                        newsletter service (double opt-in, unsubscribe,
+                        archive) is external; paste its public signup URL
+                        into DIGEST_URL in app.js to switch on every
+                        [data-digest] card (hidden while empty). Link-out
+                        only, so no CSP change and the site never sees an
+                        address. Never put a card on junior.html.
 404.html                 Custom not-found page (intentionally
                         standalone — not wired into the nav/audit
                         content-page checks).

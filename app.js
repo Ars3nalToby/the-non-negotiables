@@ -371,6 +371,39 @@ $('#theme-toggle').addEventListener('click', () => {
 })();
 
 /* ============================================================
+   WEEKLY DIGEST SIGNUP — the email edition is run by an outside
+   newsletter service (double opt-in, unsubscribe, archive and sending
+   all live there), so this site never sees an address: the card is a
+   plain link to the service's own signup page. Paste that page's public
+   URL into DIGEST_URL to switch every [data-digest] card on; while it
+   is empty they stay hidden. Never on junior.html.
+   ============================================================ */
+const DIGEST_URL = '';
+(function initDigestCards(){
+  const cards = document.querySelectorAll('[data-digest]');
+  if(!cards.length) return;
+  if(!/^https:\/\//.test(DIGEST_URL)){ cards.forEach(c => { c.hidden = true; }); return; }
+  const css = document.createElement('style');
+  css.textContent = `.dgwrap{padding-bottom:clamp(28px,5vw,48px)}
+.dg{display:flex;align-items:center;justify-content:space-between;gap:20px 28px;flex-wrap:wrap;background:var(--board-bg);color:var(--board-fg);border-radius:var(--r-lg);padding:clamp(20px,3.4vw,32px)}
+.dg__k{margin:0 0 8px;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.dg__t{margin:0 0 8px;font-family:var(--sans);font-weight:900;font-size:clamp(22px,3.4vw,30px);line-height:1.15;text-transform:uppercase;letter-spacing:-.01em;color:#fff}
+.dg p{margin:0;font-family:var(--serif);font-size:16.5px;line-height:1.6;color:rgba(255,255,255,.82);max-width:54ch}
+.dg__small{margin-top:10px !important;font-family:var(--mono) !important;font-size:12px !important;letter-spacing:.03em;color:rgba(255,255,255,.55) !important}
+@media (max-width:640px){.dg .btn{width:100%;text-align:center}}`;
+  document.head.appendChild(css);
+  cards.forEach(c => {
+    c.innerHTML = `<div class="dg"><div>
+      <p class="dg__k">Weekly email</p>
+      <h3 class="dg__t">The week, in your inbox</h3>
+      <p>The next ten days of kick-offs, the news that mattered and the column, once a week and free.</p>
+      <p class="dg__small">Signing up happens on the newsletter service's own page. This site never sees your address.</p>
+    </div><a class="btn btn--solid" href="${esc(DIGEST_URL)}" target="_blank" rel="noopener noreferrer">Get the weekly email</a></div>`;
+    c.hidden = false;
+  });
+})();
+
+/* ============================================================
    TRANSFERS + WIRE — data only. Render logic lives on transfers.html.
    ============================================================ */
 const DEADLINE = '2026-09-01T23:00:00+01:00';
