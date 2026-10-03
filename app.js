@@ -89,7 +89,7 @@ const FIXTURES = [
     ]}},
   {n:6, ko:'2026-10-10T12:30:00+01:00', opp:'lee', v:'H', tv:'TNT Sports', moved:true, checked:'2026-09-27'},
   {n:7, ko:'2026-10-18T16:30:00+01:00', opp:'nfo', v:'A', tv:'Sky Sports', moved:true, checked:'2026-09-28'},
-  {n:8, ko:'2026-10-24T15:00:00+01:00', opp:'eve', v:'H', tv:'Not on UK TV \u00b7 3pm blackout', checked:'2026-08-29'},
+  {n:8, ko:'2026-10-24T15:00:00+01:00', opp:'eve', v:'H', tv:'Not on UK TV \u00b7 3pm blackout', checked:'2026-10-03'},
   {n:9, ko:'2026-11-01T16:30:00+00:00', opp:'liv', v:'A', tv:'Sky Sports', moved:true, checked:'2026-08-29'},
   {n:10,ko:'2026-11-07T15:00:00+00:00', opp:'hul', v:'H'},
   {n:11,ko:'2026-11-21T15:00:00+00:00', opp:'new', v:'A'},
