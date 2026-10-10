@@ -87,9 +87,9 @@ const FIXTURES = [
     reaction:{notes:[
       {who:'Mikel Arteta', role:'manager', quote:'Extremely disappointed. First of all I want to congratulate Brighton, I think they deserve it, I think they were the better team.', source:'Arsenal.com', url:'https://www.arsenal.com/news/every-word-from-artetas-post-brighton-presser-auZJ86i5UOdG'}
     ]}},
-  {n:6, ko:'2026-10-10T12:30:00+01:00', opp:'lee', v:'H', tv:'TNT Sports', moved:true, checked:'2026-10-09'},
+  {n:6, ko:'2026-10-10T12:30:00+01:00', opp:'lee', v:'H', tv:'TNT Sports', moved:true, checked:'2026-10-09', result:'W 2-1', scorers:'Calafiori, Guimar\u00e3es'},
   {n:7, ko:'2026-10-18T16:30:00+01:00', opp:'nfo', v:'A', tv:'Sky Sports', moved:true, checked:'2026-10-09'},
-  {n:8, ko:'2026-10-24T15:00:00+01:00', opp:'eve', v:'H', tv:'Not on UK TV \u00b7 3pm blackout', checked:'2026-10-03'},
+  {n:8, ko:'2026-10-24T15:00:00+01:00', opp:'eve', v:'H', tv:'Not on UK TV \u00b7 3pm blackout', checked:'2026-10-10'},
   {n:9, ko:'2026-11-01T16:30:00+00:00', opp:'liv', v:'A', tv:'Sky Sports', moved:true, checked:'2026-08-29'},
   {n:10,ko:'2026-11-07T15:00:00+00:00', opp:'hul', v:'H'},
   {n:11,ko:'2026-11-21T15:00:00+00:00', opp:'new', v:'A'},
