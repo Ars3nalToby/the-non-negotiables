@@ -210,12 +210,14 @@ $('#wk-news').innerHTML = recent.filter(n => /^https:\/\//.test(n.url)).map(n =>
     <p>${esc((n.summary.match(/^.*?[.!?](?=\s|$)/) || [n.summary])[0])}</p>
   </a>`).join('');
 
-const col = COLUMNS[0];
-const lead = col.standfirst || col.paras[0];
-$('#wk-col').innerHTML = `<p class="wkc__by">${esc(col.byline)}</p>
-  <h3>${esc(col.title)}</h3>
-  <p>${esc(lead.length > 260 ? lead.slice(0,257).replace(/\s+\S*$/,'') + '…' : lead)}</p>
-  <a class="wk-link" href="programme.html">Read it →</a>`;
+if(COLUMNS.length){
+  const col = COLUMNS[0];
+  const lead = col.standfirst || col.paras[0];
+  $('#wk-col').innerHTML = `<p class="wkc__by">${esc(col.byline)}</p>
+    <h3>${esc(col.title)}</h3>
+    <p>${esc(lead.length > 260 ? lead.slice(0,257).replace(/\s+\S*$/,'') + '…' : lead)}</p>
+    <a class="wk-link" href="programme.html">Read it →</a>`;
+}
 </script>
 </body>
 </html>

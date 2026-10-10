@@ -74,8 +74,8 @@ if (!recent.length) recent = NEWS.slice(0, 3);
 const firstSentence = s => (s.match(/^.*?[.!?](?=\s|$)/) || [s])[0];
 
 const col = COLUMNS[0];
-const lead = col.standfirst || col.paras[0];
-const colLead = lead.length > 260 ? lead.slice(0, 257).replace(/\s+\S*$/, '') + '…' : lead;
+const lead = col && (col.standfirst || col.paras[0]);
+const colLead = lead && (lead.length > 260 ? lead.slice(0, 257).replace(/\s+\S*$/, '') + '…' : lead);
 
 /* ---------- assemble ---------- */
 const subjectBits = ahead.slice(0, 2).map(e => `${e.short} (${t24(e.d, 'Australia/Brisbane')} Brisbane)`);
@@ -102,10 +102,12 @@ const md = [
   '',
   `More on [the news page](${SITE}/news.html).`,
   '',
-  '## From the blog',
-  '',
-  `**${col.title}** — ${colLead} [Read it](${SITE}/programme.html)`,
-  '',
+  ...(col ? [
+    '## From the blog',
+    '',
+    `**${col.title}** — ${colLead} [Read it](${SITE}/programme.html)`,
+    ''
+  ] : []),
   '---',
   '',
   `You're receiving this because you subscribed at [thenonnegotiablog.com](${SITE}). An unofficial fan project, not affiliated with Arsenal Football Club.`,

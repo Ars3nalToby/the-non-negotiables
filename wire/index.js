@@ -45,7 +45,7 @@ const BLUESKY = [
   'arseblog.bsky.social'
 ];
 
-const CACHE_SECONDS = 900;   // 15 minutes
+const CACHE_SECONDS = 300;   // 5 minutes
 const MAX_ITEMS = 20;
 
 /* ---------- tiny XML helpers (no dependencies) ---------- */
@@ -139,6 +139,7 @@ export default {
     const cors = {
       'Access-Control-Allow-Origin': origin,
       'Access-Control-Allow-Methods': 'GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'authorization, apikey, content-type, prefer',
       'Cache-Control': `public, max-age=${CACHE_SECONDS}`
     };
     if (request.method === 'OPTIONS') return new Response(null, { headers: cors });

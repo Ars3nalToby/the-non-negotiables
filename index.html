@@ -399,7 +399,7 @@ function tickBoard(){
   const ms = ko - Date.now();
   if(ms <= 0){
     if(Date.now() > ko + 2*3600*1000 && boardIdx < FIXTURES.length - 1){
-      boardIdx++; paintBoard(boardIdx); return;
+      boardIdx++; paintBoard(boardIdx); dossierBadge(); return;
     }
     $('#clk-count').textContent = 'LIVE';
     return;
@@ -425,9 +425,11 @@ $('#board-open').addEventListener('click', () => openDrawer(boardIdx));
    whatever the dossier itself triggers on click. Says nothing if the
    feed is down (WIRE_FALLBACK's generic links never name-match), which
    is the correct degrade — no badge is honest, a wrong one isn't. */
-(async function dossierBadge(){
+async function dossierBadge(){
   const badge = $('#board-open-badge');
   if(!badge || !window.getWireItems) return;
+  badge.hidden = true;
+  $('#board-open').removeAttribute('aria-label');
   const items = await getWireItems();
   const opp = CLUBS[FIXTURES[boardIdx].opp];
   const short = opp.name.split(' ')[0];
@@ -437,7 +439,8 @@ $('#board-open').addEventListener('click', () => openDrawer(boardIdx));
     badge.hidden = false;
     $('#board-open').setAttribute('aria-label', `Open the dossier — ${count} fresh update${count === 1 ? '' : 's'} on ${opp.name}`);
   }
-})();
+}
+dossierBadge();
 
 paintBoard(boardIdx);
 splitWords($('#board-home'));
