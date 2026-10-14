@@ -137,8 +137,11 @@ const CL = [
      {who:'Declan Rice', role:'midfielder', quote:'It could\u2019ve been four or five tonight if we were a bit more clinical.', source:'VAVEL International', url:'https://www.vavel.com/en/football/2026/09/09/arsenal/1270797-declan-rice-we-played-with-fluidity.html'}
    ]}},
   {md:2, ko:'2026-10-13T20:00:00+01:00', v:'H', name:'Lille', country:'France', pot:3,
-   ground:'Emirates Stadium', city:'London',
-   note:'First European night back at the Emirates. Lille are always better than the seeding suggests \u2014 well coached, quick in transition, completely unbothered by reputations. A home banana skin dressed up as a comfortable evening.'},
+   ground:'Emirates Stadium', city:'London', result:'W 3-0', scorers:'Timber, Eze, Saka',
+   note:'First European night back at the Emirates. Lille are always better than the seeding suggests \u2014 well coached, quick in transition, completely unbothered by reputations. A home banana skin dressed up as a comfortable evening.',
+   reaction:{notes:[
+     {who:'Mikel Arteta', role:'manager', quote:'It was a joy to watch, the three goals were unbelievable.', source:'Arsenal.com', url:'https://www.arsenal.com/news/every-word-from-artetas-post-lille-press-conference-ayoR26N8ce4k'}
+   ]}},
   {md:3, ko:'2026-10-21T20:00:00+01:00', v:'A', name:'Bayern Munich', country:'Germany', pot:1,
    ground:'Allianz Arena', city:'Munich',
    note:'Eight days after Lille, the hardest away trip in the draw. This is the tie that ended 2023/24 for us and a rivalry that runs a lot deeper than most fans want to count. The Allianz on a European night is the best-run big away day in Europe \u2014 the trains work, the beer is cheap, and the stadium glows red from the motorway.'},
