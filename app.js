@@ -91,7 +91,7 @@ const FIXTURES = [
     reaction:{notes:[
       {who:'Mikel Arteta', role:'manager', quote:'Today we had two objectives: one, to face the challenge because it\u2019s a team that hasn\u2019t lost in the Premier League and they are in a great position because they fully deserved it.', source:'Arsenal.com', url:'https://www.arsenal.com/news/every-word-of-artetas-post-leeds-press-conference-agxqI0v9BjZx'}
     ]}},
-  {n:7, ko:'2026-10-18T16:30:00+01:00', opp:'nfo', v:'A', tv:'Sky Sports', moved:true, checked:'2026-10-09'},
+  {n:7, ko:'2026-10-18T16:30:00+01:00', opp:'nfo', v:'A', tv:'Sky Sports', moved:true, checked:'2026-10-16'},
   {n:8, ko:'2026-10-24T15:00:00+01:00', opp:'eve', v:'H', tv:'Not on UK TV \u00b7 3pm blackout', checked:'2026-10-10'},
   {n:9, ko:'2026-11-01T16:30:00+00:00', opp:'liv', v:'A', tv:'Sky Sports', moved:true, checked:'2026-10-12'},
   {n:10,ko:'2026-11-07T15:00:00+00:00', opp:'hul', v:'H'},
