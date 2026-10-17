@@ -120,4 +120,4 @@ const file = join(outDir, `issue-${ymd(now, UK)}.md`);
 await writeFile(file, md, 'utf8');
 console.log(`Subject: ${subject}`);
 console.log(`Wrote ${file}`);
-console.log(`${ahead.length} fixtures · ${recent.length} news items · column: ${col.title}`);
+console.log(`${ahead.length} fixtures · ${recent.length} news items · column: ${col ? col.title : 'none'}`);
