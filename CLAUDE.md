@@ -50,6 +50,27 @@ voices.html                Who-to-follow cards for journalists and fan accounts
                         CSP. The X timeline embeds it launched with showed
                         blank white boxes on iPhone. Every handle and
                         description must be checked by hand.
+factory.html               Dial Square Works: every Arsenal squad from 1992/93
+                        to now, replayed as a 3D factory (signings in at
+                        the press, departures out on the belt, honours
+                        into the cabinet). The page is a thin shell —
+                        the engine and its own history data live in
+                        factory.js, styles in factory.css (all scoped
+                        under .dsw, with .fbtn/.fchip/.fclose/.fnote/
+                        .feyebrow standing in for class names styles.css
+                        already owns). Deep links: factory.html#2003
+                        opens on that season. Night mode follows the
+                        site theme. SHOW_SPONSOR_SLOTS stays false until
+                        a real sponsor signs — the audit flags it.
+                        Uses three.js r147, SELF-HOSTED in assets/vendor/
+                        (MIT, licence alongside): the one deliberate
+                        exception to "no new dependency", same spirit as
+                        fanart.html being the one widened CSP. Strict
+                        default CSP still applies — nothing from a CDN.
+                        P/SEASONS in factory.js are club history, not
+                        the current squad; SQUAD in app.js stays the
+                        source of truth for that. Update both each
+                        window: a new SEASONS entry plus the stints.
 ledger.html                Man City decision tracker: what the independent
                         Commission found, charge by charge, from the
                         League's 29 Sep 2026 statement and redacted core
@@ -184,7 +205,7 @@ key, no proxy. Same silent-failure risk if it's ever removed.
 There is no build, no bundler, no package.json for the site itself.
 **Keep it that way.** The audit enforces a size budget per file instead
 of one monolithic ceiling: `styles.css` ≤80KB, `app.js` ≤60KB,
-`drawer.js` ≤60KB, `junior.js` ≤60KB, `junior.css` ≤30KB, `columns.js` and `news-data.js` ≤120KB each
+`drawer.js` ≤60KB, `junior.js` ≤60KB, `junior.css` ≤30KB, `factory.js` ≤130KB, `factory.css` ≤30KB, `columns.js` and `news-data.js` ≤120KB each
 (few-page files, but still not unbounded), each individual page ≤40KB.
 
 **If `app.js` trips its budget again**, the fix is almost certainly
@@ -385,4 +406,4 @@ Motion is restrained and always behind `prefers-reduced-motion`.
 - [ ] Mobile checked at 390px — the timetable is the thing that breaks
 - [ ] Keyboard: Tab through the page, open a fixture drawer, Escape closes it,
       focus returns to the row
-- [ ] No new dependency, no new build step, no key in the HTML
+- [ ] No new dependency (three.js for factory.html is the one documented, self-hosted exception), no new build step, no key in the HTML
