@@ -32,6 +32,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="factory.css">
 </head>
 <body>
 
@@ -59,11 +60,11 @@
 </header>
 
 <nav class="nav"><div class="wrap nav__in">
-  <a href="index.html" aria-current="page">Home</a>
+  <a href="timetable.html">EPL</a>
+  <a href="europe.html">UCL</a>
   <a href="news.html">News</a>
-  <a href="timetable.html">Timetable</a>
+  <a href="index.html" aria-current="page">Home</a>
   <a href="tickets.html">Tickets</a>
-  <a href="europe.html">Europe</a>
   <a href="transfers.html">Transfers</a>
   <a href="squad.html">Squad</a>
   <a href="factory.html">Factory</a>
@@ -75,6 +76,21 @@
   <a href="ledger.html">Ledger</a>
   <a href="digest.html">Week</a>
 </div></nav>
+
+<section class="fhero" id="fhero" aria-label="Dial Square Works">
+  <div class="fhero__poster">
+    <div class="wrap fhero__in">
+      <p class="fhero__tag">New · Dial Square Works</p>
+      <h2 class="fhero__title">Every Arsenal squad since 1992. <em>Built as a factory.</em></h2>
+      <p class="fhero__deck">35 seasons on one floor. Signings stamped at the press, departures out on the belt, honours into the cabinet. Pick a season and argue about it.</p>
+      <div class="fhero__cta">
+        <button class="btn btn--solid" id="fhero-enter" type="button">Enter the factory</button>
+        <a class="btn btn--ghost" href="factory.html">Full screen</a>
+      </div>
+    </div>
+  </div>
+  <section class="dsw" id="dsw" tabindex="-1" hidden aria-label="Dial Square Works, a 3D factory replaying every Arsenal squad since 1992/93"></section>
+</section>
 
 <section class="cinema" id="cinema" aria-label="The 4am kick-off">
   <div class="cinema__media">
@@ -211,28 +227,28 @@
     <p class="section__note">Tap in — each one's its own page</p>
   </div>
   <div class="widgets widgets--credits" id="widgets">
+    <a class="widget" href="timetable.html">
+      <span class="widget__icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></span>
+      <h3 class="widget__title">EPL · the season timetable</h3>
+      <p class="widget__teaser" id="w-timetable">38 fixtures, plus one-tap calendar alarms</p>
+      <span class="widget__go">Open<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+    <a class="widget" href="europe.html">
+      <span class="widget__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
+      <h3 class="widget__title">UCL · the league phase</h3>
+      <p class="widget__teaser" id="w-europe">8 opponents, drawn 27 Aug</p>
+      <span class="widget__go">Open<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
     <a class="widget" href="news.html">
       <span class="widget__icon"><svg viewBox="0 0 24 24"><path d="M4 4h13a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4z"/><path d="M8 9h8M8 13h8M8 17h5"/><path d="M19 8v10a2 2 0 0 0 2-2V8"/></svg></span>
       <h3 class="widget__title">News</h3>
       <p class="widget__teaser" id="w-news">Original coverage, always linked to source</p>
       <span class="widget__go">Open<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </a>
-    <a class="widget" href="timetable.html">
-      <span class="widget__icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></span>
-      <h3 class="widget__title">The season timetable</h3>
-      <p class="widget__teaser" id="w-timetable">38 fixtures, plus one-tap calendar alarms</p>
-      <span class="widget__go">Open<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-    </a>
     <a class="widget" href="tickets.html">
       <span class="widget__icon"><svg viewBox="0 0 24 24"><path d="M3 9a2 2 0 0 0 0 6v3a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-3a2 2 0 0 1 0-6V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v3z"/><path d="M9 5v14" stroke-dasharray="3 3"/></svg></span>
       <h3 class="widget__title">The ticket desk</h3>
       <p class="widget__teaser" id="w-tickets">Official channels only</p>
-      <span class="widget__go">Open<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-    </a>
-    <a class="widget" href="europe.html">
-      <span class="widget__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
-      <h3 class="widget__title">Europe · the league phase</h3>
-      <p class="widget__teaser" id="w-europe">8 opponents, drawn 27 Aug</p>
       <span class="widget__go">Open<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </a>
     <a class="widget" href="transfers.html">
@@ -360,6 +376,26 @@
 <script src="drawer.js"></script>
 <script src="news-data.js"></script>
 <script>
+/* Dial Square Works hero — the 3D engine (three.js + factory.js, ~700KB)
+   loads only when the visitor asks for it, so the hub stays quick. */
+(function(){
+  const go = $('#fhero-enter');
+  if (!go) return;
+  const load = src => new Promise((ok, fail) => {
+    const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = fail; document.body.appendChild(s);
+  });
+  go.addEventListener('click', async () => {
+    go.disabled = true; go.textContent = 'Loading the factory…';
+    try {
+      await load('assets/vendor/three-r147.min.js');
+      await load('assets/vendor/OrbitControls-r147.js');
+      $('#fhero').classList.add('is-live');
+      $('#dsw').hidden = false;
+      await load('factory.js');
+      $('#dsw').focus({preventScroll:true});
+    } catch (e) { location.href = 'factory.html'; }
+  });
+})();
 /* ============================================================
    HUB — hero board (next-match widget) + the widget-grid teasers
    and click-ripple. Everything else on this page is shared chrome

@@ -20,6 +20,53 @@
 (async function(){
 "use strict";
 const START_HASH=location.hash; // read before boot writes the current season into the hash
+// On factory.html the factory owns the hash and the full page; on the homepage it is a guest.
+const EMBED=!/factory\.html$/.test(location.pathname);
+// The HUD markup lives here, so any page can mount the factory into an empty <section id="dsw">.
+if(!document.getElementById("hud"))document.getElementById("dsw").insertAdjacentHTML("beforeend",`<div id="stage" aria-label="3D view of the Arsenal squad factory"></div>
+
+<div id="hud">
+  <section class="plate" aria-live="polite">
+    <div class="row1"><span>Production run</span><span id="runNo">01 / 35</span></div>
+    <div class="season" id="seasonTxt">1992<small>/</small>93</div>
+    <dl>
+      <dt>League</dt><dd class="pos" id="posTxt">10th</dd>
+      <dt>Manager</dt><dd id="mgrTxt">George Graham</dd>
+      <dt>Captain</dt><dd id="capTxt">Tony Adams</dd>
+    </dl>
+    <div class="chips" id="honTxt"></div>
+    <p class="fnote" id="noteTxt"></p>
+  </section>
+
+  <div class="strip">
+    <div class="lane in" aria-label="Arrivals this season"><span class="lane-h">In <b id="inCount">0</b></span><ol id="inList"></ol></div>
+    <div class="lane out" aria-label="Departures this season"><span class="lane-h">Out <b id="outCount">0</b></span><ol id="outList"></ol></div>
+  </div>
+
+  <div class="rail">
+    <div class="top">
+      <button class="fbtn icon" id="prevBtn" aria-label="Previous season"><svg viewBox="0 0 16 16"><path d="M3 2h2v12H3zM14 2v12L6 8z"/></svg></button>
+      <button class="fbtn primary" id="playBtn" aria-label="Pause"><svg viewBox="0 0 16 16" id="playIco"><path d="M3 2h4v12H3zM9 2h4v12H9z"/></svg><span id="playLbl">Pause</span></button>
+      <button class="fbtn icon" id="nextBtn" aria-label="Next season"><svg viewBox="0 0 16 16"><path d="M11 2h2v12h-2zM2 2v12l8-6z"/></svg></button>
+      <div class="seg" role="group" aria-label="Line speed">
+        <button data-sp="1" aria-pressed="false">1×</button>
+        <button data-sp="2" aria-pressed="true">2×</button>
+        <button data-sp="4" aria-pressed="false">4×</button>
+      </div>
+      <div class="seg view" role="group" aria-label="Camera view"><button data-v="auto" aria-pressed="true">Auto</button><button data-v="intake" aria-pressed="false">Intake</button><button data-v="squad" aria-pressed="false">Squad</button><button data-v="despatch" aria-pressed="false">Despatch</button></div>
+      <button class="fbtn soundbtn" id="soundBtn" type="button" aria-pressed="false" aria-label="Sound"><svg viewBox="0 0 16 16"><path d="M2 6h3l4-3v10L5 10H2z"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5M12.8 3.6a6 6 0 0 1 0 8.8" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><span>Sound</span></button>
+      <button class="fbtn nightbtn" id="nightBtn" aria-pressed="false"><svg viewBox="0 0 16 16"><path d="M10.5 1.5A6.5 6.5 0 1 0 14.5 11 5.5 5.5 0 0 1 10.5 1.5z"/></svg><span>Night</span></button>
+            <button class="fbtn sharebtn" id="shareBtn" type="button"><svg viewBox="0 0 16 16"><path d="M12 10a2 2 0 0 0-1.6.8L5.9 8.5a2 2 0 0 0 0-1l4.5-2.3A2 2 0 1 0 10 4l-4.5 2.3a2 2 0 1 0 0 3.4L10 12a2 2 0 1 0 2-2z"/></svg><span>Share</span></button>
+      <span class="stat hide-sm hintx" id="camHint">Drag to look around · then scroll to zoom</span><span class="spacer"></span>
+      <span class="stat">Squad <b id="sqN">0</b></span>
+      <span class="stat hide-sm">Longest serving <b id="longTxt">—</b></span>
+      <span class="stat hide-sm">Trophies <b id="trophN">0</b></span>
+    </div>
+    <div class="timeline" id="timeline"><div class="prog" id="prog"></div></div>
+  </div>
+</div>
+
+<div class="pcard" id="pcard" hidden></div>`);
 try{await Promise.race([Promise.all([document.fonts.load("900 100px 'Big Shoulders Display'"),document.fonts.load("800 60px 'Big Shoulders Display'"),document.fonts.load("600 30px 'IBM Plex Mono'"),document.fonts.load("600 16px 'Barlow Semi Condensed'")]),new Promise(r=>setTimeout(r,2500))]);}catch(e){}
 
 /* ===================================================================
@@ -618,7 +665,7 @@ function setTrophies(y,animate){
   trophyList.forEach(t=>{
     const want=t.y<=y;
     if(want){n++;if(!t.obj){t.obj=makeTrophy(t.kind,t.special);t.obj.position.copy(t.pos);cab.add(t.obj);
-      if(animate&&t.y===y){t.obj.position.y+=5;trophyAnims.push({t,time:0});}}}
+      if(animate&&t.y===y){t.obj.position.y+=5;trophyAnims.push({t,time:0});SND.chime(.85);}}}
     else if(t.obj){cab.remove(t.obj);t.obj=null;}
   });
   drawCabPlaque(n);document.getElementById("trophN").textContent=n;
@@ -791,7 +838,7 @@ let nightGoal=0,nightK=0;
 const workLamps=[[-27,5.5,2.5],[25.5,5.5,2.5]].map(([x,y,z])=>{const l=new THREE.PointLight(0xFFE2B8,0,18,1.6);l.position.set(x,y,z);l.visible=false;scene.add(l);return l;});
 const WHITE=new THREE.Color(0xFFFFFF),HALL_NIGHT=new THREE.Color(0x4A5470);
 const hallMats=[floor.material,wall.material];scene.traverse(o=>{if(o.isMesh&&o.geometry.type==="PlaneGeometry"&&o.geometry.parameters.width===70&&o.geometry.parameters.height===24)hallMats.push(o.material);});
-function setNight(v){nightGoal=v?1:0;document.getElementById("hud").classList.toggle("night",v);const b=document.getElementById("nightBtn");if(b){b.setAttribute("aria-pressed",v?"true":"false");b.querySelector("span").textContent=v?"Day":"Night";}
+function setNight(v){nightGoal=v?1:0;SND.setNight(v);document.getElementById("hud").classList.toggle("night",v);const b=document.getElementById("nightBtn");if(b){b.setAttribute("aria-pressed",v?"true":"false");b.querySelector("span").textContent=v?"Day":"Night";}
   floods.forEach(f=>f.spot.visible=true);}
 function updateNight(rdt){
   if(Math.abs(nightK-nightGoal)<1e-3){if(nightGoal===0&&floods[0].spot.visible&&nightK===0)floods.forEach(f=>f.spot.visible=false);return;}
@@ -806,6 +853,79 @@ function updateNight(rdt){
   ledMat.emissiveIntensity=.8+k*1.2;inGlow.intensity=1.2+k*2;outGlow.intensity=.8+k*2;
   if(nightK===0)floods.forEach(f=>f.spot.visible=false);
 }
+
+/* ===================================================================
+   SOUND — an original soundtrack built live with the Web Audio API
+   (no audio files, nothing fetched). Off until the visitor presses
+   Sound; browsers won't play audio before a tap anyway. The music
+   follows the floor: full band while players move, drums drop out in
+   the gap between seasons, a darker progression at night. SFX hook
+   into the press, the belts, the cabinet and title seasons.
+   =================================================================== */
+const SND=(()=>{
+  let ctx=null,master=null,musicBus=null,sfxBus=null,noiseBuf=null,on=false,timer=null;
+  let nextT=0,step=0,intensity=1,nightMood=false;
+  const BPM=122,SPB=60/BPM/4; // 16th-note grid
+  const DAY=[[62,66,69],[59,62,66],[55,59,62],[57,61,64]],DAY_R=[38,35,31,33];
+  const NIGHT=[[59,62,66],[55,59,62],[50,54,57],[57,61,64]],NIGHT_R=[35,31,26,33];
+  // the hook: [16th offset in a 2-bar phrase, midi, length in 16ths]
+  const HOOK=[[0,74,2],[2,76,2],[4,78,4],[8,76,2],[10,74,2],[12,71,4],[16,74,2],[18,76,2],[20,78,3],[23,81,1],[24,78,4],[28,76,4]];
+  const f=n=>440*Math.pow(2,(n-69)/12);
+  function init(){
+    ctx=new (window.AudioContext||window.webkitAudioContext)();
+    master=ctx.createGain();master.gain.value=.0001;
+    const comp=ctx.createDynamicsCompressor();comp.threshold.value=-14;comp.ratio.value=3;
+    master.connect(comp);comp.connect(ctx.destination);
+    musicBus=ctx.createGain();musicBus.gain.value=.55;musicBus.connect(master);
+    sfxBus=ctx.createGain();sfxBus.gain.value=.8;sfxBus.connect(master);
+    noiseBuf=ctx.createBuffer(1,ctx.sampleRate,ctx.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+  }
+  function env(g,t,a,peak,dec,sus=0){g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(peak,t+a);g.gain.exponentialRampToValueAtTime(Math.max(.0001,sus||.0001),t+a+dec);}
+  function osc(type,freq,t,dur,peak,dest,a=.005,cut=0){
+    const o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.setValueAtTime(freq,t);
+    let n=o;if(cut){const l=ctx.createBiquadFilter();l.type="lowpass";l.frequency.value=cut;o.connect(l);n=l;}
+    n.connect(g);g.connect(dest);env(g,t,a,peak,dur);o.start(t);o.stop(t+a+dur+.05);return o;
+  }
+  function noise(t,dur,peak,type,freq,dest,q=1){
+    const s=ctx.createBufferSource(),fl=ctx.createBiquadFilter(),g=ctx.createGain();s.buffer=noiseBuf;
+    fl.type=type;fl.frequency.value=freq;fl.Q.value=q;s.connect(fl);fl.connect(g);g.connect(dest);env(g,t,.002,peak,dur);s.start(t);s.stop(t+dur+.05);
+  }
+  function kick(t,v=1){const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(48,t+.12);o.connect(g);g.connect(musicBus);env(g,t,.003,.9*v,.32);o.start(t);o.stop(t+.4);}
+  function schedule(i,t){
+    const bar=Math.floor(i/16)%4,s16=i%16,prog=nightMood?NIGHT:DAY,roots=nightMood?NIGHT_R:DAY_R;
+    const full=intensity>.5;
+    // drums
+    if(s16%4===0)kick(t,full?1:.55);
+    if(full&&(s16===4||s16===12))noise(t,.16,.32,"bandpass",1800,musicBus,.8);
+    if(s16%2===1||full&&s16%4===2)noise(t,.04,full?.10:.05,"highpass",8000,musicBus);
+    // bass: off-beat octave pump
+    if(full&&s16%2===0){const n=roots[bar]+(s16%4===2?12:0);osc("sawtooth",f(n),t,SPB*1.6,.16,musicBus,.004,600);}
+    // pad: one chord per bar
+    if(s16===0)prog[bar].forEach(n=>{[-4,5].forEach(det=>{const o=osc("sawtooth",f(n)*(1+det/1200),t,SPB*15,.035,musicBus,nightMood?.6:.25,nightMood?900:1600);});});
+    // the hook, on alternate 2-bar phrases while the line is moving
+    const ph=Math.floor(i/32)%2,p16=i%32;
+    if(full&&ph===0)HOOK.forEach(([o,n,l])=>{if(o===p16){osc("square",f(n-(nightMood?12:0)),t,SPB*l*.9,.05,musicBus,.01,2400);osc("sawtooth",f(n)*1.003,t,SPB*l*.9,.03,musicBus,.01,2000);}});
+  }
+  function pump(){if(!on)return;const ahead=ctx.currentTime+.15;while(nextT<ahead){schedule(step,nextT);step++;nextT+=SPB;}}
+  function start(){
+    if(!ctx)init();if(ctx.state==="suspended")ctx.resume();
+    on=true;nextT=ctx.currentTime+.08;master.gain.cancelScheduledValues(ctx.currentTime);master.gain.setTargetAtTime(.9,ctx.currentTime,.25);
+    clearInterval(timer);timer=setInterval(pump,25);
+  }
+  function stop(){if(!ctx)return;on=false;clearInterval(timer);master.gain.setTargetAtTime(.0001,ctx.currentTime,.15);}
+  const ok=()=>on&&ctx;
+  return {
+    toggle(){on?stop():start();return on;},get on(){return on;},
+    pause(){if(ctx&&on)ctx.suspend();},resume(){if(ctx&&on)ctx.resume();},
+    setIntensity(v){intensity=v;},setNight(v){nightMood=v;},
+    stamp(){if(!ok())return;const t=ctx.currentTime;kick(t,1.3);noise(t,.25,.5,"lowpass",900,sfxBus);osc("triangle",f(84),t+.02,.35,.12,sfxBus,.002);osc("triangle",f(91),t+.02,.3,.07,sfxBus,.002);},
+    whoosh(){if(!ok())return;const t=ctx.currentTime,s=ctx.createBufferSource(),fl=ctx.createBiquadFilter(),g=ctx.createGain();s.buffer=noiseBuf;fl.type="bandpass";fl.Q.value=2;fl.frequency.setValueAtTime(400,t);fl.frequency.exponentialRampToValueAtTime(2600,t+.5);s.connect(fl);fl.connect(g);g.connect(sfxBus);env(g,t,.15,.12,.45);s.start(t);s.stop(t+.7);},
+    chime(delay=0){if(!ok())return;const t=ctx.currentTime+delay;[[88,.12],[95,.08],[100,.06],[107,.03]].forEach(([n,v],i)=>osc("sine",f(n),t+i*.06,1.6,v,sfxBus,.003));},
+    cheer(big=1){if(!ok())return;const t=ctx.currentTime,s=ctx.createBufferSource(),fl=ctx.createBiquadFilter(),g=ctx.createGain();s.buffer=noiseBuf;s.loop=true;fl.type="bandpass";fl.frequency.value=1100;fl.Q.value=.6;s.connect(fl);fl.connect(g);g.connect(sfxBus);
+      g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.22*big,t+.6);g.gain.exponentialRampToValueAtTime(.0001,t+3.2);s.start(t);s.stop(t+3.4);},
+    flip(){if(!ok())return;const t=ctx.currentTime;noise(t,.06,.18,"highpass",3000,sfxBus);osc("square",f(79),t,.05,.04,sfxBus,.002,3000);},
+  };
+})();
 
 /* ---------- Players ---------- */
 const G={
@@ -981,7 +1101,7 @@ function snapTo(y){
 }
 
 function startSeason(y,animate){
-  try{history.replaceState(null,"","#"+y);}catch(e){}
+  if(!EMBED){try{history.replaceState(null,"","#"+y);}catch(e){}}
   if(animate&&!seasonDone&&curY!==y&&curY>=FIRST){snapTo(curY);}
   firstKick=-1;curY=y;seasonT=0;seasonDone=false;holdT=0;
   const s=SN[y];
@@ -989,7 +1109,7 @@ function startSeason(y,animate){
   updateHUD(y,ins,outs);
   setManager(y,animate);
   if(!animate){boardFlip={t:1,pending:null};trophyAnims.length=0;snapTo(y);setTrophies(y,false);drawBoard(y,{sq:squadAt(y).length,in:ins.length,out:outs.length});return;}
-  boardFlip={t:0,pending:()=>drawBoard(y,{sq:squadAt(y).length,in:ins.length,out:outs.length})};
+  SND.flip();boardFlip={t:0,pending:()=>drawBoard(y,{sq:squadAt(y).length,in:ins.length,out:outs.length})};
   const slots=slotsFor(y);
   // departures
   outs.forEach((pl,i)=>{
@@ -999,7 +1119,7 @@ function startSeason(y,animate){
     const p=a.fig.position;const zLane=(i%2?.3:-.3);
     a.path=[new THREE.Vector3(Math.max(p.x+1.5,PW/2-1),PY,p.z*.4+zLane),new THREE.Vector3(DESP_X0-2.4,PY,zLane*.6),new THREE.Vector3(DESP_X0+.4,BELT_Y,0)];
     a.speed=5.4+Math.random()*.5;
-    a.onArrive=()=>{a.belt=true;a.state="belt";a.targetYaw=Math.PI/2;};
+    a.onArrive=()=>{a.belt=true;a.state="belt";a.targetYaw=Math.PI/2;SND.whoosh();};
   });
   // squad reshuffle
   slots.forEach((s,id)=>{
@@ -1013,7 +1133,7 @@ function startSeason(y,animate){
   // arrivals queue
   queue.arrivals=ins.map(pl=>({pl,slot:slots.get(pl.id)}));queue.spawnIdx=0;queue.spawnT=outs.length?1.0:0.3;
   setTrophies(y,true);
-  if(s.h.length){burstConfetti(s.f===1?520:220);}else if(s.cs){burstConfetti(90);}
+  if(s.h.length){burstConfetti(s.f===1?520:220);SND.cheer(s.f===1?1:.6);}else if(s.cs){burstConfetti(90);}
 }
 
 function stepSeason(dt){
@@ -1039,7 +1159,7 @@ function stepSeason(dt){
   if(pressState.busy){
     pressState.t+=dt;const t=pressState.t;const pd=pressState.pod;
     if(t<.22){ram.position.y=THREE.MathUtils.lerp(RAM_UP,RAM_DOWN,easeIn(t/.22));}
-    else if(t<.5){ram.position.y=RAM_DOWN;if(!pd.stamped){pd.stamped=true;flash.intensity=6;steam(PRESS_X,BELT_Y+1.2,0,9);shake=.18;
+    else if(t<.5){ram.position.y=RAM_DOWN;if(!pd.stamped){pd.stamped=true;SND.stamp();flash.intensity=6;steam(PRESS_X,BELT_Y+1.2,0,9);shake=.18;
         // reveal player
         scene.remove(pd.g);pd.stage="done";
         const a=getActor(pd.q.pl);addToScene(a);setVariant(a,"nw");a.fig.position.set(PRESS_X,BELT_Y,0);a.scale=.05;a.targetScale=1;a.fig.scale.setScalar(.05);
@@ -1304,11 +1424,11 @@ snapTo(1991);
 startSeason(FIRST,false);snapTo(1991);setTrophies(1991,false);
 drawBoard(FIRST,{sq:squadAt(FIRST).length,in:arrivalsAt(FIRST).length,out:0});
 firstKick=playing?1.2:-1;
-{const m=START_HASH.match(/^#(\d{4})$/);const y=m?+m[1]:0;
+{const m=EMBED?null:START_HASH.match(/^#(\d{4})$/);const y=m?+m[1]:0;
  if(y>=FIRST&&y<=LAST){startSeason(y,false);firstKick=-1;}}
 setPlaying(playing);
 function shareSeason(){
-  const url=location.origin+location.pathname+"#"+curY;
+  const url=new URL("factory.html#"+curY,location.href).href;
   const title=`Arsenal ${seasonLabel(curY)} · Dial Square Works`;
   const b=$("shareBtn"),lab=b.querySelector("span");
   const done=t=>{lab.textContent=t;b.setAttribute("data-done","");setTimeout(()=>{lab.textContent="Share";b.removeAttribute("data-done");},1800);};
@@ -1320,7 +1440,9 @@ $("shareBtn").onclick=shareSeason;
 
 const clockObj=new THREE.Clock();let time=0,renderedOnce=false;
 let onScreen=false;
-new IntersectionObserver(es=>{onScreen=es[0].isIntersecting;},{threshold:.2}).observe(dswEl);
+new IntersectionObserver(es=>{onScreen=es[0].isIntersecting;onScreen?SND.resume():SND.pause();},{threshold:.2}).observe(dswEl);
+document.addEventListener("visibilitychange",()=>{document.hidden?SND.pause():onScreen&&SND.resume();});
+$("soundBtn").onclick=()=>{const v=SND.toggle();const b=$("soundBtn");b.setAttribute("aria-pressed",v?"true":"false");b.querySelector("span").textContent=v?"Sound on":"Sound";};
 function frame(){
   requestAnimationFrame(frame);
   if(!onScreen&&!document.hidden&&renderedOnce){clockObj.getDelta();return;}
@@ -1340,7 +1462,7 @@ function tick(rdt){
   // manager swap + idle sway
   if(mgrT<1){mgrT=Math.min(1,mgrT+rdt*1.4);const e=easeOut(mgrT);if(mgr)mgr.scale.setScalar(Math.max(.01,e));if(mgrOld){mgrOld.scale.setScalar(Math.max(.01,1-e));if(mgrT>=1){scene.remove(mgrOld);mgrOld=null;}}}
   if(mgr){mgr.userData.body.rotation.y=Math.sin(time*.5)*.25;mgr.userData.arms.forEach((a,i)=>a.rotation.x=-.25+Math.sin(time*.8+i)*.05);}
-  updateAds(rdt);updateNight(rdt);
+  updateAds(rdt);updateNight(rdt);SND.setIntensity(seasonDone&&holdT>.4||!playing?0:1);
   // belts scroll
   beltTex.offset.x-=dt*7.5/2.2;beltTex2.offset.x-=dt*OUT_V/2.2;
   // press flash decay

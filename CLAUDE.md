@@ -71,6 +71,14 @@ factory.html               Dial Square Works: every Arsenal squad from 1992/93
                         the current squad; SQUAD in app.js stays the
                         source of truth for that. Update both each
                         window: a new SEASONS entry plus the stints.
+                        The HUD markup lives in factory.js, so the page
+                        and the homepage hero both mount it into an empty
+                        <section id="dsw">. index.html loads three.js and
+                        factory.js only when "Enter the factory" is
+                        pressed (EMBED mode: no hash writes, Share still
+                        points at factory.html). Sound is an original
+                        Web Audio soundtrack + SFX generated in code (SND
+                        in factory.js), no audio files, off until pressed.
 ledger.html                Man City decision tracker: what the independent
                         Commission found, charge by charge, from the
                         League's 29 Sep 2026 statement and redacted core
@@ -215,6 +223,13 @@ the scheduled routine keeps appending to lived in the one file every
 page loads. Check which array grew, not what to cut.
 
 ---
+
+## Navigation order (owner's rule)
+
+The nav on every page starts **EPL** (timetable.html), **UCL**
+(europe.html), **News** (news.html), then Home and the rest. The hub's
+widget grid leads with the same three cards. Keep this order when
+adding a page: new links go after Home, never before these three.
 
 ## Architecture
 
