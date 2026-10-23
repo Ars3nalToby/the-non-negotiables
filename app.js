@@ -147,8 +147,11 @@ const CL = [
      {who:'Mikel Arteta', role:'manager', quote:'It was a joy to watch, the three goals were unbelievable.', source:'Arsenal.com', url:'https://www.arsenal.com/news/every-word-from-artetas-post-lille-press-conference-ayoR26N8ce4k'}
    ]}},
   {md:3, ko:'2026-10-21T20:00:00+01:00', v:'A', name:'Bayern Munich', country:'Germany', pot:1,
-   ground:'Allianz Arena', city:'Munich',
-   note:'Eight days after Lille, the hardest away trip in the draw. This is the tie that ended 2023/24 for us and a rivalry that runs a lot deeper than most fans want to count. The Allianz on a European night is the best-run big away day in Europe \u2014 the trains work, the beer is cheap, and the stadium glows red from the motorway.'},
+   ground:'Allianz Arena', city:'Munich', result:'D 2-2', scorers:'Eze, Rice',
+   note:'Eight days after Lille, the hardest away trip in the draw. This is the tie that ended 2023/24 for us and a rivalry that runs a lot deeper than most fans want to count. The Allianz on a European night is the best-run big away day in Europe \u2014 the trains work, the beer is cheap, and the stadium glows red from the motorway.',
+   reaction:{notes:[
+     {who:'Mikel Arteta', role:'manager', quote:'We\u2019ll take the draw, but it doesn\u2019t mean we\u2019re really happy about it because we prepared a team to win the game.', source:'VAVEL International', url:'https://www.vavel.com/en/football/2026/10/23/arsenal/1276511-arteta-applauds-arsenal-s-courage-against-bayern.html'}
+   ]}},
   {md:4, ko:'2026-11-04T20:00:00+00:00', v:'A', name:'Slavia Praha', country:'Czechia', pot:4,
    ground:'Fortuna Arena', city:'Prague',
    note:'We won 3-0 there last season, Merino with a brace. Prague in November is cold and beautiful, the Fortuna Arena is small and loud, and the flights are absurdly cheap. The value away day of the whole draw.'},
