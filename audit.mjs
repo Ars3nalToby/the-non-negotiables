@@ -393,7 +393,7 @@ if (wireMatch && wireMatch[1] && !wireMatch[1].startsWith('https://')) {
    per section, specifically so no single file has to carry everything.
    Budget each kind of file on its own terms instead of one combined cap. */
 const kb = buf => Math.round(Buffer.byteLength(buf) / 1024);
-flag('INFO', 'perf', `styles.css is ${kb(cssFile)}KB, app.js is ${kb(appJs)}KB, drawer.js is ${kb(drawerJs)}KB, junior.js is ${kb(juniorJs)}KB, junior.css is ${kb(juniorCss)}KB, columns.js is ${kb(columnsJs)}KB, news-data.js is ${kb(newsJs)}KB.`);
+flag('INFO', 'perf', `styles.css is ${kb(cssFile)}KB, app.js is ${kb(appJs)}KB, drawer.js is ${kb(drawerJs)}KB, junior.js is ${kb(juniorJs)}KB, junior.css is ${kb(juniorCss)}KB, columns.js is ${kb(columnsJs)}KB, news-data.js is ${kb(newsJs)}KB, factory.js is ${kb(factoryJs)}KB, factory.css is ${kb(factoryCss)}KB.`);
 if (kb(cssFile) > 80) flag('BUG', 'perf', `styles.css is ${kb(cssFile)}KB — getting big for a single stylesheet.`);
 if (kb(appJs) > 60) flag('BUG', 'perf', `app.js is ${kb(appJs)}KB — getting big for shared data+logic.`);
 if (kb(drawerJs) > 60) flag('BUG', 'perf', `drawer.js is ${kb(drawerJs)}KB — index.html and timetable.html only, but even that needs a ceiling.`);
