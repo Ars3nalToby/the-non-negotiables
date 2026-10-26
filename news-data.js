@@ -15,6 +15,9 @@
    prepends new items here, it never rewrites news.html itself.
    ============================================================ */
 const NEWS = [
+  {date:'2026-10-25', headline:'Calafiori’s “slight issue” on Saturday, and Saka’s quad is now a weeks job, not a days one',
+   summary:'Arteta’s post-Everton briefing had two fresh worries to go with the three points. Riccardo Calafiori, filling in at left wing after Myles Lewis-Skelly started in his usual spot, went down late holding his leg and walked straight down the tunnel at full time — Arteta’s read was “a slight issue,” adding that nobody yet knows what it actually is. The more concrete update was on Bukayo Saka: the scan picture from Munich still isn’t clean enough for a firm date, but in Arteta’s own words “it looks like it’s going to be weeks,” with a repeat scan still to come and both the Fleetwood Cup tie and the trip to Anfield already looking out of reach.',
+   source:'Arsenal.com', url:'https://www.arsenal.com/news/every-word-from-artetas-post-everton-press-conference-a35Bj5F4a2lz'},
   {date:'2026-10-23', headline:'Hincapié’s fit again for Everton — Saka almost certainly isn’t',
    summary:'Friday’s presser had the inverse of last month’s problem: good news on the centre-back, bad news on the winger. Piero Hincapié has trained all week and is back in contention after his ankle injury, but Saka’s Wednesday-night quad knock in Munich has gone the other way — Arteta all but ruled him out of Saturday’s visit from Everton, with the club still waiting on the full picture from a scan. Given how reluctant this management team usually is to rule anyone out this early, that alone tells you more than any official line will.',
    source:'Sports Mole', url:'https://www.sportsmole.co.uk/football/arsenal/injury-news/news/arteta-confirms-arsenal-injury-boost-for-everton-amid-latest-saka-update_607559.html'},
