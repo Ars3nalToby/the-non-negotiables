@@ -249,7 +249,7 @@ p("Raheem Sterling","STERLING","F",[[2024,2024]],["Chelsea (loan)"],["Chelsea"])
 p("Neto","NETO","G",[[2024,2024]],["Bournemouth (loan)"],["Bournemouth"]);
 p("Myles Lewis-Skelly","LEWIS-SKELLY","D",[[2024,NOW]],[A],[]);
 p("Ethan Nwaneri","NWANERI","M",[[2024,2025]],[A],["Borussia Dortmund (loan)"]);
-p("Kepa Arrizabalaga","KEPA","G",[[2025,NOW]],["Chelsea"],[]);
+p("Kepa Arrizabalaga","KEPA","G",[[2025,2025]],["Chelsea (loan)"],["Chelsea"]);
 p("Martín Zubimendi","ZUBIMENDI","M",[[2025,NOW]],["Real Sociedad"],[]);
 p("Noni Madueke","MADUEKE","F",[[2025,NOW]],["Chelsea"],[]);
 p("Christian Nørgaard","NØRGAARD","M",[[2025,2025]],["Brentford"],["Everton"]);

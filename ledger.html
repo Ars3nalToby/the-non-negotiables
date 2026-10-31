@@ -102,7 +102,7 @@
 </div>
 
 <section class="section wrap">
-  <p class="lg-note">Updated 30 September 2026 · Manchester City denied every charge throughout the proceedings and have the right to appeal.</p>
+  <p class="lg-note">Updated 1 October 2026 · Manchester City denied every charge throughout the proceedings and have exercised their right to appeal.</p>
 
   <div class="lg-status" role="list">
     <div class="lg-st" role="listitem">
@@ -117,8 +117,8 @@
     </div>
     <div class="lg-st" role="listitem">
       <p class="lg-st__k">Appeal</p>
-      <span class="lg-st__v lg-st__v--open" id="lg-appeal-v">Open</span>
-      <p id="lg-appeal-t">City have until Friday 2 October 2026 to appeal the Commission's findings.</p>
+      <span class="lg-st__v lg-st__v--wait">Lodged</span>
+      <p>City confirmed on 1 October 2026 that they have appealed the Commission's findings, inside the 2 October deadline. A separately appointed three-person Appeal Board hears it in private; no verdict is published until it rules, expected around January 2027.</p>
     </div>
   </div>
 
@@ -241,13 +241,5 @@
 </button>
 
 <script src="app.js"></script>
-<script>
-/* The League gave City until Friday 2 October to appeal. This page is
-   static, so once that day has passed stop asserting the window is open. */
-if(Date.now() > new Date('2026-10-03T00:00:00+01:00').getTime()){
-  $('#lg-appeal-v').textContent = 'Deadline passed';
-  $('#lg-appeal-t').textContent = 'The appeal window closed on 2 October 2026. Check the Premier League’s site for whether City appealed and what happened next.';
-}
-</script>
 </body>
 </html>
