@@ -32,6 +32,7 @@ const factoryCss = await readFile(join(DIR, 'factory.css'), 'utf8');
 /* explainers.html's own files — the story-format match explainers. */
 const explainersJs = await readFile(join(DIR, 'explainers.js'), 'utf8');
 const explainersCss = await readFile(join(DIR, 'explainers.css'), 'utf8');
+const soundJs = await readFile(join(DIR, 'sound.js'), 'utf8');
 const cssFile = await readFile(join(DIR, 'styles.css'), 'utf8');
 const pageNames = (await readdir(DIR)).filter(f => f.endsWith('.html')).sort();
 const pages = {};
@@ -288,12 +289,12 @@ for (const [name, html] of Object.entries(pages)) {
 }
 
 /* ---------- 7d. brace balance ---------- */
-for (const [label, src] of [['styles.css', cssFile], ['junior.css', juniorCss], ['factory.css', factoryCss], ['explainers.css', explainersCss], ['app.js', appJs], ['drawer.js', drawerJs], ['junior.js', juniorJs], ['factory.js', factoryJs], ['explainers.js', explainersJs]]) {
+for (const [label, src] of [['styles.css', cssFile], ['junior.css', juniorCss], ['factory.css', factoryCss], ['explainers.css', explainersCss], ['app.js', appJs], ['drawer.js', drawerJs], ['junior.js', juniorJs], ['factory.js', factoryJs], ['explainers.js', explainersJs], ['sound.js', soundJs]]) {
   if ((src.match(/{/g) || []).length !== (src.match(/}/g) || []).length) {
     flag('BUG', 'frontend', `Unbalanced braces in ${label}.`);
   }
 }
-for (const [label, src] of [['app.js', appJs], ['drawer.js', drawerJs], ['junior.js', juniorJs], ['factory.js', factoryJs], ['explainers.js', explainersJs]]) {
+for (const [label, src] of [['app.js', appJs], ['drawer.js', drawerJs], ['junior.js', juniorJs], ['factory.js', factoryJs], ['explainers.js', explainersJs], ['sound.js', soundJs]]) {
   if (!src.includes('function')) continue;
   // Real JS (unlike the old inline <script>), so let node's own parser be
   // the authority on whether it's syntactically valid at all.
@@ -406,6 +407,7 @@ if (kb(columnsJs) > 120) flag('BUG', 'perf', `columns.js is ${kb(columnsJs)}KB �
 if (kb(newsJs) > 120) flag('BUG', 'perf', `news-data.js is ${kb(newsJs)}KB — index.html and news.html only, but even that needs a ceiling.`);
 if (kb(factoryJs) > 130) flag('BUG', 'perf', `factory.js is ${kb(factoryJs)}KB — factory.html only, but even that needs a ceiling.`);
 if (kb(explainersJs) > 60) flag('BUG', 'perf', `explainers.js is ${kb(explainersJs)}KB — explainers.html only, but even that needs a ceiling.`);
+if (kb(soundJs) > 20) flag('BUG', 'perf', `sound.js is ${kb(soundJs)}KB — loaded on every page, keep it small.`);
 if (kb(explainersCss) > 30) flag('BUG', 'perf', `explainers.css is ${kb(explainersCss)}KB — explainers.html only, but even that needs a ceiling.`);
 if (kb(factoryCss) > 30) flag('BUG', 'perf', `factory.css is ${kb(factoryCss)}KB — factory.html only, but even that needs a ceiling.`);
 /* factory.js must never quietly turn the sponsor boards on — that's a decision, not a commit. */

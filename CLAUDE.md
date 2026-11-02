@@ -100,6 +100,17 @@ explainers.html            Explainers: ~60-second, story-format (9:16) match
                         hub card names the latest one. For socials:
                         explainers.html?export=1#<id> plays one full-frame;
                         record it at 1080x1920 with Playwright -> MP4.
+sound.js                  Site soundtrack: the two tracks in assets/audio as
+                        one playlist, a "Soundtrack" pill injected into every
+                        masthead (app.js loads this file; no per-page tag).
+                        Off by default; a one-time "want the soundtrack?"
+                        card (never on junior.html); choice in localStorage
+                        `nn-sound`, track+position carried across pages in
+                        sessionStorage `nn-sound-pos`; if a page can't start
+                        sound itself the pill says "Tap to resume" and the
+                        next tap anywhere resumes. Pauses while the factory's
+                        own sound is on. The index hero speaker button calls
+                        NN_SOUND.toggle(). ≤20KB (audited).
 digest.html               "The Week": next ten days of kick-offs in the
                         visitor's timezone, the last week's news and the
                         latest column, built live from FIXTURES/CL/NEWS/
@@ -244,6 +255,16 @@ The nav on every page starts **EPL** (timetable.html), **UCL**
 (europe.html), **News** (news.html), then Home and the rest. The hub's
 widget grid leads with the same three cards. Keep this order when
 adding a page: new links go after Home, never before these three.
+
+The nav is an always-dark tab bar with no sideways scrolling: tier-1
+tabs (those four) always show; tier-2 tabs (`nav__tab--more`:
+Explainers, Tickets, Squad, Transfers, Factory) show from 900px; every
+page is also in the grouped **More** menu (a `<details>`; app.js only
+adds outside-click/Escape closing). A page that isn't a visible tab is
+named inside the More button so you always know where you are. The
+time-zone picker is injected at the bar's right end (own row on
+phones). The markup is identical on every page except aria-current —
+when adding a page, add it to the More menu on all of them.
 
 ## Architecture
 

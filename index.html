@@ -59,23 +59,25 @@
   </div>
 </header>
 
-<nav class="nav"><div class="wrap nav__in">
-  <a href="timetable.html">EPL</a>
-  <a href="europe.html">UCL</a>
-  <a href="news.html">News</a>
-  <a href="index.html" aria-current="page">Home</a>
-  <a href="tickets.html">Tickets</a>
-  <a href="transfers.html">Transfers</a>
-  <a href="squad.html">Squad</a>
-  <a href="factory.html">Factory</a>
-  <a href="explainers.html">Explainers</a>
-  <a href="junior.html">Juniors</a>
-  <a href="programme.html">Blog</a>
-  <a href="reading.html">Required reading</a>
-  <a href="fanart.html">Fan Art</a>
-  <a href="voices.html">Voices</a>
-  <a href="ledger.html">Ledger</a>
-  <a href="digest.html">Week</a>
+<nav class="nav" aria-label="Sections"><div class="wrap nav__in">
+  <a class="nav__tab" href="timetable.html">EPL</a>
+  <a class="nav__tab" href="europe.html">UCL</a>
+  <a class="nav__tab" href="news.html">News</a>
+  <a class="nav__tab" href="index.html" aria-current="page">Home</a>
+  <a class="nav__tab nav__tab--more" href="explainers.html">Explainers</a>
+  <a class="nav__tab nav__tab--more" href="tickets.html">Tickets</a>
+  <a class="nav__tab nav__tab--more" href="squad.html">Squad</a>
+  <a class="nav__tab nav__tab--more" href="transfers.html">Transfers</a>
+  <a class="nav__tab nav__tab--more" href="factory.html">Factory</a>
+  <details class="nav__more">
+    <summary><span>More</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="nav__menu">
+      <div class="nav__grp"><h4>Matchday</h4><a href="timetable.html"><b>EPL fixtures</b><span>All 38, in your time zone</span></a><a href="europe.html"><b>Champions League</b><span>Eight nights, mostly 5am</span></a><a href="tickets.html"><b>Tickets</b><span>Sale windows + Away Crew</span></a><a href="digest.html"><b>The Week</b><span>Next ten days at a glance</span></a></div>
+      <div class="nav__grp"><h4>Club</h4><a href="news.html"><b>News</b><span>Original write-ups, sourced</span></a><a href="squad.html"><b>Squad</b><span>Who’s who, by position</span></a><a href="transfers.html"><b>Transfers</b><span>Window, wire, rumours</span></a><a href="ledger.html"><b>City ledger</b><span>115, charge by charge</span></a></div>
+      <div class="nav__grp"><h4>Watch &amp; play</h4><a href="explainers.html"><b>Explainers</b><span>Matches in about a minute</span></a><a href="factory.html"><b>Dial Square Works</b><span>Every squad since 1992, in 3D</span></a><a href="junior.html"><b>Junior Gunners</b><span>Seven games for kids</span></a></div>
+      <div class="nav__grp"><h4>Read</h4><a href="programme.html"><b>Blog</b><span>Original columns</span></a><a href="reading.html"><b>Required reading</b><span>Arseblog, Tim Stillman &amp; co</span></a><a href="voices.html"><b>Voices</b><span>Who to follow on X</span></a><a href="fanart.html"><b>Fan Art</b><span>From the artists themselves</span></a></div>
+    </div>
+  </details>
 </div></nav>
 
 <section class="fhero" id="fhero" aria-label="Dial Square Works">
@@ -116,7 +118,6 @@
   <div class="cinema__bar cinema__bar--bottom" aria-hidden="true"></div>
   <!-- No <source> children: a two-track playlist needs its src set
        programmatically (see the cinema() script), not a static list. -->
-  <audio id="cinema-ambient" preload="none"></audio>
   <button class="cinema__sound" id="cinema-sound" type="button" hidden aria-pressed="false" aria-label="Play ambient sound">
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M3 9v6h4l5 5V4L7 9H3z"/>
@@ -554,48 +555,15 @@ document.querySelectorAll('.widget').forEach(card => {
   const conn = navigator.connection;
   const saveData = !!(conn && (conn.saveData || /2g/.test(conn.effectiveType || '')));
 
-  /* Ambient sound — strictly opt-in, never the video's own audio (the
-     video stays muted regardless). Two original tracks, played as a
-     playlist rather than one looped file: Dawn plays first (matches the
-     hero's own "before kick-off" moment), hands off to Crown when it
-     ends, then loops back to Dawn. The toggle stays hidden until the
-     first track proves it can actually load; if it never exists, the
-     button simply never appears, same as the video fallback never
-     showing when there's nothing to fall back from. */
-  const ambient = $('#cinema-ambient');
+  /* Ambient sound — the hero's speaker button is now just a second
+     handle on the site-wide soundtrack (sound.js), so both stay in sync. */
   const soundBtn = $('#cinema-sound');
-  const AMBIENT_TRACKS = [
-    'assets/audio/dawn-on-the-hallowed-turf.mp3',
-    'assets/audio/crown-of-the-pitch.mp3'
-  ];
-  if(ambient && soundBtn && !saveData){
-    let track = 0;
-    ambient.addEventListener('loadedmetadata', () => { soundBtn.hidden = false; }, {once:true});
-    ambient.addEventListener('ended', () => {
-      track = (track + 1) % AMBIENT_TRACKS.length;
-      ambient.src = AMBIENT_TRACKS[track];
-      ambient.play().catch(() => {});
-    });
-    ambient.preload = 'metadata';
-    ambient.src = AMBIENT_TRACKS[track];
-    ambient.load();
-
-    soundBtn.addEventListener('click', () => {
-      const on = soundBtn.getAttribute('aria-pressed') === 'true';
-      if(on){
-        ambient.pause();
-        soundBtn.setAttribute('aria-pressed', 'false');
-        soundBtn.setAttribute('aria-label', 'Play ambient sound');
-      } else {
-        ambient.play().catch(() => {});
-        soundBtn.setAttribute('aria-pressed', 'true');
-        soundBtn.setAttribute('aria-label', 'Mute ambient sound');
-      }
-    });
-
-    document.addEventListener('visibilitychange', () => {
-      if(document.hidden) ambient.pause();
-      else if(soundBtn.getAttribute('aria-pressed') === 'true') ambient.play().catch(() => {});
+  if(soundBtn){
+    soundBtn.hidden = false;
+    soundBtn.addEventListener('click', e => { e.stopPropagation(); window.NN_SOUND && NN_SOUND.toggle(); });
+    document.addEventListener('nn-sound', e => {
+      soundBtn.setAttribute('aria-pressed', e.detail.on ? 'true' : 'false');
+      soundBtn.setAttribute('aria-label', e.detail.on ? 'Mute the soundtrack' : 'Play the soundtrack');
     });
   }
 

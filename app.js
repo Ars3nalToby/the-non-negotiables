@@ -369,18 +369,18 @@ $('#theme-toggle').addEventListener('click', () => {
   const opts = (detected ? [`<option value="auto"${cur === 'auto' ? ' selected' : ''}>This device · ${esc(detected)}</option>`] : [])
     .concat(TZ_LIST.map(t => `<option value="${t[0]}"${cur === t[0] ? ' selected' : ''}>${t[1]}</option>`)).join('');
   const css = document.createElement('style');
-  css.textContent = `.tzbar{background:var(--paper);border-bottom:1px solid var(--rule)}
-.tzbar__in{display:flex;align-items:center;justify-content:flex-end;gap:12px;padding-top:6px;padding-bottom:6px}
-.tzbar label{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
-.tzbar select{flex:1 1 auto;min-width:0;font-family:var(--sans);font-size:16px;color:var(--ink);background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%238a94a3' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 14px center;border:1px solid var(--card-border);border-radius:999px;min-height:44px;max-width:62vw;padding:0 36px 0 16px;appearance:none;-webkit-appearance:none;cursor:pointer}
-.tzbar select:focus-visible{outline:2px solid var(--red);outline-offset:2px}
-.tzbar label{white-space:nowrap}
-@media (min-width:641px){.tzbar select{flex:0 0 auto}}`;
+  css.textContent = `.nav__tz{margin-left:auto;display:flex;align-items:center;gap:8px;padding:6px 0 6px 10px}
+.nav__tz label{font:600 10.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55);white-space:nowrap}
+.nav__tz select{font:500 16px var(--sans);color:#fff;background:rgba(255,255,255,.08) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center;
+  border:1px solid rgba(255,255,255,.2);border-radius:2px;min-height:38px;max-width:190px;padding:0 32px 0 12px;appearance:none;-webkit-appearance:none;cursor:pointer}
+.nav__tz select option{color:#0A1622}
+.nav__tz select:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media (max-width:899px){.nav__tz{flex:1 0 100%;margin:0;padding:6px 16px;border-top:1px solid rgba(255,255,255,.1);justify-content:flex-end}.nav__tz select{flex:1;max-width:none;min-height:40px}}`;
   document.head.appendChild(css);
   const bar = document.createElement('div');
-  bar.className = 'tzbar';
-  bar.innerHTML = `<div class="wrap tzbar__in"><label for="tz-select">Times in</label><select id="tz-select">${opts}</select></div>`;
-  nav.after(bar);
+  bar.className = 'nav__tz';
+  bar.innerHTML = `<label for="tz-select">Times in</label><select id="tz-select">${opts}</select>`;
+  (nav.querySelector('.nav__in') || nav).append(bar);
   $('#tz-select').addEventListener('change', e => {
     store.set('nn-tz', e.target.value);
     location.reload();
@@ -572,95 +572,11 @@ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
   }
 }
 
-/* Nav drag-to-scroll — mouse users with no horizontal scroll wheel
-   have no native way to reach nav items past the fold; click-and-drag
-   fixes that without touching layout. Scoped to pointerType 'mouse'
-   only — touch and pen already get real native scrolling, and
-   hijacking those pointer types tends to fight the browser's own
-   momentum/inertia scrolling rather than improve on it. A drag past
-   a few pixels marks the gesture as "real" so the subsequent click
-   doesn't also fire a navigation (handled by the .is-dragging class
-   in CSS turning off pointer-events on the links themselves). */
-document.querySelectorAll('.nav__in').forEach(nav => {
-  let down = false, startX = 0, startScroll = 0;
-  nav.addEventListener('pointerdown', e => {
-    if(e.pointerType !== 'mouse') return;
-    down = true;
-    startX = e.clientX;
-    startScroll = nav.scrollLeft;
-  });
-  nav.addEventListener('pointermove', e => {
-    if(!down) return;
-    const dx = e.clientX - startX;
-    if(!nav.classList.contains('is-dragging') && Math.abs(dx) > 4) nav.classList.add('is-dragging');
-    if(nav.classList.contains('is-dragging')) nav.scrollLeft = startScroll - dx;
-  });
-  const endDrag = () => { down = false; nav.classList.remove('is-dragging'); };
-  nav.addEventListener('pointerup', endDrag);
-  nav.addEventListener('pointerleave', endDrag);
-});
-
-/* Nav overflow arrows — the fade mask on its own wasn't telling anyone
-   that Fan Art (and whatever else is last) exists off to the right.
-   These are real buttons, and they only appear when there is genuinely
-   something hidden that way, so a nav that fits shows no chrome at all.
-   Built here rather than in the markup so all 12 pages get it without
-   12 copies of the same three elements. */
-document.querySelectorAll('.nav__in').forEach(nav => {
-  const parent = nav.parentElement;
-  if(!parent) return;
-  parent.classList.add('nav__wrap');
-
-  let prev, next;
-  const sync = () => {
-    const max = nav.scrollWidth - nav.clientWidth;
-    /* 2px slack: sub-pixel layout means scrollLeft rarely lands exactly
-       on 0 or on max, and a permanently-lit arrow that does nothing is
-       the same broken-feeling thing as no arrow at all. */
-    if(prev) prev.dataset.show = nav.scrollLeft > 2 ? '1' : '0';
-    if(next) next.dataset.show = nav.scrollLeft < max - 2 ? '1' : '0';
-  };
-
-  const arrow = dir => {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = `nav__arrow nav__arrow--${dir === -1 ? 'prev' : 'next'}`;
-    b.setAttribute('aria-label', dir === -1 ? 'Scroll navigation left' : 'More sections');
-    b.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${dir === -1 ? 'M15 5l-7 7 7 7' : 'M9 5l7 7-7 7'}"/></svg>`;
-    b.addEventListener('click', () => {
-      const max = nav.scrollWidth - nav.clientWidth;
-      const from = nav.scrollLeft;
-      const to = Math.max(0, Math.min(max, from + dir * Math.max(160, nav.clientWidth * 0.7)));
-      if(from === to) return;
-      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ nav.scrollLeft = to; sync(); return; }
-      /* setInterval rather than requestAnimationFrame, and sync() called
-         directly on each tick rather than trusting the scroll event:
-         both rAF and scroll events are starved in some embedded
-         contexts (verified here — neither fired), which left the arrow
-         either dead or stuck lit the wrong way. A 16ms timer plus an
-         explicit sync always runs. */
-      const t0 = Date.now(), dur = 280;
-      const ease = p => 1 - Math.pow(1 - p, 3);
-      const id = setInterval(() => {
-        const p = Math.min(1, (Date.now() - t0) / dur);
-        nav.scrollLeft = from + (to - from) * ease(p);
-        sync();
-        if(p >= 1) clearInterval(id);
-      }, 16);
-    });
-    parent.appendChild(b);
-    return b;
-  };
-
-  prev = arrow(-1);
-  next = arrow(1);
-
-  sync();
-  nav.addEventListener('scroll', sync, {passive:true});
-  window.addEventListener('resize', sync);
-  /* Web fonts land after first paint and change every label's width,
-     which changes whether anything overflows at all. */
-  if(document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
+/* More menu — a <details>, so it opens without JS; this only closes it
+   on an outside click or Escape, the way a real menu does. */
+document.querySelectorAll('.nav__more').forEach(d => {
+  document.addEventListener('click', e => { if(d.open && !d.contains(e.target)) d.open = false; });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && d.open){ d.open = false; d.querySelector('summary').focus(); } });
 });
 
 /* Mascots roll as you scroll past them — each ball's own rotation
@@ -816,3 +732,7 @@ function initAccordions(){
   });
 }
 initAccordions();
+
+/* Site soundtrack — its own file (sound.js), pulled in here so every
+   page gets the masthead "Soundtrack" pill without a script tag each. */
+(function(){ const s = document.createElement('script'); s.src = 'sound.js'; document.head.append(s); })();
