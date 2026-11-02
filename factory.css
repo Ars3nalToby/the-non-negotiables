@@ -216,26 +216,26 @@
    (bar height = league finish), gold for titles, silver for cups, the
    current season lit red. Buttons are slanted broadcast plates. Pure CSS
    over the existing markup; pressed-state colours above still win. ---- */
-.dsw .rail{position:relative;padding:16px 16px 10px;gap:14px;
+.dsw .rail{position:relative;padding:11px 14px 6px;gap:8px;
   background:radial-gradient(70% 160% at 0% 0%,rgba(239,1,7,.2),transparent 60%),radial-gradient(50% 140% at 100% 100%,rgba(201,162,75,.16),transparent 60%),
   repeating-linear-gradient(90deg,rgba(255,255,255,.028) 0 1px,transparent 1px 8px),linear-gradient(180deg,#16264F,#0A1330);
   box-shadow:0 -14px 40px -18px rgba(10,17,34,.75),inset 0 1px 0 rgba(255,255,255,.08);}
 .dsw .rail::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;
   background:linear-gradient(90deg,var(--red) 0 58%,transparent 58% 59%,var(--brass) 59% 72%,transparent 72% 73%,#fff 73% 74%,transparent 74%);}
-.dsw .rail .fbtn{border:0;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);padding:0 18px;
+.dsw .rail .fbtn{border:0;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);padding:0 14px;
   clip-path:polygon(7px 0,100% 0,calc(100% - 7px) 100%,0 100%);transition:background .15s,transform .15s;}
-.dsw .rail .fbtn.icon{width:44px;padding:0;}
+.dsw .rail .fbtn.icon{width:40px;padding:0;}
 .dsw .rail .fbtn:hover{background:rgba(255,255,255,.14);}
 .dsw .rail .fbtn:active{transform:translateY(1px);}
-.dsw .rail .fbtn.primary{background:linear-gradient(180deg,#FF2D36,#C8000A);box-shadow:inset 0 1px 0 rgba(255,255,255,.3);min-width:118px;}
+.dsw .rail .fbtn.primary{background:linear-gradient(180deg,#FF2D36,#C8000A);box-shadow:inset 0 1px 0 rgba(255,255,255,.3);min-width:104px;}
 .dsw .rail .fbtn.primary:hover{background:linear-gradient(180deg,#FF4A52,#D4000B);}
 .dsw .rail .seg{border:0;background:rgba(0,0,0,.28);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);clip-path:polygon(7px 0,100% 0,calc(100% - 7px) 100%,0 100%);padding:0 6px;}
 .dsw .rail .seg button{color:#B9C3DC;transition:background .15s,color .15s;}
 .dsw .rail .seg button:hover{color:#fff;}
 .dsw .rail .seg button[aria-pressed="true"]{background:linear-gradient(180deg,#fff,#E3DED6);color:var(--navy);box-shadow:inset 0 -2px 0 var(--red);}
-.dsw .rail .stat{padding:5px 10px;background:rgba(255,255,255,.05);border-left:2px solid var(--brass);color:#9FAACA;}
+.dsw .rail .stat{padding:3px 9px;background:rgba(255,255,255,.05);border-left:2px solid var(--brass);color:#9FAACA;}
 .dsw .rail .stat b{color:#fff;}
-.dsw .timeline{height:66px;gap:4px;padding:8px 6px 0;border-radius:4px;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.22));}
+.dsw .timeline{height:50px;gap:3px;padding:3px 4px 0;border-radius:4px;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.22));}
 .dsw .tick .col{box-shadow:0 2px 0 rgba(255,255,255,.16);}
 .dsw .tick .bar{border-radius:3px 3px 0 0;background:linear-gradient(180deg,#40558C,#22325C);box-shadow:inset 0 1px 0 rgba(255,255,255,.2);
   transform-origin:bottom;transition:background .2s,height .2s,transform .2s,filter .2s;}
@@ -250,5 +250,8 @@
 .dsw .tick .sh{background:#0A1330;box-shadow:0 0 0 1.5px var(--brass),0 0 7px rgba(201,162,75,.9);}
 .dsw .tick.cur .yr{background:var(--red);padding:2px 6px 0;color:#fff;}
 @media (max-width:2100px){.dsw .rail .hintx{display:none}}
-@media (max-width:640px){.dsw .tick .sh{width:3px;height:3px;box-shadow:0 0 0 1px var(--brass)}.dsw .rail .fbtn{padding:0 12px}.dsw .timeline{height:54px;gap:2px;padding:6px 3px 0}}
+@media (max-width:1500px){.dsw .rail .stat.hide-sm{display:none}}
+.dsw .rail .top{flex-wrap:nowrap;}.dsw .rail .top>*{flex-shrink:0}.dsw .rail .spacer{flex-shrink:1;min-width:0}
+@media (max-width:1100px){.dsw .rail .top{flex-wrap:wrap}}
+@media (max-width:640px){.dsw .tick .sh{width:3px;height:3px;box-shadow:0 0 0 1px var(--brass)}.dsw .rail .fbtn{padding:0 12px}.dsw .timeline{height:42px;gap:2px;padding:3px 2px 0}}
 @media (prefers-reduced-motion:reduce){.dsw .tick .bar,.dsw .rail .fbtn{transition:none}.dsw .tick:hover .bar{transform:none}}
