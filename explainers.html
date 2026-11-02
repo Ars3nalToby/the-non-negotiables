@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://anueveizfqxnloncuvmf.supabase.co; base-uri 'none'; object-src 'none'; form-action 'none';">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Explainers — The Non-Negotiables</title>
+<meta name="description" content="Arsenal matches explained in about a minute: animated, story-format, every number sourced.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#EF0107" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A1420" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23EF0107'/%3E%3Crect x='14' y='27' width='36' height='6' fill='%23fff'/%3E%3Crect x='14' y='39' width='22' height='6' fill='%23fff'/%3E%3Crect x='14' y='15' width='28' height='6' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="explainers.css">
+</head>
+<body>
+
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<header class="masthead">
+  <div class="wrap masthead__in">
+    <h1 class="wordmark">
+      <b><a href="index.html" style="color:inherit">The <em>Non-</em>Negotiables</a></b>
+      <span>Arsenal 2026/27 · fixtures, away days &amp; wake-up calls</span>
+    </h1>
+    <div class="mh-right">
+      <div class="mh-meta">
+        <strong><svg class="plaque-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 5.1 5.6.6-4.2 3.8 1.2 5.5L12 14.9 6.9 17l1.2-5.5-4.2-3.8 5.6-.6L12 2z"/></svg>Champions of England</strong>
+        Watching from Brisbane since 2009
+      </div>
+      <button class="theme" id="theme-toggle" aria-label="Switch between light and dark">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path class="moon" d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/>
+          <g class="sun"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/></g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav"><div class="wrap nav__in">
+  <a href="timetable.html">EPL</a>
+  <a href="europe.html">UCL</a>
+  <a href="news.html">News</a>
+  <a href="index.html">Home</a>
+  <a href="tickets.html">Tickets</a>
+  <a href="transfers.html">Transfers</a>
+  <a href="squad.html">Squad</a>
+  <a href="factory.html">Factory</a>
+  <a href="explainers.html" aria-current="page">Explainers</a>
+  <a href="junior.html">Juniors</a>
+  <a href="programme.html">Blog</a>
+  <a href="reading.html">Required reading</a>
+  <a href="fanart.html">Fan Art</a>
+  <a href="voices.html">Voices</a>
+  <a href="ledger.html">Ledger</a>
+  <a href="digest.html">Week</a>
+</div></nav>
+
+<div class="page-head">
+  <div class="wrap page-head__in">
+    <a class="crumb" href="index.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Back to hub</a>
+    <p class="eyebrow">About a minute each · every number sourced</p>
+    <h1>Explainers</h1>
+  </div>
+</div>
+
+<section class="section wrap">
+  <div class="xp-wrap">
+    <div>
+      <div class="xp-stage" id="xp-stage" tabindex="0" role="region" aria-roledescription="animated explainer"></div>
+      <div class="xp-ctl">
+        <button type="button" id="xp-prev" aria-label="Previous beat">&larr;</button>
+        <button type="button" id="xp-play">Play</button>
+        <button type="button" id="xp-next" aria-label="Next beat">&rarr;</button>
+        <button type="button" id="xp-restart">Restart</button>
+        <button type="button" id="xp-share">Share</button>
+      </div>
+    </div>
+    <div class="xp-side" id="xp-side" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="section wrap">
+  <h2 class="section__title">All explainers</h2>
+  <div class="xp-list" id="xp-list"></div>
+</section>
+
+<div class="mascot-row" aria-hidden="true">
+  <div class="mascot mascot--sm">
+    <svg class="mascot__ball" data-mascot viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="46" fill="var(--card)" stroke="var(--ink)" stroke-width="3"/>
+      <g stroke="var(--ink)" stroke-width="3" stroke-linecap="round">
+        <line x1="50" y1="37" x2="50" y2="6"/>
+        <line x1="62.37" y1="45.98" x2="93.75" y2="35.79"/>
+        <line x1="57.64" y1="60.51" x2="77.03" y2="87.22"/>
+        <line x1="42.36" y1="60.51" x2="22.97" y2="87.22"/>
+        <line x1="37.63" y1="45.98" x2="6.25" y2="35.79"/>
+      </g>
+      <polygon points="50,37 62.37,45.98 57.64,60.51 42.36,60.51 37.63,45.98" fill="var(--ink)"/>
+      <circle cx="40" cy="24" r="5.5" fill="var(--card)"/>
+      <circle cx="60" cy="24" r="5.5" fill="var(--card)"/>
+      <circle class="mascot__pupil" data-eye data-bx="40" data-by="24" cx="40" cy="24" r="2.6" fill="var(--ink)"/>
+      <circle class="mascot__pupil" data-eye data-bx="60" data-by="24" cx="60" cy="24" r="2.6" fill="var(--ink)"/>
+      <path d="M38,70 Q50,82 62,70" fill="none" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round"/>
+      <ellipse cx="38" cy="93" rx="9" ry="5" fill="var(--red)"/>
+      <ellipse cx="62" cy="93" rx="9" ry="5" fill="var(--red)"/>
+    </svg>
+  </div>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div>
+      <h4>Original writing</h4>
+      <p>All editorial prose on this site is original. See Required Reading for the writers this owes a debt to.</p>
+    </div>
+    <div>
+      <h4>Tickets</h4>
+      <p>Every ticket link points to Arsenal's own authorised channels. No resale is brokered, listed, advertised or facilitated here.</p>
+    </div>
+    <div>
+      <h4>Independent</h4>
+      <p>An unofficial fan project. Not affiliated with, endorsed by, or connected to Arsenal Football Club. No club marks, crests or photography used.</p>
+    </div>
+  </div>
+</footer>
+
+<button class="back-top" id="back-top" aria-label="Back to top" type="button">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="app.js"></script>
+<script>
+/* Side panel + list render from EXPLAINERS (explainers.js). The player
+   itself lives in explainers.js; this page only says what to show. */
+window.XP_ONLOAD = x => {
+  const f = FIXTURES.find(m => m.n === x.fixture);
+  $('#xp-side').innerHTML = `<p class="meta">${esc(x.kicker)} · ${esc(x.date)}</p>
+    <h2>${esc(x.title)}</h2>
+    <p class="standfirst">${esc(x.standfirst)}</p>
+    <ol>${x.points.map(p => `<li>${esc(p)}</li>`).join('')}</ol>
+    <p class="xp-src">Numbers from: ${x.sources.map(s => `<a href="${s[1]}" target="_blank" rel="noopener noreferrer">${esc(s[0])}</a>`).join(' · ')}.
+    Tactics boards are illustrations of what the match reports describe, not tracking data.
+    ${f ? `<br><a href="timetable.html">Full fixture list &rarr;</a>` : ''}</p>`;
+  document.querySelectorAll('.xp-card').forEach(c => c.setAttribute('aria-current', c.dataset.id === x.id));
+  if (location.hash.slice(1) !== x.id) history.replaceState(null, '', '#' + x.id);
+};
+</script>
+<script src="explainers.js"></script>
+<script>
+$('#xp-list').innerHTML = XP.list.map(x => `<button type="button" class="xp-card" data-id="${x.id}" aria-current="${location.hash.slice(1) === x.id || x === XP.list[0]}">
+  <span>${esc(x.date)} · ${x.beats.length} beats</span><b>${esc(x.title)}</b><span>${esc(x.kicker)}</span></button>`).join('');
+document.querySelectorAll('.xp-card').forEach(c => c.addEventListener('click', () => {
+  XP.load(c.dataset.id, true); $('#xp-stage').scrollIntoView({behavior:'smooth', block:'center'});
+}));
+$('#xp-share').addEventListener('click', async () => {
+  const url = location.href;
+  try {
+    if (navigator.share) await navigator.share({title: document.title, url});
+    else { await navigator.clipboard.writeText(url); $('#xp-share').textContent = 'Link copied'; }
+  } catch (e) { /* share sheet dismissed */ }
+});
+</script>
+</body>
+</html>

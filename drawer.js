@@ -165,6 +165,7 @@ function openDrawer(i){
         ${f.checked ? `<dt>Verified</dt><dd style="color:var(--mute);font-size:13px">${f.checked}</dd>` : '<dt>Verified</dt><dd style="color:var(--warn);font-size:13px">Not re-checked — confirm before booking</dd>'}
         ${f.result ? `<dt>Result</dt><dd style="color:var(--ok);font-weight:600">${f.result}${f.scorers ? ' — ' + f.scorers : ''}</dd>` : ''}
       </dl>
+      ${f.explainer ? `<p style="margin:12px 0 0"><a href="explainers.html#${f.explainer}" style="font-size:13.5px;color:var(--red);text-decoration:none;font-weight:700">Watch the one-minute explainer &rarr;</a></p>` : ''}
       ${f.warn ? `<p style="margin:12px 0 0;padding:10px 12px;background:var(--warn-wash);color:var(--warn);font-size:13.5px;line-height:1.5;border-radius:2px">${f.warn}</p>` : ''}
     </div>
 

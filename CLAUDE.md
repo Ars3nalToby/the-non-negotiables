@@ -86,6 +86,20 @@ ledger.html                Man City decision tracker: what the independent
                         found"), original wording, no sanction guessing.
                         Update it when the sanction hearing or appeal
                         resolves; the appeal-deadline box flips itself.
+explainers.html            Explainers: ~60-second, story-format (9:16) match
+                        explainers, animated in code (SVG + CSS), no video
+                        files. explainers.js holds EXPLAINERS (data, newest
+                        first: beats of caption + scene) and the player;
+                        explainers.css styles the always-dark stage. Scene
+                        types: note, board, pitch, poss, ft, end. Every
+                        number must come from that entry's `sources`; the
+                        pitch shows COUNTS, never an invented shot map, and
+                        tactics boards say "Illustration" on their face.
+                        A fixture with `explainer:'<id>'` gets a "Watch the
+                        one-minute explainer" link in its dossier, and the
+                        hub card names the latest one. For socials:
+                        explainers.html?export=1#<id> plays one full-frame;
+                        record it at 1080x1920 with Playwright -> MP4.
 digest.html               "The Week": next ten days of kick-offs in the
                         visitor's timezone, the last week's news and the
                         latest column, built live from FIXTURES/CL/NEWS/
@@ -213,7 +227,7 @@ key, no proxy. Same silent-failure risk if it's ever removed.
 There is no build, no bundler, no package.json for the site itself.
 **Keep it that way.** The audit enforces a size budget per file instead
 of one monolithic ceiling: `styles.css` ≤80KB, `app.js` ≤60KB,
-`drawer.js` ≤60KB, `junior.js` ≤60KB, `junior.css` ≤30KB, `factory.js` ≤130KB, `factory.css` ≤30KB, `columns.js` and `news-data.js` ≤120KB each
+`drawer.js` ≤60KB, `junior.js` ≤60KB, `junior.css` ≤30KB, `factory.js` ≤130KB, `factory.css` ≤30KB, `explainers.js` ≤60KB, `explainers.css` ≤30KB, `columns.js` and `news-data.js` ≤120KB each
 (few-page files, but still not unbounded), each individual page ≤40KB.
 
 **If `app.js` trips its budget again**, the fix is almost certainly

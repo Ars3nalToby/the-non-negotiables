@@ -29,6 +29,9 @@ const newsJs = await readFile(join(DIR, 'news-data.js'), 'utf8');
 /* factory.html's own files — the 3D squad factory (Dial Square Works). */
 const factoryJs = await readFile(join(DIR, 'factory.js'), 'utf8');
 const factoryCss = await readFile(join(DIR, 'factory.css'), 'utf8');
+/* explainers.html's own files — the story-format match explainers. */
+const explainersJs = await readFile(join(DIR, 'explainers.js'), 'utf8');
+const explainersCss = await readFile(join(DIR, 'explainers.css'), 'utf8');
 const cssFile = await readFile(join(DIR, 'styles.css'), 'utf8');
 const pageNames = (await readdir(DIR)).filter(f => f.endsWith('.html')).sort();
 const pages = {};
@@ -285,12 +288,12 @@ for (const [name, html] of Object.entries(pages)) {
 }
 
 /* ---------- 7d. brace balance ---------- */
-for (const [label, src] of [['styles.css', cssFile], ['junior.css', juniorCss], ['factory.css', factoryCss], ['app.js', appJs], ['drawer.js', drawerJs], ['junior.js', juniorJs], ['factory.js', factoryJs]]) {
+for (const [label, src] of [['styles.css', cssFile], ['junior.css', juniorCss], ['factory.css', factoryCss], ['explainers.css', explainersCss], ['app.js', appJs], ['drawer.js', drawerJs], ['junior.js', juniorJs], ['factory.js', factoryJs], ['explainers.js', explainersJs]]) {
   if ((src.match(/{/g) || []).length !== (src.match(/}/g) || []).length) {
     flag('BUG', 'frontend', `Unbalanced braces in ${label}.`);
   }
 }
-for (const [label, src] of [['app.js', appJs], ['drawer.js', drawerJs], ['junior.js', juniorJs], ['factory.js', factoryJs]]) {
+for (const [label, src] of [['app.js', appJs], ['drawer.js', drawerJs], ['junior.js', juniorJs], ['factory.js', factoryJs], ['explainers.js', explainersJs]]) {
   if (!src.includes('function')) continue;
   // Real JS (unlike the old inline <script>), so let node's own parser be
   // the authority on whether it's syntactically valid at all.
@@ -393,7 +396,7 @@ if (wireMatch && wireMatch[1] && !wireMatch[1].startsWith('https://')) {
    per section, specifically so no single file has to carry everything.
    Budget each kind of file on its own terms instead of one combined cap. */
 const kb = buf => Math.round(Buffer.byteLength(buf) / 1024);
-flag('INFO', 'perf', `styles.css is ${kb(cssFile)}KB, app.js is ${kb(appJs)}KB, drawer.js is ${kb(drawerJs)}KB, junior.js is ${kb(juniorJs)}KB, junior.css is ${kb(juniorCss)}KB, columns.js is ${kb(columnsJs)}KB, news-data.js is ${kb(newsJs)}KB, factory.js is ${kb(factoryJs)}KB, factory.css is ${kb(factoryCss)}KB.`);
+flag('INFO', 'perf', `styles.css is ${kb(cssFile)}KB, app.js is ${kb(appJs)}KB, drawer.js is ${kb(drawerJs)}KB, junior.js is ${kb(juniorJs)}KB, junior.css is ${kb(juniorCss)}KB, columns.js is ${kb(columnsJs)}KB, news-data.js is ${kb(newsJs)}KB, factory.js is ${kb(factoryJs)}KB, factory.css is ${kb(factoryCss)}KB, explainers.js is ${kb(explainersJs)}KB, explainers.css is ${kb(explainersCss)}KB.`);
 if (kb(cssFile) > 80) flag('BUG', 'perf', `styles.css is ${kb(cssFile)}KB — getting big for a single stylesheet.`);
 if (kb(appJs) > 60) flag('BUG', 'perf', `app.js is ${kb(appJs)}KB — getting big for shared data+logic.`);
 if (kb(drawerJs) > 60) flag('BUG', 'perf', `drawer.js is ${kb(drawerJs)}KB — index.html and timetable.html only, but even that needs a ceiling.`);
@@ -402,6 +405,8 @@ if (kb(juniorCss) > 30) flag('BUG', 'perf', `junior.css is ${kb(juniorCss)}KB �
 if (kb(columnsJs) > 120) flag('BUG', 'perf', `columns.js is ${kb(columnsJs)}KB — programme.html only, but even a single-page file needs a ceiling.`);
 if (kb(newsJs) > 120) flag('BUG', 'perf', `news-data.js is ${kb(newsJs)}KB — index.html and news.html only, but even that needs a ceiling.`);
 if (kb(factoryJs) > 130) flag('BUG', 'perf', `factory.js is ${kb(factoryJs)}KB — factory.html only, but even that needs a ceiling.`);
+if (kb(explainersJs) > 60) flag('BUG', 'perf', `explainers.js is ${kb(explainersJs)}KB — explainers.html only, but even that needs a ceiling.`);
+if (kb(explainersCss) > 30) flag('BUG', 'perf', `explainers.css is ${kb(explainersCss)}KB — explainers.html only, but even that needs a ceiling.`);
 if (kb(factoryCss) > 30) flag('BUG', 'perf', `factory.css is ${kb(factoryCss)}KB — factory.html only, but even that needs a ceiling.`);
 /* factory.js must never quietly turn the sponsor boards on — that's a decision, not a commit. */
 if (!/const SHOW_SPONSOR_SLOTS=false;/.test(factoryJs)) flag('TODO', 'compliance', 'factory.js has sponsor slots switched on. Fine if a sponsor has actually signed — otherwise the README still says the site sells nothing.');

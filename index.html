@@ -68,6 +68,7 @@
   <a href="transfers.html">Transfers</a>
   <a href="squad.html">Squad</a>
   <a href="factory.html">Factory</a>
+  <a href="explainers.html">Explainers</a>
   <a href="junior.html">Juniors</a>
   <a href="programme.html">Blog</a>
   <a href="reading.html">Required reading</a>
@@ -267,6 +268,12 @@
       <span class="widget__icon"><svg viewBox="0 0 24 24"><path d="M3 21V10l5 3V10l5 3V10l5 3V4h3v17z"/><path d="M7 17h2M12 17h2M17 17h2"/></svg></span>
       <h3 class="widget__title">Dial Square Works</h3>
       <p class="widget__teaser" id="w-factory">Every squad since 1992, as a 3D factory</p>
+      <span class="widget__go">Open<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+    <a class="widget" href="explainers.html">
+      <span class="widget__icon"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10.5 9v6l5-3z"/></svg></span>
+      <h3 class="widget__title">Explainers</h3>
+      <p class="widget__teaser" id="w-explainers">Matches explained in about a minute</p>
       <span class="widget__go">Open<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </a>
     <a class="widget" href="junior.html">
@@ -508,6 +515,8 @@ setInterval(tickBoard, 1000);
     ? `Deadline in ${Math.max(0, Math.ceil(dlMs/86400000))}d · ${MOVES_IN.length} in, ${MOVES_OUT.length} out`
     : `Window closed · ${MOVES_IN.length} in, ${MOVES_OUT.length} out`;
   $('#w-squad').textContent = `${SQUAD.length} names, 5 groups`;
+  { const xf = FIXTURES.filter(f => f.explainer).pop(); const xc = xf && CLUBS[xf.opp];
+    if (xc) $('#w-explainers').textContent = `Latest: ${xf.v === 'A' ? xc.name + ' ' + xf.result.slice(2).split('-').reverse().join('\u2013') + ' Arsenal' : 'Arsenal ' + xf.result.slice(2).replace('-','\u2013') + ' ' + xc.name}, in about a minute`; }
 })();
 
 /* ---- click ripple on the widget cards ----

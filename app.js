@@ -101,7 +101,7 @@ const FIXTURES = [
       {who:'Mikel Arteta', role:'manager', quote:'We were all scared.', source:'Arsenal.com', url:'https://www.arsenal.com/news/every-word-from-artetas-post-everton-press-conference-a35Bj5F4a2lz'},
       {who:'Ezri Konsa', role:'defender', quote:'A clean sheet and a goal \u2014 my first for the club \u2014 so a fantastic day overall.', source:'Just Arsenal News', url:'https://www.justarsenal.com/a-great-feeling-ezri-konsa-enjoyed-scoring-and-keeping-a-clean-sheet/424470'}
     ]}},
-  {n:9, ko:'2026-11-01T16:30:00+00:00', opp:'liv', v:'A', tv:'Sky Sports', moved:true, checked:'2026-10-12'},
+  {n:9, ko:'2026-11-01T16:30:00+00:00', opp:'liv', v:'A', tv:'Sky Sports', moved:true, checked:'2026-10-12', result:'W 1-0', scorers:'Havertz', explainer:'mw9-liv'},
   {n:10,ko:'2026-11-07T15:00:00+00:00', opp:'hul', v:'H'},
   {n:11,ko:'2026-11-21T15:00:00+00:00', opp:'new', v:'A'},
   {n:12,ko:'2026-11-28T15:00:00+00:00', opp:'mci', v:'H'},
