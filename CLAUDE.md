@@ -252,7 +252,7 @@ page loads. Check which array grew, not what to cut.
 ## Navigation order (owner's rule)
 
 The nav on every page starts with **Home** as a house icon at the far
-left (the universal spot; the label shows from 1200px), then **EPL**
+left (the universal spot; the label shows from 1440px), then **EPL**
 (timetable.html), **UCL**
 (europe.html), **News** (news.html), then the rest. The hub's
 widget grid leads with the same three cards. Keep this order when
@@ -260,7 +260,7 @@ adding a page: new links go after these, never before them.
 
 The nav is an always-dark tab bar with no sideways scrolling: tier-1
 tabs (Home + those three) always show; tier-2 tabs (`nav__tab--more`:
-Explainers, Tickets, Squad, Transfers, Factory) show from 900px; every
+Explainers, Tickets, Squad, Transfers, Factory) show from 1220px; every
 page is also in the grouped **More** menu (a `<details>`; app.js only
 adds outside-click/Escape closing). A page that isn't a visible tab is
 named inside the More button so you always know where you are. The

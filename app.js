@@ -375,7 +375,7 @@ $('#theme-toggle').addEventListener('click', () => {
   border:1px solid rgba(255,255,255,.2);border-radius:2px;min-height:38px;max-width:190px;padding:0 32px 0 12px;appearance:none;-webkit-appearance:none;cursor:pointer}
 .nav__tz select option{color:#0A1622}
 .nav__tz select:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-@media (max-width:899px){.nav__tz{flex:1 0 100%;margin:0;padding:6px 16px;border-top:1px solid rgba(255,255,255,.1);justify-content:flex-end}.nav__tz select{flex:1;max-width:none;min-height:40px}}`;
+@media (max-width:1219px){.nav__tz{flex:1 1 100%;min-width:0;box-sizing:border-box;margin:0;padding:6px 16px;border-top:1px solid rgba(255,255,255,.1);justify-content:flex-end}.nav__tz select{flex:1;min-width:0;max-width:none;min-height:40px}}`;
   document.head.appendChild(css);
   const bar = document.createElement('div');
   bar.className = 'nav__tz';
