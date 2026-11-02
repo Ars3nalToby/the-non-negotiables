@@ -20,7 +20,15 @@ index.html              Hub. Hero match board + a grid of clickable
 news.html                Original news coverage, newest first — short
                         write-ups in this site's own voice, each
                         linked to its real source. Renders from NEWS
-                        (news-data.js); never a hardcoded item.
+                        (news-data.js); never a hardcoded item. Laid out
+                        as a front page (news.css): next-match strip with
+                        countdown + latest explainer, a lead story and two
+                        seconds, the live wire, then a searchable archive
+                        grouped by week. Topic chips come from TOPICS
+                        regexes in the page script, or an entry's own
+                        optional `tags:['injury',...]` (wins if present).
+                        Each story has a stable #n-DATE-slug permalink;
+                        "New" badges use localStorage nn-news-seen.
 timetable.html           Full season fixture list (month accordion), a
                         season-so-far panel, and the season calendar:
                         one .ics of every match still to come (league +

@@ -17,6 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="news.css">
 </head>
 <body>
 
@@ -75,6 +76,8 @@
 </div>
 
 <section class="section wrap">
+  <div class="nx-strip" id="nx-strip"></div>
+  <div class="nx-front" id="nx-front" aria-label="Latest from this site"></div>
   <div style="margin-bottom:34px">
     <div class="wire-head">
       <p class="eyebrow" id="wire-kicker">Live wire · everything, newest first <span class="wire-count" id="wire-count"></span></p>
@@ -84,8 +87,17 @@
     <p class="wire__note" id="wire-note">Connecting…</p>
   </div>
 
-  <p class="eyebrow" id="written-kicker">Written here · this site's own words</p>
-  <div id="news-feed"></div>
+  <div id="written-kicker">
+    <div class="nx-tools">
+      <h2 class="section__title">The archive</h2>
+      <label class="nx-search"><span class="sr-only">Search the archive</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input type="search" id="nx-q" placeholder="Search: Saka, Anfield, ban…" autocomplete="off">
+      </label>
+    </div>
+    <div class="nx-chips" id="nx-chips" role="group" aria-label="Filter by topic"></div>
+    <div id="news-feed" aria-live="polite"></div>
+  </div>
 </section>
 
 <div class="wrap dgwrap"><div data-digest></div></div>
@@ -142,14 +154,140 @@
    programme.html: this page never carries a hardcoded item, the
    scheduled routine grows the data instead of touching markup.
    ============================================================ */
-const newsDate = iso => dayLong(new Date(iso + 'T12:00:00Z'), 'UTC');
-$('#news-feed').innerHTML = NEWS.map((n,k) => `<div class="dcard" style="--nd:${k * 80}ms">
-  <p class="dsub" style="margin:0 0 4px">${newsDate(n.date)}</p>
-  <h3 class="news-h" style="margin:0 0 10px">${n.headline}</h3>
-  <p class="note" style="margin:0 0 14px">${n.summary}</p>
-  <a href="${n.url}" target="_blank" rel="noopener noreferrer" style="font-size:13px;color:var(--red);text-decoration:none;font-weight:600">Full story at ${n.source} →</a>
-</div>`).join('');
+/* ---- front page + archive ----
+   Topics: an entry's own `tags` if it has them, otherwise derived from
+   its headline + summary by the patterns below (first two that match, in
+   this order). "New" = newer than the newest item this browser saw last
+   time (localStorage nn-news-seen; nothing on a first visit). */
+const TOPICS = [
+  ['match','Matchday',/\b\d-\d\b|\bwin\b|\bwon\b(?![\u2019'])|\bdraws?\b|\bbeat\b|defeat|penalt|clean sheet|equalis|full time|on target/i],
+  ['injury','Injuries',/injur|\bscans?\b|fitness|knock|hamstring|\bquad\b|ankle|calf|groin|back in (full )?training|fit again|medics|ruled out|in contention/i],
+  ['discipline','Discipline',/\bban\b|red card|suspen|appeal|\bcharges?\b|fined|violent conduct/i],
+  ['transfer','Transfers',/transfer|\bsign(s|ed|ing)?\b|\bloan\b|\bbid\b|\bfee\b|contract|window/i],
+  ['europe','Europe',/champions league|uefa|bayern|munich|lille|napoli|european/i],
+  ['club','The club',/\bjobs?\b|staff|chief executive|garlick|kroenke|stadium|ticket|revenue|accounts|died|tribute/i],
+  ['press','Press room',/press conference|presser|briefing/i]
+];
+const TNAME = Object.fromEntries(TOPICS.map(t => [t[0], t[1]]));
+const tagsOf = n => (n.tags || TOPICS.filter(t => t[2].test(n.headline + ' ' + n.summary)).map(t => t[0])).slice(0,2);
+const tagHTML = n => tagsOf(n).map(t => `<span class="nx-tag" style="--tc:var(--t-${t})">${TNAME[t] || esc(t)}</span>`).join('');
+const slug = s => s.toLowerCase().replace(/<[^>]+>/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,48);
+NEWS.forEach(n => { n.id = 'n-' + n.date + '-' + slug(n.headline); n.tg = tagsOf(n); });
+const todayIso = isoDate(new Date(), BNE);
+const daysAgo = iso => Math.round((Date.parse(todayIso) - Date.parse(iso)) / 864e5);
+const rel = iso => { const d = daysAgo(iso); return d <= 0 ? 'Today' : d === 1 ? 'Yesterday' : d < 7 ? d + ' days ago' : d < 14 ? 'Last week' : ''; };
+const D = iso => new Date(iso + 'T12:00:00Z');
+const newsDate = iso => dayLong(D(iso), 'UTC');
+const seen = store.get('nn-news-seen');
+const isNew = n => seen && n.date > seen;
+store.set('nn-news-seen', NEWS[0] ? NEWS[0].date : null);
+const ICON_SHARE = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
+const src = n => `<a class="nx-src" href="${n.url}" target="_blank" rel="noopener noreferrer"><i>${esc(n.source.replace(/[^A-Za-z]/g,'').slice(0,2).toUpperCase())}</i>Full story at ${esc(n.source)}</a>`;
+const share = n => `<button type="button" class="nx-act" data-share="${n.id}" aria-label="Copy a link to this story">${ICON_SHARE}<span>Share</span></button>`;
 
+/* next-match strip + latest explainer (from FIXTURES/CL, so it never goes stale) */
+(function strip(){
+  const now = Date.now();
+  const games = FIXTURES.map(f => ({ko:f.ko, v:f.v, opp:(CLUBS[f.opp]||{}).name, comp:'Premier League'}))
+    .concat(CL.filter(c => c.ko).map(c => ({ko:c.ko, v:c.v, opp:c.name, comp:'Champions League'})))
+    .filter(g => g.opp && Date.parse(g.ko) > now).sort((a,b) => Date.parse(a.ko) - Date.parse(b.ko));
+  const g = games[0], city = (window.NN_TZ && NN_TZ.city) || 'Brisbane';
+  let html = '';
+  if (g) {
+    const d = new Date(g.ko);
+    html += `<a class="nx-next" href="timetable.html"><div><span class="k">Next up · ${g.comp}</span>
+      <b>${g.v === 'H' ? 'Arsenal v ' + esc(g.opp) : esc(g.opp) + ' v Arsenal'}</b>
+      <div class="when">${dayShort(d, BNE)} · ${t24(d, BNE)} ${esc(city)}</div></div>
+      <div class="cd" id="nx-cd" data-ko="${g.ko}">–<small>until kick-off</small></div></a>`;
+  }
+  const xf = FIXTURES.filter(f => f.explainer).pop();
+  if (xf) {
+    const c = (CLUBS[xf.opp]||{}).name, sc = xf.result.slice(2).split('-');
+    const line = xf.v === 'A' ? `${c} ${sc[1]}–${sc[0]} Arsenal` : `Arsenal ${sc[0]}–${sc[1]} ${c}`;
+    html += `<a class="nx-xp" href="explainers.html#${xf.explainer}"><span class="play"><svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg></span>
+      <div><span class="k">Watch · one-minute explainer</span><b>${esc(line)}, explained</b></div></a>`;
+  }
+  $('#nx-strip').innerHTML = html;
+  const cd = $('#nx-cd');
+  if (cd) {
+    const ko = Date.parse(cd.dataset.ko);
+    const tick = () => { const s = Math.max(0, (ko - Date.now()) / 1000), dd = Math.floor(s / 86400), hh = Math.floor(s % 86400 / 3600), mm = Math.floor(s % 3600 / 60);
+      cd.firstChild.textContent = dd ? `${dd}d ${String(hh).padStart(2,'0')}h` : `${hh}h ${String(mm).padStart(2,'0')}m`; };
+    tick(); setInterval(tick, 30000);
+  }
+})();
+
+/* front page: lead + two seconds */
+(function front(){
+  const [lead, ...more] = NEWS;
+  if (!lead) return;
+  const r = rel(lead.date);
+  $('#nx-front').innerHTML = `<article class="nx-lead nx-in" id="${lead.id}">
+      <span class="bigday" aria-hidden="true">${D(lead.date).getUTCDate()}</span>
+      <div class="nx-kick"><span class="lab">Lead story</span><span class="d">${newsDate(lead.date)}${r ? ' · ' + r : ''}</span>${isNew(lead) ? '<span class="nx-new">New</span>' : ''}</div>
+      <div class="nx-tags" style="margin-bottom:14px">${tagHTML(lead)}</div>
+      <h2>${lead.headline}</h2><p>${lead.summary}</p>
+      <div class="nx-foot">${src(lead)}${share(lead)}</div>
+    </article>
+    <div class="nx-seconds">${more.slice(0,2).map((n,k) => `<article class="nx-second nx-in" id="${n.id}" style="--d:${120 + k*90}ms;--tc:var(--t-${n.tg[0] || 'club'})">
+      <div class="nx-tags">${tagHTML(n)}${isNew(n) ? '<span class="nx-new">New</span>' : ''}<span class="nx-rel">${rel(n.date) || dayShort(D(n.date),'UTC')}</span></div>
+      <h3>${n.headline}</h3><p>${n.summary}</p>
+      <div class="nx-foot">${src(n)}${share(n)}</div></article>`).join('')}</div>`;
+})();
+
+/* archive: topic chips + search, grouped by week/month */
+let topic = 'all', q = '';
+const ARCH = NEWS.slice(3);
+function chips(){
+  const pool = (q || topic !== 'all' ? NEWS : ARCH).filter(matchQ);
+  const count = t => (t === 'all' ? pool : pool.filter(n => n.tg.includes(t))).length;
+  $('#nx-chips').innerHTML = [['all','Everything']].concat(TOPICS.map(t => [t[0], t[1]])).filter(t => t[0] === 'all' || NEWS.some(n => n.tg.includes(t[0])))
+    .map(t => `<button type="button" class="nx-chip" data-t="${t[0]}" aria-pressed="${topic === t[0]}" style="--tc:${t[0] === 'all' ? 'var(--ink)' : 'var(--t-' + t[0] + ')'}">${t[1]} <span>${count(t[0])}</span></button>`).join('');
+}
+const qWords = () => q.trim().split(/\s+/).filter(w => w.length > 1);
+const matchQ = n => qWords().every(w => (n.headline + ' ' + n.summary + ' ' + n.source).toLowerCase().includes(w.toLowerCase()));
+const hl = (s, words) => !words.length ? s : s.replace(/(<[^>]+>)|([^<]+)/g, (m, tag, txt) => tag || txt.replace(new RegExp('(' + words.map(w => w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|') + ')','gi'), '<mark class="nx-m">$1</mark>'));
+function groupOf(iso){
+  const d = daysAgo(iso);
+  if (d < 7) return 'This week';
+  if (d < 14) return 'Last week';
+  return fmt(D(iso), 'UTC', {month:'long', year:'numeric'});
+}
+function archive(){
+  const words = qWords();
+  const pool = (q || topic !== 'all') ? NEWS : ARCH;
+  const list = pool.filter(n => (topic === 'all' || n.tg.includes(topic)) && matchQ(n));
+  if (!list.length) { $('#news-feed').innerHTML = `<p class="nx-empty">Nothing in the archive matches that. Try a player’s surname, or clear the filter.</p>`; return; }
+  const groups = [];
+  list.forEach(n => { const g = groupOf(n.date); const last = groups[groups.length - 1]; last && last.g === g ? last.items.push(n) : groups.push({g, items:[n]}); });
+  $('#news-feed').innerHTML = groups.map(gr => `<section class="nx-group"><h3>${gr.g} <span>· ${gr.items.length}</span></h3>${gr.items.map((n,k) => `<article class="nx-row nx-in" id="${n.id}" style="--d:${Math.min(k,8)*45}ms">
+      <div class="nx-date" aria-hidden="true"><b>${D(n.date).getUTCDate()}</b><span>${fmt(D(n.date),'UTC',{month:'short'})}</span></div>
+      <div><div class="nx-tags">${tagHTML(n)}${isNew(n) ? '<span class="nx-new">New</span>' : ''}<span class="nx-rel">${newsDate(n.date)}</span></div>
+        <h4>${hl(n.headline, words)}</h4><p class="sum">${hl(n.summary, words)}</p>
+        <div class="nx-foot">${src(n)}<button type="button" class="nx-act" data-more aria-expanded="false" hidden>Read all</button>${share(n)}</div></div>
+    </article>`).join('')}</section>`).join('');
+  document.querySelectorAll('#news-feed .nx-row').forEach(r => { const p = r.querySelector('.sum'); if (p.scrollHeight > p.clientHeight + 4) r.querySelector('[data-more]').hidden = false; });
+}
+chips(); archive();
+$('#nx-chips').addEventListener('click', e => { const b = e.target.closest('.nx-chip'); if (!b) return; topic = b.dataset.t; chips(); archive(); });
+let qt; $('#nx-q').addEventListener('input', e => { clearTimeout(qt); qt = setTimeout(() => { q = e.target.value; chips(); archive(); }, 120); });
+document.addEventListener('click', async e => {
+  const m = e.target.closest('[data-more]');
+  if (m) { const r = m.closest('.nx-row'); const open = r.classList.toggle('is-open'); m.textContent = open ? 'Show less' : 'Read all'; m.setAttribute('aria-expanded', open); return; }
+  const s = e.target.closest('[data-share]');
+  if (s) {
+    const url = location.origin + location.pathname + '#' + s.dataset.share;
+    const lab = s.querySelector('span');
+    try { if (navigator.share && matchMedia('(pointer:coarse)').matches) await navigator.share({title: document.title, url}); else { await navigator.clipboard.writeText(url); lab.textContent = 'Link copied'; setTimeout(() => lab.textContent = 'Share', 1800); } } catch (err) {}
+  }
+});
+/* deep link: open the archive to that story and flash it */
+(function(){
+  const id = decodeURIComponent(location.hash.slice(1)); if (!id) return;
+  if (!document.getElementById(id) && NEWS.some(n => n.id === id)) { q = ''; topic = 'all'; const n = NEWS.find(x => x.id === id); ARCH.includes(n) || ARCH.unshift(n); archive(); }
+  const el = document.getElementById(id); if (!el) return;
+  el.classList.add('is-open', 'is-hit'); setTimeout(() => el.scrollIntoView({block:'center'}), 60);
+})();
 /* Live wire — pulled fresh on every page load so this page is never
    stale, however long it's been since the last written write-up above.
    Feed items are third-party RSS parsed with a regex (see
