@@ -255,3 +255,10 @@
 @media (max-width:1100px){.dsw .rail .top{flex-wrap:wrap}}
 @media (max-width:640px){.dsw .tick .sh{width:3px;height:3px;box-shadow:0 0 0 1px var(--brass)}.dsw .rail .fbtn{padding:0 12px}.dsw .timeline{height:42px;gap:2px;padding:3px 2px 0}}
 @media (prefers-reduced-motion:reduce){.dsw .tick .bar,.dsw .rail .fbtn{transition:none}.dsw .tick:hover .bar{transform:none}}
+
+/* Legends XI card on the hub (external game on its own subdomain) */
+.widget--legends{background:linear-gradient(135deg,#0A1622,#16264F 70%);color:#fff;border-color:transparent}
+.widget--legends .widget__title,.widget--legends .widget__teaser,.widget--legends .widget__go{color:#fff}
+.widget--legends .widget__teaser{opacity:.8}
+.widget--legends .widget__icon{background:#EF0107;color:#fff}
+.widget__new{display:inline-block;margin-left:6px;padding:3px 6px;vertical-align:3px;font:700 9.5px var(--mono,monospace);letter-spacing:.12em;text-transform:uppercase;background:#C9A24B;color:#0A1622}

@@ -276,6 +276,14 @@ time-zone picker is injected at the bar's right end (own row on
 phones). The markup is identical on every page except aria-current —
 when adding a page, add it to the More menu on all of them.
 
+**Legends XI** (the dream-XI football game, its own repo
+Ars3nalToby/legends-xi on Vercel) lives at
+https://legends.thenonnegotiablog.com and is linked from the More menu
+("Watch & play") and a hub card. It is deliberately NOT linked from
+junior.html: its online rooms let other players send messages, which
+breaks Child safety rule 2. If you regenerate the nav, strip that link
+from junior.html again.
+
 ## Architecture
 
 The pattern for every content page: same `<head>` (CSP, fonts,
