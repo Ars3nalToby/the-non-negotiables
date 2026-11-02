@@ -20,3 +20,13 @@ None show any Arsenal branding, crest, kit, or identifiable person —
 Swap any of them out at will; nothing else references these files by
 name except the inline `background` styles on each chapter's
 `.chapter__bg` in `index.html`.
+
+## Factory images (our own renders)
+
+`factory-hero.jpg` (homepage hero background) and `factory-og.jpg`
+(social share card) are screenshots of our own Dial Square Works scene,
+2003/04 season, with every HTML panel hidden so only the 3D world shows.
+Rendered with Playwright from `factory.html?debug#2003` (the debug flag
+exposes the camera): target (-12, 0.5, 0), camera (-1, 19, 33), 2400x1000.
+The pitch sits right of centre so the hero headline has clear floor to sit
+on. Re-render the same way if the factory's look changes.

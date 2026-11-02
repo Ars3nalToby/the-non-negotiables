@@ -201,7 +201,7 @@
 /* ---- homepage hero (index.html): a poster until the visitor walks in ---- */
 .fhero{position:relative;background:#0A1622;color:#fff;}
 .fhero__poster{position:relative;min-height:clamp(520px,76svh,820px);display:flex;align-items:flex-end;padding-block:clamp(40px,8vh,96px);
-  background:linear-gradient(90deg,rgba(10,22,34,.92) 0%,rgba(10,22,34,.72) 42%,rgba(10,22,34,.15) 78%),linear-gradient(0deg,rgba(10,22,34,.85),rgba(10,22,34,0) 45%),url('assets/img/factory-og.jpg') 62% center/cover no-repeat;}
+  background:linear-gradient(90deg,#0A1622 0%,rgba(10,22,34,.9) 36%,rgba(10,22,34,.35) 54%,rgba(10,22,34,0) 68%),linear-gradient(0deg,rgba(10,22,34,.7),rgba(10,22,34,0) 30%),url('assets/img/factory-hero.jpg') right center/auto 100% no-repeat #0A1622;}
 .fhero__in{width:100%;}
 .fhero__tag{display:inline-block;margin:0 0 14px;font-family:var(--mono,'IBM Plex Mono',monospace);font-size:12px;letter-spacing:.14em;text-transform:uppercase;background:#EF0107;color:#fff;padding:6px 10px;}
 .fhero__title{margin:0;max-width:16ch;font-size:clamp(38px,6.2vw,84px);line-height:.92;font-weight:900;font-variation-settings:'wdth' 72;text-transform:uppercase;letter-spacing:-.01em;text-wrap:balance;}
@@ -209,4 +209,5 @@
 .fhero__deck{margin:18px 0 0;max-width:52ch;font-size:clamp(16px,1.4vw,19px);line-height:1.5;color:rgba(255,255,255,.82);}
 .fhero__cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px;}
 .fhero.is-live .fhero__poster{display:none;}
-@media (max-width:640px){.fhero__poster{background-position:70% center;}}
+@media (min-width:641px) and (max-width:1500px){.fhero__poster{background-position:0 0,0 0,right -14vw center;}}
+@media (max-width:640px){.fhero__poster{background:linear-gradient(0deg,#0A1622 0%,#0A1622 36%,rgba(10,22,34,.7) 58%,rgba(10,22,34,.4) 100%),url('assets/img/factory-hero.jpg') 80% 0/auto 66% no-repeat #0A1622;}}
