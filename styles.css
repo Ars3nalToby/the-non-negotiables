@@ -205,7 +205,9 @@ button{font:inherit;color:inherit;cursor:pointer}
 .nav__tab[aria-current="page"],.nav__more.is-here>summary{color:#fff;background:var(--red);clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}
 .nav__tab[aria-current="page"]::after{display:none}
 .nav__tab:focus-visible,.nav__more>summary:focus-visible{outline:2px solid var(--gold);outline-offset:-4px}
-.nav__tab--more{display:none}
+.nav__home svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.nav__homelab,.nav__tab--more{display:none}
+@media (min-width:1200px){.nav__homelab{display:inline}}
 @media (min-width:900px){.nav__tab--more{display:flex}}
 .nav__more{display:flex}
 .nav__more>summary{list-style:none;border-left:1px solid rgba(255,255,255,.14)}
