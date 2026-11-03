@@ -1,0 +1,77 @@
+/* ============================================================
+   THE LEDGER — ledger.html only. Dressed as a case file: a stamped
+   status triptych, figures on ruled ledger paper, each charge as a
+   charge sheet with a rubber-stamp verdict, the witnesses as an exhibit,
+   and the one-minute explainer (explainers.js, id mci-ledger) up top.
+   Theme tokens for page surfaces; the stamps and paper are fixed hues.
+   ============================================================ */
+.lg-head{position:relative;overflow:hidden}
+.lg-head::after{content:"CASE FILE";position:absolute;right:max(16px,calc((100vw - 1180px)/2));top:50%;transform:translateY(-50%) rotate(-8deg);
+  font:900 clamp(34px,6vw,76px)/1 var(--sans);font-variation-settings:'wdth' 70;letter-spacing:.04em;color:transparent;
+  -webkit-text-stroke:2px rgba(239,1,7,.45);border:3px solid rgba(239,1,7,.45);padding:6px 18px;pointer-events:none}
+@media (max-width:760px){.lg-head::after{display:none}}
+.lg-note{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--mute);margin:0 0 22px;padding-left:12px;border-left:3px solid var(--gold)}
+
+/* status triptych */
+.lg-status{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-bottom:40px;background:var(--board-bg);color:var(--board-fg);position:relative}
+.lg-status::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--red) 0 33.3%,var(--gold) 33.3% 100%)}
+.lg-st{padding:26px 24px 24px;position:relative}
+.lg-st + .lg-st{border-left:1px solid rgba(255,255,255,.1)}
+.lg-st__k{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55);margin:0 0 10px}
+.lg-st__v{display:inline-block;font:900 clamp(22px,2.6vw,30px)/1 var(--sans);font-variation-settings:'wdth' 78;text-transform:uppercase;letter-spacing:.01em;margin:0 0 14px;padding:6px 12px 5px;transform:rotate(-2deg)}
+.lg-st__v--done{color:#fff;background:var(--red)}
+.lg-st__v--wait{color:#F2D48A;border:2px solid rgba(227,185,90,.7)}
+.lg-st p{margin:0;font-family:var(--serif);font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.82)}
+
+/* explainer block */
+.lg-watch{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:36px;align-items:start;margin:0 0 46px}
+@media (max-width:860px){.lg-watch{grid-template-columns:1fr;gap:20px}}
+.lg-watch .xp-stage{max-height:76vh}
+.lg-watch h2{margin:4px 0 12px;font:900 clamp(26px,3.2vw,36px)/1.05 var(--sans);font-variation-settings:'wdth' 82;text-transform:uppercase}
+.lg-watch .kick{font:700 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--red);display:inline-block;padding:5px 14px 5px 9px;clip-path:polygon(0 0,100% 0,calc(100% - 7px) 100%,0 100%)}
+.lg-watch ol{font-family:var(--serif);font-size:16.5px;line-height:1.6;padding-left:1.2em;margin:0 0 16px}
+.lg-watch ol li{margin-bottom:8px}
+.lg-watch .fine{font-size:13px;line-height:1.6;color:var(--mute);margin:0}
+
+/* ledger figures */
+.lg-nums{display:grid;grid-template-columns:repeat(4,1fr);margin-bottom:46px;border:1px solid var(--card-border);
+  background:var(--card) repeating-linear-gradient(transparent 0 27px,color-mix(in oklab,var(--ok,#0E7A4A) 14%,transparent) 27px 28px);position:relative}
+.lg-nums::before{content:"";position:absolute;top:0;bottom:0;left:22px;width:2px;background:color-mix(in oklab,var(--red) 55%,transparent)}
+.lg-num{padding:22px 18px 18px 36px;position:relative}
+.lg-num + .lg-num{border-left:1px dashed var(--card-border)}
+.lg-num b{display:block;font-family:var(--mono);font-size:clamp(28px,3.8vw,42px);font-weight:600;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.lg-num span{display:block;margin-top:10px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;line-height:1.5;color:var(--mute)}
+.lg-num:nth-child(2) b{color:var(--red)}
+
+.lg-h{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin:0 0 16px}
+.lg-h::after{content:"";flex:1;height:1px;background:var(--card-border)}
+
+/* charge sheets */
+.lg-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:46px}
+@media (max-width:900px){.lg-list{grid-template-columns:1fr}}
+.lg-card{position:relative;display:block;background:var(--card);border:1px solid var(--card-border);padding:22px 22px 20px 26px;overflow:hidden;
+  box-shadow:0 1px 0 var(--card-border),0 10px 24px -18px rgba(10,22,34,.5);transition:transform .2s var(--ease-out),box-shadow .2s var(--ease-out)}
+.lg-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--red)}
+.lg-card:hover{transform:translateY(-3px);box-shadow:0 18px 36px -20px rgba(10,22,34,.55)}
+.lg-card__id{display:inline-block;font:700 12px var(--mono);letter-spacing:.08em;color:var(--board-fg);background:var(--board-bg);padding:6px 10px;margin:0 0 12px}
+.lg-card h3{margin:0 0 10px;padding-right:96px;font-family:var(--sans);font-weight:800;font-size:19px;line-height:1.3;color:var(--ink)}
+.lg-card p{margin:0;font-family:var(--serif);font-size:16px;line-height:1.65;color:var(--ink-2)}
+.lg-card__v{position:absolute;top:18px;right:16px;font:900 15px/1 var(--sans);font-variation-settings:'wdth' 80;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--red);border:2.5px solid var(--red);padding:6px 9px 5px;transform:rotate(-7deg);opacity:.92;
+  -webkit-mask-image:repeating-linear-gradient(115deg,#000 0 7px,rgba(0,0,0,.72) 7px 9px);mask-image:repeating-linear-gradient(115deg,#000 0 7px,rgba(0,0,0,.72) 7px 9px)}
+.lg-card__v--no{color:#5c6b7d;border-color:#5c6b7d}
+.lg-card--no::before{background:#5c6b7d}
+.lg-card--no .lg-card__id{background:#5c6b7d;color:#fff}
+
+/* exhibit: the witnesses */
+.lg-quote{position:relative;background:var(--board-bg);color:var(--board-fg);padding:clamp(26px,3.6vw,40px) clamp(22px,3.6vw,40px) clamp(26px,3.6vw,40px) clamp(54px,7vw,90px);margin-bottom:46px;overflow:hidden}
+.lg-quote::before{content:"\201C";position:absolute;left:clamp(12px,2vw,24px);top:clamp(14px,2vw,22px);font:900 clamp(72px,8vw,104px)/.8 var(--serif);color:var(--red);opacity:.9}
+.lg-quote::after{content:"Exhibit";position:absolute;right:18px;top:16px;font:700 10.5px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#F2D48A;border:1.5px solid rgba(227,185,90,.6);padding:4px 8px}
+.lg-quote h3{margin:0 0 14px;font-family:var(--sans);font-weight:900;font-size:clamp(20px,3vw,28px);line-height:1.2;text-transform:uppercase;letter-spacing:-.01em;color:#fff;padding-right:80px}
+.lg-quote p{margin:0 0 12px;font-family:var(--serif);font-size:17.5px;line-height:1.68;color:rgba(255,255,255,.84);max-width:68ch}
+.lg-quote p:last-child{margin:0}
+.lg-src a{color:var(--red);font-weight:700}
+
+@media (max-width:820px){.lg-nums{grid-template-columns:1fr 1fr}.lg-num:nth-child(3){border-left:0}.lg-status{grid-template-columns:1fr}.lg-st + .lg-st{border-left:0;border-top:1px solid rgba(255,255,255,.1)}}
+@media (max-width:640px){.lg-card{padding:18px 16px 18px 22px}.lg-card h3{padding-right:0;margin-top:36px}}
+@media (prefers-reduced-motion:reduce){.lg-card{transition:none}}

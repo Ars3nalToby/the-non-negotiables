@@ -94,12 +94,24 @@ ledger.html                Man City decision tracker: what the independent
                         found"), original wording, no sanction guessing.
                         Update it when the sanction hearing or appeal
                         resolves; the appeal-deadline box flips itself.
+                        Styled as a case file in ledger.css. Embeds the
+                        explainer `mci-ledger` (explainers.js, picked via
+                        data-xp on #xp-stage). That explainer states only
+                        what the Commission found or plain record (e.g.
+                        three titles in the charged seasons); it never
+                        says the titles were won because of the breaches
+                        and never guesses the sanction. Update it with the
+                        page when the appeal or sanction lands.
 explainers.html            Explainers: ~60-second, story-format (9:16) match
                         explainers, animated in code (SVG + CSS), no video
                         files. explainers.js holds EXPLAINERS (data, newest
                         first: beats of caption + scene) and the player;
                         explainers.css styles the always-dark stage. Scene
-                        types: note, board, pitch, poss, ft, end. Every
+                        types: note, board, pitch, poss, ft, end, plus
+                        stat, stack, book, seasons, charges, status (the
+                        Ledger set). Another page can host the player by
+                        copying the stage + controls markup and setting
+                        data-xp="<id>" on #xp-stage. Every
                         number must come from that entry's `sources`; the
                         pitch shows COUNTS, never an invented shot map, and
                         tactics boards say "Illustration" on their face.
@@ -246,7 +258,7 @@ key, no proxy. Same silent-failure risk if it's ever removed.
 There is no build, no bundler, no package.json for the site itself.
 **Keep it that way.** The audit enforces a size budget per file instead
 of one monolithic ceiling: `styles.css` ≤80KB, `app.js` ≤60KB,
-`drawer.js` ≤60KB, `junior.js` ≤60KB, `junior.css` ≤30KB, `factory.js` ≤130KB, `factory.css` ≤30KB, `explainers.js` ≤60KB, `explainers.css` ≤30KB, `columns.js` and `news-data.js` ≤120KB each
+`drawer.js` ≤60KB, `junior.js` ≤60KB, `junior.css` ≤30KB, `factory.js` ≤130KB, `factory.css` ≤30KB, `explainers.js` ≤60KB, `explainers.css` ≤30KB, `news.css`, `ledger.css` ≤30KB each, `columns.js` and `news-data.js` ≤120KB each
 (few-page files, but still not unbounded), each individual page ≤40KB.
 
 **If `app.js` trips its budget again**, the fix is almost certainly

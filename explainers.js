@@ -19,6 +19,42 @@
    ============================================================ */
 const EXPLAINERS = [
   {
+    /* Man City: findings only. Every claim is "the Commission found" or a
+       plain matter of record (seasons, titles, status). No sanction guess,
+       no claim the titles were won BECAUSE of the breaches — that is not
+       what was ruled, and City have appealed. Shown on ledger.html too. */
+    id: 'mci-ledger', date: '2026-11-03',
+    title: 'Manchester City and the Commission, in about a minute',
+    kicker: 'The Ledger · what was found',
+    standfirst: 'Nine seasons of accounts, a sponsorship model that wasn’t what the paperwork said, and an investigation the club tried to stop. What an independent Commission found, and what is still undecided.',
+    points: [
+      'The Commission found most Abu Dhabi sponsorship money really came from the owner, booked as commercial income: overstated by over £830m across 2009/10 to 2017/18.',
+      'It found owner-paid costs kept off the books (including £8.866m, £7.4m, £0.5m and £49.414m), and, with the accounts restated, UEFA’s break-even rule and the League’s £105m losses limit missed in every season charged.',
+      'It found City made concerted efforts to frustrate the investigation, and that some of the club’s key witnesses were dishonest. Every charge was proven except 4(B).',
+      'City won the league three times in those nine seasons. What, if anything, happens to that is for the sanction hearing. City deny every charge and have appealed.'
+    ],
+    sources: [
+      ['Premier League statement, 29 Sep 2026', 'https://www.premierleague.com/en/news/4727779/premier-league-statement-manchester-city-fc/'],
+      ['Premier League statement on the appeal, 2 Oct 2026', 'https://www.premierleague.com/en/news/4729207/premier-league-statement-manchester-city-fc-appeal-decision-of-independent-commission-02-october-2026'],
+      ['The Ledger, charge by charge', 'ledger.html']
+    ],
+    beats: [
+      {d:5600, cap:'An independent Commission has ruled on Manchester City. Here’s what it *found*.', scene:{type:'stat', count:[0,9], label:'seasons charged', sub:'2009/10 → 2017/18'}},
+      {d:6400, cap:'The sponsors’ money? Mostly *wasn’t* the sponsors’.', scene:{type:'stack'}},
+      {d:5200, cap:'Income overstated by over *£830m*, the Commission found.', scene:{type:'stat', count:[0,830], pre:'£', suf:'m+', label:'income overstated', sub:'sponsorship, nine seasons', gold:true}},
+      {d:6800, cap:'And owner-paid costs went *missing* from the club’s books.', scene:{type:'book', rows:[
+        ['Arrangement A','£8.866m'],['Arrangement B','£7.4m'],['Arrangement C','£0.5m'],['Fordham costs','£49.414m']]}},
+      {d:6200, cap:'Put the books back together: UEFA’s break-even rule, missed. *Every* season.', scene:{type:'seasons', mode:'x', title:'UEFA break-even'}},
+      {d:5600, cap:'The Premier League’s own losses limit, too. *Every* season.', scene:{type:'seasons', mode:'x', title:'PL limit · £105m over 3 yrs'}},
+      {d:7200, cap:'The investigation? Concerted efforts to *frustrate* it, the Commission found.', scene:{type:'charges', rows:[
+        ['1(A)','Sponsorship income',1],['1(B)','Payments off the books',1],['1(C)','Fordham',1],['1(D)','Related parties',1],['2','UEFA rules',1],['3','PL losses limit',1],['4(A,C,D)','Cooperation',2],['4(B)','One cooperation count',0]]}},
+      {d:5800, cap:'Some of City’s key witnesses were *dishonest*, it concluded.', scene:{type:'stat', count:[0,27], label:'witnesses of fact heard', sub:'some of City’s, the Commission found, gave evidence they knew was untrue'}},
+      {d:6200, cap:'Inside those nine seasons, City won the league *three* times.', scene:{type:'seasons', mode:'titles', title:'League champions', titles:['11/12','13/14','17/18']}},
+      {d:6600, cap:'What happens to those titles? *Not decided.*', scene:{type:'status'}},
+      {d:5400, cap:'Every finding, charge by charge, *sourced*.', scene:{type:'end', n:2, sub:'The Ledger · City deny every charge and have appealed. Source: Premier League statement, 29 Sep 2026.'}}
+    ]
+  },
+  {
     id: 'mw9-liv', fixture: 9, date: '2026-11-01',
     title: 'How Arsenal won at Anfield with 43% of the ball',
     kicker: 'Liverpool 0–1 Arsenal · Premier League',
@@ -289,11 +325,62 @@ const EXPLAINERS = [
   function end(beat){
     const el = html('div','xp-end', `<div class="wm">The <em>Non-</em><br>Negotiables</div>
       <div class="url">thenonnegotiablog.com</div>
-      <div class="sub">Explainer no.${beat.scene.n} · an independent fan site, not the club’s. Every number sourced.</div>`);
+      <div class="sub">${beat.scene.sub ? beat.scene.sub : `Explainer no.${beat.scene.n} \u00b7 an independent fan site, not the club\u2019s. Every number sourced.`}</div>`);
     return {el};
   }
 
-  const SCENES = {note, board, pitch, poss, ft, end};
+  /* ---- ledger scenes (stat, stack, book, seasons, charges, status) ---- */
+  function stat(beat){
+    const sc = beat.scene, el = html('div','xp-stat' + (sc.gold ? ' gold' : ''));
+    el.innerHTML = `<div class="xp-grid" aria-hidden="true"></div><div class="xp-statin"><b>${sc.pre||''}<span>${sc.count[0]}</span>${sc.suf||''}</b><small></small>${sc.sub ? '<i></i>' : ''}</div>`;
+    el.querySelector('small').textContent = sc.label;
+    if (sc.sub) el.querySelector('i').textContent = sc.sub;
+    const n = el.querySelector('b span');
+    return {el, upd: p => { n.textContent = Math.round(lerp(sc.count[0], sc.count[1], ease(seg(p, .1, .55)))); }};
+  }
+  function stack(beat){
+    const el = html('div','xp-stack');
+    el.innerHTML = `<p class="xp-illu">Illustration · not to scale</p>
+      <div class="xp-flow">
+        <div class="xp-src"><div class="xp-blk sp" style="animation-delay:${ms(beat,.12)}"><b>Sponsor</b><span>paid a fraction</span></div>
+          <div class="xp-blk ow" style="animation-delay:${ms(beat,.34)}"><b>Owner</b><span>paid the rest</span></div></div>
+        <div class="xp-arrow" style="animation-delay:${ms(beat,.5)}">→</div>
+        <div class="xp-col" style="animation-delay:${ms(beat,.55)}"><div class="xp-fill"></div><b>Booked as</b><span>commercial revenue</span></div>
+      </div>`;
+    const fill = el.querySelector('.xp-fill');
+    return {el, upd: p => { fill.style.height = (ease(seg(p, .58, .85)) * 100) + '%'; }};
+  }
+  function book(beat){
+    const sc = beat.scene, el = html('div','xp-book');
+    el.innerHTML = `<div class="xp-bookpg"><div class="xp-bookh"><span>Paid by the owner</span><span>On the club’s books?</span></div>
+      ${sc.rows.map((r,k) => `<div class="xp-brow" style="animation-delay:${ms(beat,.1 + k*.14)}"><span>${r[0]}</span><b>${r[1]}</b>
+        <em style="animation-delay:${ms(beat,.18 + k*.14)}">Not there</em></div>`).join('')}</div>`;
+    return {el};
+  }
+  const SEASONS9 = ['09/10','10/11','11/12','12/13','13/14','14/15','15/16','16/17','17/18'];
+  function seasons(beat){
+    const sc = beat.scene, el = html('div','xp-seasons xp-m-' + sc.mode);
+    el.innerHTML = `<p class="xp-stitle">${sc.title}</p><div class="xp-sgrid">${SEASONS9.map((y,k) => {
+      const t = sc.mode === 'titles' && sc.titles.includes(y);
+      return `<div class="xp-cell${t ? ' won' : ''}"><span>${y}</span>${sc.mode === 'x' ? `<i style="animation-delay:${ms(beat,.12 + k*.07)}">✕</i>` : t ? `<i style="animation-delay:${ms(beat,.25 + sc.titles.indexOf(y)*.15)}">Champions</i>` : ''}</div>`; }).join('')}</div>`;
+    return {el};
+  }
+  function charges(beat){
+    const sc = beat.scene, el = html('div','xp-charges');
+    const V = ['Not proven','Proven','Mostly proven'];
+    el.innerHTML = sc.rows.map((r,k) => `<div class="xp-crow" style="animation-delay:${ms(beat,.06 + k*.075)}"><b>${r[0]}</b><span>${r[1]}</span>
+      <em class="v${r[2]}" style="animation-delay:${ms(beat,.14 + k*.075)}">${V[r[2]]}</em></div>`).join('');
+    return {el};
+  }
+  function status(beat){
+    const el = html('div','xp-status');
+    el.innerHTML = [['Liability','Decided','d'],['Sanction','Not decided','w'],['Appeal','Lodged · in private','w']].map((r,k) =>
+      `<div class="xp-srow" style="animation-delay:${ms(beat,.08 + k*.16)}"><span>${r[0]}</span><b class="${r[2]}">${r[1]}</b></div>`).join('') +
+      `<p class="xp-snote" style="animation-delay:${ms(beat,.6)}">City deny every charge.</p>`;
+    return {el};
+  }
+
+  const SCENES = {note, board, pitch, poss, ft, end, stat, stack, book, seasons, charges, status};
 
   /* ---------- clock ---------- */
   function show(k){
@@ -372,6 +459,6 @@ const EXPLAINERS = [
     requestAnimationFrame(fit);
   }
   const hashId = decodeURIComponent(location.hash.slice(1));
-  load(hashId, EXPORT);
+  load(stageEl.dataset.xp || hashId, EXPORT);
   last = performance.now(); requestAnimationFrame(frame);
 })();
