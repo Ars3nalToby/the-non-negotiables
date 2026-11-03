@@ -597,7 +597,8 @@ const EXPLAINERS = [
   /* Bars: scorers, counted from the scorers strings. */
   function bars(beat){
     const sc = beat.scene, G = games(sc.comp, sc.upto), tally = {};
-    G.forEach(g => g.scorers.split(',').map(s => s.replace(/\(.*?\)/g,'').trim()).filter(Boolean).forEach(s => tally[s] = (tally[s]||0) + 1));
+    // by surname: FIXTURES spells some players two ways ('Bruno Guimarães' / 'Guimarães')
+    G.forEach(g => g.scorers.split(',').map(s => s.replace(/\(.*?\)/g,'').trim().split(' ').pop()).filter(Boolean).forEach(s => tally[s] = (tally[s]||0) + 1));
     const rows = Object.entries(tally).sort((a,b) => b[1]-a[1]), max = rows.length ? rows[0][1] : 1;
     const el = html('div','xp-bars');
     el.innerHTML = rows.map(([n,v],k) => `<div class="xp-bar${v === max ? ' top' : ''}" style="animation-delay:${ms(beat,.05 + k*.05)}">

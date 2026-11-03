@@ -229,7 +229,7 @@
 .xp-chip b{font-size:.72em;font-weight:800;line-height:1.1;font-variation-settings:'wdth' 85}
 .xp-chip em{font-style:normal;font-size:1.5em;font-weight:900;font-variant-numeric:tabular-nums;font-variation-settings:'wdth' 75;line-height:1}
 .xp-chips.few .xp-chip{flex-direction:row;align-items:center;gap:.6em}.xp-chips.few .xp-chip b{flex:1;font-size:1em}
-.xp-chip.dim{filter:saturate(.2);opacity:.32!important}
+.xp-chip.dim{filter:saturate(.15) brightness(.42)}
 .xp-chip i{position:absolute;right:.35em;bottom:.4em;font:800 .44em 'Archivo',sans-serif;font-style:normal;letter-spacing:.08em;text-transform:uppercase;background:#E3B95A;color:#0A1622;padding:.3em .45em;opacity:0;animation:xpStampIn .3s cubic-bezier(.2,1.4,.4,1) both}
 
 .xp-bars{position:absolute;inset:29% 7% 13%;display:flex;flex-direction:column;justify-content:center;gap:.42em}
