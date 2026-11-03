@@ -120,6 +120,23 @@ explainers.html            Explainers: ~60-second, story-format (9:16) match
                         hub card names the latest one. For socials:
                         explainers.html?export=1#<id> plays one full-frame;
                         record it at 1080x1920 with Playwright -> MP4.
+                        Frame-exact: XP.seek(ms) draws any moment (CSS
+                        animations included) and XP.total() gives the
+                        length, so record by stepping 1/30s, not in real
+                        time. &lang=zh swaps captions for each beat's
+                        optional `zh` (and `labelZh`/`subZh`) for RedNote
+                        cuts; the page itself is English only.
+                        Season scenes (terrain, wall, chips, bars, clock)
+                        read FIXTURES/CL results at render time ('W 3-0' =
+                        Arsenal first), so they can't drift from the
+                        results. terrain = goals per match as height (says
+                        so on its face), wall = goals as a COUNT, not
+                        where they went. clock shows Prague, London and
+                        the visitor's NN_TZ zone, never a fixed city.
+                        window.XP_EXTRA (loaded before explainers.js)
+                        adds explainers that load by id but stay off the
+                        list; promo cuts use that plus the `shot` scene
+                        (a phone-framed screenshot of one of our pages).
 sound.js                  Site soundtrack: the two tracks in assets/audio as
                         one playlist, a "Soundtrack" pill injected into every
                         masthead (app.js loads this file; no per-page tag).

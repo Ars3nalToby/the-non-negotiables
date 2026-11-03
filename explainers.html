@@ -149,7 +149,8 @@ window.XP_ONLOAD = x => {
     <p class="standfirst">${esc(x.standfirst)}</p>
     <ol>${x.points.map(p => `<li>${esc(p)}</li>`).join('')}</ol>
     <p class="xp-src">Numbers from: ${x.sources.map(s => `<a href="${s[1]}" target="_blank" rel="noopener noreferrer">${esc(s[0])}</a>`).join(' · ')}.
-    Tactics boards are illustrations of what the match reports describe, not tracking data.
+    ${x.beats.some(b => b.scene.type === 'board') ? 'Tactics boards are illustrations of what the match reports describe, not tracking data.' : ''}
+    ${x.beats.some(b => b.scene.type === 'terrain') ? 'The landscape is goals per match drawn as height, not a picture of play.' : ''}
     ${f ? `<br><a href="timetable.html">Full fixture list &rarr;</a>` : ''}</p>`;
   document.querySelectorAll('.xp-card').forEach(c => c.setAttribute('aria-current', c.dataset.id === x.id));
   if (location.hash.slice(1) !== x.id) history.replaceState(null, '', '#' + x.id);
@@ -157,7 +158,7 @@ window.XP_ONLOAD = x => {
 </script>
 <script src="explainers.js"></script>
 <script>
-$('#xp-list').innerHTML = XP.list.map(x => `<button type="button" class="xp-card" data-id="${x.id}" aria-current="${location.hash.slice(1) === x.id || x === XP.list[0]}">
+$('#xp-list').innerHTML = XP.list.map(x => `<button type="button" class="xp-card" data-id="${x.id}" aria-current="${location.hash.slice(1) === x.id}">
   <span>${esc(x.date)} · ${x.beats.length} beats</span><b>${esc(x.title)}</b><span>${esc(x.kicker)}</span></button>`).join('');
 document.querySelectorAll('.xp-card').forEach(c => c.addEventListener('click', () => {
   XP.load(c.dataset.id, true); $('#xp-stage').scrollIntoView({behavior:'smooth', block:'center'});

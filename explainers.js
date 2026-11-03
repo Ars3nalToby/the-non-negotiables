@@ -19,6 +19,86 @@
    ============================================================ */
 const EXPLAINERS = [
   {
+    /* Preview. Kick-off comes from CL (app.js) and is shown in the
+       visitor's own zone, so the caption never names a city. */
+    id: 'cl4-sla', date: '2026-11-04',
+    title: 'Slavia away: the record, the absentee and the alarm',
+    kicker: 'Preview · Champions League matchday 4',
+    standfirst: 'Three games into the league phase and unbeaten, Arsenal go to Prague, where they won 3–0 a year ago. Here is where the campaign stands, who is missing, and what time you need to be awake.',
+    points: [
+      'League phase so far: won 1–0 in Naples, beat Lille 3–0 at home, drew 2–2 in Munich. Seven points from nine.',
+      'Six goals, five different scorers: Ødegaard, Timber, Eze (twice), Saka and Rice. Two conceded, both in Munich.',
+      'Last season’s visit finished Slavia 0–3 Arsenal, Mikel Merino scoring twice.',
+      'Bukayo Saka is out. Kick-off is 20:00 in London, 21:00 in Prague.'
+    ],
+    sources: [
+      ['UEFA Champions League fixtures', 'https://www.uefa.com/uefachampionsleague/fixtures-results/'],
+      ['Yahoo Sports team news, 3 Nov 2026', 'https://sports.yahoo.com/articles/slavia-praha-vs-arsenal-early-063500884.html'],
+      ['This site’s Champions League page', 'europe.html']
+    ],
+    beats: [
+      {d:4800, cap:'Champions League. Matchday *four*. Prague.', zh:'欧冠 联赛阶段 第 *4* 轮。 布拉格。',
+        scene:{type:'note', lines:[{t:'UCL · matchday 4', at:.05},{t:'Slavia Praha (away)', at:.3},{t:'Fortuna Arena, Prague', at:.55, cls:'dim'}]}},
+      {d:6400, cap:'So far: Naples won, Lille *battered*, Munich drawn.', zh:'目前： 那不勒斯 赢了， 里尔 *血洗*， 慕尼黑 打平。',
+        scene:{type:'chips', comp:'cl', upto:3}},
+      {d:4800, cap:'*Seven* points from nine.', zh:'9 分 拿了 *7* 分。',
+        scene:{type:'stat', count:[0,7], label:'points from 9', labelZh:'分 / 满分 9', sub:'Won 2 · Drawn 1 · Lost 0'}},
+      {d:5600, cap:'Six goals. *Five* different scorers.', zh:'6 个进球， *5* 个 不同的进球者。',
+        scene:{type:'bars', comp:'cl', upto:3}},
+      {d:5600, cap:'Last time here? *3–0*. Merino twice.', zh:'上次来这里？ *3–0*。 梅里诺 梅开二度。',
+        scene:{type:'note', lines:[{t:'Nov 2025 · Prague', at:.05},{t:'Slavia 0–3 Arsenal', at:.3},{t:'Merino ×2 ✓', at:.6, cls:'red'}]}},
+      {d:4600, cap:'This time, no *Saka*.', zh:'这次， 没有 *萨卡*。',
+        scene:{type:'note', lines:[{t:'Team news', at:.05},{t:'Saka: out', at:.35, cls:'red'}]}},
+      {d:7600, cap:'Eight in London. What time is it where *you* are?', zh:'伦敦 晚上 8 点。 你那边 *几点*？',
+        scene:{type:'clock', comp:'cl', md:4}},
+      {d:5000, cap:'Set the *alarm*.', zh:'*定好闹钟*。', scene:{type:'end', n:4}}
+    ]
+  },
+  {
+    /* Built from FIXTURES (app.js) at render time: every peak and pit is
+       a real scoreline, so there is nothing here to go stale or invent.
+       The terrain is a picture of goals per match, not of play. */
+    id: 'pl9-terrain', date: '2026-11-04',
+    title: 'Nine games, drawn as a landscape',
+    kicker: 'Season so far · Premier League matchdays 1–9',
+    standfirst: 'Every league match so far turned into terrain: goals scored push the ground up, goals conceded dig it out. Eight hills, one hole, and a defence that has made the place look very flat from the other side.',
+    points: [
+      'Eight wins from nine: 24 points from a possible 27. The only defeat was 0–3 at Brighton on matchday 5.',
+      'Fourteen goals scored, five conceded, and three of those five came in that one afternoon at Brighton.',
+      'Six clean sheets in nine. Three of the wins finished 1–0: Villa away, Forest away, Anfield.',
+      'Eight different scorers. Havertz and Saka have three each, Ødegaard and Guimarães two.'
+    ],
+    sources: [
+      ['Arsenal.com fixtures and results', 'https://www.arsenal.com/fixtures'],
+      ['This site’s results list', 'timetable.html']
+    ],
+    beats: [
+      {d:5400, cap:'Nine league games. Let’s draw them as a *landscape*.', zh:'九场 联赛。 把它们 画成 一片 *地形*。',
+        scene:{type:'terrain', n:9, upto:[0,0], rot:[-.62,-.5]}},
+      {d:7200, cap:'Goals scored push the ground *up*. Four wins, four hills.', zh:'进球 把地面 *顶起来*。 四连胜， 四座山。',
+        scene:{type:'terrain', n:9, upto:[0,4], rot:[-.5,-.32]}},
+      {d:5600, cap:'Then *Brighton*. 0–3. The one hole in the map.', zh:'然后是 *布莱顿*。 0–3。 地图上 唯一的 坑。',
+        scene:{type:'terrain', n:9, upto:[4,5], focus:4, rot:[-.32,-.22]}},
+      {d:6800, cap:'Since then? Four more hills. Four more *wins*.', zh:'之后呢？ 又是 四座山， 四场 *胜利*。',
+        scene:{type:'terrain', n:9, upto:[5,9], rot:[-.22,-.02]}},
+      {d:4800, cap:'That’s *24* points from a possible 27.', zh:'27 分里 拿了 *24* 分。',
+        scene:{type:'stat', count:[0,24], label:'points from 27', labelZh:'分 / 满分 27', sub:'Won 8 · Drawn 0 · Lost 1'}},
+      {d:5200, cap:'*Fourteen* goals scored.', zh:'进了 *14* 球。',
+        scene:{type:'wall', comp:'pl', n:9, side:'for', label:'goals scored', labelZh:'进球'}},
+      {d:5800, cap:'Five conceded. Three of them in *one* afternoon.', zh:'丢了 5 球， 其中 3 个 在 *同一个* 下午。',
+        scene:{type:'wall', comp:'pl', n:9, side:'against', label:'goals conceded', labelZh:'失球'}},
+      {d:5600, cap:'*Six* clean sheets in nine.', zh:'九场 *六场* 零封。',
+        scene:{type:'chips', comp:'pl', upto:9, mark:'cs'}},
+      {d:5600, cap:'Three of the wins were *1–0*. Not pretty. Points.', zh:'其中 三场 都是 *1–0*。 不好看， 但有分。',
+        scene:{type:'chips', comp:'pl', upto:9, mark:'one'}},
+      {d:5800, cap:'*Eight* different scorers.', zh:'*8 个* 不同的 进球者。',
+        scene:{type:'bars', comp:'pl', upto:9}},
+      {d:6200, cap:'Eight wins. One very bad day by the *sea*.', zh:'八场 胜利。 一个 在 *海边* 的 糟糕下午。',
+        scene:{type:'terrain', n:9, upto:[9,9], rot:[-.02,.55], spin:true}},
+      {d:5000, cap:'Every game, *mapped*.', zh:'每一场， 都 *画* 出来。', scene:{type:'end', n:3}}
+    ]
+  },
+  {
     /* Man City: findings only. Every claim is "the Commission found" or a
        plain matter of record (seasons, titles, status). No sanction guess,
        no claim the titles were won BECAUSE of the breaches — that is not
@@ -111,6 +191,8 @@ const EXPLAINERS = [
   const no = name => { const s = (typeof SQUAD!=='undefined' ? SQUAD : []).find(p => p.name === name); return s ? s.no : ''; };
   const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const EXPORT = /[?&]export=1/.test(location.search);
+  const LANG = (location.search.match(/[?&]lang=(\w+)/) || [])[1] || 'en';   // export-only: ?lang=zh uses beat.zh
+  const ALL = EXPLAINERS.concat(window.XP_EXTRA || []);   // extras (promo cuts) load by id but stay off the list
   const html = (tag, cls, inner) => { const e = document.createElement(tag); if (cls) e.className = cls; if (inner != null) e.innerHTML = inner; return e; };
   const ms = (beat, f) => Math.round((f||0) * beat.d) + 'ms';
 
@@ -127,7 +209,7 @@ const EXPLAINERS = [
 
   /* ---------- scenes ---------- */
   function caption(beat){
-    const words = beat.cap.split(' ');
+    const words = ((LANG === 'zh' && beat.zh) || beat.cap).split(' ');
     const step = Math.min(200, (beat.d * .45) / words.length);
     capEl.innerHTML = '';
     words.forEach((w,k) => {
@@ -325,7 +407,7 @@ const EXPLAINERS = [
   function end(beat){
     const el = html('div','xp-end', `<div class="wm">The <em>Non-</em><br>Negotiables</div>
       <div class="url">thenonnegotiablog.com</div>
-      <div class="sub">${beat.scene.sub ? beat.scene.sub : `Explainer no.${beat.scene.n} \u00b7 an independent fan site, not the club\u2019s. Every number sourced.`}</div>`);
+      <div class="sub">${beat.scene.sub ? L(beat.scene,"sub") : `Explainer no.${beat.scene.n} \u00b7 an independent fan site, not the club\u2019s. Every number sourced.`}</div>`);
     return {el};
   }
 
@@ -333,7 +415,7 @@ const EXPLAINERS = [
   function stat(beat){
     const sc = beat.scene, el = html('div','xp-stat' + (sc.gold ? ' gold' : ''));
     el.innerHTML = `<div class="xp-grid" aria-hidden="true"></div><div class="xp-statin"><b>${sc.pre||''}<span>${sc.count[0]}</span>${sc.suf||''}</b><small></small>${sc.sub ? '<i></i>' : ''}</div>`;
-    el.querySelector('small').textContent = sc.label;
+    el.querySelector('small').textContent = L(sc,'label');
     if (sc.sub) el.querySelector('i').textContent = sc.sub;
     const n = el.querySelector('b span');
     return {el, upd: p => { n.textContent = Math.round(lerp(sc.count[0], sc.count[1], ease(seg(p, .1, .55)))); }};
@@ -380,7 +462,186 @@ const EXPLAINERS = [
     return {el};
   }
 
-  const SCENES = {note, board, pitch, poss, ft, end, stat, stack, book, seasons, charges, status};
+  /* ---- season scenes (terrain, wall, chips, bars, clock, shot) ----
+     All read real results from FIXTURES / CL (app.js) at render time:
+     'W 3-0' is always Arsenal's score first. */
+  const games = (comp, upto) => {
+    const src = comp === 'cl' ? (typeof CL!=='undefined' ? CL : []) : (typeof FIXTURES!=='undefined' ? FIXTURES : []);
+    return src.filter(g => g.result).slice(0, upto).map(g => {
+      const m = g.result.match(/^([WDL])\s*(\d+)-(\d+)/) || [];
+      const name = comp === 'cl' ? g.name : ((typeof CLUBS!=='undefined' && CLUBS[g.opp]) ? CLUBS[g.opp].name : g.opp);
+      return {r:m[1], f:+m[2], a:+m[3], v:g.v, name, code:(g.opp || name).slice(0,3).toUpperCase(), scorers:g.scorers || ''};
+    });
+  };
+  const L = (sc, k) => (LANG === 'zh' && sc[k+'Zh']) || sc[k];
+  const mix = (c1, c2, q) => c1.map((v,k) => Math.round(v + (c2[k]-v)*q));
+  const rgb = c => `rgb(${c[0]},${c[1]},${c[2]})`;
+
+  /* Terrain: the season as a surface. Along the long axis, one band per
+     matchday; goals for raise it (red), goals against dig it (navy).
+     Painted on a 2D canvas with a hand-rolled projection: no library. */
+  function terrain(beat){
+    const sc = beat.scene, G = games('pl', sc.n), N = G.length || 1;
+    const el = html('div','xp-ter'), cv = document.createElement('canvas'); el.append(cv);
+    el.append(html('p','xp-illu xp-terkey','Height = goals · peaks scored, pits conceded'));
+    const strip = html('div','xp-terstrip'); el.append(strip);
+    G.forEach((g,k) => { const c = html('span', 'r' + g.r + (sc.focus === k ? ' on' : ''), `<b>${g.f}–${g.a}</b><i>${g.code}</i>`); strip.append(c); });
+    const ctx = cv.getContext('2d'), NX = 84, NY = 26;
+    const CREAM = [236,229,206], RED = [239,1,7], DEEP = [150,0,6], NAVY = [10,38,88];
+    const hAt = (u, v, rev) => {
+      let h = 0;
+      for (let k=0;k<N;k++) {
+        const amt = ease(clamp(rev - k)); if (!amt) continue;
+        const cx = (k + .5) / N, du = (u - cx) * N, env = Math.exp(-Math.pow((v - .5) / .42, 2));
+        const g = G[k], wob = 1 + .18 * Math.sin(v * 9 + k * 2.1);
+        h += amt * env * (g.f * .12 * Math.exp(-du*du / .2) * wob - g.a * .12 * Math.exp(-du*du / .24));
+      }
+      return h;
+    };
+    let W = 0, Hh = 0;
+    const size = () => { const r = el.getBoundingClientRect(), d = Math.min(2, devicePixelRatio || 1);
+      W = cv.width = Math.max(2, Math.round(r.width * d)); Hh = cv.height = Math.max(2, Math.round(r.height * d)); };
+    const upd = p => {
+      if (!W) size();
+      const rev = lerp(sc.upto[0], sc.upto[1], ease(seg(p, .08, .9)));
+      const yaw = lerp(sc.rot[0], sc.rot[1], sc.spin ? p : ease(p)), tilt = .9, ct = Math.cos(tilt), st = Math.sin(tilt);
+      const S = W * .52, cy0 = Hh * .5, cx0 = W / 2, LEN = 1.5, DEP = 1.0;
+      const P = [];   // projected grid
+      for (let j=0;j<=NY;j++) for (let i2=0;i2<=NX;i2++) {
+        const u = i2/NX, v = j/NY, h = hAt(u, v, rev);
+        const x = (u - .5) * LEN, y = (v - .5) * DEP;
+        const X = x*Math.cos(yaw) - y*Math.sin(yaw), Y = x*Math.sin(yaw) + y*Math.cos(yaw);
+        P.push([cx0 + X*S, cy0 + Y*S*ct - h*S*st, Y, h, x, y]);
+      }
+      ctx.clearRect(0,0,W,Hh);
+      // shadow
+      ctx.save(); ctx.translate(cx0, cy0 + W*.12); ctx.scale(1, .32); ctx.fillStyle = 'rgba(0,0,0,.45)';
+      ctx.beginPath(); ctx.arc(0, 0, W*.46, 0, 7); ctx.filter = 'blur(' + (W*.03) + 'px)'; ctx.fill(); ctx.restore();
+      const quads = [];
+      for (let j=0;j<NY;j++) for (let i2=0;i2<NX;i2++) {
+        const a = j*(NX+1)+i2, q = [P[a], P[a+1], P[a+NX+2], P[a+NX+1]];
+        quads.push([(q[0][2]+q[2][2])/2, q]);
+      }
+      quads.sort((m,n) => m[0]-n[0]);
+      for (const [,q] of quads) {
+        const h = (q[0][3]+q[1][3]+q[2][3]+q[3][3])/4;
+        const dx = q[1][3]-q[0][3], dy = q[3][3]-q[0][3];
+        const sh = clamp(.82 - dx*9 + dy*5);   // cheap slope light, from the left
+        let c = h > .004 ? mix(CREAM, h > .3 ? DEEP : RED, clamp(h/.12)) : h < -.004 ? mix(CREAM, NAVY, clamp(-h/.12)) : CREAM;
+        c = mix([8,12,20], c, .55 + .45*sh);
+        ctx.fillStyle = rgb(c); ctx.strokeStyle = rgb(c); ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(q[0][0],q[0][1]); for (let k=1;k<4;k++) ctx.lineTo(q[k][0],q[k][1]); ctx.closePath(); ctx.fill(); ctx.stroke();
+      }
+      // matchday seams + score flags above each revealed peak
+      ctx.lineWidth = Math.max(1, W/700); ctx.strokeStyle = 'rgba(10,20,34,.35)';
+      for (let k=1;k<N;k++) { const ii = Math.round(k/N*NX); ctx.beginPath();
+        for (let j=0;j<=NY;j++) { const pt = P[j*(NX+1)+ii]; j ? ctx.lineTo(pt[0],pt[1]) : ctx.moveTo(pt[0],pt[1]); } ctx.stroke(); }
+      ctx.textAlign = 'center'; ctx.font = `800 ${Math.round(W*.034)}px Archivo, sans-serif`;
+      for (let k=0;k<N;k++) {
+        const amt = clamp(rev - k); if (amt < .6) continue;
+        const ii = Math.round((k+.5)/N*NX), pt = P[Math.round(NY/2)*(NX+1)+ii], g = G[k];
+        const yy = Math.min(pt[1], P[ii][1]) - W*.05, on = sc.focus === k;
+        ctx.globalAlpha = clamp((amt - .6) / .4);
+        ctx.fillStyle = on ? '#E3B95A' : '#fff'; ctx.fillText(`${g.f}–${g.a}`, pt[0], yy);
+        ctx.fillStyle = 'rgba(255,255,255,.45)'; ctx.fillRect(pt[0]-.5, yy + W*.008, 1, Math.max(0, pt[1] - yy - W*.012));
+        ctx.globalAlpha = 1;
+      }
+      [...strip.children].forEach((c,k) => c.style.opacity = clamp(rev - k) > .5 ? 1 : .18);
+    };
+    new ResizeObserver(() => { W = 0; }).observe(el);
+    return {el, upd};
+  }
+
+  /* Wall: a goal, face on. One ball in the net per goal, as a COUNT:
+     positions are spread deterministically, not where the goals went. */
+  function wall(beat){
+    const sc = beat.scene, G = games(sc.comp, sc.n), el = html('div','xp-wall');
+    const balls = []; G.forEach((g,k) => { for (let j=0;j<(sc.side === 'for' ? g.f : g.a);j++) balls.push({k, g}); });
+    const n = balls.length, svg = document.createElementNS(NS,'svg');
+    svg.setAttribute('viewBox','0 0 400 200');
+    let net = ''; for (let x=24;x<=376;x+=11) net += `M${x} 30V170`; for (let y=30;y<=170;y+=11) net += `M24 ${y}H376`;
+    svg.innerHTML = `<rect x="0" y="170" width="400" height="30" fill="#2F7A33"/><path d="${net}" stroke="rgba(255,255,255,.16)" stroke-width="1"/>
+      <path d="M18 172V24H382V172" fill="none" stroke="#fff" stroke-width="7" stroke-linejoin="round"/><g id="b"></g>`;
+    const bg = svg.querySelector('#b'), tone = sc.side === 'for' ? '#F4F6F8' : '#7C8DA6';
+    const pos = balls.map((b,k) => { const r = (k*0.61803 + .13) % 1, s = (k*0.381966 + .47) % 1;
+      return [44 + r*312, 52 + s*104]; });
+    const nodes = pos.map(() => { const g = document.createElementNS(NS,'g');
+      g.innerHTML = `<circle r="10.5" fill="${tone}" stroke="#0A1622" stroke-width="1.6"/><path d="M-4-3l4-3 4 3-1.5 4.5h-5z" fill="#0A1622" opacity=".75"/>`; bg.append(g); return g; });
+    el.append(svg);
+    const cnt = html('div','xp-count' + (sc.side === 'for' ? '' : ' gold'), `<b>0</b><small></small>`); cnt.querySelector('small').textContent = L(sc,'label'); el.append(cnt);
+    const key = html('div','xp-wkey'); el.append(key);
+    // which games they came from, as small tags
+    const per = G.map(g => sc.side === 'for' ? g.f : g.a);
+    key.innerHTML = G.map((g,k) => `<span class="${per[k] ? '' : 'z'}"><b>${per[k]}</b>${g.code}</span>`).join('');
+    return {el, upd: p => {
+      let shown = 0;
+      nodes.forEach((g,k) => { const q = clamp(seg(p, .08 + k*(.6/Math.max(1,n)), .2 + k*(.6/Math.max(1,n))));
+        const [x,y] = pos[k], yy = lerp(-30, y, ease(q)) + Math.sin(q*Math.PI)*-12;
+        g.setAttribute('transform', `translate(${x.toFixed(1)} ${yy.toFixed(1)})`); g.style.opacity = q > 0 ? 1 : 0; if (q >= 1) shown++; });
+      cnt.firstChild.textContent = shown;
+    }};
+  }
+
+  /* Chips: one card per game, in order. mark: 'cs' clean sheets, 'one' 1-0s. */
+  function chips(beat){
+    const sc = beat.scene, G = games(sc.comp, sc.upto), el = html('div','xp-chips' + (G.length > 4 ? '' : ' few'));
+    const hit = g => sc.mark === 'cs' ? g.a === 0 : sc.mark === 'one' ? (g.f === 1 && g.a === 0) : true;
+    const tagTxt = {cs:'Clean sheet', one:'1–0'}[sc.mark];
+    el.innerHTML = G.map((g,k) => `<div class="xp-chip r${g.r}${sc.mark && !hit(g) ? ' dim' : ''}" style="animation-delay:${ms(beat,.05 + k*.06)}">
+      <span>${g.v === 'H' ? 'Home' : 'Away'}</span><b>${esc2(g.name)}</b><em>${g.f}–${g.a}</em>
+      ${sc.mark && hit(g) ? `<i style="animation-delay:${ms(beat,.45 + k*.04)}">${tagTxt}</i>` : ''}</div>`).join('');
+    return {el};
+  }
+  const esc2 = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  /* Bars: scorers, counted from the scorers strings. */
+  function bars(beat){
+    const sc = beat.scene, G = games(sc.comp, sc.upto), tally = {};
+    G.forEach(g => g.scorers.split(',').map(s => s.replace(/\(.*?\)/g,'').trim()).filter(Boolean).forEach(s => tally[s] = (tally[s]||0) + 1));
+    const rows = Object.entries(tally).sort((a,b) => b[1]-a[1]), max = rows.length ? rows[0][1] : 1;
+    const el = html('div','xp-bars');
+    el.innerHTML = rows.map(([n,v],k) => `<div class="xp-bar${v === max ? ' top' : ''}" style="animation-delay:${ms(beat,.05 + k*.05)}">
+      <span>${esc2(n)}</span><i><u style="--w:${(v/max*100).toFixed(1)}%;animation-delay:${ms(beat,.12 + k*.05)}"></u></i><b>${v}</b></div>`).join('');
+    return {el};
+  }
+
+  /* Clock: the same kick-off in three places. The third is the
+     visitor's chosen zone (NN_TZ from app.js), never a hard-coded city. */
+  function clock(beat){
+    const sc = beat.scene, src = sc.comp === 'cl' ? (typeof CL!=='undefined' ? CL : []) : (typeof FIXTURES!=='undefined' ? FIXTURES : []);
+    const fx = src.find(g => sc.comp === 'cl' ? g.md === sc.md : g.n === sc.n), ko = new Date(fx ? fx.ko : Date.now());
+    const me = (window.NN_TZ && window.NN_TZ.id) || 'Australia/Brisbane', meCity = (window.NN_TZ && window.NN_TZ.city) || 'Brisbane';
+    const zones = [['Prague','Europe/Prague'],['London','Europe/London'],[meCity, me]].filter((z,k,a) => a.findIndex(y => y[1] === z[1]) === k);
+    const el = html('div','xp-clocks');
+    const parts = tz => { const o = {}; new Intl.DateTimeFormat('en-GB',{timeZone:tz,hour:'2-digit',minute:'2-digit',weekday:'short',day:'numeric',month:'short',hourCycle:'h23'})
+      .formatToParts(ko).forEach(x => o[x.type] = x.value); return o; };
+    const faces = zones.map(([city,tz],k) => { const o = parts(tz), mine = k === zones.length - 1 && zones.length === 3;
+      const d = html('div','xp-clk' + (mine ? ' me' : ''));
+      let ticks = ''; for (let t2=0;t2<12;t2++) ticks += `<path d="M0 -40V${t2%3 ? -36 : -32}" transform="rotate(${t2*30})"/>`;
+      d.innerHTML = `<svg viewBox="-46 -46 92 92"><circle r="44" fill="#0E1826" stroke="${mine ? '#E3B95A' : '#2A3A50'}" stroke-width="2.5"/>
+        <g stroke="#93A0B2" stroke-width="2">${ticks}</g><path class="hh" d="M0 4V-22" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+        <path class="mm" d="M0 6V-34" stroke="${mine ? '#E3B95A' : '#EF0107'}" stroke-width="3" stroke-linecap="round"/><circle r="3.5" fill="#fff"/></svg>
+        <div><small>${esc2(city)}</small><b>${o.hour}:${o.minute}</b><span>${o.weekday} ${o.day} ${o.month}</span></div>`;
+      el.append(d); return {d, h:+o.hour, m:+o.minute};
+    });
+    return {el, upd: p => faces.forEach((f,k) => {
+      const q = ease(seg(p, .06 + k*.12, .45 + k*.12)), tot = (f.h*60 + f.m) * q;
+      f.d.querySelector('.hh').setAttribute('transform', `rotate(${(tot/720*360).toFixed(2)})`);
+      f.d.querySelector('.mm').setAttribute('transform', `rotate(${(tot%60*6).toFixed(2)})`);
+      f.d.style.opacity = q > 0 ? 1 : .25;
+    })};
+  }
+
+  /* Shot: a screenshot of one of this site's own pages in a phone,
+     panning down. Used by the promo cuts only (XP_EXTRA), not the list. */
+  function shot(beat){
+    const sc = beat.scene, el = html('div','xp-shot');
+    el.innerHTML = `<div class="xp-phone"><div class="xp-scr"><img alt="" src="${esc2(sc.src)}"></div></div>${sc.label ? `<p class="xp-illu">${esc2(sc.label)}</p>` : ''}`;
+    const img = el.querySelector('img');
+    return {el, upd: p => { img.style.transform = `translateY(-${(lerp(sc.pan ? sc.pan[0] : 0, sc.pan ? sc.pan[1] : 0, ease(seg(p,.1,.95)))*100).toFixed(2)}%)`; }};
+  }
+
+  const SCENES = {note, board, pitch, poss, ft, end, stat, stack, book, seasons, charges, status, terrain, wall, chips, bars, clock, shot};
 
   /* ---------- clock ---------- */
   function show(k){
@@ -421,7 +682,7 @@ const EXPLAINERS = [
   }
 
   function load(id, autoplay){
-    X = EXPLAINERS.find(e => e.id === id) || EXPLAINERS[0];
+    X = ALL.find(e => e.id === id) || EXPLAINERS[0];
     prog.innerHTML = X.beats.map(() => '<i><b></b></i>').join('');
     stageEl.setAttribute('aria-label', `${X.title} — animated explainer. Space to play or pause, arrow keys to step.`);
     show(0);
@@ -452,9 +713,24 @@ const EXPLAINERS = [
   on('xp-next', () => show(i+1));
   on('xp-restart', () => { show(0); setPlaying(!REDUCE); });
 
-  window.XP = { load, list: EXPLAINERS };
+  /* Frame-exact export: XP.seek(ms) draws the explainer at that moment,
+     CSS animations included (Web Animations currentTime), so a recorder
+     can step 1/30s at a time instead of filming in real time. */
+  const total = () => X.beats.reduce((s,b) => s + b.d, 0);
+  function seek(msAt){
+    let k = 0, acc = 0;
+    while (k < X.beats.length - 1 && msAt >= acc + X.beats[k].d) { acc += X.beats[k].d; k++; }
+    playing = false;
+    if (k !== i || poster || !scene) show(k);
+    stageEl.classList.remove('xp-static','xp-paused');
+    t = Math.max(0, Math.min(msAt - acc, X.beats[k].d));
+    if (scene && scene.upd) scene.upd(t / X.beats[k].d);
+    stageEl.getAnimations({subtree:true}).forEach(a => { a.pause(); a.currentTime = t; });
+  }
+  window.XP = { load, seek, total, list: EXPLAINERS };
   if (EXPORT) {
     document.documentElement.classList.add('xp-export');
+    if (LANG === 'zh') document.documentElement.classList.add('xp-zh');
     const f = html('div','xp-exportframe'); document.body.append(f); f.append(stageEl);
     requestAnimationFrame(fit);
   }
