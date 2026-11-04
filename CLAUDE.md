@@ -137,8 +137,10 @@ explainers.html            Explainers: ~60-second, story-format (9:16) match
                         adds explainers that load by id but stay off the
                         list; promo cuts use that plus the `shot` scene
                         (a phone-framed screenshot of one of our pages).
-sound.js                  Site soundtrack: the two tracks in assets/audio as
-                        one playlist, a "Soundtrack" pill injected into every
+sound.js                  Site soundtrack: seven tracks in assets/audio as
+                        one playlist (TRACKS = [file, name, mood, gain]; a
+                        ▾ menu next to the pill picks one, remembered in
+                        localStorage nn-sound-track), a "Soundtrack" pill injected into every
                         masthead (app.js loads this file; no per-page tag).
                         Off by default; a one-time "want the soundtrack?"
                         card (never on junior.html); choice in localStorage
