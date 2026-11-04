@@ -157,7 +157,7 @@ const CL = [
      {who:'Mikel Arteta', role:'manager', quote:'We\u2019ll take the draw, but it doesn\u2019t mean we\u2019re really happy about it because we prepared a team to win the game.', source:'VAVEL International', url:'https://www.vavel.com/en/football/2026/10/23/arsenal/1276511-arteta-applauds-arsenal-s-courage-against-bayern.html'}
    ]}},
   {md:4, ko:'2026-11-04T20:00:00+00:00', v:'A', name:'Slavia Praha', country:'Czechia', pot:4,
-   ground:'Fortuna Arena', city:'Prague',
+   ground:'Fortuna Arena', city:'Prague', result:'W 2-1', scorers:'Madueke, Gy\u00f6keres',
    note:'We won 3-0 there last season, Merino with a brace. Prague in November is cold and beautiful, the Fortuna Arena is small and loud, and the flights are absurdly cheap. The value away day of the whole draw.'},
   {md:5, ko:'2026-11-24T20:00:00+00:00', v:'H', name:'Borussia Dortmund', country:'Germany', pot:2,
    ground:'Emirates Stadium', city:'London',
