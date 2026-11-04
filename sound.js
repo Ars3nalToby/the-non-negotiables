@@ -97,15 +97,23 @@
 
   let audio = null, track = 0, on = false, held = false, fade = 0;
   const saved = (() => { try { return JSON.parse(get(sessionStorage, 'nn-sound-pos') || 'null'); } catch(e) { return null; } })();
+  /* Each page has its own track (PAGE_TRACK, by TRACKS index). A listener
+     who picks one from the menu locks it in (nn-sound-lock) and keeps it on
+     every page; "Auto" in the menu hands control back to the pages. */
+  const PAGE_TRACK = {'index':1,'squad':0,'digest':0,'timetable':6,'fanart':6,'europe':4,'ledger':4,
+    'news':5,'programme':5,'reading':5,'voices':5,'explainers':2,'transfers':2,'tickets':3,'factory':3,'junior':3};
+  const pageKey = (location.pathname.split('/').pop() || 'index.html').replace(/\.html$/,'') || 'index';
+  const pageTrack = PAGE_TRACK[pageKey] ?? 1;
   const fav = Number(get(localStorage, 'nn-sound-track'));
-  if (saved && TRACKS[saved.t]) track = saved.t; else if (TRACKS[fav]) track = fav;
+  let locked = get(localStorage, 'nn-sound-lock') === '1' && !!TRACKS[fav];
+  track = locked ? fav : pageTrack;
   const vol = () => VOL * (TRACKS[track][3] || 1);
 
   function ensure(){
     if (audio) return audio;
     audio = new Audio(); audio.preload = 'auto';
     audio.addEventListener('ended', () => { track = (track + 1) % TRACKS.length; load(0); start().catch(() => {}); });
-    load(saved && saved.t === track ? saved.at : 0);
+    load(saved && saved.t === track ? saved.at : 0);   // same track as the last page: carry on
     return audio;
   }
   function load(at){
@@ -137,15 +145,18 @@
 
   /* track menu */
   let menu = null;
-  function play(i){
-    track = (i + TRACKS.length) % TRACKS.length; put(localStorage, 'nn-sound-track', String(track));
+  function play(i, auto){
+    track = (i + TRACKS.length) % TRACKS.length;
+    locked = !auto; put(localStorage, 'nn-sound-lock', locked ? '1' : '0');
+    if (!auto) put(localStorage, 'nn-sound-track', String(track));
     if (audio) load(0);
     on = true; put(localStorage, 'nn-sound', '1'); hideAsk();
     start().catch(() => paint('wait'));
   }
   function drawMenu(){
-    menu.innerHTML = `<h4>Soundtrack \u00b7 ${TRACKS.length} original tracks</h4><ol>${TRACKS.map((t, i) =>
-      `<li><button type="button" data-i="${i}" aria-current="${i === track && on}">${t[1]}<span>${t[2]}</span></button></li>`).join('')}</ol>
+    menu.innerHTML = `<h4>Soundtrack \u00b7 ${TRACKS.length} original tracks</h4><ol>
+      <li><button type="button" data-auto aria-current="${!locked && on}">Auto: this page\u2019s track<span>${TRACKS[pageTrack][1]}</span></button></li>${TRACKS.map((t, i) =>
+      `<li><button type="button" data-i="${i}" aria-current="${locked && i === track && on}">${t[1]}<span>${t[2]}</span></button></li>`).join('')}</ol>
       <div class="nx"><small>${on ? 'Playing: ' + TRACKS[track][1] : 'Off'}</small><button type="button" data-next>Next track</button></div>`;
   }
   function closeMenu(){ if (menu) { menu.remove(); menu = null; pick.setAttribute('aria-expanded', 'false'); } }
@@ -158,7 +169,9 @@
     menu.addEventListener('click', ev => {
       ev.stopPropagation();
       const b = ev.target.closest('button'); if (!b) return;
-      if (b.hasAttribute('data-next')) play(track + 1); else play(Number(b.dataset.i));
+      if (b.hasAttribute('data-next')) play(track + 1);
+      else if (b.hasAttribute('data-auto')) play(pageTrack, true);
+      else play(Number(b.dataset.i));
     });
   });
   document.addEventListener('click', e => { if (menu && !grp.contains(e.target)) closeMenu(); });

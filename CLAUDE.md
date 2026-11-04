@@ -79,6 +79,10 @@ factory.html               Dial Square Works: every Arsenal squad from 1992/93
                         the current squad; SQUAD in app.js stays the
                         source of truth for that. Update both each
                         window: a new SEASONS entry plus the stints.
+                        Never infer a departure from a player's absence in
+                        SQUAD (Kepa was wrongly "returned to Chelsea" that
+                        way on 31 Oct 2026): confirm every move against a
+                        source, and fix SQUAD if it is SQUAD that's wrong.
                         The HUD markup lives in factory.js, so the page
                         and the homepage hero both mount it into an empty
                         <section id="dsw">. index.html loads three.js and
@@ -333,7 +337,7 @@ page's chrome rather than reinventing it.
 | `FIXTURES` | All 38 league games. `ko` is an ISO string **with an explicit UK offset**. A played match gets `result`/`scorers`, and optionally `reaction:{notes:[{who,role,quote,source,url}]}` — short, verified, sourced pull-quotes only, never fabricated, always linked. Renders automatically in the fixture drawer. |
 | `CL` | Champions League league phase — 8 opponents, 4 home / 4 away |
 | `DEMAND` | Ticket demand estimate per opponent, 1–3. **This site's own read, not club data** |
-| `SQUAD` | First team + manager. `ig: null` / `x: null` means no verified Instagram / X handle — never guess either, both fall back to an in-platform search |
+| `SQUAD` | First team + manager. `ig: null` / `x: null` means no verified Instagram / X handle — never guess either, both fall back to an in-platform search. Shirt numbers were checked on 4 Nov 2026 against two published 2026/27 lists (19 Aug and 4 Sep): verify a number from a source before changing it, never renumber by position. |
 | `MOVES_IN` / `MOVES_OUT` | Transfer window, current summer |
 | `KEY_DATES` | Cup rounds, CL matchdays, finals |
 | `JG_QUIZ` / `JG_BINGO` (in `junior.js`, not `app.js`) | Junior Gunners content — QUIZ is 16 questions, 10 drawn per round; BINGO is a 20-item pool, 12 dealt per card |

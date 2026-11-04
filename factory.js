@@ -105,7 +105,7 @@ p("Glenn Helder","HELDER","F",[[1994,1996]],["Vitesse"],[""]);
 p("Chris Kiwomya","KIWOMYA","F",[[1994,1995]],["Ipswich Town"],[""]);
 p("Vince Bartram","BARTRAM","G",[[1994,1996]],["Bournemouth"],[""]);
 p("Dennis Bergkamp","BERGKAMP","F",[[1995,2005]],["Inter"],["Retired"],"L");
-p("David Platt","PLATT","M",[[1995,1997]],["Sampdoria"],["Nottingham Forest"]);
+p("David Platt","PLATT","M",[[1995,1997]],["Sampdoria"],["Sampdoria (as manager)"]);
 // --- Wenger
 p("Patrick Vieira","VIEIRA","M",[[1996,2004]],["AC Milan"],["Juventus"],"L");
 p("Rémi Garde","GARDE","M",[[1996,1998]],["Strasbourg"],["Retired"]);
@@ -145,7 +145,7 @@ p("José Antonio Reyes","REYES","F",[[2003,2005]],["Sevilla"],["Real Madrid (loa
 p("Philippe Senderos","SENDEROS","D",[[2003,2009]],["Servette"],["Fulham"]);
 p("Robin van Persie","VAN PERSIE","F",[[2004,2011]],["Feyenoord"],["Man United"]);
 p("Mathieu Flamini","FLAMINI","M",[[2004,2007],[2013,2015]],["Marseille","AC Milan (free)"],["AC Milan","Crystal Palace"]);
-p("Manuel Almunia","ALMUNIA","G",[[2004,2010]],["Celta Vigo"],["Watford"]);
+p("Manuel Almunia","ALMUNIA","G",[[2004,2011]],["Celta Vigo"],["Watford"]);
 p("Emmanuel Eboué","EBOUÉ","D",[[2004,2010]],["Beveren"],["Galatasaray"]);
 p("Johan Djourou","DJOUROU","D",[[2004,2012]],[A],["Hamburg"]);
 p("Alexander Hleb","HLEB","M",[[2005,2007]],["Stuttgart"],["Barcelona"]);
@@ -231,7 +231,7 @@ p("Aaron Ramsdale","RAMSDALE","G",[[2021,2023]],["Sheffield United"],["Southampt
 p("Takehiro Tomiyasu","TOMIYASU","D",[[2021,2024]],["Bologna"],["Released"]);
 p("Nuno Tavares","TAVARES","D",[[2021,2021]],["Benfica"],["Marseille (loan)"]);
 p("Albert Sambi Lokonga","LOKONGA","M",[[2021,2021]],["Anderlecht"],["Crystal Palace (loan)"]);
-p("William Saliba","SALIBA","D",[[2022,NOW]],["Saint-Étienne (back from loan)"],[],"L");
+p("William Saliba","SALIBA","D",[[2022,NOW]],["Saint-Étienne (signed 2019, back from loans)"],[],"L");
 p("Gabriel Jesus","JESUS","F",[[2022,2025]],["Man City"],["Barcelona"]);
 p("Oleksandr Zinchenko","ZINCHENKO","D",[[2022,2024]],["Man City"],["Nottingham Forest (loan)"]);
 p("Fábio Vieira","F. VIEIRA","M",[[2022,2023]],["Porto"],["Porto (loan)"]);
@@ -249,7 +249,7 @@ p("Raheem Sterling","STERLING","F",[[2024,2024]],["Chelsea (loan)"],["Chelsea"])
 p("Neto","NETO","G",[[2024,2024]],["Bournemouth (loan)"],["Bournemouth"]);
 p("Myles Lewis-Skelly","LEWIS-SKELLY","D",[[2024,NOW]],[A],[]);
 p("Ethan Nwaneri","NWANERI","M",[[2024,2025]],[A],["Borussia Dortmund (loan)"]);
-p("Kepa Arrizabalaga","KEPA","G",[[2025,2025]],["Chelsea (loan)"],["Chelsea"]);
+p("Kepa Arrizabalaga","KEPA","G",[[2025,NOW]],["Chelsea"],[]);
 p("Martín Zubimendi","ZUBIMENDI","M",[[2025,NOW]],["Real Sociedad"],[]);
 p("Noni Madueke","MADUEKE","F",[[2025,NOW]],["Chelsea"],[]);
 p("Christian Nørgaard","NØRGAARD","M",[[2025,2025]],["Brentford"],["Everton"]);
