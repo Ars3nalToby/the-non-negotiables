@@ -226,7 +226,7 @@ const EXPLAINERS = [
     const paper = html('div','xp-paper'); el.append(paper);
     sc.lines.forEach(L => {
       const ln = html('div','xp-line' + (L.cls ? ' ' + L.cls : ''));
-      ln.textContent = L.t;
+      ln.textContent = (LANG === 'zh' && L.tZh) || L.t;
       if (L.boxes) { const b = html('span','xp-boxes'); for (let k=0;k<L.boxes;k++) b.append(html('i')); ln.append(b); }
       ln.style.animationDelay = L.at == null ? '0ms' : ms(beat, L.at);
       if (L.at == null) ln.style.animationDuration = '1ms';
@@ -612,7 +612,7 @@ const EXPLAINERS = [
     const sc = beat.scene, src = sc.comp === 'cl' ? (typeof CL!=='undefined' ? CL : []) : (typeof FIXTURES!=='undefined' ? FIXTURES : []);
     const fx = src.find(g => sc.comp === 'cl' ? g.md === sc.md : g.n === sc.n), ko = new Date(fx ? fx.ko : Date.now());
     const me = (window.NN_TZ && window.NN_TZ.id) || 'Australia/Brisbane', meCity = (window.NN_TZ && window.NN_TZ.city) || 'Brisbane';
-    const zones = [['Prague','Europe/Prague'],['London','Europe/London'],[meCity, me]].filter((z,k,a) => a.findIndex(y => y[1] === z[1]) === k);
+    const zones = (sc.zones || [['Prague','Europe/Prague'],['London','Europe/London']]).concat([[meCity, me]]).filter((z,k,a) => a.findIndex(y => y[1] === z[1]) === k);
     const el = html('div','xp-clocks');
     const parts = tz => { const o = {}; new Intl.DateTimeFormat('en-GB',{timeZone:tz,hour:'2-digit',minute:'2-digit',weekday:'short',day:'numeric',month:'short',hourCycle:'h23'})
       .formatToParts(ko).forEach(x => o[x.type] = x.value); return o; };
