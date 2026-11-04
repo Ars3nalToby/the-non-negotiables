@@ -166,8 +166,16 @@ if (!NEWS.length) {
   flag('TODO', 'news', 'NEWS is empty — news.html will render nothing.');
 } else {
   const newsAgeDays = (now - new Date(NEWS[0].date)) / 86400000;
-  if (newsAgeDays > 5) {
+  /* Owner's rule: news is the top priority, especially injuries and team
+     news. Two days without an item is stale, and so is any played match
+     (league or Europe) that kicked off after the newest item was written. */
+  if (newsAgeDays > 2) {
     flag('DATA', 'news', `Newest NEWS item is ${Math.round(newsAgeDays)} day(s) old (${NEWS[0].headline}). Due a refresh.`);
+  }
+  const newest = new Date(NEWS[0].date + 'T23:59:59Z');
+  const missed = FIXTURES.filter(f => f.result).concat(CL.filter(m => m.result)).filter(g => new Date(g.ko) > newest);
+  if (missed.length) {
+    flag('DATA', 'news', `${missed.length} match(es) played after the newest NEWS item — the lead story is out of date. Write up the result.`);
   }
 }
 if (!COLUMNS.length) {

@@ -295,6 +295,18 @@ page loads. Check which array grew, not what to cut.
 
 ---
 
+## News first (owner's rule)
+
+News is the top priority on this site, above all injuries and team
+news. `NEWS[0]` must always be the most recent real development: every
+played match (league, UCL, cup) gets its own NEWS item the morning
+after, and pre-match team news leads before every game. A stale lead
+(an old injury story still on top after a match) is the worst failure
+this site can have. audit.mjs flags NEWS older than 2 days and any
+played match newer than `NEWS[0].date`. The daily scheduled task
+"Arsenal news — daily (news first)" (09:47 Brisbane) does this; results
+in FIXTURES/CL are NOT a substitute for a NEWS item.
+
 ## Navigation order (owner's rule)
 
 The nav on every page starts with **Home** as a house icon at the far
