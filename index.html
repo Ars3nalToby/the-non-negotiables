@@ -415,24 +415,37 @@
    and click-ripple. Everything else on this page is shared chrome
    from app.js.
    ============================================================ */
-let boardIdx = NEXT_I;
+/* The board shows the very next Arsenal match in ANY competition: league
+   and Champions League fixtures merged and sorted by kick-off. A match
+   stays up until two hours after kick-off, then the next one takes over.
+   League games open the fixture dossier; European games open that
+   matchday's card on europe.html (#md-N). */
+const GAMES = FIXTURES.map((f,i) => { const c = CLUBS[f.opp]; return {kind:'pl', i, ko:f.ko, v:f.v, comp:'Premier League',
+    name:c.name, ground:f.v === 'H' ? 'Emirates Stadium' : c.stadium, area:c.area, cap:f.v === 'H' ? CLUBS.ars.cap : c.cap, site:c.site}; })
+  .concat(CL.filter(m => m.ko).map(m => ({kind:'cl', md:m.md, ko:m.ko, v:m.v, comp:'Champions League',
+    name:m.name, ground:m.v === 'H' ? 'Emirates Stadium' : m.ground, area:m.v === 'H' ? CLUBS.ars.area : m.city + ', ' + m.country,
+    cap:m.v === 'H' ? CLUBS.ars.cap : m.city, site:m.site || null})))
+  .sort((x,y) => Date.parse(x.ko) - Date.parse(y.ko));
+const liveOrNext = () => { const now = Date.now(); const k = GAMES.findIndex(g => Date.parse(g.ko) + 2*3600*1000 > now); return k < 0 ? GAMES.length - 1 : k; };
+let boardK = liveOrNext();
 const PG_TZ = window.NN_TZ || {city:'Brisbane', abbr:'BNE'};
 
-function paintBoard(i){
-  const f = FIXTURES[i], c = CLUBS[f.opp], d = new Date(f.ko);
-  const home = f.v === 'H';
-  $('#board-eyebrow').textContent = home ? 'Next match · Emirates Stadium' : 'Next away day · ' + c.stadium;
-  $('#board-home').textContent = home ? 'Arsenal' : c.name;
+function paintBoard(k){
+  const g = GAMES[k], d = new Date(g.ko), home = g.v === 'H';
+  const euro = g.kind === 'cl';
+  $('#board-eyebrow').textContent = (home ? 'Next match · ' : 'Next away day · ') + g.ground;
+  $('#board .vs').textContent = g.comp;
+  $('#board .vs').classList.toggle('vs--ucl', euro);
+  $('#board-home').textContent = home ? 'Arsenal' : g.name;
   $('#board-home').className = 'side__club' + (home ? ' is-arsenal' : '');
-  $('#board-away').textContent = home ? c.name : 'Arsenal';
+  $('#board-away').textContent = home ? g.name : 'Arsenal';
   $('#board-away').className = 'side__club' + (home ? '' : ' is-arsenal');
-  $('#board-home-tag').textContent = home ? 'Home' : c.area;
-  $('#board-away-tag').textContent = home ? c.area : 'Away end';
-  const ARS = CLUBS.ars.site;
-  $('#board-home-link').href = home ? ARS : c.site;
-  $('#board-home-link').setAttribute('aria-label', `Visit ${home ? 'Arsenal' : c.name}'s official website`);
-  $('#board-away-link').href = home ? c.site : ARS;
-  $('#board-away-link').setAttribute('aria-label', `Visit ${home ? c.name : 'Arsenal'}'s official website`);
+  $('#board-home-tag').textContent = home ? 'Home' : g.area;
+  $('#board-away-tag').textContent = home ? g.area : 'Away end';
+  const ARS = CLUBS.ars.site, opp = g.site || ('europe.html#md-' + g.md);
+  const setLink = (el, mine) => { el.href = mine ? ARS : opp; const ext = /^https?:/.test(el.href) && !/thenonnegotiablog|localhost/.test(el.href);
+    el.target = ext ? '_blank' : ''; el.setAttribute('aria-label', mine ? "Visit Arsenal's official website" : (g.site ? `Visit ${g.name}'s official website` : `Read about ${g.name} on the UCL page`)); };
+  setLink($('#board-home-link'), home); setLink($('#board-away-link'), !home);
   $('#clk-uk').textContent = t24(d,LDN);
   $('#clk-uk-day').textContent = dayLong(d,LDN);
   const brutal = isBrutal(d);
@@ -441,7 +454,9 @@ function paintBoard(i){
   bneEl.previousElementSibling.textContent = 'Kick-off · ' + PG_TZ.city;
   bneEl.className = 'clock__time' + (brutal ? ' is-hot' : '');
   $('#clk-bne-day').textContent = dayLong(d,BNE);
-  $('#clk-venue').textContent = (home ? 'Emirates Stadium' : c.stadium) + ' · ' + c.cap;
+  $('#clk-venue').textContent = g.ground + ' · ' + g.cap;
+  const btn = $('#board-open');
+  btn.firstChild.textContent = euro ? 'Open the UCL preview' : 'Open the dossier';
 
   const h = bneHour(d);
   $('#verdict').innerHTML = brutal
@@ -452,11 +467,11 @@ function paintBoard(i){
 }
 
 function tickBoard(){
-  const ko = new Date(FIXTURES[boardIdx].ko).getTime();
+  const ko = Date.parse(GAMES[boardK].ko);
   const ms = ko - Date.now();
   if(ms <= 0){
-    if(Date.now() > ko + 2*3600*1000 && boardIdx < FIXTURES.length - 1){
-      boardIdx++; paintBoard(boardIdx); dossierBadge(); return;
+    if(Date.now() > ko + 2*3600*1000 && boardK < GAMES.length - 1){
+      boardK++; paintBoard(boardK); dossierBadge(); return;
     }
     $('#clk-count').textContent = 'LIVE';
     return;
@@ -473,7 +488,10 @@ function tickBoard(){
     countEl.classList.add('tick-pulse');
   }
 }
-$('#board-open').addEventListener('click', () => openDrawer(boardIdx));
+$('#board-open').addEventListener('click', () => {
+  const g = GAMES[boardK];
+  if (g.kind === 'pl') openDrawer(g.i); else location.href = 'europe.html#md-' + g.md;
+});
 
 /* A quiet signal that the dossier isn't just static copy — if the
    live wire actually has coverage naming this fixture's opponent, the
@@ -488,7 +506,7 @@ async function dossierBadge(){
   badge.hidden = true;
   $('#board-open').removeAttribute('aria-label');
   const items = await getWireItems();
-  const opp = CLUBS[FIXTURES[boardIdx].opp];
+  const opp = {name: GAMES[boardK].name};
   const short = opp.name.split(' ')[0];
   const count = items.filter(i => new RegExp(short,'i').test(i.t)).length;
   if(count > 0){
@@ -499,7 +517,7 @@ async function dossierBadge(){
 }
 dossierBadge();
 
-paintBoard(boardIdx);
+paintBoard(boardK);
 splitWords($('#board-home'));
 splitWords($('#board-away'));
 tickBoard();

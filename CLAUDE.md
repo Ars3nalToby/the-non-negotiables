@@ -14,7 +14,10 @@ the squad list. Every page shares one stylesheet and one data/helpers
 script; there's still no build step, no bundler.
 
 ```
-index.html              Hub. Hero match board + a grid of clickable
+index.html              Hub. Hero match board (the very next match in ANY
+                        competition: FIXTURES + CL merged by kick-off,
+                        held until 2h after kick-off; a UCL game's button
+                        opens europe.html#md-N) + a grid of clickable
                         "widget" cards, one per section, each with a
                         live teaser pulled from the shared data.
 news.html                Original news coverage, newest first — short

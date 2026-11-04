@@ -166,7 +166,7 @@ $('#euro-grid').innerHTML = CL.map(m => {
     {t:'Tickets', u:'https://www.arsenal.com/tickets'},
     {t:'Exchange', u:'https://www.arsenal.com/ticket-exchange'}
   ];
-  return `<article class="eu ${away ? 'eu--away' : 'eu--home'}">
+  return `<article id="md-${m.md}" class="eu ${away ? 'eu--away' : 'eu--home'}">
     <div class="eu__top">
       <span class="eu__md">MD${m.md} · ${dayShort(d,LDN)} · ${t24(d,LDN)} UK</span>
       <span class="ha ${away ? 'ha--a' : 'ha--h'}">${away ? 'AWAY' : 'HOME'}</span>
@@ -207,6 +207,16 @@ $('#dates').innerHTML = KEY_DATES.map((k, i) => {
   if(!Number.isNaN(t)) cls = t < kdNow ? ' is-done' : (i === kdNextI ? ' is-next' : '');
   return `<div class="date${cls}"><b>${k.d}</b><span>${k.t}</span></div>`;
 }).join('');
+
+/* Deep link from the homepage board (europe.html#md-4): bring that
+   matchday's card into view below the sticky nav and mark it briefly. */
+(function(){
+  const el = location.hash && document.getElementById(location.hash.slice(1));
+  if (!el) return;
+  el.style.scrollMarginTop = '90px';
+  setTimeout(() => { el.scrollIntoView({block:'start'}); el.style.outline = '3px solid var(--gold)'; el.style.outlineOffset = '4px';
+    setTimeout(() => { el.style.outline = ''; }, 2600); }, 60);
+})();
 </script>
 </body>
 </html>
