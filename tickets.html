@@ -162,8 +162,11 @@
    Away Crew board (Supabase-backed, shared across every visitor).
    ============================================================ */
 function tkRowHTML(f){
-  const c = CLUBS[f.opp], d = new Date(f.ko);
-  const dem = DEMAND_TEXT[DEMAND[f.opp] || 2];
+  /* f is a league fixture or a CL match (m.md set). CL games get a plain
+     UCL badge: DEMAND is our own read of league opponents only. */
+  const cl = !!f.md, d = new Date(f.ko);
+  const c = cl ? {name:f.name, stadium:f.ground} : CLUBS[f.opp];
+  const dem = cl ? {cls:'', lbl:'UCL · MD' + f.md} : DEMAND_TEXT[DEMAND[f.opp] || 2];
   return `<div class="tk__row">
     <div><b>${f.v === 'H' ? 'Arsenal v ' + c.name : c.name + ' v Arsenal'}</b>
       <span class="sub">${dayShort(d,LDN)} · ${f.v === 'H' ? 'Emirates' : c.stadium}</span></div>
@@ -176,8 +179,10 @@ function tkRowHTML(f){
 (function renderTicketDesk(){
   const groups = [];
   let cur = null;
-  FIXTURES.forEach((f,i) => {
-    if(i < NEXT_I) return;
+  /* Every match still to come, league and Europe, in kick-off order. */
+  FIXTURES.filter((f,i) => i >= NEXT_I)
+    .concat(CL.filter(m => m.ko && !m.result && Date.parse(m.ko) + 2*3600*1000 > Date.now()))
+    .sort((a,b) => Date.parse(a.ko) - Date.parse(b.ko)).forEach(f => {
     const d = new Date(f.ko), key = monthKey(d);
     if(!cur || cur.key !== key){ cur = {key, label:monthLabel(d), rows:[]}; groups.push(cur); }
     cur.rows.push(tkRowHTML(f));
@@ -203,8 +208,14 @@ function tkRowHTML(f){
    unreachable (first day live, or a network hiccup) so the section
    never looks broken or embarrassingly bare. */
 const crewFix = $('#crew-fix');
-crewFix.innerHTML = FIXTURES.filter((f,i) => i >= NEXT_I && f.v === 'A')
-  .map(f => `<option value="${f.n}">${CLUBS[f.opp].name} away · ${dayShort(new Date(f.ko),LDN)}</option>`).join('');
+/* League away days use fixture n (1-38); CL away days use 100 + matchday,
+   so the integer fixture_n column holds both without a schema change. */
+const crewKey = n => n > 100 ? CL.find(m => m.md === n - 100) : FIXTURES.find(x => x.n === n);
+const crewName = g => g.md ? g.name + ' away (UCL)' : CLUBS[g.opp].name + ' away';
+crewFix.innerHTML = FIXTURES.filter((f,i) => i >= NEXT_I && f.v === 'A').map(f => ({...f, key:f.n}))
+  .concat(CL.filter(m => m.v === 'A' && m.ko && !m.result && Date.parse(m.ko) > Date.now()).map(m => ({...m, key:100 + m.md})))
+  .sort((a,b) => Date.parse(a.ko) - Date.parse(b.ko))
+  .map(g => `<option value="${g.key}">${crewName(g)} · ${dayShort(new Date(g.ko),LDN)}</option>`).join('');
 
 const CREW_SEED = [
   {name:'Toby', from_city:'Brisbane', fixture_n:14},
@@ -214,8 +225,8 @@ const CREW_SEED = [
 
 function paintCrew(list){
   $('#crew-list').innerHTML = list.map(c => {
-    const f = FIXTURES.find(x => x.n === Number(c.fixture_n));
-    const label = f ? `${CLUBS[f.opp].name} away` : 'A game';
+    const f = crewKey(Number(c.fixture_n));
+    const label = f ? crewName(f) : 'A game';
     return `<div class="crew__item"><b>${esc(c.name)}</b><span>${esc(c.from_city)} → ${label}</span></div>`;
   }).join('') || '<p style="color:var(--mute);font-size:14px;margin:0">Nobody on the board yet.</p>';
 }

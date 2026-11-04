@@ -529,7 +529,9 @@ setInterval(tickBoard, 1000);
   if(NEWS.length) $('#w-news').textContent = NEWS[0].headline;
   const upcoming = FIXTURES.filter((f,i) => i >= NEXT_I);
   const nextTk = upcoming[0];
-  if(nextTk){
+  const g0 = GAMES[liveOrNext()];   /* next match in any competition */
+  if(g0 && g0.kind === 'cl') $('#w-tickets').textContent = `${g0.name} — Champions League, MD${g0.md}`;
+  else if(nextTk){
     const dem = DEMAND_TEXT[DEMAND[nextTk.opp] || 2];
     $('#w-tickets').textContent = `${CLUBS[nextTk.opp].name} — ${dem.lbl}`;
   }
