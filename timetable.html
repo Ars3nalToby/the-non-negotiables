@@ -234,7 +234,7 @@ function rowHTML(f,i,d){
   return `<button type="button" class="row${i === NEXT_I ? ' is-next' : ''}${i < NEXT_I ? ' is-done' : ''}" data-i="${i}">
       <span class="row__no">${String(f.n).padStart(2,'0')}</span>
       <span class="row__date">${dayShort(d,LDN)}</span>
-      <span class="row__opp"><b>${c.name}</b><span class="row__meta">${f.v === 'H' ? 'Emirates Stadium' : c.stadium} · ${t24(d,LDN)} UK<span class="row__tv">${f.tv ? ' · ' + f.tv : ''}</span>${f.moved ? ' <i class="moved">MOVED</i>' : ''}</span></span>
+      <span class="row__opp"><b>${c.name}</b><span class="row__meta">${f.v === 'H' ? 'Emirates Stadium' : c.stadium} · ${t24(d,LDN)} UK<span class="row__tv">${f.tv ? ' · ' + f.tv : ''}</span>${f.moved && !f.result ? ' <i class="moved" title="Moved from its original Saturday 3pm slot for TV coverage. The time shown is the new one.">MOVED FOR TV</i>' : ''}</span></span>
       <span class="row__ha"><i class="ha ${f.v === 'H' ? 'ha--h' : 'ha--a'}">${f.v === 'H' ? 'HOME' : 'AWAY'}</i></span>
       <span class="row__bne">${f.result
         ? `<b class="row__score">${f.result}</b><span>Full time</span>`
