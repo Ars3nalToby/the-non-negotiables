@@ -497,6 +497,14 @@ the serif is the programme. Don't blur them.
 
 Motion is restrained and always behind `prefers-reduced-motion`.
 
+**iPhone status bar:** every page uses `viewport-fit=cover` and, as a
+home-screen app, a `black-translucent` status bar, so the page draws
+under the clock/5G/battery. styles.css reserves that strip: `.masthead`
+pads by `env(safe-area-inset-top)`, a fixed dark `body::before` fills
+it, and the sticky `.nav` and progress bar stick at
+`top:env(safe-area-inset-top,0)`. Any new top-pinned element must do
+the same, or it slides under the status bar.
+
 ---
 
 ## Current TODOs

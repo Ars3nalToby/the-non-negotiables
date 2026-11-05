@@ -137,7 +137,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* ============================================================
    MASTHEAD + NAV
    ============================================================ */
-.masthead{background:var(--paper);position:relative}
+.masthead{background:var(--paper);position:relative;padding-top:env(safe-area-inset-top)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top);background:var(--board-bg);z-index:40}
 .masthead__in{
   display:flex;align-items:flex-end;justify-content:space-between;
   gap:20px;flex-wrap:wrap;padding-top:32px;padding-bottom:22px;
@@ -194,7 +195,7 @@ button{font:inherit;color:inherit;cursor:pointer}
    always show, tier-2 (.nav__tab--more) from 1220px, the rest live in
    the grouped "More" menu (a <details>, so it works without JS). The
    time-zone picker (and its CSS) is injected into the bar by app.js. */
-.nav{background:var(--board-bg);color:var(--board-fg);position:sticky;top:0;z-index:30;border-bottom:3px solid var(--red)}
+.nav{background:var(--board-bg);color:var(--board-fg);position:sticky;top:env(safe-area-inset-top,0);z-index:30;border-bottom:3px solid var(--red)}
 .nav__in{display:flex;align-items:stretch;gap:2px;min-height:50px;position:relative}
 .nav__tab,.nav__more>summary{display:flex;align-items:center;gap:6px;padding:0 15px;font:800 13.5px/1 var(--sans);font-variation-settings:'wdth' 88;
   letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.82);text-decoration:none;white-space:nowrap;position:relative;cursor:pointer;
@@ -947,7 +948,7 @@ button{font:inherit;color:inherit;cursor:pointer}
    per frame. Reduced-motion is handled by the rule above.
    ============================================================ */
 #scroll-progress{
-  position:fixed;top:0;left:0;height:3px;width:0%;z-index:35;
+  position:fixed;top:env(safe-area-inset-top,0);left:0;height:3px;width:0%;z-index:35;
   background:linear-gradient(90deg,var(--red),var(--gold));
   transition:width .1s linear;pointer-events:none;
 }
