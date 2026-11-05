@@ -103,8 +103,8 @@ const FIXTURES = [
     ]}},
   {n:9, ko:'2026-11-01T16:30:00+00:00', opp:'liv', v:'A', tv:'Sky Sports', moved:true, checked:'2026-10-12', result:'W 1-0', scorers:'Havertz', explainer:'mw9-liv'},
   {n:10,ko:'2026-11-07T15:00:00+00:00', opp:'hul', v:'H', checked:'2026-11-02'},
-  {n:11,ko:'2026-11-21T15:00:00+00:00', opp:'new', v:'A'},
-  {n:12,ko:'2026-11-28T15:00:00+00:00', opp:'mci', v:'H'},
+  {n:11,ko:'2026-11-21T17:30:00+00:00', opp:'new', v:'A', tv:'Sky Sports', moved:true, checked:'2026-11-05'},
+  {n:12,ko:'2026-11-29T16:30:00+00:00', opp:'mci', v:'H', moved:true, checked:'2026-11-05'},
   {n:13,ko:'2026-12-02T20:00:00+00:00', opp:'bre', v:'A'},
   {n:14,ko:'2026-12-05T15:00:00+00:00', opp:'tot', v:'A'},
   {n:15,ko:'2026-12-12T15:00:00+00:00', opp:'bou', v:'H', warn:'Arsenal have said this is set to move \u2014 Bournemouth are in Europa League action the preceding Thursday.'},
@@ -158,6 +158,10 @@ const CL = [
    ]}},
   {md:4, ko:'2026-11-04T20:00:00+00:00', v:'A', name:'Slavia Praha', country:'Czechia', pot:4,
    ground:'Fortuna Arena', city:'Prague', result:'W 2-1', scorers:'Madueke, Gy\u00f6keres',
+   reaction:{notes:[
+     {who:'Mikel Arteta', role:'manager', quote:'We were on the back foot, very sloppy.', source:'Dave', url:'https://dave.sport/news/arteta-arsenal-defensive-problems-hull-city-previe/'},
+     {who:'Mikel Arteta', role:'manager', quote:'He understood really well when to appear, when to threat.', source:'football.london via AOL', url:'https://www.aol.co.uk/articles/mikel-artetas-arsenal-fury-clear-070000000.html'}
+   ]},
    note:'We won 3-0 there last season, Merino with a brace. Prague in November is cold and beautiful, the Fortuna Arena is small and loud, and the flights are absurdly cheap. The value away day of the whole draw.'},
   {md:5, ko:'2026-11-24T20:00:00+00:00', v:'H', name:'Borussia Dortmund', country:'Germany', pot:2,
    ground:'Emirates Stadium', city:'London',
