@@ -102,7 +102,7 @@ const FIXTURES = [
       {who:'Ezri Konsa', role:'defender', quote:'A clean sheet and a goal \u2014 my first for the club \u2014 so a fantastic day overall.', source:'Just Arsenal News', url:'https://www.justarsenal.com/a-great-feeling-ezri-konsa-enjoyed-scoring-and-keeping-a-clean-sheet/424470'}
     ]}},
   {n:9, ko:'2026-11-01T16:30:00+00:00', opp:'liv', v:'A', tv:'Sky Sports', moved:true, checked:'2026-10-12', result:'W 1-0', scorers:'Havertz', explainer:'mw9-liv'},
-  {n:10,ko:'2026-11-07T15:00:00+00:00', opp:'hul', v:'H', checked:'2026-11-02'},
+  {n:10,ko:'2026-11-07T15:00:00+00:00', opp:'hul', v:'H', checked:'2026-11-02', result:'W 3-0', scorers:'Gyökeres, Havertz, Eze'},
   {n:11,ko:'2026-11-21T17:30:00+00:00', opp:'new', v:'A', tv:'Sky Sports', moved:true, checked:'2026-11-05'},
   {n:12,ko:'2026-11-29T16:30:00+00:00', opp:'mci', v:'H', moved:true, checked:'2026-11-05'},
   {n:13,ko:'2026-12-02T20:00:00+00:00', opp:'bre', v:'A'},
