@@ -110,7 +110,7 @@ const FIXTURES = [
     ]}},
   {n:11,ko:'2026-11-21T17:30:00+00:00', opp:'new', v:'A', tv:'Sky Sports', moved:true, checked:'2026-11-05'},
   {n:12,ko:'2026-11-29T16:30:00+00:00', opp:'mci', v:'H', moved:true, checked:'2026-11-05'},
-  {n:13,ko:'2026-12-02T20:00:00+00:00', opp:'bre', v:'A'},
+  {n:13,ko:'2026-12-02T20:15:00+00:00', opp:'bre', v:'A', tv:'Sky Sports', moved:true, checked:'2026-11-11'},
   {n:14,ko:'2026-12-05T15:00:00+00:00', opp:'tot', v:'A'},
   {n:15,ko:'2026-12-12T15:00:00+00:00', opp:'bou', v:'H', warn:'Arsenal have said this is set to move \u2014 Bournemouth are in Europa League action the preceding Thursday.'},
   {n:16,ko:'2026-12-19T15:00:00+00:00', opp:'mun', v:'H'},
