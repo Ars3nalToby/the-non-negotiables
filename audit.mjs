@@ -292,7 +292,7 @@ for (const [name, html] of Object.entries(pages)) {
   const dupes = ids.filter((v, i) => ids.indexOf(v) !== i);
   if (dupes.length) flag('BUG', 'frontend', `${name}: duplicate element id(s): ${[...new Set(dupes)].join(', ')}`);
 
-  const inlineScript = (html.match(/<script>([\s\S]*?)<\/script>/) || [, ''])[1];
+  const inlineScript = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).join('\n');
   const used = new Set([...inlineScript.matchAll(/\$\('#([\w-]+)'\)/g)].map(m => m[1]));
   const missing = [...used].filter(id => !ids.includes(id));
   if (missing.length) flag('BUG', 'frontend', `${name}: inline script references missing id(s): ${missing.join(', ')}`);
