@@ -616,7 +616,7 @@ const EXPLAINERS = [
     const el = html('div','xp-clocks');
     const parts = tz => { const o = {}; new Intl.DateTimeFormat('en-GB',{timeZone:tz,hour:'2-digit',minute:'2-digit',weekday:'short',day:'numeric',month:'short',hourCycle:'h23'})
       .formatToParts(ko).forEach(x => o[x.type] = x.value); return o; };
-    const faces = zones.map(([city,tz],k) => { const o = parts(tz), mine = k === zones.length - 1 && zones.length === 3;
+    const faces = zones.map(([city,tz],k) => { const o = parts(tz), mine = k === zones.length - 1;
       const d = html('div','xp-clk' + (mine ? ' me' : ''));
       let ticks = ''; for (let t2=0;t2<12;t2++) ticks += `<path d="M0 -40V${t2%3 ? -36 : -32}" transform="rotate(${t2*30})"/>`;
       d.innerHTML = `<svg viewBox="-46 -46 92 92"><circle r="44" fill="#0E1826" stroke="${mine ? '#E3B95A' : '#2A3A50'}" stroke-width="2.5"/>

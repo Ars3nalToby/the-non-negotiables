@@ -144,7 +144,7 @@ if (!CL.some(m => m.ko)) {
   if (order.some((t, i) => i && t < order[i - 1])) {
     flag('BUG', 'europe', 'CL entries are not in chronological order — the cards will render out of sequence.');
   }
-  const clBrutal = CL.filter(m => { const h = hourIn(m.ko, BNE); return h >= 1 && h < 7; }).length;
+  const clBrutal = CL.filter(m => { const h = hourIn(m.ko, BNE); return h >= 1 && h < 6; }).length;
   flag('INFO', 'europe', `All 8 CL fixtures dated. ${clBrutal} of them kick off between 1am and 7am Brisbane.`);
 }
 
