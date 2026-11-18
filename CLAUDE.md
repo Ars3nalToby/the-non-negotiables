@@ -125,6 +125,16 @@ odegaard.html              Special edition: Martin Ødegaard, the captain —
                         Both specials share special.css (audited ≤30KB);
                         the big outlined numeral is the page head's
                         data-num attribute (shirt number).
+                        OWNER'S RULE for every player special (these two
+                        and any future one): always include "Before
+                        Arsenal: stories from the old clubs" (one card per
+                        former club, real anecdotes, not just dates) and
+                        "Off the pitch" (upbringing, family, partner,
+                        publicly announced milestones). Every line tagged
+                        Confirmed/On the record/Reported/Our read and
+                        sourced. Only what the player or credible press
+                        has made public: no rumours about private life,
+                        no children's names or photos.
 explainers.html            Explainers: ~60-second, story-format (9:16) match
                         explainers, animated in code (SVG + CSS), no video
                         files. explainers.js holds EXPLAINERS (data, newest
