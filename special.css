@@ -1,12 +1,13 @@
 /* ============================================================
-   RICE SPECIAL EDITION — rice.html only. A one-off broadcast
-   "special" for Declan Rice's new contract: a status triptych, a
-   what-we-know ledger with honesty labels, a live strip read from
-   FIXTURES/CL, a dated timeline and an original column. No photos,
-   no crest; the big 41 is just type. Theme tokens throughout.
+   SPECIAL EDITIONS — shared by the player specials (rice.html,
+   odegaard.html). The big outlined numeral comes from the page head's
+   data-num attribute, so each page sets its own shirt number. Each
+   special: a status triptych, a what-we-know table with honesty labels,
+   a live strip read from FIXTURES/CL, a dated timeline and an original
+   column. No photos, no crest; the numeral is just type. Theme tokens.
    ============================================================ */
 .rc-head{position:relative;overflow:hidden}
-.rc-head::after{content:"41";position:absolute;right:max(16px,calc((100vw - 1180px)/2));top:50%;transform:translateY(-52%);
+.rc-head::after{content:attr(data-num);position:absolute;right:max(16px,calc((100vw - 1180px)/2));top:50%;transform:translateY(-52%);
   font:900 clamp(120px,19vw,250px)/.8 var(--sans);font-variation-settings:'wdth' 66;color:transparent;
   -webkit-text-stroke:3px rgba(239,1,7,.38);pointer-events:none;letter-spacing:-.02em}
 @media (max-width:760px){.rc-head::after{display:none}}
@@ -84,6 +85,6 @@
 .rc-src{font-size:13px;line-height:1.7}
 .rc-src a{color:var(--red);font-weight:700}
 
-/* Mid-width nav: the "Rice special" label inside More pushes the time-zone
+/* Mid-width nav: the page label inside More pushes the time-zone
    picker off-screen between 1220px and ~1500px. Hide the label there. */
 @media (min-width:1220px) and (max-width:1520px){.nav__more.is-here>summary em{display:none}}
