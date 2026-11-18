@@ -109,6 +109,14 @@ ledger.html                Man City decision tracker: what the independent
                         says the titles were won because of the breaches
                         and never guesses the sanction. Update it with the
                         page when the appeal or sanction lands.
+rice.html                  Special edition: Declan Rice's new contract (Nov
+                        2026). Status triptych, a what-we-know table with
+                        honesty labels (Confirmed / Credible reporting /
+                        Not confirmed / Our read), a dated career timeline,
+                        an original column, and a live strip read from
+                        FIXTURES/CL. Styles in rice.css (audited ≤30KB).
+                        Flip the status boxes when the club announces the
+                        signing; never print an unconfirmed wage.
 explainers.html            Explainers: ~60-second, story-format (9:16) match
                         explainers, animated in code (SVG + CSS), no video
                         files. explainers.js holds EXPLAINERS (data, newest
@@ -284,7 +292,7 @@ key, no proxy. Same silent-failure risk if it's ever removed.
 There is no build, no bundler, no package.json for the site itself.
 **Keep it that way.** The audit enforces a size budget per file instead
 of one monolithic ceiling: `styles.css` ≤80KB, `app.js` ≤60KB,
-`drawer.js` ≤60KB, `junior.js` ≤60KB, `junior.css` ≤30KB, `factory.js` ≤130KB, `factory.css` ≤30KB, `explainers.js` ≤60KB, `explainers.css` ≤30KB, `news.css`, `ledger.css` ≤30KB each, `columns.js` and `news-data.js` ≤120KB each
+`drawer.js` ≤60KB, `junior.js` ≤60KB, `junior.css` ≤30KB, `factory.js` ≤130KB, `factory.css` ≤30KB, `explainers.js` ≤60KB, `explainers.css` ≤30KB, `news.css`, `ledger.css`, `rice.css` ≤30KB each, `columns.js` and `news-data.js` ≤120KB each
 (few-page files, but still not unbounded), each individual page ≤40KB.
 
 **If `app.js` trips its budget again**, the fix is almost certainly

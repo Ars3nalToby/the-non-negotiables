@@ -35,6 +35,7 @@ const explainersCss = await readFile(join(DIR, 'explainers.css'), 'utf8');
 const soundJs = await readFile(join(DIR, 'sound.js'), 'utf8');
 const newsCss = await readFile(join(DIR, 'news.css'), 'utf8');
 const ledgerCss = await readFile(join(DIR, 'ledger.css'), 'utf8');
+const riceCss = await readFile(join(DIR, 'rice.css'), 'utf8');
 const cssFile = await readFile(join(DIR, 'styles.css'), 'utf8');
 const pageNames = (await readdir(DIR)).filter(f => f.endsWith('.html')).sort();
 const pages = {};
@@ -299,7 +300,7 @@ for (const [name, html] of Object.entries(pages)) {
 }
 
 /* ---------- 7d. brace balance ---------- */
-for (const [label, src] of [['styles.css', cssFile], ['junior.css', juniorCss], ['factory.css', factoryCss], ['explainers.css', explainersCss], ['news.css', newsCss], ['ledger.css', ledgerCss], ['app.js', appJs], ['drawer.js', drawerJs], ['junior.js', juniorJs], ['factory.js', factoryJs], ['explainers.js', explainersJs], ['sound.js', soundJs]]) {
+for (const [label, src] of [['styles.css', cssFile], ['junior.css', juniorCss], ['factory.css', factoryCss], ['explainers.css', explainersCss], ['news.css', newsCss], ['ledger.css', ledgerCss], ['rice.css', riceCss], ['app.js', appJs], ['drawer.js', drawerJs], ['junior.js', juniorJs], ['factory.js', factoryJs], ['explainers.js', explainersJs], ['sound.js', soundJs]]) {
   if ((src.match(/{/g) || []).length !== (src.match(/}/g) || []).length) {
     flag('BUG', 'frontend', `Unbalanced braces in ${label}.`);
   }
@@ -418,6 +419,7 @@ if (kb(newsJs) > 120) flag('BUG', 'perf', `news-data.js is ${kb(newsJs)}KB — i
 if (kb(factoryJs) > 130) flag('BUG', 'perf', `factory.js is ${kb(factoryJs)}KB — factory.html only, but even that needs a ceiling.`);
 if (kb(explainersJs) > 60) flag('BUG', 'perf', `explainers.js is ${kb(explainersJs)}KB — explainers.html only, but even that needs a ceiling.`);
 if (kb(ledgerCss) > 30) flag('BUG', 'perf', `ledger.css is ${kb(ledgerCss)}KB — ledger.html only, but even that needs a ceiling.`);
+if (kb(riceCss) > 30) flag('BUG', 'perf', `rice.css is ${kb(riceCss)}KB — rice.html only, but even that needs a ceiling.`);
 if (kb(newsCss) > 30) flag('BUG', 'perf', `news.css is ${kb(newsCss)}KB — news.html only, but even that needs a ceiling.`);
 if (kb(soundJs) > 20) flag('BUG', 'perf', `sound.js is ${kb(soundJs)}KB — loaded on every page, keep it small.`);
 if (kb(explainersCss) > 30) flag('BUG', 'perf', `explainers.css is ${kb(explainersCss)}KB — explainers.html only, but even that needs a ceiling.`);
