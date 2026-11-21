@@ -108,7 +108,12 @@ const FIXTURES = [
       {who:'Mikel Arteta', role:'manager', quote:'We had enough chances to make the scoreline much bigger.', source:'ESPN', url:'https://www.espn.com/soccer/story/_/id/50410317/mikel-arteta-arsenal-hull-premier-league'},
       {who:'Mikel Arteta', role:'manager', quote:'And this is exactly how we won the game.', source:'Hayters TV via Yahoo Sports', url:'https://sports.yahoo.com/articles/arteta-praises-arsenal-persistence-gives-182700292.html'}
     ]}},
-  {n:11,ko:'2026-11-21T17:30:00+00:00', opp:'new', v:'A', tv:'Sky Sports', moved:true, checked:'2026-11-17'},
+  {n:11,ko:'2026-11-21T17:30:00+00:00', opp:'new', v:'A', tv:'Sky Sports', moved:true, checked:'2026-11-22', result:'D 2-2', scorers:'Eze, Madueke',
+    reaction:{notes:[
+      {who:'Mikel Arteta', role:'manager', quote:'We gave them the first goal in a way that is unacceptable. We didn\u2019t control it.', source:'The Football Faithful via Yahoo Sports', url:'https://sports.yahoo.com/articles/david-raya-injury-arsenal-held-211600408.html'},
+      {who:'Mikel Arteta', role:'manager', quote:'We scored a beautiful goal and should have gone on to kill the game.', source:'The Football Faithful via Yahoo Sports', url:'https://sports.yahoo.com/articles/david-raya-injury-arsenal-held-211600408.html'},
+      {who:'Mikel Arteta', role:'manager', quote:'We know how important David is for us. Tomorrow we will have more news.', source:'TEAMtalk', url:'https://www.teamtalk.com/arsenal/breaking-mikel-arteta-gives-david-raya-injury-update-after-newcastle-2-2-arsenal-not-good-news'}
+    ]}},
   {n:12,ko:'2026-11-29T16:30:00+00:00', opp:'mci', v:'H', moved:true, checked:'2026-11-17'},
   {n:13,ko:'2026-12-02T20:15:00+00:00', opp:'bre', v:'A', tv:'Sky Sports', moved:true, checked:'2026-11-11'},
   {n:14,ko:'2026-12-05T15:00:00+00:00', opp:'tot', v:'A'},
