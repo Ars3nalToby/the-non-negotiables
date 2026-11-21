@@ -425,7 +425,7 @@ if (kb(soundJs) > 20) flag('BUG', 'perf', `sound.js is ${kb(soundJs)}KB — load
 if (kb(explainersCss) > 30) flag('BUG', 'perf', `explainers.css is ${kb(explainersCss)}KB — explainers.html only, but even that needs a ceiling.`);
 if (kb(factoryCss) > 30) flag('BUG', 'perf', `factory.css is ${kb(factoryCss)}KB — factory.html only, but even that needs a ceiling.`);
 /* factory.js must never quietly turn the sponsor boards on — that's a decision, not a commit. */
-if (!/const SHOW_SPONSOR_SLOTS=false;/.test(factoryJs)) flag('TODO', 'compliance', 'factory.js has sponsor slots switched on. Fine if a sponsor has actually signed — otherwise the README still says the site sells nothing.');
+if (!/const\s+SHOW_SPONSOR_SLOTS\s*=\s*false\s*;/.test(factoryJs)) flag('TODO', 'compliance', 'factory.js has sponsor slots switched on. Fine if a sponsor has actually signed — otherwise the README still says the site sells nothing.');
 for (const [name, html] of Object.entries(pages)) {
   const pkb = kb(html);
   if (pkb > 40) flag('BUG', 'perf', `${name} is ${pkb}KB of markup — that's a lot for one page now that styles/data are shared.`);
