@@ -174,7 +174,12 @@ const CL = [
    ]},
    note:'We won 3-0 there last season, Merino with a brace. Prague in November is cold and beautiful, the Fortuna Arena is small and loud, and the flights are absurdly cheap. The value away day of the whole draw.'},
   {md:5, ko:'2026-11-24T20:00:00+00:00', v:'H', name:'Borussia Dortmund', country:'Germany', pot:2,
-   ground:'Emirates Stadium', city:'London',
+   ground:'Emirates Stadium', city:'London', result:'D 1-1', scorers:'Gy\u00f6keres',
+   reaction:{notes:[
+     {who:'Mikel Arteta', role:'manager', quote:'There is an element of luck, how the hell some of those balls didn\u2019t go in, I don\u2019t know.', source:'AFP via Yahoo Sports', url:'https://sports.yahoo.com/soccer/articles/arteta-backs-brilliant-gyokeres-arsenal-225255433.html'},
+     {who:'Mikel Arteta', role:'manager', quote:'What I loved the most was how connected he was to the team.', source:'AFP via Yahoo Sports', url:'https://sports.yahoo.com/soccer/articles/arteta-backs-brilliant-gyokeres-arsenal-225255433.html'},
+     {who:'Viktor Gy\u00f6keres', role:'striker', quote:'We could have won the game in many different ways.', source:'BBC Sport via Yahoo Sports', url:'https://sports.yahoo.com/soccer/articles/arsenal-1-1-borussia-dortmund-224146042.html'}
+   ]},
    note:'Mercifully, the Yellow Wall does not travel. Dortmund away is the great European pilgrimage; Dortmund at home is a very good side without the terrace that makes them frightening. Take the draw.'},
   {md:6, ko:'2026-12-09T20:00:00+00:00', v:'H', name:'Real Madrid', country:'Spain', pot:1,
    ground:'Emirates Stadium', city:'London',
